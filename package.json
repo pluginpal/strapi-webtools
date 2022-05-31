@@ -1,0 +1,77 @@
+{
+  "name": "strapi-plugin-path",
+  "version": "1.0.1",
+  "description": "Unique entity paths.",
+  "strapi": {
+    "displayName": "Path",
+    "name": "path",
+    "icon": "path",
+    "description": "Unique entity paths.",
+    "required": false,
+    "kind": "plugin"
+  },
+  "scripts": {
+    "eslint": "eslint --max-warnings=0 './**/*.{js,jsx}'",
+    "eslint:fix": "eslint --fix './**/*.{js,jsx}'",
+    "test:unit": "jest --verbose",
+    "plugin:install": "yarn install && rm -rf node_modules/@strapi/helper-plugin"
+  },
+  "dependencies": {},
+  "author": {
+    "name": "Boaz Poolman",
+    "email": "info@boazpoolman.nl",
+    "url": "https://github.com/boazpoolman"
+  },
+  "maintainers": [
+    {
+      "name": "Boaz Poolman",
+      "email": "info@boazpoolman.nl",
+      "url": "https://github.com/boazpoolman"
+    }
+  ],
+  "files": [
+    "admin",
+    "server",
+    "bin",
+    "strapi-admin.js",
+    "strapi-server.js"
+  ],
+  "peerDependencies": {
+    "@strapi/strapi": "^4.0.0"
+  },
+  "devDependencies": {
+    "@fortawesome/react-fontawesome": "^0.1.16",
+    "@strapi/design-system": "^0.0.1-alpha.79",
+    "@strapi/helper-plugin": "^4.1.8",
+    "@strapi/icons": "^0.0.1-alpha.79",
+    "@strapi/utils": "^4.1.8",
+    "babel-eslint": "9.0.0",
+    "eslint": "^7.32.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-react-app": "^3.0.7",
+    "eslint-import-resolver-webpack": "^0.11.0",
+    "eslint-loader": "2.1.1",
+    "eslint-plugin-babel": "^5.3.0",
+    "eslint-plugin-flowtype": "2.50.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-react-hooks": "^2.3.0",
+    "jest": "^26.0.1",
+    "jest-cli": "^26.0.1",
+    "jest-styled-components": "^7.0.2",
+    "lodash": "^4.17.11",
+    "react": "^17.0.2",
+    "react-intl": "^5.20.12",
+    "styled-components": "^5.2.3"
+  },
+  "bugs": {
+    "url": "https://github.com/boazpoolman/strapi-plugin-path/issues"
+  },
+  "homepage": "https://github.com/boazpoolman/strapi-plugin-path#readme",
+  "engines": {
+    "node": ">=10.0.0",
+    "npm": ">=6.0.0"
+  },
+  "license": "MIT"
+}
