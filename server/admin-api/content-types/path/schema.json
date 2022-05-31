@@ -21,6 +21,13 @@
   "attributes": {
     "path": {
       "type": "string"
+    },
+    "generated": {
+      "type": "boolean",
+      "default": true
+    },
+    "contentType": {
+      "type": "string"
     }
   }
 }

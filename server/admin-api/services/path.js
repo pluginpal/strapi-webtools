@@ -37,14 +37,12 @@ module.exports = () => ({
    * Update.
    *
    * @param {number} id the id.
-   * @param {string} path the path.
+   * @param {object} data the data.
    * @returns {void}
    */
-   update: async (id, path) => {
+   update: async (id, data) => {
     const pathEntity = await strapi.entityService.update('plugin::path.path', id, {
-      data: {
-        path,
-      },
+      data,
     });
 
     return pathEntity;

@@ -18,7 +18,7 @@ module.exports = async (strapi) => {
       configurable: false,
       visible: false,
       default: null,
-      type: 'integer',
+      type: 'string',
     });
   });
 };

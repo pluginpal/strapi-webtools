@@ -6,15 +6,20 @@
  */
 
 import React from 'react';
+import { QueryClient, QueryClientProvider } from 'react-query';
 import { CheckPagePermissions } from '@strapi/helper-plugin';
 
 import pluginPermissions from '../../permissions';
 import ConfigPage from '../ConfigPage';
 
 const App = () => {
+  const queryClient = new QueryClient();
+
   return (
     <CheckPagePermissions permissions={pluginPermissions.settings}>
-      <ConfigPage />
+      <QueryClientProvider client={queryClient}>
+        <ConfigPage />
+      </QueryClientProvider>
     </CheckPagePermissions>
   );
 };

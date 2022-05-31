@@ -17,15 +17,13 @@ module.exports = () => ({
 
     // fields
     await Promise.all(Object.entries(data).map(async ([key, value]) => {
-      if (!value && key !== 'path_id') {
+      if (!value && key !== 'path') {
         return;
       }
 
-      if (key === 'path_id') {
-        // TODO: query the path.
-        const pathEntity = await getPluginService('pathService').create('/test-path');
-        data['path'] = pathEntity.path;
-        delete data[key];
+      if (key === 'path' && Number(value)) {
+        const pathEntity = await getPluginService('pathService').get(value);
+        data[key] = pathEntity.path;
       }
 
       // relation(s)
