@@ -7,8 +7,6 @@ import pluginPermissions from './permissions';
 const pluginDescription = pluginPkg.strapi.description || pluginPkg.description;
 const { name } = pluginPkg.strapi;
 
-console.log('register app');
-
 export default {
   register(app) {
     app.registerPlugin({

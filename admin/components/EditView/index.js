@@ -14,8 +14,6 @@ const EditView = () => {
   const { formatMessage } = useIntl();
   const { slug, modifiedData, onChange } = useCMEditViewDataManager();
 
-  console.log(modifiedData.path);
-
   return (
     <Box paddingTop={6}>
       <Typography textColor="neutral600" variant="sigma">
@@ -31,8 +29,8 @@ const EditView = () => {
             label="Content"
             name="content"
             hint="Description line"
-            onChange={(e) => onChange({ target: { name: 'path', value: e.target.value } })}
-            value={modifiedData.path}
+            onChange={(e) => onChange({ target: { name: 'path_id', value: e.target.value } })}
+            value={modifiedData.path_id}
           />
         </Box>
       </Stack>
