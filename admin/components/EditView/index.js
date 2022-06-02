@@ -72,7 +72,7 @@ const EditView = () => {
               >
                 {formatMessage({ id: getTrad('EditView.ExcludeFromSitemap'), defaultMessage: ' Generate automatic path alias' })}
               </Checkbox>
-              <Link to="https://strapi.io/">Configure path alias patterns.</Link>
+              <Link to="/settings/path/patterns">Configure path alias patterns.</Link>
             </Box>
             <Box paddingTop={4}>
               <TextInput

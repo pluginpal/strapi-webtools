@@ -22,32 +22,49 @@ export default {
         id: pluginId,
         intlLabel: {
           id: `${pluginId}.settings.title`,
-          defaultMessage: 'Path',
+          defaultMessage: 'URL alias',
         },
       },
       [
+        // TODO: List all URL aliases.
+        // {
+        //   intlLabel: {
+        //     id: `${pluginId}.settings.page.list.title`,
+        //     defaultMessage: 'List',
+        //   },
+        //   id: 'url-alias-list',
+        //   to: `/settings/${pluginId}/list`,
+        //   Component: async () => {
+        //     const component = await import(
+        //       /* webpackChunkName: "path-settings-page" */ './screens/List'
+        //     );
+
+        //     return component;
+        //   },
+        //   permissions: pluginPermissions['settings.list'],
+        // },
         {
           intlLabel: {
-            id: `${pluginId}.settings.title`,
-            defaultMessage: 'Tools',
+            id: `${pluginId}.settings.page.patterns.title`,
+            defaultMessage: 'Patterns',
           },
-          id: 'path-page',
-          to: `/settings/${pluginId}`,
+          id: 'url-alias-patterns',
+          to: `/settings/${pluginId}/patterns`,
           Component: async () => {
             const component = await import(
-              /* webpackChunkName: "path-settings-page" */ './containers/App'
+              /* webpackChunkName: "path-settings-page" */ './screens/Patterns'
             );
 
             return component;
           },
-          permissions: pluginPermissions['settings'],
+          permissions: pluginPermissions['settings.patterns'],
         },
       ],
     );
   },
   bootstrap(app) {
     app.injectContentManagerComponent('editView', 'right-links', {
-      name: 'path-field-edit-view',
+      name: 'url-alias-edit-view',
       Component: EditView,
     });
   },

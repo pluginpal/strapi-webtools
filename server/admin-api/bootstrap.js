@@ -11,8 +11,14 @@ module.exports = async () => {
     const actions = [
       {
         section: 'plugins',
-        displayName: 'Access the plugin settings',
-        uid: 'settings.read',
+        displayName: 'Access the URL alias list',
+        uid: 'settings.list',
+        pluginName: 'path',
+      },
+      {
+        section: 'plugins',
+        displayName: 'Access the URL alias patterns',
+        uid: 'settings.patterns',
         pluginName: 'path',
       },
     ];
