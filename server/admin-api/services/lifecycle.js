@@ -1,5 +1,7 @@
 'use strict';
 
+const _ = require('lodash');
+
 const { getPluginService } = require('../../util/getPluginService');
 
 /**
@@ -13,24 +15,60 @@ const subscribeLifecycleMethods = async (modelName) => {
     await strapi.db.lifecycles.subscribe({
       models: [modelName],
 
+      // Create the path entity.
       async beforeCreate(event) {
         const { data } = event.params;
+        let pathEntity;
+
+        if (!data.path_generated && data.path_value) {
+          pathEntity = await getPluginService('pathService').create({ path: data.path_value, generated: false });
+        } else {
+          pathEntity = await getPluginService('pathService').create({ path: 'generated-path', generated: true });
+        }
+
+        data.path_id = pathEntity.id;
       },
 
+      // Delete the path entity.
       async beforeDelete(event) {
-        const { data } = event.params;
-        console.log(data);
+        const { id } = event.params.where;
+        const { uid } = event.model;
+
+        const entity = await strapi.entityService.findOne(uid, id);
+
+        if (!entity.path_id) {
+          return null;
+        }
+
+        await getPluginService('pathService').delete(entity.path_id);
       },
 
+      // Update or create the path entity.
       async beforeUpdate(event) {
         const { data } = event.params;
 
         if (!data.path_id) {
-          return null;
+          let pathEntity;
+
+          if (!data.path_generated && data.path_value) {
+            pathEntity = await getPluginService('pathService').create({ path: data.path_value, generated: false });
+          } else {
+            pathEntity = await getPluginService('pathService').create({ path: 'generated-path', generated: true });
+          }
+
+          data.path_id = pathEntity.id;
+
+          return;
         }
 
-        if (data.overridden_path && data.overridden_path_value) {
-          await getPluginService('pathService').update(data.path_id, { path: data.overridden_path_value, generated: false });
+        if (!data.path_generated && !data.path_value) {
+          const pathEntity = await getPluginService('pathService').get(data.path_id);
+
+          if (pathEntity.generated) {
+            await getPluginService('pathService').update(data.path_id, { path: 'generated-path', generated: true });
+          }
+        } else if (!data.path_generated && data.path_value) {
+          await getPluginService('pathService').update(data.path_id, { path: data.path_value, generated: false });
         } else {
           await getPluginService('pathService').update(data.path_id, { path: 'generated-path', generated: true });
         }
@@ -44,6 +82,12 @@ const subscribeLifecycleMethods = async (modelName) => {
 module.exports = () => ({
   async loadAllLifecycleMethods() {
     Object.keys(strapi.contentTypes).map(async (contentType) => {
+      const { pluginOptions } = strapi.contentTypes[contentType];
+
+      // Not for CTs that are not visible in the content manager.
+      const isInContentManager = _.get(pluginOptions, ['content-manager', 'visible']);
+      if (isInContentManager === false) return;
+
       await subscribeLifecycleMethods(contentType);
     });
   },

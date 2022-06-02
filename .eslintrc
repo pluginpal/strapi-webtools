@@ -335,7 +335,7 @@
 
     "no-multiple-empty-lines": ["warn", { "max": 2 }],
 
-    "no-nested-ternary": "warn",
+    "no-nested-ternary": "off",
 
     "no-new-object": "off",
 

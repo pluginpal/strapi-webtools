@@ -6,16 +6,14 @@ module.exports = () => ({
   /**
    * Create.
    *
-   * @param {string} path the path.
+   * @param {object} data the data.
    * @returns {void}
    */
-  create: async (path) => {
+  create: async (data) => {
     // TODO:
     // Check for duplicate URLs and append -0, -1, -2 etc.
     const pathEntity = await strapi.entityService.create('plugin::path.path', {
-      data: {
-        path,
-      },
+      data,
     });
 
     return pathEntity;

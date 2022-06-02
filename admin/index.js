@@ -46,7 +46,7 @@ export default {
     );
   },
   bootstrap(app) {
-    app.injectContentManagerComponent('editView', 'informations', {
+    app.injectContentManagerComponent('editView', 'right-links', {
       name: 'path-field-edit-view',
       Component: EditView,
     });
