@@ -1,0 +1,49 @@
+{
+  "kind": "collectionType",
+  "collectionName": "patterns",
+  "info": {
+    "singularName": "pattern",
+    "pluralName": "patterns",
+    "displayName": "pattern"
+  },
+  "options": {
+    "draftAndPublish": false,
+    "comment": ""
+  },
+  "pluginOptions": {
+    "content-manager": {
+      "visible": false
+    },
+    "content-type-builder": {
+      "visible": false
+    }
+  },
+  "attributes": {
+    "label": {
+      "type": "string",
+      "configurable": false,
+      "required": true
+    },
+    "pattern": {
+      "type": "string",
+      "configurable": false,
+      "required": true
+    },
+    "code": {
+      "type": "string",
+      "unique": true,
+      "configurable": false,
+      "required": true
+    },
+    "contentTypes": {
+      "type": "json",
+      "configurable": false,
+      "required": true
+    },
+    "languages": {
+      "type": "json",
+      "configurable": false,
+      "required": true
+    }
+  }
+}

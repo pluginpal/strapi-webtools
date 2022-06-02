@@ -62,7 +62,7 @@ const subscribeLifecycleMethods = async (modelName) => {
         }
 
         if (!data.path_generated && !data.path_value) {
-          const pathEntity = await getPluginService('pathService').get(data.path_id);
+          const pathEntity = await getPluginService('pathService').findOne(data.path_id);
 
           if (pathEntity.generated) {
             await getPluginService('pathService').update(data.path_id, { path: 'generated-path', generated: true });

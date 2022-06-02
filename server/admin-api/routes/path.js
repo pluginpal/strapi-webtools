@@ -3,8 +3,8 @@
 module.exports = [
   {
     method: "GET",
-    path: "/get/:id",
-    handler: "path.get",
+    path: "/findOne/:id",
+    handler: "path.findOne",
     config: {
       policies: [],
     },

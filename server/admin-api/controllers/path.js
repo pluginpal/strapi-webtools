@@ -9,10 +9,10 @@ const { getPluginService } = require('../../util/getPluginService');
  */
 
 module.exports = {
-  get: async (ctx) => {
+  findOne: async (ctx) => {
     try {
       const { id } = ctx.params;
-      const pathEntity = await getPluginService('pathService').get(id);
+      const pathEntity = await getPluginService('pathService').findOne(id);
       ctx.send(pathEntity);
     } catch (err) {
       ctx.status = err.status || 500;

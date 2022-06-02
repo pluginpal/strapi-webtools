@@ -23,7 +23,7 @@ const EditView = () => {
   useEffect(() => {
     if (Number(modifiedData.path_id)) {
       setLoading(true);
-      request(`/path/get/${modifiedData.path_id}`, { method: 'GET' })
+      request(`/path/findOne/${modifiedData.path_id}`, { method: 'GET' })
         .then((res) => {
           setPathEntity(res);
           setLoading(false);

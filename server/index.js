@@ -4,9 +4,13 @@
 const adminApiRegister = require('./admin-api/register');
 const adminApiBootstrap = require('./admin-api/bootstrap');
 const adminApiPathSchema = require('./admin-api/content-types/path/schema.json');
+const adminApiPatternSchema = require('./admin-api/content-types/pattern/schema.json');
 const adminApiPathController = require('./admin-api/controllers/path');
+const adminApiPatternController = require('./admin-api/controllers/pattern');
 const adminApiPathService = require('./admin-api/services/path');
+const adminApiPatternService = require('./admin-api/services/pattern');
 const adminApiPathRoutes = require('./admin-api/routes/path');
+const adminApiPatternRoutes = require('./admin-api/routes/pattern');
 const adminApiLifecycleService = require('./admin-api/services/lifecycle');
 
 // Content API
@@ -25,12 +29,16 @@ module.exports = {
     path: {
       schema: adminApiPathSchema,
     },
+    pattern: {
+      schema: adminApiPatternSchema,
+    },
   },
   routes: {
     admin: {
       type: 'admin',
       routes: [
         ...adminApiPathRoutes,
+        ...adminApiPatternRoutes,
       ],
     },
     "content-api": {
@@ -40,10 +48,12 @@ module.exports = {
   },
   controllers: {
     path: adminApiPathController,
+    pattern: adminApiPatternController,
   },
   services: {
     preparePathService: contentApiPreparePathService,
     pathService: adminApiPathService,
+    patternService: adminApiPatternService,
     lifecycleService: adminApiLifecycleService,
   },
 };

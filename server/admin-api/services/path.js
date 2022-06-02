@@ -20,12 +20,12 @@ module.exports = () => ({
   },
 
   /**
-   * Get.
+   * findOne.
    *
    * @param {number} id the id.
    * @returns {void}
    */
-   get: async (id) => {
+   findOne: async (id) => {
     const pathEntity = await strapi.entityService.findOne('plugin::path.path', id);
 
     return pathEntity;
