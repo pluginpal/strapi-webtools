@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { useQuery } from 'react-query';
 
 import { useCMEditViewDataManager, request } from '@strapi/helper-plugin';
 import { Box } from '@strapi/design-system/Box';
@@ -18,7 +17,7 @@ const EditView = () => {
   const [pathEntity, setPathEntity] = useState({});
   const [loading, setLoading] = useState(false);
   const { formatMessage } = useIntl();
-  const { slug, modifiedData, onChange } = useCMEditViewDataManager();
+  const { modifiedData, onChange } = useCMEditViewDataManager();
 
   useEffect(() => {
     if (Number(modifiedData.path_id)) {

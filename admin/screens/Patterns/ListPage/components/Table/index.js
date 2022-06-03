@@ -8,7 +8,6 @@ import {
   EmptyStateLayout,
 } from '@strapi/helper-plugin';
 
-import getTrad from '../../../../../helpers/getTrad';
 import TableBody from '../TableBody';
 
 const TableComponent = ({ patterns }) => {

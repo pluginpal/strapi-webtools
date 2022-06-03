@@ -2,8 +2,6 @@
 
 const _ = require('lodash');
 
-const { getPluginService } = require('../../util/getPluginService');
-
 /**
  * Info controller
  */

@@ -7,7 +7,6 @@ import { Popover } from '@strapi/design-system/Popover';
 import { request } from '@strapi/helper-plugin';
 import { Stack } from '@strapi/design-system/Stack';
 import { Box } from '@strapi/design-system/Box';
-import Typography from '@strapi/design-system/Typography';
 
 import useActiveElement from '../../helpers/useActiveElement';
 

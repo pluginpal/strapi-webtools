@@ -1,7 +1,5 @@
 'use strict';
 
-const _ = require('lodash');
-
 const { getPluginService } = require('../../util/getPluginService');
 
 module.exports = () => ({
