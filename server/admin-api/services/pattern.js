@@ -10,7 +10,9 @@ module.exports = () => ({
    * @returns {void}
    */
   create: async (data) => {
-    data.code = _.snakeCase(_.deburr(_.toLower(data.label)));
+    if (!data.code) {
+      data.code = _.snakeCase(_.deburr(_.toLower(data.label)));
+    }
 
     const patternEntity = await strapi.entityService.create('plugin::path.pattern', {
       data,

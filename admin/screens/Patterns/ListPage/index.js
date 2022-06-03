@@ -12,6 +12,7 @@ import { request } from '@strapi/helper-plugin';
 import getTrad from '../../../helpers/getTrad';
 import pluginId from '../../../helpers/pluginId';
 import Table from './components/Table';
+import Center from '../../../components/Center';
 
 const ListPatternPage = () => {
   const [patterns, setPatterns] = useState([]);
@@ -32,7 +33,11 @@ const ListPatternPage = () => {
   }, []);
 
   if (loading || !patterns) {
-    return <Loader>Loading content...</Loader>;
+    return (
+      <Center>
+        <Loader>Loading content...</Loader>
+      </Center>
+    );
   }
 
   return (

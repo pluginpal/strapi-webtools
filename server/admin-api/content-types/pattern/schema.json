@@ -35,8 +35,8 @@
       "configurable": false,
       "required": true
     },
-    "contentTypes": {
-      "type": "json",
+    "contenttype": {
+      "type": "string",
       "configurable": false,
       "required": true
     },

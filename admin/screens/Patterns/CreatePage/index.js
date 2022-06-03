@@ -6,11 +6,9 @@ import { ContentLayout, HeaderLayout } from '@strapi/design-system/Layout';
 import { Box } from '@strapi/design-system/Box';
 import { Link } from '@strapi/design-system/Link';
 import ArrowLeft from '@strapi/icons/ArrowLeft';
-import { Checkbox } from '@strapi/design-system/Checkbox';
 import { Button } from '@strapi/design-system/Button';
 import { Stack } from '@strapi/design-system/Stack';
 import { TextInput } from '@strapi/design-system/TextInput';
-import { Textarea } from '@strapi/design-system/Textarea';
 import { Typography } from '@strapi/design-system/Typography';
 import Check from '@strapi/icons/Check';
 import { GridItem, Grid } from '@strapi/design-system/Grid';
@@ -21,11 +19,12 @@ import getTrad from '../../../helpers/getTrad';
 import schema from './utils/schema';
 
 import pluginId from '../../../helpers/pluginId';
-import CheckboxGroup from '../../../components/CheckboxGroup';
+import Center from '../../../components/Center';
+import Select from '../../../components/Select';
+import LabelField from '../../../components/LabelField';
 
 const CreatePattternPage = () => {
   const [loading, setLoading] = useState(false);
-  const [languages, setLanguage] = useState([]);
   const [contentTypes, setContentTypes] = useState([]);
   const { formatMessage } = useIntl();
 
@@ -41,18 +40,6 @@ const CreatePattternPage = () => {
       });
   }, []);
 
-  // useEffect(() => {
-  //   setLoading(true);
-  //   request(`/path/info/getLanguages`, { method: 'GET' })
-  //     .then((res) => {
-  //       setLanguage(res);
-  //       setLoading(false);
-  //     })
-  //     .catch(() => {
-  //       setLoading(false);
-  //     });
-  // }, []);
-
   const handleEditRoleSubmit = (values) => {
     request(`/path/pattern/create`, {
       method: 'POST',
@@ -67,13 +54,17 @@ const CreatePattternPage = () => {
   };
 
   if (loading || !contentTypes) {
-    return <Loader>Loading content...</Loader>;
+    return (
+      <Center>
+        <Loader>Loading content...</Loader>
+      </Center>
+    );
   }
 
   return (
     <Formik
       enableReinitialize
-      initialValues={{ label: '', pattern: '', contentTypes: [], languages: [] }}
+      initialValues={{ label: '', pattern: '', contenttype: '', languages: [] }}
       onSubmit={handleEditRoleSubmit}
       validationSchema={schema}
     >
@@ -120,19 +111,32 @@ const CreatePattternPage = () => {
                   </Typography>
                   <Grid gap={4}>
                     <GridItem col={6}>
-                      <TextInput
-                        name="label"
-                        value={values.label || ''}
-                        onChange={handleChange}
+                      <Select
+                        name="contenttype"
+                        list={contentTypes}
+                        value={values.contenttype || ''}
+                        setFieldValue={setFieldValue}
                         label={formatMessage({
-                          id: 'global.name',
-                          defaultMessage: 'Name',
+                          id: 'global.asdfe',
+                          defaultMessage: 'Content type',
                         })}
                         error={
-                          errors.label && touched.label
-                            ? formatMessage({ id: errors.label, defaultMessage: 'Invalid value' })
+                          errors.contenttype && touched.contenttype
+                            ? formatMessage({ id: errors.contenttype, defaultMessage: 'Invalid value' })
                             : null
                         }
+                      />
+                    </GridItem>
+                    <GridItem col={12} />
+                    <GridItem col={6}>
+                      <LabelField
+                        values={values}
+                        setFieldValue={setFieldValue}
+                        errors={errors}
+                        touched={touched}
+                        hint={(code) => (
+                          <Typography>Machine name: {code} </Typography>
+                        )}
                       />
                     </GridItem>
                     <GridItem col={12} />
@@ -142,7 +146,7 @@ const CreatePattternPage = () => {
                         value={values.pattern || ''}
                         onChange={handleChange}
                         label={formatMessage({
-                          id: 'global.name',
+                          id: 'global.namasfe',
                           defaultMessage: 'Pattern',
                         })}
                         error={
@@ -150,30 +154,6 @@ const CreatePattternPage = () => {
                             ? formatMessage({ id: errors.pattern, defaultMessage: 'Invalid value' })
                             : null
                         }
-                      />
-                    </GridItem>
-                    <GridItem col={12} />
-                    <GridItem col={6}>
-                      <CheckboxGroup
-                        title="Content types"
-                        list={contentTypes}
-                        values={values}
-                        errors={errors}
-                        touched={touched}
-                        setFieldValue={setFieldValue}
-                        fieldName="contentTypes"
-                      />
-                    </GridItem>
-                    <GridItem col={12} />
-                    <GridItem col={6}>
-                      <CheckboxGroup
-                        title="Languages"
-                        list={languages}
-                        values={values}
-                        errors={errors}
-                        touched={touched}
-                        setFieldValue={setFieldValue}
-                        fieldName="languages"
                       />
                     </GridItem>
                   </Grid>

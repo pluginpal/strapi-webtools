@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { IconButton } from '@strapi/design-system/IconButton';
 import { Typography } from '@strapi/design-system/Typography';
 import { Flex } from '@strapi/design-system/Flex';
@@ -62,15 +61,3 @@ const TableBody = ({ patterns }) => {
 };
 
 export default TableBody;
-
-TableBody.defaultProps = {
-  canDelete: false,
-};
-
-TableBody.propTypes = {
-  onDelete: PropTypes.array.isRequired,
-  permissions: PropTypes.object.isRequired,
-  setRoleToDelete: PropTypes.func.isRequired,
-  sortedRoles: PropTypes.array.isRequired,
-  canDelete: PropTypes.bool,
-};

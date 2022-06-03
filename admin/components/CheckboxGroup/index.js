@@ -7,6 +7,10 @@ import { Typography } from '@strapi/design-system/Typography';
 const CheckboxGroup = ({ values, setFieldValue, title, list, errors, touched, fieldName }) => {
   const { formatMessage } = useIntl();
 
+  if (!list || list.length < 0) {
+    return null;
+  }
+
   return (
     <div>
       <Box paddingBottom={2}>
@@ -33,7 +37,7 @@ const CheckboxGroup = ({ values, setFieldValue, title, list, errors, touched, fi
             value={values.contentTypes.indexOf(item.uid) >= 0}
             error={
               errors[fieldName] && touched[fieldName] && list.length === i + 1
-                ? formatMessage({ id: errors.pattern, defaultMessage: 'Invalid value' })
+                ? formatMessage({ id: errors[fieldName], defaultMessage: 'Invalid value' })
                 : null
             }
           >
