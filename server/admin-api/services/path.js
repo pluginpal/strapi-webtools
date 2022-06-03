@@ -2,6 +2,8 @@
 
 const _ = require('lodash');
 
+const { getPluginService } = require('../../util/getPluginService');
+
 module.exports = () => ({
   /**
    * Create.
@@ -10,8 +12,19 @@ module.exports = () => ({
    * @returns {void}
    */
   create: async (data) => {
-    // TODO:
-    // Check for duplicate URLs and append -0, -1, -2 etc.
+    const duplicateCheck = async (ext = -1) => {
+      const extension = ext >= 0 ? `-${ext}` : '';
+      const pathAllreadyExists = await getPluginService('pathService').findByPath(data.path + extension);
+
+      if (pathAllreadyExists) {
+        duplicateCheck(ext + 1);
+      } else {
+        data.path = data.path + extension;
+      }
+    };
+
+    await duplicateCheck();
+
     const pathEntity = await strapi.entityService.create('plugin::path.path', {
       data,
     });
@@ -32,13 +45,43 @@ module.exports = () => ({
   },
 
   /**
+   * findByPath.
+   *
+   * @param {string} path the path.
+   * @returns {void}
+   */
+   findByPath: async (path) => {
+    const pathEntity = await strapi.entityService.findMany('plugin::path.path', {
+      filters: {
+        path,
+      },
+      limit: 1,
+    });
+
+    return pathEntity[0];
+  },
+
+  /**
    * Update.
    *
    * @param {number} id the id.
    * @param {object} data the data.
    * @returns {void}
    */
-   update: async (id, data) => {
+  update: async (id, data) => {
+    const duplicateCheck = async (ext = -1) => {
+      const extension = ext >= 0 ? `-${ext}` : '';
+      const pathAllreadyExists = await getPluginService('pathService').findByPath(data.path + extension);
+
+      if (pathAllreadyExists) {
+        duplicateCheck(ext + 1);
+      } else {
+        data.path = data.path + extension;
+      }
+    };
+
+    await duplicateCheck();
+
     const pathEntity = await strapi.entityService.update('plugin::path.path', id, {
       data,
     });

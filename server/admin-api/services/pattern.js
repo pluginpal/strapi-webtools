@@ -13,7 +13,9 @@ module.exports = () => ({
    * @returns {void}
    */
   create: async (data) => {
-    if (!data.code) {
+    if (data.code) {
+      data.code = _.snakeCase(_.deburr(_.toLower(data.code)));
+    } else {
       data.code = _.snakeCase(_.deburr(_.toLower(data.label)));
     }
 
@@ -37,12 +39,13 @@ module.exports = () => ({
   },
 
   /**
-   * Get.
+   * FindMany.
    *
+   * @param {object} params the params.
    * @returns {void}
    */
-   findMany: async () => {
-    const patternEntities = await strapi.entityService.findMany('plugin::path.pattern');
+   findMany: async (params) => {
+    const patternEntities = await strapi.entityService.findMany('plugin::path.pattern', params);
 
     return patternEntities;
   },
@@ -94,20 +97,21 @@ module.exports = () => ({
           && fieldName !== 'createdBy'
           && fieldName !== 'updatedBy'
         ) {
-          const relation = strapi.contentTypes[field.target];
+          // TODO: Relation fields.
+          // const relation = strapi.contentTypes[field.target];
 
-          if (
-            allowedFields.includes('id')
-            && !fields.includes(`${fieldName}.id`)
-          ) {
-            fields.push(`${fieldName}.id`);
-          }
+          // if (
+          //   allowedFields.includes('id')
+          //   && !fields.includes(`${fieldName}.id`)
+          // ) {
+          //   fields.push(`${fieldName}.id`);
+          // }
 
-          Object.entries(relation.attributes).map(([subFieldName, subField]) => {
-            if (subField.type === fieldType || subFieldName === fieldType) {
-              fields.push(`${fieldName}.${subFieldName}`);
-            }
-          });
+          // Object.entries(relation.attributes).map(([subFieldName, subField]) => {
+          //   if (subField.type === fieldType || subFieldName === fieldType) {
+          //     fields.push(`${fieldName}.${subFieldName}`);
+          //   }
+          // });
         }
       });
     });
@@ -137,30 +141,46 @@ module.exports = () => ({
   /**
    * Resolve a pattern string from pattern to path for a single entity.
    *
-   * @param {string} pattern - The pattern.
+   * @param {string} uid - The UID.
    * @param {object} entity - The entity.
    *
    * @returns {string} The path.
    */
 
-  resolvePattern: async (pattern, entity) => {
-    const fields = getPluginService('patternService').getFieldsFromPattern(pattern);
+  resolvePattern: async (uid, entity) => {
+    const resolve = (pattern) => {
+      const fields = getPluginService('patternService').getFieldsFromPattern(pattern);
 
-    fields.map((field) => {
-      const relationalField = field.split('.').length > 1 ? field.split('.') : null;
+      fields.map((field) => {
+        const relationalField = field.split('.').length > 1 ? field.split('.') : null;
 
-        if (!relationalField) {
-          pattern = pattern.replace(`[${field}]`, entity[field] || '');
-        } else if (Array.isArray(entity[relationalField[0]])) {
-          strapi.log.error('Something went wrong whilst resolving the pattern.');
-        } else if (typeof entity[relationalField[0]] === 'object') {
-          pattern = pattern.replace(`[${field}]`, entity[relationalField[0]] && entity[relationalField[0]][relationalField[1]] ? entity[relationalField[0]][relationalField[1]] : '');
-        }
+        // TODO: Relation fields.
+          if (!relationalField) {
+            // Slugify.
+            const fieldValue = _.kebabCase(_.deburr(_.toLower(entity[field])));
+            pattern = pattern.replace(`[${field}]`, fieldValue || '');
+          } else if (Array.isArray(entity[relationalField[0]])) {
+            strapi.log.error('Something went wrong whilst resolving the pattern.');
+          } else if (typeof entity[relationalField[0]] === 'object') {
+            pattern = pattern.replace(`[${field}]`, entity[relationalField[0]] && entity[relationalField[0]][relationalField[1]] ? entity[relationalField[0]][relationalField[1]] : '');
+          }
+      });
+
+      pattern = pattern.replace(/([^:]\/)\/+/g, "$1"); // Remove duplicate forward slashes.
+      pattern = pattern.startsWith('/') ? pattern : `/${pattern}`; // Add a starting slash.
+      return pattern;
+    };
+
+    const patterns = await getPluginService('patternService').findMany({
+      filters: {
+        contenttype: uid,
+      },
+      limit: 1,
     });
 
-    pattern = pattern.replace(/([^:]\/)\/+/g, "$1"); // Remove duplicate forward slashes.
-    pattern = pattern.startsWith('/') ? pattern : `/${pattern}`; // Add a starting slash.
-    return pattern;
+    const path = resolve(patterns[0].pattern);
+
+    return path;
   },
 
   /**

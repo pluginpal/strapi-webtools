@@ -21,9 +21,13 @@ module.exports = () => ({
         return;
       }
 
-      if (key === 'path_id' && Number(value)) {
-        const pathEntity = await getPluginService('pathService').findOne(value);
-        data[key] = pathEntity.path;
+      if (key === 'path_id') {
+        if (Number(value)) {
+          const pathEntity = await getPluginService('pathService').findOne(value);
+          data['path'] = pathEntity.path;
+        }
+
+        delete data.path_id;
       }
 
       // relation(s)

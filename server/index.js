@@ -17,7 +17,9 @@ const adminApiLifecycleService = require('./admin-api/services/lifecycle');
 
 // Content API
 const contentApiBootstrap = require('./content-api/bootstrap');
+const contentApiByPathController = require('./content-api/controllers/by-path');
 const contentApiPreparePathService = require('./content-api/services/prepare-path');
+const contentApiPathRoutes = require('./content-api/routes/path');
 
 module.exports = {
   register: async ({ strapi }) => {
@@ -46,13 +48,16 @@ module.exports = {
     },
     "content-api": {
       type: "content-api",
-      routes: [],
+      routes: [
+        ...contentApiPathRoutes,
+      ],
     },
   },
   controllers: {
     path: adminApiPathController,
     pattern: adminApiPatternController,
     info: adminApiInfoController,
+    byPath: contentApiByPathController,
   },
   services: {
     preparePathService: contentApiPreparePathService,

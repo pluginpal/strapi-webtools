@@ -24,7 +24,6 @@ const SelectComponent = ({
       error={error}
       value={value}
       onChange={(v) => {
-        console.log(v);
         setFieldValue(name, v);
       }}
     >
