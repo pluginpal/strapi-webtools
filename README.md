@@ -88,6 +88,17 @@ The following field types are allowed in a pattern:
 - `uid`
 - `string`
 
+## 📺  Endpoint
+
+The plugin also comes with an endpoint you can use to find _any_ content by path.
+
+#### REST
+
+```js
+await fetch(`${API_URL}/api/url-alias/get?path=/about-page`);
+// GET /api/url-alias/get?path=/about-page
+```
+
 ## 🔗 Links
 
 - [NPM package](https://www.npmjs.com/package/strapi-plugin-url-alias)
