@@ -12,7 +12,7 @@ module.exports = {
   findOne: async (ctx) => {
     try {
       const { id } = ctx.params;
-      const patternEntity = await getPluginService('patternSerivce').findOne(id);
+      const patternEntity = await getPluginService('patternService').findOne(id);
       ctx.send(patternEntity);
     } catch (err) {
       ctx.status = err.status || 500;
@@ -22,7 +22,7 @@ module.exports = {
   },
   findMany: async (ctx) => {
     try {
-      const patternEntities = await getPluginService('patternSerivce').findMany();
+      const patternEntities = await getPluginService('patternService').findMany();
       ctx.send(patternEntities);
     } catch (err) {
       ctx.status = err.status || 500;
@@ -33,7 +33,7 @@ module.exports = {
   delete: async (ctx) => {
     try {
       const { id } = ctx.params;
-      await getPluginService('patternSerivce').delete(id);
+      await getPluginService('patternService').delete(id);
       ctx.send({ succes: true });
     } catch (err) {
       ctx.status = err.status || 500;
@@ -45,7 +45,7 @@ module.exports = {
     try {
       const { id } = ctx.params;
       const { data } = ctx.request.body;
-      const patternEntity = await getPluginService('patternSerivce').update(id, data);
+      const patternEntity = await getPluginService('patternService').update(id, data);
       ctx.send(patternEntity);
     } catch (err) {
       ctx.status = err.status || 500;
@@ -56,7 +56,7 @@ module.exports = {
   create: async (ctx) => {
     try {
       const { data } = ctx.request.body;
-      const patternEntity = await getPluginService('patternSerivce').create(data);
+      const patternEntity = await getPluginService('patternService').create(data);
       ctx.send(patternEntity);
     } catch (err) {
       ctx.status = err.status || 500;

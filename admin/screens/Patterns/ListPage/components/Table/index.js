@@ -19,7 +19,7 @@ const TableComponent = ({ patterns }) => {
 
   return (
     <div>
-      {patterns ? (
+      {patterns && patterns.length > 0 ? (
         <Table colCount={colCount} rowCount={rowCount}>
           <Thead>
             <Tr>
@@ -53,7 +53,7 @@ const TableComponent = ({ patterns }) => {
       ) : (
         <EmptyStateLayout content={{
           id: getTrad('Roles.empty'),
-          efaultMessage: "You don't have any roles yet.",
+          defaultMessage: "You don't have any roles yet.",
         }} />
       )}
     </div>

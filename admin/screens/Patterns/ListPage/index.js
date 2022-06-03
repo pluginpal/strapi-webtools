@@ -1,36 +1,39 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useHistory } from 'react-router-dom';
+import { Loader } from '@strapi/design-system/Loader';
 
 import { ContentLayout, HeaderLayout } from '@strapi/design-system/Layout';
 import { Button } from '@strapi/design-system/Button';
 import { Box } from '@strapi/design-system/Box';
 import Plus from '@strapi/icons/Plus';
+import { request } from '@strapi/helper-plugin';
 
 import getTrad from '../../../helpers/getTrad';
 import pluginId from '../../../helpers/pluginId';
 import Table from './components/Table';
 
 const ListPatternPage = () => {
+  const [patterns, setPatterns] = useState([]);
+  const [loading, setLoading] = useState(false);
   const { formatMessage } = useIntl();
   const { push } = useHistory();
 
-  const patterns = [
-    {
-      id: 1,
-      label: "article",
-      pattern: "/test/[id]/test",
-      contentTypes: [],
-      languages: [],
-    },
-    {
-      id: 2,
-      label: "article",
-      pattern: "/test/[id]/test",
-      contentTypes: [],
-      languages: [],
-    },
-  ];
+  useEffect(() => {
+    setLoading(true);
+    request(`/path/pattern/findMany`, { method: 'GET' })
+      .then((res) => {
+        setPatterns(res);
+        setLoading(false);
+      })
+      .catch(() => {
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading || !patterns) {
+    return <Loader>Loading content...</Loader>;
+  }
 
   return (
     <Box>
@@ -48,17 +51,7 @@ const ListPatternPage = () => {
         )}
       />
       <ContentLayout>
-        <Box
-          background="neutral0"
-          hasRadius
-          shadow="filterShadow"
-          paddingTop={6}
-          paddingBottom={6}
-          paddingLeft={7}
-          paddingRight={7}
-        >
-          <Table patterns={patterns} />
-        </Box>
+        <Table patterns={patterns} />
       </ContentLayout>
     </Box>
   );

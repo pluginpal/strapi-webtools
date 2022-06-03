@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { Formik, Form } from 'formik';
 
@@ -14,6 +14,8 @@ import { Textarea } from '@strapi/design-system/Textarea';
 import { Typography } from '@strapi/design-system/Typography';
 import Check from '@strapi/icons/Check';
 import { GridItem, Grid } from '@strapi/design-system/Grid';
+import { request } from '@strapi/helper-plugin';
+import { Loader } from '@strapi/design-system/Loader';
 
 import getTrad from '../../../helpers/getTrad';
 import schema from './utils/schema';
@@ -22,33 +24,51 @@ import pluginId from '../../../helpers/pluginId';
 import CheckboxGroup from '../../../components/CheckboxGroup';
 
 const CreatePattternPage = () => {
+  const [loading, setLoading] = useState(false);
+  const [languages, setLanguage] = useState([]);
+  const [contentTypes, setContentTypes] = useState([]);
   const { formatMessage } = useIntl();
 
-  const contentTypes = [
-    {
-      name: 'test',
-      uid: 'space',
-    },
-    {
-      name: 'testearr',
-      uid: 'spaceasef',
-    },
-  ];
+  useEffect(() => {
+    setLoading(true);
+    request(`/path/info/getContentTypes`, { method: 'GET' })
+      .then((res) => {
+        setContentTypes(res);
+        setLoading(false);
+      })
+      .catch(() => {
+        setLoading(false);
+      });
+  }, []);
 
-  const languages = [
-    {
-      name: 'NL',
-      uid: 'nl',
-    },
-    {
-      name: 'EN',
-      uid: 'nl',
-    },
-  ];
+  // useEffect(() => {
+  //   setLoading(true);
+  //   request(`/path/info/getLanguages`, { method: 'GET' })
+  //     .then((res) => {
+  //       setLanguage(res);
+  //       setLoading(false);
+  //     })
+  //     .catch(() => {
+  //       setLoading(false);
+  //     });
+  // }, []);
 
   const handleEditRoleSubmit = (values) => {
-    console.log(values);
+    request(`/path/pattern/create`, {
+      method: 'POST',
+      body: {
+        data: values,
+      },
+    })
+      .then((res) => {
+      })
+      .catch(() => {
+      });
   };
+
+  if (loading || !contentTypes) {
+    return <Loader>Loading content...</Loader>;
+  }
 
   return (
     <Formik

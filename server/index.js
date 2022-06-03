@@ -7,10 +7,12 @@ const adminApiPathSchema = require('./admin-api/content-types/path/schema.json')
 const adminApiPatternSchema = require('./admin-api/content-types/pattern/schema.json');
 const adminApiPathController = require('./admin-api/controllers/path');
 const adminApiPatternController = require('./admin-api/controllers/pattern');
+const adminApiInfoController = require('./admin-api/controllers/info');
 const adminApiPathService = require('./admin-api/services/path');
 const adminApiPatternService = require('./admin-api/services/pattern');
 const adminApiPathRoutes = require('./admin-api/routes/path');
 const adminApiPatternRoutes = require('./admin-api/routes/pattern');
+const adminApiInfoRoutes = require('./admin-api/routes/info');
 const adminApiLifecycleService = require('./admin-api/services/lifecycle');
 
 // Content API
@@ -39,6 +41,7 @@ module.exports = {
       routes: [
         ...adminApiPathRoutes,
         ...adminApiPatternRoutes,
+        ...adminApiInfoRoutes,
       ],
     },
     "content-api": {
@@ -49,6 +52,7 @@ module.exports = {
   controllers: {
     path: adminApiPathController,
     pattern: adminApiPatternController,
+    info: adminApiInfoController,
   },
   services: {
     preparePathService: contentApiPreparePathService,

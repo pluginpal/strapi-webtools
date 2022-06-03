@@ -1,5 +1,7 @@
 'use strict';
 
+const _ = require('lodash');
+
 module.exports = () => ({
   /**
    * Create.
@@ -8,6 +10,8 @@ module.exports = () => ({
    * @returns {void}
    */
   create: async (data) => {
+    data.code = _.snakeCase(_.deburr(_.toLower(data.label)));
+
     const patternEntity = await strapi.entityService.create('plugin::path.pattern', {
       data,
     });
