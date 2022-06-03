@@ -16,7 +16,7 @@ module.exports = {
       const contentTypes = [];
 
       await Promise.all(Object.values(strapi.contentTypes).map(async (contentType) => {
-      const { pluginOptions } = contentType;
+        const { pluginOptions } = contentType;
 
         // Not for CTs that are not visible in the content manager.
         const isInContentManager = _.get(pluginOptions, ['content-manager', 'visible']);

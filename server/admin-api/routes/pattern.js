@@ -41,4 +41,20 @@ module.exports = [
       policies: [],
     },
   },
+  {
+    method: "GET",
+    path: "/pattern/allowed-fields",
+    handler: "pattern.allowedFields",
+    config: {
+      policies: [],
+    },
+  },
+  {
+    method: "POST",
+    path: "/pattern/validate",
+    handler: "pattern.validatePattern",
+    config: {
+      policies: [],
+    },
+  },
 ];

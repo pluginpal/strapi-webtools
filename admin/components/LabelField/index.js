@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useIntl } from 'react-intl';
 import _ from 'lodash';
 
@@ -17,6 +17,12 @@ const LabelField = ({
   const [open, setOpen] = useState(false);
   const { formatMessage } = useIntl();
   const generatedCode = code || _.snakeCase(_.deburr(_.toLower(values.label || '')));
+
+  useEffect(() => {
+    if (errors.code) {
+      setOpen(true);
+    }
+  }, [errors]);
 
   return (
     <Box>
@@ -52,8 +58,8 @@ const LabelField = ({
               defaultMessage: 'Code',
             })}
             error={
-              errors.code && touched.code
-                ? formatMessage({ id: errors.code, defaultMessage: 'Invalid value' })
+              errors.code
+                ? formatMessage({ id: errors.code, defaultMessage: 'This value must be unique' })
                 : null
             }
           />

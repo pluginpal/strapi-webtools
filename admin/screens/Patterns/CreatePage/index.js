@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { Formik, Form } from 'formik';
+import { useHistory } from 'react-router-dom';
 
 import { ContentLayout, HeaderLayout } from '@strapi/design-system/Layout';
 import { Box } from '@strapi/design-system/Box';
@@ -8,11 +9,10 @@ import { Link } from '@strapi/design-system/Link';
 import ArrowLeft from '@strapi/icons/ArrowLeft';
 import { Button } from '@strapi/design-system/Button';
 import { Stack } from '@strapi/design-system/Stack';
-import { TextInput } from '@strapi/design-system/TextInput';
 import { Typography } from '@strapi/design-system/Typography';
 import Check from '@strapi/icons/Check';
 import { GridItem, Grid } from '@strapi/design-system/Grid';
-import { request } from '@strapi/helper-plugin';
+import { request, useNotification } from '@strapi/helper-plugin';
 import { Loader } from '@strapi/design-system/Loader';
 
 import getTrad from '../../../helpers/getTrad';
@@ -22,8 +22,11 @@ import pluginId from '../../../helpers/pluginId';
 import Center from '../../../components/Center';
 import Select from '../../../components/Select';
 import LabelField from '../../../components/LabelField';
+import PatternField from '../../../components/PatternField';
 
 const CreatePattternPage = () => {
+  const { push } = useHistory();
+  const toggleNotification = useNotification();
   const [loading, setLoading] = useState(false);
   const [contentTypes, setContentTypes] = useState([]);
   const { formatMessage } = useIntl();
@@ -40,7 +43,7 @@ const CreatePattternPage = () => {
       });
   }, []);
 
-  const handleEditRoleSubmit = (values) => {
+  const handleEditRoleSubmit = (values, { setSubmitting, setErrors }) => {
     request(`/path/pattern/create`, {
       method: 'POST',
       body: {
@@ -48,9 +51,39 @@ const CreatePattternPage = () => {
       },
     })
       .then((res) => {
+        push(`/settings/${pluginId}/patterns`);
+        toggleNotification({ type: 'success', message: { id: getTrad('notification.success.submit') } });
+        setSubmitting(false);
+      })
+      .catch((err) => {
+        if (err.response.payload[0].message === 'This attribute must be unique') {
+          setErrors({ code: err.response.payload[0].message });
+        } else {
+          toggleNotification({ type: 'warning', message: { id: 'notification.error' } });
+        }
+        setSubmitting(false);
+      });
+  };
+
+  const validatePattern = async (values) => {
+    const errors = {};
+
+    await request(`/path/pattern/validate`, {
+      method: 'POST',
+      body: {
+        pattern: values.pattern,
+        modelName: values.contenttype,
+      },
+    })
+      .then((res) => {
+        if (res.valid === false) {
+          errors.pattern = res.message;
+        }
       })
       .catch(() => {
       });
+
+    return errors;
   };
 
   if (loading || !contentTypes) {
@@ -67,6 +100,7 @@ const CreatePattternPage = () => {
       initialValues={{ label: '', pattern: '', contenttype: '', languages: [] }}
       onSubmit={handleEditRoleSubmit}
       validationSchema={schema}
+      validate={validatePattern}
     >
       {({ handleSubmit, values, handleChange, errors, touched, isSubmitting, setFieldValue }) => (
         <Form noValidate onSubmit={handleSubmit}>
@@ -140,22 +174,23 @@ const CreatePattternPage = () => {
                       />
                     </GridItem>
                     <GridItem col={12} />
-                    <GridItem col={6}>
-                      <TextInput
-                        name="pattern"
-                        value={values.pattern || ''}
-                        onChange={handleChange}
-                        label={formatMessage({
-                          id: 'global.namasfe',
-                          defaultMessage: 'Pattern',
-                        })}
-                        error={
-                          errors.pattern && touched.pattern
-                            ? formatMessage({ id: errors.pattern, defaultMessage: 'Invalid value' })
-                            : null
-                        }
-                      />
-                    </GridItem>
+                    {(values.contenttype !== '') && (
+                      <GridItem col={6}>
+                        <PatternField
+                          values={values}
+                          uid={values.contenttype}
+                          setFieldValue={setFieldValue}
+                          hint={(hint) => (
+                            <Typography variant="pi">{hint}</Typography>
+                          )}
+                          error={
+                            errors.pattern && touched.pattern
+                              ? errors.pattern
+                              : null
+                          }
+                        />
+                      </GridItem>
+                    )}
                   </Grid>
                 </Stack>
               </Box>

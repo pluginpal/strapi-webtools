@@ -1,5 +1,7 @@
 'use strict';
 
+const _ = require('lodash');
+
 const { getPluginService } = require('../../util/getPluginService');
 
 /**
@@ -60,8 +62,36 @@ module.exports = {
       ctx.send(patternEntity);
     } catch (err) {
       ctx.status = err.status || 500;
-      ctx.body = err.message;
+      ctx.body = err.details.errors;
       ctx.app.emit('error', err, ctx);
     }
+  },
+  allowedFields: async (ctx) => {
+    const formattedFields = {};
+
+    Object.values(strapi.contentTypes).map(async (contentType) => {
+      const { pluginOptions } = contentType;
+
+      // Not for CTs that are not visible in the content manager.
+      const isInContentManager = _.get(pluginOptions, ['content-manager', 'visible']);
+      if (isInContentManager === false) return;
+
+      const fields = await getPluginService('patternService').getAllowedFields(contentType, ['string', 'uid', 'id']);
+      formattedFields[contentType.uid] = fields;
+    });
+
+    ctx.send(formattedFields);
+  },
+
+  validatePattern: async (ctx) => {
+    const patternService = getPluginService('patternService');
+    const { pattern, modelName } = ctx.request.body;
+
+    const contentType = strapi.contentTypes[modelName];
+
+    const fields = await patternService.getAllowedFields(contentType, ['string', 'uid', 'id']);
+    const validated = await patternService.validatePattern(pattern, fields);
+
+    ctx.send(validated);
   },
 };
