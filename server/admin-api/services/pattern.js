@@ -178,6 +178,10 @@ module.exports = () => ({
       limit: 1,
     });
 
+    if (!patterns[0]) {
+      return '';
+    }
+
     const path = resolve(patterns[0].pattern);
 
     return path;

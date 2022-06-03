@@ -25,17 +25,17 @@ const PatternField = ({ uid, values, error, setFieldValue, hint }) => {
   `;
 
   const patternHint = () => {
-    const base = formatMessage({ id: 'sitemap.Settings.Field.Pattern.DescriptionPart1', defaultMessage: 'Create a dynamic URL pattern' });
+    const base = formatMessage({ id: 'settings.form.pattern.description_1', defaultMessage: 'Create a URL alias pattern' });
     let suffix = '';
     if (allowedFields[uid]) {
-      suffix = ` ${formatMessage({ id: 'sitemap.Settings.Field.Pattern.DescriptionPart2', defaultMessage: 'using' })} `;
+      suffix = ` ${formatMessage({ id: 'settings.form.pattern.description_2', defaultMessage: 'using' })} `;
       allowedFields[uid].map((fieldName, i) => {
         if (i === 0) {
           suffix = `${suffix}[${fieldName}]`;
         } else if (allowedFields[uid].length !== i + 1) {
           suffix = `${suffix}, [${fieldName}]`;
         } else {
-          suffix = `${suffix} ${formatMessage({ id: 'sitemap.Settings.Field.Pattern.DescriptionPart3', defaultMessage: 'and' })} [${fieldName}]`;
+          suffix = `${suffix} ${formatMessage({ id: 'settings.form.pattern.description_3', defaultMessage: 'or' })} [${fieldName}]`;
         }
       });
     }
@@ -58,7 +58,7 @@ const PatternField = ({ uid, values, error, setFieldValue, hint }) => {
     <div>
       <div ref={patternRef}>
         <TextInput
-          label={formatMessage({ id: 'sitemap.Settings.Field.Pattern.Label', defaultMessage: 'Pattern' })}
+          label={formatMessage({ id: 'settings.form.pattern.label', defaultMessage: 'Pattern' })}
           name="pattern"
           value={values.pattern}
           placeholder="/en/pages/[id]"

@@ -15,7 +15,6 @@ import { GridItem, Grid } from '@strapi/design-system/Grid';
 import { request, useNotification } from '@strapi/helper-plugin';
 import { Loader } from '@strapi/design-system/Loader';
 
-import getTrad from '../../../helpers/getTrad';
 import schema from './utils/schema';
 
 import pluginId from '../../../helpers/pluginId';
@@ -60,7 +59,7 @@ const EditPatternPage = () => {
       });
   }, []);
 
-  const handleEditRoleSubmit = (values, { setSubmitting, setErrors }) => {
+  const handleEditSubmit = (values, { setSubmitting, setErrors }) => {
     request(`/url-alias/pattern/update/${patternEntity.id}`, {
       method: 'POST',
       body: {
@@ -69,7 +68,7 @@ const EditPatternPage = () => {
     })
     .then((res) => {
       push(`/settings/${pluginId}/patterns`);
-      toggleNotification({ type: 'success', message: { id: getTrad('notification.success.submit') } });
+      toggleNotification({ type: 'success', message: { id: 'url-alias.settings.success.edit' } });
       setSubmitting(false);
     })
     .catch((err) => {
@@ -106,7 +105,7 @@ const EditPatternPage = () => {
   if (loading || !contentTypes || !patternEntity) {
     return (
       <Center>
-        <Loader>Loading content...</Loader>
+        <Loader>{formatMessage({ id: 'url-alias.settings.loading', defaultMessage: "Loading content..." })}</Loader>
       </Center>
     );
   }
@@ -121,15 +120,15 @@ const EditPatternPage = () => {
         languages: patternEntity.languages,
         code: patternEntity.code,
       }}
-      onSubmit={handleEditRoleSubmit}
+      onSubmit={handleEditSubmit}
       validationSchema={schema}
       validate={validatePattern}
     >
       {({ handleSubmit, values, handleChange, errors, touched, isSubmitting, setFieldValue }) => (
         <Form noValidate onSubmit={handleSubmit}>
           <HeaderLayout
-            title={formatMessage({ id: 'path.settings.page.patterns.title', defaultMessage: "Edit pattern" })}
-            subtitle={formatMessage({ id: 'path.settings.page.patterns.title', defaultMessage: "Edit this pattern for automatic URL alias generation." })}
+            title={formatMessage({ id: 'url-alias.settings.page.patterns.edit.title', defaultMessage: "Edit pattern" })}
+            subtitle={formatMessage({ id: 'url-alias.settings.page.patterns.edit.description', defaultMessage: "Edit this pattern for automatic URL alias generation." })}
             as="h2"
             navigationAction={(
               <Link startIcon={<ArrowLeft />} to={`/settings/${pluginId}/patterns`}>
@@ -162,7 +161,7 @@ const EditPatternPage = () => {
                 <Stack spacing={4}>
                   <Typography variant="delta" as="h2">
                     {formatMessage({
-                      id: getTrad('EditPage.form.roles'),
+                      id: 'settings.page.patterns.edit.subtitle',
                       defaultMessage: 'Pattern details',
                     })}
                   </Typography>
@@ -174,7 +173,7 @@ const EditPatternPage = () => {
                         value={values.contenttype || ''}
                         setFieldValue={setFieldValue}
                         label={formatMessage({
-                          id: 'global.asdfe',
+                          id: 'settings.form.contenttype.label',
                           defaultMessage: 'Content type',
                         })}
                         error={

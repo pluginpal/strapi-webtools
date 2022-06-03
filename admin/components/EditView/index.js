@@ -54,7 +54,7 @@ const EditView = () => {
       <Stack size={2}>
         {loading ? (
           <Box>
-            <Loader>Loading content...</Loader>
+            <Loader>{formatMessage({ id: 'url-alias.settings.loading', defaultMessage: "Loading content..." })}</Loader>
           </Box>
         ) : (
           <Box>

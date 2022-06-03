@@ -31,7 +31,7 @@ const LabelField = ({
         value={values.label || ''}
         onChange={(e) => setFieldValue('label', e.target.value)}
         label={formatMessage({
-          id: 'global.aasdf',
+          id: 'settings.form.label.label',
           defaultMessage: 'Label',
         })}
         error={

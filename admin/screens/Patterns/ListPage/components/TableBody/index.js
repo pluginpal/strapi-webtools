@@ -10,7 +10,6 @@ import { useIntl } from 'react-intl';
 import { useHistory } from 'react-router-dom';
 
 import pluginId from '../../../../../helpers/pluginId';
-import getTrad from '../../../../../helpers/getTrad';
 
 const TableBody = ({ patterns }) => {
   const [statePatterns, setStatePatterns] = useState(patterns);
@@ -25,7 +24,7 @@ const TableBody = ({ patterns }) => {
       .then((res) => {
         const newPatterns = statePatterns.filter((pattern) => pattern.id !== id);
         setStatePatterns(newPatterns);
-        toggleNotification({ type: 'success', message: { id: getTrad('notification.success.submit') } });
+        toggleNotification({ type: 'success', message: { id: 'url-alias.settings.success.delete' } });
       })
       .catch((err) => {
         toggleNotification({ type: 'warning', message: { id: 'notification.error' } });
@@ -53,7 +52,7 @@ const TableBody = ({ patterns }) => {
                 noBorder
                 icon={<Pencil />}
                 label={formatMessage(
-                  { id: 'app.component.table.edit', defaultMessage: 'Edit {target}' },
+                  { id: 'url-alias.settings.page.patterns.table.actions.edit', defaultMessage: 'Edit {target}' },
                   { target: `${pattern.label}` },
                 )}
               />
@@ -62,7 +61,7 @@ const TableBody = ({ patterns }) => {
                 noBorder
                 icon={<Trash />}
                 label={formatMessage(
-                  { id: 'global.delete-target', defaultMessage: 'Delete {target}' },
+                  { id: 'url-alias.settings.page.patterns.table.actions.delete', defaultMessage: 'Delete {target}' },
                   { target: `${pattern.label}` },
                 )}
               />

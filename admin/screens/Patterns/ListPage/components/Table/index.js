@@ -25,21 +25,21 @@ const TableComponent = ({ patterns }) => {
             <Tr>
               <Th>
                 <Typography variant="sigma" textColor="neutral600">
-                  {formatMessage({ id: 'global.name', defaultMessage: 'Name' })}
+                  {formatMessage({ id: 'settings.page.patterns.table.head.label', defaultMessage: 'Label' })}
                 </Typography>
               </Th>
               <Th>
                 <Typography variant="sigma" textColor="neutral600">
                   {formatMessage({
-                    id: 'global.description',
-                    defaultMessage: 'Description',
+                    id: 'settings.page.patterns.table.head.pattern',
+                    defaultMessage: 'Pattern',
                   })}
                 </Typography>
               </Th>
               <Th>
                 <VisuallyHidden>
                   {formatMessage({
-                    id: 'global.actions',
+                    id: 'settings.page.patterns.table.head.actions',
                     defaultMessage: 'Actions',
                   })}
                 </VisuallyHidden>
@@ -52,8 +52,8 @@ const TableComponent = ({ patterns }) => {
         </Table>
       ) : (
         <EmptyStateLayout content={{
-          id: getTrad('Roles.empty'),
-          defaultMessage: "You don't have any roles yet.",
+          id: 'settings.page.patterns.table.empty',
+          defaultMessage: "You don't have any patterns yet.",
         }} />
       )}
     </div>

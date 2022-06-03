@@ -9,7 +9,6 @@ import { Box } from '@strapi/design-system/Box';
 import Plus from '@strapi/icons/Plus';
 import { request } from '@strapi/helper-plugin';
 
-import getTrad from '../../../helpers/getTrad';
 import pluginId from '../../../helpers/pluginId';
 import Table from './components/Table';
 import Center from '../../../components/Center';
@@ -35,7 +34,7 @@ const ListPatternPage = () => {
   if (loading || !patterns) {
     return (
       <Center>
-        <Loader>Loading content...</Loader>
+        <Loader>{formatMessage({ id: 'url-alias.settings.loading', defaultMessage: "Loading content..." })}</Loader>
       </Center>
     );
   }
@@ -43,13 +42,13 @@ const ListPatternPage = () => {
   return (
     <Box>
       <HeaderLayout
-        title={formatMessage({ id: 'path.settings.page.patterns.title', defaultMessage: "Patterns" })}
-        subtitle={formatMessage({ id: 'path.settings.page.patterns.title', defaultMessage: "A list of all the known URL alias patterns." })}
+        title={formatMessage({ id: 'url-alias.settings.page.patterns.title', defaultMessage: "Patterns" })}
+        subtitle={formatMessage({ id: 'url-alias.settings.page.patterns.description', defaultMessage: "A list of all the known URL alias patterns." })}
         as="h2"
         primaryAction={(
           <Button onClick={() => push(`/settings/${pluginId}/patterns/new`)} startIcon={<Plus />} size="L">
             {formatMessage({
-              id: getTrad('List.button.roles'),
+              id: 'url-alias.settings.button.add_pattern',
               defaultMessage: 'Add new pattern',
             })}
           </Button>
