@@ -13,13 +13,13 @@ module.exports = async () => {
         section: 'plugins',
         displayName: 'Access the URL alias list',
         uid: 'settings.list',
-        pluginName: 'path',
+        pluginName: 'url-alias',
       },
       {
         section: 'plugins',
         displayName: 'Access the URL alias patterns',
         uid: 'settings.patterns',
-        pluginName: 'path',
+        pluginName: 'url-alias',
       },
     ];
     await strapi.admin.services.permission.actionProvider.registerMany(actions);

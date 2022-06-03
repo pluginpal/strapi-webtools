@@ -22,7 +22,7 @@ const ListPatternPage = () => {
 
   useEffect(() => {
     setLoading(true);
-    request(`/path/pattern/findMany`, { method: 'GET' })
+    request(`/url-alias/pattern/findMany`, { method: 'GET' })
       .then((res) => {
         setPatterns(res);
         setLoading(false);

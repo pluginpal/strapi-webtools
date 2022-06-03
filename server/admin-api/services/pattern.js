@@ -19,7 +19,7 @@ module.exports = () => ({
       data.code = _.snakeCase(_.deburr(_.toLower(data.label)));
     }
 
-    const patternEntity = await strapi.entityService.create('plugin::path.pattern', {
+    const patternEntity = await strapi.entityService.create('plugin::url-alias.pattern', {
       data,
     });
 
@@ -33,7 +33,7 @@ module.exports = () => ({
    * @returns {void}
    */
    findOne: async (id) => {
-    const patternEntity = await strapi.entityService.findOne('plugin::path.pattern', id);
+    const patternEntity = await strapi.entityService.findOne('plugin::url-alias.pattern', id);
 
     return patternEntity;
   },
@@ -45,7 +45,7 @@ module.exports = () => ({
    * @returns {void}
    */
    findMany: async (params) => {
-    const patternEntities = await strapi.entityService.findMany('plugin::path.pattern', params);
+    const patternEntities = await strapi.entityService.findMany('plugin::url-alias.pattern', params);
 
     return patternEntities;
   },
@@ -58,7 +58,7 @@ module.exports = () => ({
    * @returns {void}
    */
    update: async (id, data) => {
-    const patternEntity = await strapi.entityService.update('plugin::path.pattern', id, {
+    const patternEntity = await strapi.entityService.update('plugin::url-alias.pattern', id, {
       data,
     });
 
@@ -72,7 +72,7 @@ module.exports = () => ({
    * @returns {void}
    */
    delete: async (id) => {
-    await strapi.entityService.delete('plugin::path.pattern', id);
+    await strapi.entityService.delete('plugin::url-alias.pattern', id);
   },
 
   /**

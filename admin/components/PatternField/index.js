@@ -44,7 +44,7 @@ const PatternField = ({ uid, values, error, setFieldValue, hint }) => {
   };
 
   useEffect(() => {
-    request(`/path/pattern/allowed-fields`, { method: 'GET' })
+    request(`/url-alias/pattern/allowed-fields`, { method: 'GET' })
       .then((res) => {
         setAllowedFields(res);
       })

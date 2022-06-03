@@ -1,12 +1,12 @@
 {
-  "name": "strapi-plugin-path",
+  "name": "strapi-plugin-url-alias",
   "version": "1.0.1",
-  "description": "Unique entity paths.",
+  "description": "Unique URL paths.",
   "strapi": {
-    "displayName": "Path",
-    "name": "path",
+    "displayName": "URL alias",
+    "name": "url-alias",
     "icon": "path",
-    "description": "Unique entity paths.",
+    "description": "Unique URL paths.",
     "required": false,
     "kind": "plugin"
   },
@@ -66,9 +66,9 @@
     "styled-components": "^5.2.3"
   },
   "bugs": {
-    "url": "https://github.com/boazpoolman/strapi-plugin-path/issues"
+    "url": "https://github.com/boazpoolman/strapi-plugin-url-alias/issues"
   },
-  "homepage": "https://github.com/boazpoolman/strapi-plugin-path#readme",
+  "homepage": "https://github.com/boazpoolman/strapi-plugin-url-alias#readme",
   "engines": {
     "node": ">=10.0.0",
     "npm": ">=6.0.0"

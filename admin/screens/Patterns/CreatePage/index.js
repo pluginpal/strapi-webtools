@@ -33,7 +33,7 @@ const CreatePattternPage = () => {
 
   useEffect(() => {
     setLoading(true);
-    request(`/path/info/getContentTypes`, { method: 'GET' })
+    request(`/url-alias/info/getContentTypes`, { method: 'GET' })
       .then((res) => {
         setContentTypes(res);
         setLoading(false);
@@ -44,7 +44,7 @@ const CreatePattternPage = () => {
   }, []);
 
   const handleEditRoleSubmit = (values, { setSubmitting, setErrors }) => {
-    request(`/path/pattern/create`, {
+    request(`/url-alias/pattern/create`, {
       method: 'POST',
       body: {
         data: values,
@@ -68,7 +68,7 @@ const CreatePattternPage = () => {
   const validatePattern = async (values) => {
     const errors = {};
 
-    await request(`/path/pattern/validate`, {
+    await request(`/url-alias/pattern/validate`, {
       method: 'POST',
       body: {
         pattern: values.pattern,

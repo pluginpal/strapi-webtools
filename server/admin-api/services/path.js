@@ -25,7 +25,7 @@ module.exports = () => ({
 
     await duplicateCheck();
 
-    const pathEntity = await strapi.entityService.create('plugin::path.path', {
+    const pathEntity = await strapi.entityService.create('plugin::url-alias.path', {
       data,
     });
 
@@ -39,7 +39,7 @@ module.exports = () => ({
    * @returns {void}
    */
    findOne: async (id) => {
-    const pathEntity = await strapi.entityService.findOne('plugin::path.path', id);
+    const pathEntity = await strapi.entityService.findOne('plugin::url-alias.path', id);
 
     return pathEntity;
   },
@@ -51,7 +51,7 @@ module.exports = () => ({
    * @returns {void}
    */
    findByPath: async (path) => {
-    const pathEntity = await strapi.entityService.findMany('plugin::path.path', {
+    const pathEntity = await strapi.entityService.findMany('plugin::url-alias.path', {
       filters: {
         path,
       },
@@ -82,7 +82,7 @@ module.exports = () => ({
 
     await duplicateCheck();
 
-    const pathEntity = await strapi.entityService.update('plugin::path.path', id, {
+    const pathEntity = await strapi.entityService.update('plugin::url-alias.path', id, {
       data,
     });
 
@@ -96,6 +96,6 @@ module.exports = () => ({
    * @returns {void}
    */
    delete: async (id) => {
-    await strapi.entityService.delete('plugin::path.path', id);
+    await strapi.entityService.delete('plugin::url-alias.path', id);
   },
 });

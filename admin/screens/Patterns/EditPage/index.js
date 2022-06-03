@@ -38,7 +38,7 @@ const EditPatternPage = () => {
 
   useEffect(() => {
     setLoading(true);
-    request(`/path/info/getContentTypes`, { method: 'GET' })
+    request(`/url-alias/info/getContentTypes`, { method: 'GET' })
       .then((res) => {
         setContentTypes(res);
         setLoading(false);
@@ -50,7 +50,7 @@ const EditPatternPage = () => {
 
   useEffect(() => {
     setLoading(true);
-    request(`/path/pattern/findOne/${id}`, { method: 'GET' })
+    request(`/url-alias/pattern/findOne/${id}`, { method: 'GET' })
       .then((res) => {
         setPatternEntity(res);
         setLoading(false);
@@ -61,7 +61,7 @@ const EditPatternPage = () => {
   }, []);
 
   const handleEditRoleSubmit = (values, { setSubmitting, setErrors }) => {
-    request(`/path/pattern/update/${patternEntity.id}`, {
+    request(`/url-alias/pattern/update/${patternEntity.id}`, {
       method: 'POST',
       body: {
         data: values,
@@ -85,7 +85,7 @@ const EditPatternPage = () => {
   const validatePattern = async (values) => {
     const errors = {};
 
-    await request(`/path/pattern/validate`, {
+    await request(`/url-alias/pattern/validate`, {
       method: 'POST',
       body: {
         pattern: values.pattern,
@@ -128,8 +128,8 @@ const EditPatternPage = () => {
       {({ handleSubmit, values, handleChange, errors, touched, isSubmitting, setFieldValue }) => (
         <Form noValidate onSubmit={handleSubmit}>
           <HeaderLayout
-            title={formatMessage({ id: 'path.settings.page.patterns.title', defaultMessage: "Add new pattern" })}
-            subtitle={formatMessage({ id: 'path.settings.page.patterns.title', defaultMessage: "Add a pattern for automatic URL alias generation." })}
+            title={formatMessage({ id: 'path.settings.page.patterns.title', defaultMessage: "Edit pattern" })}
+            subtitle={formatMessage({ id: 'path.settings.page.patterns.title', defaultMessage: "Edit this pattern for automatic URL alias generation." })}
             as="h2"
             navigationAction={(
               <Link startIcon={<ArrowLeft />} to={`/settings/${pluginId}/patterns`}>

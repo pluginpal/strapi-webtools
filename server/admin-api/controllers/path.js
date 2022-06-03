@@ -3,9 +3,7 @@
 const { getPluginService } = require('../../util/getPluginService');
 
 /**
- * Sitemap.js controller
- *
- * @description: A set of functions called "actions" of the `sitemap` plugin.
+ * Path controller
  */
 
 module.exports = {

@@ -19,7 +19,7 @@ const TableBody = ({ patterns }) => {
   const toggleNotification = useNotification();
 
   const handleClickDelete = (id) => {
-    request(`/path/pattern/delete/${id}`, {
+    request(`/url-alias/pattern/delete/${id}`, {
       method: 'GET',
     })
       .then((res) => {

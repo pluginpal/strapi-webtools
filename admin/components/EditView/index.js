@@ -23,7 +23,7 @@ const EditView = () => {
   useEffect(() => {
     if (Number(modifiedData.path_id)) {
       setLoading(true);
-      request(`/path/findOne/${modifiedData.path_id}`, { method: 'GET' })
+      request(`/url-alias/findOne/${modifiedData.path_id}`, { method: 'GET' })
         .then((res) => {
           setPathEntity(res);
           setLoading(false);
@@ -37,7 +37,7 @@ const EditView = () => {
   return (
     <Box
       as="aside"
-      aria-labelledby="path-sidebar-title"
+      aria-labelledby="url-alias-sidebar-title"
       background="neutral0"
       borderColor="neutral150"
       hasRadius
@@ -45,8 +45,8 @@ const EditView = () => {
       paddingTop={6}
       shadow="tableShadow"
     >
-      <Typography textColor="neutral600" variant="sigma" id="path-sidebar-title">
-        {formatMessage({ id: getTrad('plugin.name'), defaultMessage: 'Path plugin' })}
+      <Typography textColor="neutral600" variant="sigma" id="url-alias-sidebar-title">
+        {formatMessage({ id: getTrad('plugin.name'), defaultMessage: 'URL alias' })}
       </Typography>
       <Box paddingTop={2} paddingBottom={6}>
         <Divider />
@@ -70,15 +70,15 @@ const EditView = () => {
                 name="generated"
                 hint="Uncheck this to create a custom alias below."
               >
-                {formatMessage({ id: getTrad('EditView.ExcludeFromSitemap'), defaultMessage: ' Generate automatic path alias' })}
+                {formatMessage({ id: getTrad('EditView.ExcludeFromSitemap'), defaultMessage: ' Generate automatic URL alias' })}
               </Checkbox>
-              <Link to="/settings/path/patterns">Configure path alias patterns.</Link>
+              <Link to="/settings/url-alias/patterns">Configure URL alias patterns.</Link>
             </Box>
             <Box paddingTop={4}>
               <TextInput
-                label="Path alias"
+                label="URL alias"
                 name="path"
-                hint='Specify an alternative path by which this data can be accessed. For example, type "/about" when writing an about page.'
+                hint='Specify a path by which this data can be accessed in the browser. For example, type "/about" when writing an about page.'
                 disabled={'path_generated' in modifiedData ? modifiedData.path_generated : ('generated' in pathEntity ? pathEntity.generated : true)}
                 onChange={(e) => onChange({ target: { name: 'path_value', value: e.target.value } })}
                 value={modifiedData.path_value || pathEntity.path}

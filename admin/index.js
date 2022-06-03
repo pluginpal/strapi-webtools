@@ -36,7 +36,7 @@ export default {
         //   to: `/settings/${pluginId}/list`,
         //   Component: async () => {
         //     const component = await import(
-        //       /* webpackChunkName: "path-settings-page" */ './screens/List'
+        //       /* webpackChunkName: "url-alias-list" */ './screens/List'
         //     );
 
         //     return component;
@@ -52,7 +52,7 @@ export default {
           to: `/settings/${pluginId}/patterns`,
           Component: async () => {
             const component = await import(
-              /* webpackChunkName: "path-settings-page" */ './screens/Patterns'
+              /* webpackChunkName: "url-alias-patterns" */ './screens/Patterns'
             );
 
             return component;
@@ -72,7 +72,7 @@ export default {
     const importedTrads = await Promise.all(
       locales.map((locale) => {
         return import(
-          /* webpackChunkName: "path-translation-[request]" */ `./translations/${locale}.json`
+          /* webpackChunkName: "url-alias-translation-[request]" */ `./translations/${locale}.json`
         )
           .then(({ default: data }) => {
             return {
