@@ -50,7 +50,12 @@ const subscribeLifecycleMethods = async (modelName) => {
         const { data } = event.params;
         const { uid } = event.model;
 
-        const entity = await strapi.entityService.findOne(uid, id);
+        let entity = data;
+
+        // Fetch the entity if not all the data is available.
+        if (!data.url_path_id) {
+          entity = await strapi.entityService.findOne(uid, id);
+        }
 
         if (!entity.url_path_id) {
           let pathEntity;
