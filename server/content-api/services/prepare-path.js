@@ -5,7 +5,7 @@ const { getPluginService } = require('../../util/getPluginService');
 
 module.exports = () => ({
   /**
-   * Test.
+   * Rewrite path_id to the actual path.
    *
    * @param {object} data the data.
    * @returns {object} transformed data
@@ -15,9 +15,9 @@ module.exports = () => ({
       return data;
     }
 
-    // fields
     await Promise.all(Object.entries(data).map(async ([key, value]) => {
-      if (!value && key !== 'path_id') {
+      if (_.isObject(data[key])) {
+        await traverse(data[key]);
         return;
       }
 
@@ -28,32 +28,6 @@ module.exports = () => ({
         }
 
         delete data.path_id;
-      }
-
-      // relation(s)
-      if (_.has(value, 'data')) {
-        let relation = null;
-        // single
-        if (_.isObject(value.data)) {
-          relation = await traverse(value.data);
-        }
-
-        // many
-        if (_.isArray(value.data)) {
-          relation = await value.data.map((e) => traverse(e));
-        }
-
-        data[key]['data'] = relation;
-      }
-
-      // single component
-      if (_.has(value, 'id')) {
-        data[key] = await traverse(value);
-      }
-
-      // repeatable component & dynamic zone
-      if (_.isArray(value) && _.has(_.head(value), 'id')) {
-        data[key] = await value.map((p) => traverse(p));
       }
     }));
 

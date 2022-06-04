@@ -1,8 +1,7 @@
 'use strict';
 
-// const preparePathMiddleware = require('./middleware/prepare-path');
+const preparePathMiddleware = require('./middleware/prepare-path');
 
 module.exports = async () => {
-  // TODO: Fix middleware.
-  // preparePathMiddleware(strapi);
+  preparePathMiddleware(strapi);
 };
