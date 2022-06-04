@@ -1,6 +1,6 @@
 {
   "kind": "collectionType",
-  "collectionName": "patterns",
+  "collectionName": "url_patterns",
   "info": {
     "singularName": "pattern",
     "pluralName": "patterns",

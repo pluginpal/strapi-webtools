@@ -1,6 +1,6 @@
 {
   "kind": "collectionType",
-  "collectionName": "paths",
+  "collectionName": "url_paths",
   "info": {
     "singularName": "path",
     "pluralName": "paths",
