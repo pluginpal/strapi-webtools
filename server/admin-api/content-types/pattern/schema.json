@@ -21,28 +21,23 @@
   "attributes": {
     "label": {
       "type": "string",
-      "configurable": false,
       "required": true
     },
     "pattern": {
       "type": "string",
-      "configurable": false,
       "required": true
     },
     "code": {
       "type": "string",
       "unique": true,
-      "configurable": false,
       "required": true
     },
     "contenttype": {
       "type": "string",
-      "configurable": false,
       "required": true
     },
     "languages": {
       "type": "json",
-      "configurable": false,
       "required": true
     }
   }

@@ -21,7 +21,8 @@
   "attributes": {
     "path": {
       "type": "string",
-      "required": true
+      "required": true,
+      "unique": true
     },
     "generated": {
       "type": "boolean",
