@@ -15,7 +15,7 @@ module.exports = () => ({
       const pathAllreadyExists = await getPluginService('pathService').findByPath(data.path + extension);
 
       if (pathAllreadyExists) {
-        duplicateCheck(ext + 1);
+        await duplicateCheck(ext + 1);
       } else {
         data.path = data.path + extension;
       }
@@ -46,12 +46,16 @@ module.exports = () => ({
    * findByPath.
    *
    * @param {string} path the path.
+   * @param {number} id the id to ignore.
    * @returns {void}
    */
-   findByPath: async (path) => {
+   findByPath: async (path, id = 0) => {
     const pathEntity = await strapi.entityService.findMany('plugin::url-alias.path', {
       filters: {
         path,
+        id: {
+          $not: id,
+        },
       },
       limit: 1,
     });
@@ -69,10 +73,10 @@ module.exports = () => ({
   update: async (id, data) => {
     const duplicateCheck = async (ext = -1) => {
       const extension = ext >= 0 ? `-${ext}` : '';
-      const pathAllreadyExists = await getPluginService('pathService').findByPath(data.path + extension);
+      const pathAllreadyExists = await getPluginService('pathService').findByPath(data.path + extension, id);
 
       if (pathAllreadyExists) {
-        duplicateCheck(ext + 1);
+        await duplicateCheck(ext + 1);
       } else {
         data.path = data.path + extension;
       }

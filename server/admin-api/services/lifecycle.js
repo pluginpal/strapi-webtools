@@ -46,15 +46,19 @@ const subscribeLifecycleMethods = async (modelName) => {
 
       // Update or create the path entity.
       async beforeUpdate(event) {
+        const { id } = event.params.where;
         const { data } = event.params;
+        const { uid } = event.model;
 
-        if (!data.path_id) {
+        const entity = await strapi.entityService.findOne(uid, id);
+
+        if (!entity.path_id) {
           let pathEntity;
 
           if (!data.path_generated && data.path_value) {
             pathEntity = await getPluginService('pathService').create({ path: data.path_value, generated: false, contenttype: modelName });
           } else {
-            const generatedPath = await getPluginService('patternService').resolvePattern(modelName, data);
+            const generatedPath = await getPluginService('patternService').resolvePattern(modelName, entity);
             pathEntity = await getPluginService('pathService').create({ path: generatedPath, generated: true, contenttype: modelName });
           }
 
@@ -64,17 +68,17 @@ const subscribeLifecycleMethods = async (modelName) => {
         }
 
         if (!data.path_generated && !data.path_value) {
-          const pathEntity = await getPluginService('pathService').findOne(data.path_id);
+          const pathEntity = await getPluginService('pathService').findOne(entity.path_id);
 
           if (pathEntity.generated) {
-            const generatedPath = await getPluginService('patternService').resolvePattern(modelName, data);
-            await getPluginService('pathService').update(data.path_id, { path: generatedPath, generated: true });
+            const generatedPath = await getPluginService('patternService').resolvePattern(modelName, entity);
+            await getPluginService('pathService').update(entity.path_id, { path: generatedPath, generated: true });
           }
         } else if (!data.path_generated && data.path_value) {
-          await getPluginService('pathService').update(data.path_id, { path: data.path_value, generated: false });
+          await getPluginService('pathService').update(entity.path_id, { path: data.path_value, generated: false });
         } else {
-          const generatedPath = await getPluginService('patternService').resolvePattern(modelName, data);
-          await getPluginService('pathService').update(data.path_id, { path: generatedPath, generated: true });
+          const generatedPath = await getPluginService('patternService').resolvePattern(modelName, entity);
+          await getPluginService('pathService').update(entity.path_id, { path: generatedPath, generated: true });
         }
       },
     });
