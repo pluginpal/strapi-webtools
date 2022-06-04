@@ -20,9 +20,9 @@ const EditView = () => {
   const { modifiedData, onChange } = useCMEditViewDataManager();
 
   useEffect(() => {
-    if (Number(modifiedData.path_id)) {
+    if (Number(modifiedData.url_path_id)) {
       setLoading(true);
-      request(`/url-alias/findOne/${modifiedData.path_id}`, { method: 'GET' })
+      request(`/url-alias/findOne/${modifiedData.url_path_id}`, { method: 'GET' })
         .then((res) => {
           setPathEntity(res);
           setLoading(false);
@@ -31,7 +31,7 @@ const EditView = () => {
           setLoading(false);
         });
     }
-  }, [modifiedData.updatedAt, modifiedData.path_id]);
+  }, [modifiedData.updatedAt, modifiedData.url_path_id]);
 
   return (
     <Box

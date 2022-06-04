@@ -30,7 +30,7 @@ module.exports = {
 
     const entity = await strapi.entityService.findMany(pathEntity.contenttype, {
       filters: {
-        path_id: pathEntity.id,
+        url_path_id: pathEntity.id,
         published_at: excludeDrafts ? {
           $notNull: true,
         } : {},

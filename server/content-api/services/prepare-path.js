@@ -5,7 +5,7 @@ const { getPluginService } = require('../../util/getPluginService');
 
 module.exports = () => ({
   /**
-   * Rewrite path_id to the actual path.
+   * Rewrite url_path_id to the actual path.
    *
    * @param {object} data the data.
    * @returns {object} transformed data
@@ -21,13 +21,13 @@ module.exports = () => ({
         return;
       }
 
-      if (key === 'path_id') {
+      if (key === 'url_path_id') {
         if (Number(value)) {
           const pathEntity = await getPluginService('pathService').findOne(value);
-          data['path'] = pathEntity.path;
+          data['url_path'] = pathEntity.path;
         }
 
-        delete data.path_id;
+        delete data.url_path_id;
       }
     }));
 
