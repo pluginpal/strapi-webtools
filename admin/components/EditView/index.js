@@ -79,8 +79,12 @@ const EditView = () => {
                 name="path"
                 hint='Specify a path by which this data can be accessed in the browser. For example, type "/about" when writing an about page.'
                 disabled={'path_generated' in modifiedData ? modifiedData.path_generated : ('generated' in pathEntity ? pathEntity.generated : true)}
-                onChange={(e) => onChange({ target: { name: 'path_value', value: e.target.value } })}
-                value={modifiedData.path_value || pathEntity.path}
+                onChange={async (e) => {
+                  if (e.target.value.match(/^[A-Za-z0-9-_.~[\]/]*$/)) {
+                    onChange({ target: { name: 'path_value', value: e.target.value } });
+                  }
+                }}
+                value={'path_value' in modifiedData ? modifiedData.path_value : pathEntity.path}
               />
             </Box>
           </Box>
