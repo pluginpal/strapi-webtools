@@ -1,14 +1,34 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 
 import { ContentLayout, HeaderLayout } from '@strapi/design-system/Layout';
-import { Box } from '@strapi/design-system/Box';
-import { CheckPagePermissions } from '@strapi/helper-plugin';
+import { CheckPagePermissions, request } from '@strapi/helper-plugin';
+import { Button } from '@strapi/design-system/Button';
 
 import pluginPermissions from '../../permissions';
+import Table from './components/Table';
 
 const List = () => {
+  const [paths, setPaths] = useState(null);
   const { formatMessage } = useIntl();
+
+  useEffect(() => {
+    request(`/url-alias/path/findMany`, { method: 'GET' })
+      .then((res) => {
+        setPaths(res);
+      })
+      .catch(() => {
+      });
+  }, []);
+
+  // TODO: fix loading state
+  // if (loading || !paths) {
+  //   return (
+  //     <Center>
+  //       <Loader>{formatMessage({ id: 'url-alias.settings.loading', defaultMessage: "Loading content..." })}</Loader>
+  //     </Center>
+  //   );
+  // }
 
   return (
     <CheckPagePermissions permissions={pluginPermissions['settings.patterns']}>
@@ -16,19 +36,17 @@ const List = () => {
         title={formatMessage({ id: 'url-alias.settings.page.list.title', defaultMessage: "List" })}
         subtitle={formatMessage({ id: 'url-alias.settings.page.list.description', defaultMessage: "A list of all the known URL aliases." })}
         as="h2"
+        primaryAction={(
+          <Button onClick={() => console.log('generate')} size="L">
+            {formatMessage({
+              id: 'url-alias.settings.button.generate_paths',
+              defaultMessage: 'Generate paths',
+            })}
+          </Button>
+        )}
       />
       <ContentLayout>
-        <Box
-          background="neutral0"
-          hasRadius
-          shadow="filterShadow"
-          paddingTop={6}
-          paddingBottom={6}
-          paddingLeft={7}
-          paddingRight={7}
-        >
-          {formatMessage({ id: 'url-alias.settings.page.list.body', defaultMessage: "List all URL aliases" })}
-        </Box>
+        <Table paths={paths} />
       </ContentLayout>
     </CheckPagePermissions>
   );

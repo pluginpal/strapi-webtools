@@ -26,23 +26,22 @@ export default {
         },
       },
       [
-        // TODO: List all URL aliases.
-        // {
-        //   intlLabel: {
-        //     id: `${pluginId}.settings.page.list.title`,
-        //     defaultMessage: 'List',
-        //   },
-        //   id: 'url-alias-list',
-        //   to: `/settings/${pluginId}/list`,
-        //   Component: async () => {
-        //     const component = await import(
-        //       /* webpackChunkName: "url-alias-list" */ './screens/List'
-        //     );
+        {
+          intlLabel: {
+            id: `${pluginId}.settings.page.list.title`,
+            defaultMessage: 'List',
+          },
+          id: 'url-alias-list',
+          to: `/settings/${pluginId}/list`,
+          Component: async () => {
+            const component = await import(
+              /* webpackChunkName: "url-alias-list" */ './screens/List'
+            );
 
-        //     return component;
-        //   },
-        //   permissions: pluginPermissions['settings.list'],
-        // },
+            return component;
+          },
+          permissions: pluginPermissions['settings.list'],
+        },
         {
           intlLabel: {
             id: `${pluginId}.settings.page.patterns.title`,

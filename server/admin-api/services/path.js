@@ -43,6 +43,17 @@ module.exports = () => ({
   },
 
   /**
+   * findMany.
+   *
+   * @returns {void}
+   */
+   findMany: async () => {
+    const pathEntities = await strapi.entityService.findMany('plugin::url-alias.path');
+
+    return pathEntities;
+  },
+
+  /**
    * findByPath.
    *
    * @param {string} path the path.

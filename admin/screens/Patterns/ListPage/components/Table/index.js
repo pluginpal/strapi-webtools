@@ -13,7 +13,7 @@ import TableBody from '../TableBody';
 const TableComponent = ({ patterns }) => {
   const { formatMessage } = useIntl();
 
-  const colCount = 4;
+  const colCount = 3;
   const rowCount = (patterns?.length || 0) + 1;
 
   return (

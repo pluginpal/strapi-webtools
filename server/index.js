@@ -19,6 +19,7 @@ const adminApiLifecycleService = require('./admin-api/services/lifecycle');
 const contentApiBootstrap = require('./content-api/bootstrap');
 const contentApiByPathController = require('./content-api/controllers/by-path');
 const contentApiPreparePathService = require('./content-api/services/prepare-path');
+const contentApiByPathService = require('./content-api/services/by-path');
 const contentApiPathRoutes = require('./content-api/routes/path');
 
 module.exports = {
@@ -64,5 +65,6 @@ module.exports = {
     pathService: adminApiPathService,
     patternService: adminApiPatternService,
     lifecycleService: adminApiLifecycleService,
+    byPathService: contentApiByPathService,
   },
 };

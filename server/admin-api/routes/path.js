@@ -9,4 +9,20 @@ module.exports = [
       policies: [],
     },
   },
+  {
+    method: "GET",
+    path: "/path/findMany",
+    handler: "path.findMany",
+    config: {
+      policies: [],
+    },
+  },
+  {
+    method: "GET",
+    path: "/path/editLink",
+    handler: "path.editLink",
+    config: {
+      policies: [],
+    },
+  },
 ];

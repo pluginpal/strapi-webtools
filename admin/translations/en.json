@@ -7,6 +7,7 @@
   "settings.success.delete": "The pattern has been deleted.",
 
   "settings.button.add_pattern": "Add new pattern",
+  "settings.button.generate_paths": "Generate paths",
 
   "settings.form.label.label": "Label",
   "settings.form.pattern.label": "Pattern",
@@ -18,6 +19,8 @@
   "settings.page.list.title": "List",
   "settings.page.list.description": "A list of all the known URL aliases.",
   "settings.page.list.body": "List all URL aliases",
+
+  "settings.page.list.table.empty": "You don't have any URL paths yet.",
 
   "settings.page.patterns.title": "Patterns",
   "settings.page.patterns.description": "A list of all the known URL alias patterns.",
