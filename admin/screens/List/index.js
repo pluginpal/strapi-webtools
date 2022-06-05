@@ -36,14 +36,15 @@ const List = () => {
         title={formatMessage({ id: 'url-alias.settings.page.list.title', defaultMessage: "List" })}
         subtitle={formatMessage({ id: 'url-alias.settings.page.list.description', defaultMessage: "A list of all the known URL aliases." })}
         as="h2"
-        primaryAction={(
-          <Button onClick={() => console.log('generate')} size="L">
-            {formatMessage({
-              id: 'url-alias.settings.button.generate_paths',
-              defaultMessage: 'Generate paths',
-            })}
-          </Button>
-        )}
+        // TODO: Generate all button.
+        // primaryAction={(
+        //   <Button onClick={() => console.log('generate')} size="L">
+        //     {formatMessage({
+        //       id: 'url-alias.settings.button.generate_paths',
+        //       defaultMessage: 'Generate paths',
+        //     })}
+        //   </Button>
+        // )}
       />
       <ContentLayout>
         <Table paths={paths} />
