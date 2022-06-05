@@ -3,7 +3,6 @@ import { useIntl } from 'react-intl';
 
 import { ContentLayout, HeaderLayout } from '@strapi/design-system/Layout';
 import { CheckPagePermissions, request } from '@strapi/helper-plugin';
-import { Button } from '@strapi/design-system/Button';
 
 import pluginPermissions from '../../permissions';
 import Table from './components/Table';
