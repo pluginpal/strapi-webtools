@@ -27,6 +27,12 @@
 - **Public endpoint** Get your page by path with the `/get` endpoint
 - **Auto slugify** The URLs will automatically be slugified to ensure valid paths
 
+## ✨ #StrapiPluginWeek
+
+This plugin was made as an entry to the <a href="https://lu.ma/strapihacks">Strapi Plugin Week</a> hackathon.
+
+See the <a href="https://www.loom.com/share/5409b9415e3e4b66ad27eab967c393d0">demo video</a>.
+
 ## ⏳ Installation
 
 Install the plugin in your Strapi project.
