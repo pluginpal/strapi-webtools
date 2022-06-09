@@ -21,4 +21,17 @@ module.exports = async (strapi) => {
       type: 'string',
     });
   });
+
+  // Register the pattern config type when using the config-sync plugin.
+  if (strapi.plugin('config-sync')) {
+    if (!strapi.plugin('config-sync').pluginTypes) {
+      strapi.plugin('config-sync').pluginTypes = [];
+    }
+
+    strapi.plugin('config-sync').pluginTypes.push({
+      configName: 'url-pattern',
+      queryString: 'plugin::url-alias.pattern',
+      uid: 'code',
+    });
+  }
 };
