@@ -9,4 +9,12 @@ module.exports = [
       policies: [],
     },
   },
+  {
+    method: "GET",
+    path: "/all",
+    handler: "byPath.all",
+    config: {
+      policies: [],
+    },
+  },
 ];

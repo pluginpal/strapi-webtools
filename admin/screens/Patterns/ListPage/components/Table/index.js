@@ -48,6 +48,7 @@ const TableComponent = ({ patterns }) => {
           <TableBody
             patterns={patterns}
           />
+          {/* TODO: Pagination */}
         </Table>
       ) : (
         <EmptyStateLayout content={{

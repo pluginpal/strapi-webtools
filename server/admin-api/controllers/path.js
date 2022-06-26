@@ -20,7 +20,7 @@ module.exports = {
   },
   findMany: async (ctx) => {
     try {
-      const pathEntities = await getPluginService('pathService').findMany();
+      const pathEntities = await getPluginService('pathService').findMany(true);
       ctx.send(pathEntities);
     } catch (err) {
       ctx.status = err.status || 500;

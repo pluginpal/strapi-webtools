@@ -14,7 +14,7 @@ const List = () => {
   useEffect(() => {
     request(`/url-alias/path/findMany`, { method: 'GET' })
       .then((res) => {
-        setPaths(res);
+        setPaths(res.results);
       })
       .catch(() => {
       });
