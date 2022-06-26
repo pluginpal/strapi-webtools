@@ -29,4 +29,20 @@ module.exports = {
     const sanitizedEntity = await sanitizeOutput(entity, contentTypeObj, auth);
     ctx.body = transformResponse(sanitizedEntity, {}, { contentType: contentTypeObj });
   },
+
+  all: async (ctx) => {
+    const { auth } = ctx.state;
+
+    const entities = await getPluginService('pathService').findMany();
+    const contentTypeObj = strapi.contentTypes['plugin::url-alias.path'];
+
+    if (!entities) {
+      ctx.notFound();
+      return;
+    }
+
+    // Format response.
+    const sanitizedEntity = await sanitizeOutput(entities, contentTypeObj, auth);
+    ctx.body = transformResponse(sanitizedEntity, {}, { contentType: contentTypeObj });
+  },
 };
