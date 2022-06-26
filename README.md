@@ -10,11 +10,11 @@
   <a href="https://www.npmjs.org/package/strapi-plugin-url-alias">
     <img src="https://img.shields.io/npm/dm/strapi-plugin-url-alias" alt="Monthly download on NPM" />
   </a>
-  <a href="https://codecov.io/gh/boazpoolman/strapi-plugin-url-alias">
-    <img src="https://img.shields.io/github/workflow/status/boazpoolman/strapi-plugin-url-alias/Tests/master" alt="CI build status" />
+  <a href="https://codecov.io/gh/strapi-community/strapi-plugin-url-alias">
+    <img src="https://img.shields.io/github/workflow/status/strapi-community/strapi-plugin-url-alias/Tests/master" alt="CI build status" />
   </a>
-  <a href="https://codecov.io/gh/boazpoolman/strapi-plugin-url-alias">
-    <img src="https://codecov.io/gh/boazpoolman/strapi-plugin-url-alias/coverage.svg?branch=master" alt="codecov.io" />
+  <a href="https://codecov.io/gh/strapi-community/strapi-plugin-url-alias">
+    <img src="https://codecov.io/gh/strapi-community/strapi-plugin-url-alias/coverage.svg?branch=master" alt="codecov.io" />
   </a>
 </p>
 </div>
@@ -108,7 +108,7 @@ await fetch(`${API_URL}/api/url-alias/get?path=/about-page`);
 ## 🔗 Links
 
 - [NPM package](https://www.npmjs.com/package/strapi-plugin-url-alias)
-- [GitHub repository](https://github.com/boazpoolman/strapi-plugin-url-alias)
+- [GitHub repository](https://github.com/strapi-community/strapi-plugin-url-alias)
 
 ## 🌎 Community support
 

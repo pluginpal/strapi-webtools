@@ -7,9 +7,9 @@ We want this community to be friendly and respectful to each other. Please follo
 To get started with the project, make sure you have a local instance of Strapi running.
 See the [Strapi docs](https://github.com/strapi/strapi#getting-started) on how to setup a Strapi project.
 
-#### 1. Fork the [repository](https://github.com/boazpoolman/strapi-plugin-url-alias)
+#### 1. Fork the [repository](https://github.com/strapi-community/strapi-plugin-url-alias)
 
-[Go to the repository](https://github.com/boazpoolman/strapi-plugin-url-alias) and fork it to your own GitHub account.
+[Go to the repository](https://github.com/strapi-community/strapi-plugin-url-alias) and fork it to your own GitHub account.
 
 #### 2. Clone from your repository into the plugins folder
 
