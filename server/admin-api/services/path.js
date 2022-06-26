@@ -12,12 +12,12 @@ module.exports = () => ({
   create: async (data) => {
     const duplicateCheck = async (ext = -1) => {
       const extension = ext >= 0 ? `-${ext}` : '';
-      const pathAllreadyExists = await getPluginService('pathService').findByPath(data.path + extension);
+      const pathAllreadyExists = await getPluginService('pathService').findByPath(data.url_path + extension);
 
       if (pathAllreadyExists) {
         await duplicateCheck(ext + 1);
       } else {
-        data.path = data.path + extension;
+        data.url_path = data.url_path + extension;
       }
     };
 
@@ -84,12 +84,12 @@ module.exports = () => ({
   update: async (id, data) => {
     const duplicateCheck = async (ext = -1) => {
       const extension = ext >= 0 ? `-${ext}` : '';
-      const pathAllreadyExists = await getPluginService('pathService').findByPath(data.path + extension, id);
+      const pathAllreadyExists = await getPluginService('pathService').findByPath(data.url_path + extension, id);
 
       if (pathAllreadyExists) {
         await duplicateCheck(ext + 1);
       } else {
-        data.path = data.path + extension;
+        data.url_path = data.url_path + extension;
       }
     };
 

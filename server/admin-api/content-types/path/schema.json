@@ -19,7 +19,7 @@
     }
   },
   "attributes": {
-    "path": {
+    "url_path": {
       "type": "string",
       "required": true,
       "unique": true

@@ -24,7 +24,7 @@ module.exports = () => ({
       if (key === 'url_path_id') {
         if (Number(value)) {
           const pathEntity = await getPluginService('pathService').findOne(value);
-          data['url_path'] = pathEntity.path;
+          data['url_path'] = pathEntity.url_path;
         }
 
         delete data.url_path_id;
