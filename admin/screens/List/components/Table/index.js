@@ -31,6 +31,7 @@ const TableComponent = ({ paths }) => {
           <TableBody
             paths={paths}
           />
+          {/* TODO: Pagination */}
         </Table>
       ) : (
         <EmptyStateLayout content={{

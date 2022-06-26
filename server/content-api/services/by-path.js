@@ -7,10 +7,11 @@ module.exports = () => ({
   /**
    * Get an entity by it's path.
    *
-   * @param {sing} path the path.
+   * @param {string} path the path.
+   * @param {object} query the entity service query.
    * @returns {object} the entity.
    */
-  byPath: async (path) => {
+  byPath: async (path, query = {}) => {
     let excludeDrafts = false;
 
     const pathEntity = await getPluginService('pathService').findByPath(path);
@@ -25,7 +26,9 @@ module.exports = () => ({
     }
 
     const entity = await strapi.entityService.findMany(pathEntity.contenttype, {
+      ...query,
       filters: {
+        ...query?.filters,
         url_path_id: pathEntity.id,
         published_at: excludeDrafts ? {
           $notNull: true,

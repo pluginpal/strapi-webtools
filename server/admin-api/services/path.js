@@ -1,5 +1,7 @@
 'use strict';
 
+const _ = require('lodash');
+
 const { getPluginService } = require('../../util/getPluginService');
 
 module.exports = () => ({
@@ -45,12 +47,31 @@ module.exports = () => ({
   /**
    * findMany.
    *
+   * @param {boolean} showDrafts wheter to include the drafts.
+   * @param {object} query the entity service query.
    * @returns {void}
    */
-   findMany: async () => {
-    const pathEntities = await strapi.entityService.findMany('plugin::url-alias.path');
+   findMany: async (showDrafts = false, query = {}) => {
+    const excludeDrafts = false;
 
-    return pathEntities;
+    // Check drafAndPublish setting.
+    if (!showDrafts) {
+      // TODO:
+      // Exclude draft URLs.
+      // We need to check the publication status of the linked entity.
+    }
+
+    const { results, pagination } = await strapi.entityService.findPage('plugin::url-alias.path', {
+      ...query,
+      filters: {
+        ...query?.filters,
+        published_at: excludeDrafts ? {
+          $notNull: true,
+        } : {},
+      },
+    });
+
+    return { results, pagination };
   },
 
   /**
