@@ -36,15 +36,15 @@
     "strapi-server.js"
   ],
   "peerDependencies": {
-    "@strapi/strapi": "^4.1.8"
+    "@strapi/strapi": "^4.0.0"
   },
   "devDependencies": {
     "@fortawesome/react-fontawesome": "^0.1.16",
-    "@strapi/design-system": "^0.0.1-alpha.79",
-    "@strapi/helper-plugin": "^4.1.8",
-    "@strapi/icons": "^0.0.1-alpha.79",
-    "@strapi/strapi": "^4.1.8",
-    "@strapi/utils": "^4.1.8",
+    "@strapi/design-system": "^1.2.0",
+    "@strapi/helper-plugin": "^4.2.3",
+    "@strapi/icons": "^1.2.0",
+    "@strapi/strapi": "^4.2.3",
+    "@strapi/utils": "^4.2.3",
     "babel-eslint": "9.0.0",
     "eslint": "^7.32.0",
     "eslint-config-airbnb": "^18.2.1",
