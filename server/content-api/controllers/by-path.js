@@ -21,6 +21,10 @@ module.exports = {
       return;
     }
 
+    // TODO:
+    // Check 'find' permissions for the content type we're querying.
+    // If there is no permission throw a 403.
+
     // Add content type to response.
     entity.contentType = contentType;
     const contentTypeObj = strapi.contentTypes[contentType];
