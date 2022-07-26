@@ -20,10 +20,10 @@ const TableBody = ({ paths }) => {
   return (
     <Tbody>
       {paths.map((path) => (
-        <Tr key={path.path} {...onRowClick({ fn: () => handleClick(path.path) })}>
+        <Tr key={path.url_path} {...onRowClick({ fn: () => handleClick(path.url_path) })}>
           <Td width="20%">
             <Box style={{ marginTop: 5, marginBottom: 5 }}>
-              <Typography>{path.path}</Typography>
+              <Typography>{path.url_path}</Typography>
             </Box>
           </Td>
         </Tr>

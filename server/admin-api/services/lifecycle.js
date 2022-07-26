@@ -21,10 +21,10 @@ const subscribeLifecycleMethods = async (modelName) => {
         let pathEntity;
 
         if (!data.path_generated && data.path_value) {
-          pathEntity = await getPluginService('pathService').create({ path: data.path_value, generated: false, contenttype: modelName });
+          pathEntity = await getPluginService('pathService').create({ url_path: data.path_value, generated: false, contenttype: modelName });
         } else {
           const generatedPath = await getPluginService('patternService').resolvePattern(modelName, data);
-          pathEntity = await getPluginService('pathService').create({ path: generatedPath, generated: true, contenttype: modelName });
+          pathEntity = await getPluginService('pathService').create({ url_path: generatedPath, generated: true, contenttype: modelName });
         }
 
         data.url_path_id = pathEntity.id;
@@ -61,10 +61,10 @@ const subscribeLifecycleMethods = async (modelName) => {
           let pathEntity;
 
           if (!data.path_generated && data.path_value) {
-            pathEntity = await getPluginService('pathService').create({ path: data.path_value, generated: false, contenttype: modelName });
+            pathEntity = await getPluginService('pathService').create({ url_path: data.path_value, generated: false, contenttype: modelName });
           } else {
             const generatedPath = await getPluginService('patternService').resolvePattern(modelName, entity);
-            pathEntity = await getPluginService('pathService').create({ path: generatedPath, generated: true, contenttype: modelName });
+            pathEntity = await getPluginService('pathService').create({ url_path: generatedPath, generated: true, contenttype: modelName });
           }
 
           data.url_path_id = pathEntity.id;
@@ -77,13 +77,13 @@ const subscribeLifecycleMethods = async (modelName) => {
 
           if (pathEntity.generated) {
             const generatedPath = await getPluginService('patternService').resolvePattern(modelName, entity);
-            await getPluginService('pathService').update(entity.url_path_id, { path: generatedPath, generated: true });
+            await getPluginService('pathService').update(entity.url_path_id, { url_path: generatedPath, generated: true });
           }
         } else if (!data.path_generated && data.path_value) {
-          await getPluginService('pathService').update(entity.url_path_id, { path: data.path_value, generated: false });
+          await getPluginService('pathService').update(entity.url_path_id, { url_path: data.path_value, generated: false });
         } else {
           const generatedPath = await getPluginService('patternService').resolvePattern(modelName, entity);
-          await getPluginService('pathService').update(entity.url_path_id, { path: generatedPath, generated: true });
+          await getPluginService('pathService').update(entity.url_path_id, { url_path: generatedPath, generated: true });
         }
       },
     });

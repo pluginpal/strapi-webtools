@@ -62,7 +62,7 @@ const EditView = () => {
                 onValueChange={(value) => {
                   onChange({ target: { name: 'path_generated', value } });
                   if (!('path_value' in modifiedData)) {
-                    onChange({ target: { name: 'path_value', value: pathEntity.path } });
+                    onChange({ target: { name: 'path_value', value: pathEntity.url_path } });
                   }
                 }}
                 value={'path_generated' in modifiedData ? modifiedData.path_generated : ('generated' in pathEntity ? pathEntity.generated : true)}
@@ -84,7 +84,7 @@ const EditView = () => {
                     onChange({ target: { name: 'path_value', value: e.target.value } });
                   }
                 }}
-                value={'path_value' in modifiedData ? modifiedData.path_value : pathEntity.path}
+                value={'path_value' in modifiedData ? modifiedData.path_value : pathEntity.url_path}
               />
             </Box>
           </Box>

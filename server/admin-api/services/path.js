@@ -82,7 +82,7 @@ module.exports = () => ({
    findByPath: async (path, id = 0) => {
     const pathEntity = await strapi.entityService.findMany('plugin::url-alias.path', {
       filters: {
-        path,
+        url_path: path,
         id: {
           $not: id,
         },
