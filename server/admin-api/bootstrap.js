@@ -7,6 +7,9 @@ module.exports = async () => {
     // Register the lifecycle methods.
     await getPluginService('lifecycleService').loadAllLifecycleMethods();
 
+    // Rewrite the results from the internal query APIs.
+    getPluginService('overrideQueryLayer').initialize();
+
     // Register permission actions.
     const actions = [
       {
