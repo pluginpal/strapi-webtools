@@ -5,9 +5,94 @@ const _ = require('lodash');
 const { getPluginService } = require('../../util/getPluginService');
 
 /**
- * Gets lifecycle service
+ * Update an entity.
  *
- * @returns {object} - Lifecycle service
+ * @param {object} event The lifecycle event.
+ * @param {string} modelName The name of the model.
+ * @returns {void}
+ */
+const updateEntity = async (event, modelName) => {
+  const { id } = event.params.where;
+  const { data } = event.params;
+  const { uid } = event.model;
+
+  const fetchedEntity = await strapi.entityService.findOne(uid, id);
+  const entity = _.merge(fetchedEntity, data);
+
+  if (!entity.url_path_id) {
+    let pathEntity;
+
+    if (!data.path_generated && data.path_value) {
+      pathEntity = await getPluginService('pathService').create({ url_path: data.path_value, generated: false, contenttype: modelName });
+    } else {
+      const generatedPath = await getPluginService('patternService').resolvePattern(modelName, entity);
+      pathEntity = await getPluginService('pathService').create({ url_path: generatedPath, generated: true, contenttype: modelName });
+    }
+
+    data.url_path_id = pathEntity.id;
+
+    return;
+  }
+
+  if (!data.path_generated && !data.path_value) {
+    const pathEntity = await getPluginService('pathService').findOne(entity.url_path_id);
+
+    if (pathEntity.generated) {
+      const generatedPath = await getPluginService('patternService').resolvePattern(modelName, entity);
+      await getPluginService('pathService').update(entity.url_path_id, { url_path: generatedPath, generated: true });
+    }
+  } else if (!data.path_generated && data.path_value) {
+    await getPluginService('pathService').update(entity.url_path_id, { url_path: data.path_value, generated: false });
+  } else {
+    const generatedPath = await getPluginService('patternService').resolvePattern(modelName, entity);
+    await getPluginService('pathService').update(entity.url_path_id, { url_path: generatedPath, generated: true });
+  }
+};
+/**
+ * Delete an entity.
+ *
+ * @param {object} event The lifecycle event.
+ * @param {string} modelName The name of the model.
+ * @returns {void}
+ */
+const deleteEntity = async (event, modelName) => {
+  const { id } = event.params.where;
+  const { uid } = event.model;
+
+  const entity = await strapi.entityService.findOne(uid, id);
+
+  if (!entity.url_path_id) {
+    return null;
+  }
+
+  await getPluginService('pathService').delete(entity.url_path_id);
+};
+
+/**
+ * Create an entity.
+ *
+ * @param {object} event The lifecycle event.
+ * @param {string} modelName The name of the model.
+ * @returns {void}
+ */
+const createEntity = async (event, modelName) => {
+  const { data } = event.params;
+  let pathEntity;
+
+  if (!data.path_generated && data.path_value) {
+    pathEntity = await getPluginService('pathService').create({ url_path: data.path_value, generated: false, contenttype: modelName });
+  } else {
+    const generatedPath = await getPluginService('patternService').resolvePattern(modelName, data);
+    pathEntity = await getPluginService('pathService').create({ url_path: generatedPath, generated: true, contenttype: modelName });
+  }
+
+  data.url_path_id = pathEntity.id;
+};
+
+/**
+ * Subscribes to the lifecycle methods.
+ *
+ * @returns {void}
  */
 
 const subscribeLifecycleMethods = async (modelName) => {
@@ -17,70 +102,38 @@ const subscribeLifecycleMethods = async (modelName) => {
 
       // Create the path entity.
       async beforeCreate(event) {
-        const { data } = event.params;
-        let pathEntity;
+        await createEntity(event, modelName);
+      },
 
-        if (!data.path_generated && data.path_value) {
-          pathEntity = await getPluginService('pathService').create({ url_path: data.path_value, generated: false, contenttype: modelName });
-        } else {
-          const generatedPath = await getPluginService('patternService').resolvePattern(modelName, data);
-          pathEntity = await getPluginService('pathService').create({ url_path: generatedPath, generated: true, contenttype: modelName });
-        }
-
-        data.url_path_id = pathEntity.id;
+      // Create the path entity.
+      async beforeCreateMany(event) {
+        // TODO: wrap in a loop.
+        // await createEntity(event, modelName);
       },
 
       // Delete the path entity.
       async beforeDelete(event) {
-        const { id } = event.params.where;
-        const { uid } = event.model;
+        await deleteEntity(event, modelName);
+      },
 
-        const entity = await strapi.entityService.findOne(uid, id);
-
-        if (!entity.url_path_id) {
-          return null;
+      // Delete the path entity.
+      async beforeDeleteMany(event) {
+        const ids = event.params.where['$and'][0].id['$in'];
+        for (const i = 0; i < ids; i + 1) {
+          event.params.where.id = ids[i];
+          deleteEntity(event, modelName);
         }
-
-        await getPluginService('pathService').delete(entity.url_path_id);
       },
 
       // Update or create the path entity.
       async beforeUpdate(event) {
-        const { id } = event.params.where;
-        const { data } = event.params;
-        const { uid } = event.model;
+        await updateEntity(event, modelName);
+      },
 
-        // Fetch the entity to make sure all the data is available.
-        const entity = await strapi.entityService.findOne(uid, id);
-
-        if (!entity.url_path_id) {
-          let pathEntity;
-
-          if (!data.path_generated && data.path_value) {
-            pathEntity = await getPluginService('pathService').create({ url_path: data.path_value, generated: false, contenttype: modelName });
-          } else {
-            const generatedPath = await getPluginService('patternService').resolvePattern(modelName, entity);
-            pathEntity = await getPluginService('pathService').create({ url_path: generatedPath, generated: true, contenttype: modelName });
-          }
-
-          data.url_path_id = pathEntity.id;
-
-          return;
-        }
-
-        if (!data.path_generated && !data.path_value) {
-          const pathEntity = await getPluginService('pathService').findOne(entity.url_path_id);
-
-          if (pathEntity.generated) {
-            const generatedPath = await getPluginService('patternService').resolvePattern(modelName, entity);
-            await getPluginService('pathService').update(entity.url_path_id, { url_path: generatedPath, generated: true });
-          }
-        } else if (!data.path_generated && data.path_value) {
-          await getPluginService('pathService').update(entity.url_path_id, { url_path: data.path_value, generated: false });
-        } else {
-          const generatedPath = await getPluginService('patternService').resolvePattern(modelName, entity);
-          await getPluginService('pathService').update(entity.url_path_id, { url_path: generatedPath, generated: true });
-        }
+      // Update or create the path entity.
+      async beforeUpdateMany(event) {
+        // TODO: wrap in a loop.
+        // await updateEntity(event, modelName);
       },
     });
   } else {
