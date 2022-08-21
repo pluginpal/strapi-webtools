@@ -52,14 +52,14 @@ const updateEntity = async (event, modelName) => {
  * Delete an entity.
  *
  * @param {object} event The lifecycle event.
- * @param {string} modelName The name of the model.
+ * @param {string} parentId The parent id.
  * @returns {void}
  */
-const deleteEntity = async (event, modelName) => {
+const deleteEntity = async (event, parentId) => {
   const { id } = event.params.where;
   const { uid } = event.model;
 
-  const entity = await strapi.entityService.findOne(uid, id);
+  const entity = await strapi.entityService.findOne(uid, parentId || id);
 
   if (!entity.url_path_id) {
     return null;
@@ -72,18 +72,19 @@ const deleteEntity = async (event, modelName) => {
  * Create an entity.
  *
  * @param {object} event The lifecycle event.
- * @param {string} modelName The name of the model.
  * @returns {void}
  */
-const createEntity = async (event, modelName) => {
+const createEntity = async (event) => {
   const { data } = event.params;
+  const { uid } = event.model;
+
   let pathEntity;
 
   if (!data.path_generated && data.path_value) {
-    pathEntity = await getPluginService('pathService').create({ url_path: data.path_value, generated: false, contenttype: modelName });
+    pathEntity = await getPluginService('pathService').create({ url_path: data.path_value, generated: false, contenttype: uid });
   } else {
-    const generatedPath = await getPluginService('patternService').resolvePattern(modelName, data);
-    pathEntity = await getPluginService('pathService').create({ url_path: generatedPath, generated: true, contenttype: modelName });
+    const generatedPath = await getPluginService('patternService').resolvePattern(uid, data);
+    pathEntity = await getPluginService('pathService').create({ url_path: generatedPath, generated: true, contenttype: uid });
   }
 
   data.url_path_id = pathEntity.id;
@@ -97,43 +98,48 @@ const createEntity = async (event, modelName) => {
 
 const subscribeLifecycleMethods = async (modelName) => {
   if (strapi.contentTypes[modelName]) {
-    await strapi.db.lifecycles.subscribe({
+    strapi.db.lifecycles.subscribe({
       models: [modelName],
 
       // Create the path entity.
       async beforeCreate(event) {
-        await createEntity(event, modelName);
+        createEntity(event, modelName);
       },
 
       // Create the path entity.
       async beforeCreateMany(event) {
-        // TODO: wrap in a loop.
-        // await createEntity(event, modelName);
+        // TODO: before create many.
+        // const ids = event.params.where['$and'][0].id['$in'];
+        // for (let i = 0; i < ids.length; i++) {
+        //   createEntity(event, ids[i]);
+        // }
       },
 
       // Delete the path entity.
       async beforeDelete(event) {
-        await deleteEntity(event, modelName);
+        deleteEntity(event);
       },
 
       // Delete the path entity.
       async beforeDeleteMany(event) {
         const ids = event.params.where['$and'][0].id['$in'];
-        for (const i = 0; i < ids; i + 1) {
-          event.params.where.id = ids[i];
-          deleteEntity(event, modelName);
+        for (let i = 0; i < ids.length; i++) {
+          deleteEntity(event, ids[i]);
         }
       },
 
       // Update or create the path entity.
       async beforeUpdate(event) {
-        await updateEntity(event, modelName);
+        updateEntity(event, modelName);
       },
 
       // Update or create the path entity.
       async beforeUpdateMany(event) {
-        // TODO: wrap in a loop.
-        // await updateEntity(event, modelName);
+        // TODO: before update many.
+        // const ids = event.params.where['$and'][0].id['$in'];
+        // for (let i = 0; i < ids.length; i++) {
+        //   updateEntity(event, ids[i]);
+        // }
       },
     });
   } else {
