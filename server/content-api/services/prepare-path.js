@@ -22,7 +22,7 @@ module.exports = () => ({
       }
 
       if (key === 'url_path_id') {
-        if (Number(value)) {
+        if (Number(value) && value !== null) {
           const pathEntity = await getPluginService('pathService').findOne(value);
           data['url_path'] = pathEntity.url_path;
         }
