@@ -87,7 +87,7 @@ module.exports = () => ({
     const fields = [];
     allowedFields.map((fieldType) => {
       Object.entries(contentType.attributes).map(([fieldName, field]) => {
-        if ((field.type === fieldType || fieldName === fieldType) && field.type !== 'relation') {
+        if ((field.type === fieldType || fieldName === fieldType) && field.type !== 'relation' && fieldName !== 'url_path_id') {
           fields.push(fieldName);
         } else if (
           field.type === 'relation'
