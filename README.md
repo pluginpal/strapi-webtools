@@ -19,6 +19,8 @@
 </p>
 </div>
 
+## This plugin is in ALPHA state
+
 ## ✨ Features
 
 - **Unique URLs** No duplicate URLs possible
