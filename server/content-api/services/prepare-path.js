@@ -27,7 +27,7 @@ module.exports = () => ({
           data['url_path'] = pathEntity.url_path;
         }
 
-        delete data.url_path_id;
+        // delete data.url_path_id;
       }
     }));
 
