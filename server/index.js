@@ -22,12 +22,36 @@ const contentApiPreparePathService = require('./content-api/services/prepare-pat
 const contentApiByPathService = require('./content-api/services/by-path');
 const contentApiPathRoutes = require('./content-api/routes/path');
 
+// Queue API
+const queueApiQueueSchema = require('./queue/content-types/queue/schema.json');
+const queueApiJobSchema = require('./queue/content-types/job/schema.json');
+const queueApiQueueService = require('./queue/services/queue');
+const queueApiQueueHelperService = require('./queue/services/helpers');
+// const { getPluginService } = require('./util/getPluginService');
+
 module.exports = {
   register: async ({ strapi }) => {
     await adminApiRegister(strapi);
   },
   bootstrap: async () => {
     await adminApiBootstrap();
+
+    // const queueName = 'url-alias creation queue 9';
+    // await getPluginService('queueService').process(queueName, async (job, done) => {
+    //   console.log('we be processing the job breh', job.data);
+    //   done();
+    // });
+
+    // await getPluginService('queueService').create(queueName);
+    // await getPluginService('queueService').addJob(queueName, {
+    //   some: 'data',
+    // });
+    // await getPluginService('queueService').addJob(queueName, {
+    //   some: 'more data',
+    // });
+    // await getPluginService('queueService').addJob(queueName, {
+    //   some: 'even data',
+    // });
   },
   contentTypes: {
     path: {
@@ -35,6 +59,12 @@ module.exports = {
     },
     pattern: {
       schema: adminApiPatternSchema,
+    },
+    queue: {
+      schema: queueApiQueueSchema,
+    },
+    job: {
+      schema: queueApiJobSchema,
     },
   },
   routes: {
@@ -66,5 +96,7 @@ module.exports = {
     lifecycleService: adminApiLifecycleService,
     byPathService: contentApiByPathService,
     overrideQueryLayer: adminApiOverrideQueryLayerService,
+    queueService: queueApiQueueService,
+    queueHelpers: queueApiQueueHelperService,
   },
 };
