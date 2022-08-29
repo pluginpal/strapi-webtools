@@ -7,9 +7,6 @@ module.exports = [
     handler: "byPath.get",
     config: {
       policies: [],
-      auth: {
-        scope: ["find"],
-      },
     },
   },
   {
@@ -18,9 +15,6 @@ module.exports = [
     handler: "byPath.all",
     config: {
       policies: [],
-      auth: {
-        scope: ["find"],
-      },
     },
   },
 ];
