@@ -7,6 +7,9 @@ const { getPluginService } = require('../../util/getPluginService');
  */
 
 module.exports = {
+  // Hack, placeholder for generate correct permissions (https://github.com/strapi-community/strapi-plugin-url-alias/issues/22)
+  find: async (ctx) => {
+  },
   findOne: async (ctx) => {
     try {
       const { id } = ctx.params;

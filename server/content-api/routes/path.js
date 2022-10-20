@@ -1,6 +1,15 @@
 'use strict';
 
 module.exports = [
+  // Hack, placeholder for generate correct permissions (https://github.com/strapi-community/strapi-plugin-url-alias/issues/22)
+  {
+    method: "GET",
+    path: "/find",
+    handler: "path.find",
+    config: {
+      policies: [],
+    },
+  },
   {
     method: "GET",
     path: "/get",
