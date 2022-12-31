@@ -39,7 +39,6 @@
     "@strapi/strapi": "^4.0.0"
   },
   "devDependencies": {
-    "@fortawesome/react-fontawesome": "^0.1.16",
     "@strapi/design-system": "^1.4.1",
     "@strapi/helper-plugin": "^4.5.5",
     "@strapi/icons": "^1.4.1",
