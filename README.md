@@ -11,7 +11,7 @@
     <img src="https://img.shields.io/npm/dm/@strapi-community/strapi-plugin-url-alias" alt="Monthly download on NPM" />
   </a>
   <a href="https://codecov.io/gh/strapi-community/strapi-plugin-url-alias">
-    <img src="https://img.shields.io/github/workflow/status/strapi-community/strapi-plugin-url-alias/Tests/master" alt="CI build status" />
+    <img src="https://img.shields.io/github/actions/workflow/status/strapi-community/strapi-plugin-url-alias/tests.yml?branch=master" alt="CI build status" />
   </a>
   <a href="https://codecov.io/gh/strapi-community/strapi-plugin-url-alias">
     <img src="https://codecov.io/gh/strapi-community/strapi-plugin-url-alias/coverage.svg?branch=master" alt="codecov.io" />
