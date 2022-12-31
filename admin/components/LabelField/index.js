@@ -2,9 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useIntl } from 'react-intl';
 import _ from 'lodash';
 
-import { TextInput } from '@strapi/design-system/TextInput';
-import { Box } from '@strapi/design-system/Box';
-import { TextButton } from '@strapi/design-system/TextButton';
+import { TextInput, Box, TextButton } from '@strapi/design-system';
 
 const LabelField = ({
   values,

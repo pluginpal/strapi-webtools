@@ -1,5 +1,5 @@
 import React from 'react';
-import { Select, Option } from '@strapi/design-system/Select';
+import { Select, Option } from '@strapi/design-system';
 
 const SelectComponent = ({
   list,

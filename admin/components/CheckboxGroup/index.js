@@ -1,8 +1,6 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
-import { Checkbox } from '@strapi/design-system/Checkbox';
-import { Box } from '@strapi/design-system/Box';
-import { Typography } from '@strapi/design-system/Typography';
+import { Checkbox, Box, Typography } from '@strapi/design-system';
 
 const CheckboxGroup = ({ values, setFieldValue, title, list, errors, touched, fieldName }) => {
   const { formatMessage } = useIntl();

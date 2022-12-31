@@ -1,7 +1,5 @@
 import React from 'react';
-import { Typography } from '@strapi/design-system/Typography';
-import { Box } from '@strapi/design-system/Box';
-import { Tbody, Tr, Td } from '@strapi/design-system/Table';
+import { Typography, Box, Tbody, Tr, Td } from '@strapi/design-system';
 import { onRowClick, request } from '@strapi/helper-plugin';
 import { useHistory } from 'react-router-dom';
 

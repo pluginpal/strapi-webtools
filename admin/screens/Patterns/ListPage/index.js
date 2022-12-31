@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useHistory } from 'react-router-dom';
-import { Loader } from '@strapi/design-system/Loader';
+import {
+  Loader,
+  ContentLayout,
+  HeaderLayout,
+  Button,
+  Box,
+} from '@strapi/design-system';
 
-import { ContentLayout, HeaderLayout } from '@strapi/design-system/Layout';
-import { Button } from '@strapi/design-system/Button';
-import { Box } from '@strapi/design-system/Box';
-import Plus from '@strapi/icons/Plus';
+import { Plus } from '@strapi/icons';
 import { request } from '@strapi/helper-plugin';
 
 import pluginId from '../../../helpers/pluginId';

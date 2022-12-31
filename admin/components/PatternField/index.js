@@ -2,11 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 
-import { TextInput } from '@strapi/design-system/TextInput';
-import { Popover } from '@strapi/design-system/Popover';
+import { TextInput, Popover, Stack, Box } from '@strapi/design-system';
 import { request } from '@strapi/helper-plugin';
-import { Stack } from '@strapi/design-system/Stack';
-import { Box } from '@strapi/design-system/Box';
 
 import useActiveElement from '../../helpers/useActiveElement';
 

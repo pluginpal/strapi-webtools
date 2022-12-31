@@ -1,12 +1,8 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
 
-import { Table, Tr, Thead, Th } from '@strapi/design-system/Table';
-import { VisuallyHidden } from '@strapi/design-system/VisuallyHidden';
-import { Typography } from '@strapi/design-system/Typography';
-import {
-  EmptyStateLayout,
-} from '@strapi/helper-plugin';
+import { Table, Tr, Thead, Th, VisuallyHidden, Typography } from '@strapi/design-system';
+import { EmptyStateLayout } from '@strapi/helper-plugin';
 
 import TableBody from '../TableBody';
 

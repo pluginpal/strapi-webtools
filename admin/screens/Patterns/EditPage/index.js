@@ -3,17 +3,20 @@ import { useIntl } from 'react-intl';
 import { Formik, Form } from 'formik';
 import { useRouteMatch, useHistory } from 'react-router-dom';
 
-import { ContentLayout, HeaderLayout } from '@strapi/design-system/Layout';
-import { Box } from '@strapi/design-system/Box';
-import { Link } from '@strapi/design-system/Link';
-import ArrowLeft from '@strapi/icons/ArrowLeft';
-import { Button } from '@strapi/design-system/Button';
-import { Stack } from '@strapi/design-system/Stack';
-import { Typography } from '@strapi/design-system/Typography';
-import Check from '@strapi/icons/Check';
-import { GridItem, Grid } from '@strapi/design-system/Grid';
+import {
+  ContentLayout,
+  HeaderLayout,
+  Box,
+  Link,
+  Button,
+  Stack,
+  Typography,
+  GridItem,
+  Grid,
+  Loader,
+} from '@strapi/design-system';
 import { request, useNotification } from '@strapi/helper-plugin';
-import { Loader } from '@strapi/design-system/Loader';
+import { ArrowLeft, Check } from '@strapi/icons';
 
 import schema from './utils/schema';
 

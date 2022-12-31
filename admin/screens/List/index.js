@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 
-import { ContentLayout, HeaderLayout } from '@strapi/design-system/Layout';
+import { ContentLayout, HeaderLayout } from '@strapi/design-system';
 import { CheckPagePermissions, request } from '@strapi/helper-plugin';
 
 import pluginPermissions from '../../permissions';
