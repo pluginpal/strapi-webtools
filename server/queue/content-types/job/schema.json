@@ -1,0 +1,34 @@
+{
+  "kind": "collectionType",
+  "collectionName": "queue_job",
+  "info": {
+    "singularName": "job",
+    "pluralName": "jobs",
+    "displayName": "job",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false,
+    "comment": ""
+  },
+  "pluginOptions": {
+    "content-manager": {
+      "visible": true
+    },
+    "content-type-builder": {
+      "visible": true
+    }
+  },
+  "attributes": {
+    "queue": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::url-alias.queue",
+      "inversedBy": "queue_jobs"
+    },
+    "data": {
+      "type": "json",
+      "required": true
+    }
+  }
+}
