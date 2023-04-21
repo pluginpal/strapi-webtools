@@ -16,7 +16,7 @@ async function getLatestPathPlusOne(skipId) {
           },
         }),
       },
-      sort: "id:desc",
+      sort: "updatedAt:desc",
       limit: 1,
     }
   );
