@@ -1,5 +1,6 @@
 "use strict";
 
+import { Strapi } from '@strapi/strapi';
 import { pluginId } from "./pluginId";
 
 /**

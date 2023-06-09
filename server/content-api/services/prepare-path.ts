@@ -3,7 +3,7 @@
 import _ from 'lodash';
 import { getPluginService } from '../../util/getPluginService';
 
-module.exports = () => ({
+export default () => ({
   /**
    * Rewrite url_path_id to the actual path.
    *

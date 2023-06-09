@@ -1,8 +1,8 @@
 'use strict';
 
-import { getPluginService } from '../../util/getPluginService';
+import { getPluginService } from '../util/getPluginService';
 
-module.exports = async () => {
+export default async ({ strapi }) => {
   try {
     // Register the lifecycle methods.
     await getPluginService('lifecycleService').loadAllLifecycleMethods();

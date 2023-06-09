@@ -55,7 +55,7 @@ const updateEntity = async (event, modelName) => {
  * @param {string} parentId The parent id.
  * @returns {void}
  */
-const deleteEntity = async (event, parentId) => {
+const deleteEntity = async (event, parentId?) => {
   const { id } = event.params.where;
   const { uid } = event.model;
 
@@ -99,11 +99,12 @@ const createEntity = async (event) => {
 const subscribeLifecycleMethods = async (modelName) => {
   if (strapi.contentTypes[modelName]) {
     strapi.db.lifecycles.subscribe({
+      // @ts-ignore
       models: [modelName],
 
       // Create the path entity.
       async beforeCreate(event) {
-        await createEntity(event, modelName);
+        await createEntity(event);
       },
 
       // Create the path entity.

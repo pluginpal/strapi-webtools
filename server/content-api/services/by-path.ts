@@ -11,7 +11,7 @@ export default () => ({
    * @param {object} query the entity service query.
    * @returns {object} the entity.
    */
-  byPath: async (path, query = {}) => {
+  byPath: async (path, query: Record<string, any> = {}) => {
     let excludeDrafts = false;
 
     const pathEntity = await getPluginService('pathService').findByPath(path);

@@ -83,10 +83,10 @@ export default () => ({
    *
    * @returns {string[]} The fields.
    */
-  getAllowedFields: (contentType, allowedFields = []) => {
-    const fields = [];
+  getAllowedFields: (contentType, allowedFields: string[] = []) => {
+    const fields: string[] = [];
     allowedFields.map((fieldType) => {
-      Object.entries(contentType.attributes).map(([fieldName, field]) => {
+      Object.entries(contentType.attributes).map(([fieldName, field]: [string, any]) => {
         if ((field.type === fieldType || fieldName === fieldType) && field.type !== 'relation' && fieldName !== 'url_path_id') {
           fields.push(fieldName);
         } else if (
@@ -132,9 +132,10 @@ export default () => ({
    *
    * @returns {array} The fields.\[([\w\d\[\]]+)\]
    */
-  getFieldsFromPattern: (pattern) => {
+  getFieldsFromPattern: (pattern: string) => {
     let fields = pattern.match(/[[\w\d.]+]/g); // Get all substrings between [] as array.
-    fields = fields.map((field) => RegExp(/(?<=\[)(.*?)(?=\])/).exec(field)[0]); // Strip [] from string.
+    if (!fields) return [];
+    fields = fields.map((field) => (/(?<=\[)(.*?)(?=\])/).exec(field)?.[0] ?? ''); // Strip [] from string.
     return fields;
   },
 

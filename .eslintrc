@@ -72,7 +72,9 @@
 
     "react/jsx-closing-tag-location": "warn",
 
-    "import/extensions": "error",
+    "import/extensions": "off",
+
+    "import/no-unresolved": "off",
 
     "newline-per-chained-call": "warn",
 

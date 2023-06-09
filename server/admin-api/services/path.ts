@@ -49,7 +49,7 @@ export default () => ({
    * @param {object} query the entity service query.
    * @returns {void}
    */
-   findMany: async (showDrafts = false, query = {}) => {
+   findMany: async (showDrafts: boolean = false, query: Record<string, any> = {}) => {
     const excludeDrafts = false;
 
     // Check drafAndPublish setting.

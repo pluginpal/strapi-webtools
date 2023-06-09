@@ -4,7 +4,7 @@ import _ from 'lodash';
 
 export default async (strapi) => {
   // Register the url_path_id field.
-  Object.values(strapi.contentTypes).forEach((contentType) => {
+  Object.values(strapi.contentTypes).forEach((contentType: any) => {
     const { attributes, pluginOptions } = contentType;
 
     // Not for CTs that are not visible in the content manager.
