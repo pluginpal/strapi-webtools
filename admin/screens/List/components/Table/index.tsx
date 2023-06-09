@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { useIntl } from 'react-intl';
 
 import { Table, Tr, Thead, Th, Typography } from '@strapi/design-system';
@@ -6,7 +6,14 @@ import { EmptyStateLayout } from '@strapi/helper-plugin';
 
 import TableBody from '../TableBody';
 
-const TableComponent = ({ paths }) => {
+type Props = {
+  paths?: {
+    url_path: string;
+    [key: string]: any;
+  }[] | null;
+}
+
+const TableComponent: FC<Props> = ({ paths }) => {
   const { formatMessage } = useIntl();
 
   const colCount = 1;

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { Formik, Form } from 'formik';
-import { useHistory } from 'react-router-dom';
+import { useRouteMatch, useHistory } from 'react-router-dom';
 
 import {
   ContentLayout,
@@ -15,8 +15,8 @@ import {
   Grid,
   Loader,
 } from '@strapi/design-system';
-import { ArrowLeft, Check } from '@strapi/icons';
 import { request, useNotification } from '@strapi/helper-plugin';
+import { ArrowLeft, Check } from '@strapi/icons';
 
 import schema from './utils/schema';
 
@@ -26,17 +26,22 @@ import Select from '../../../components/Select';
 import LabelField from '../../../components/LabelField';
 import PatternField from '../../../components/PatternField';
 
-const CreatePattternPage = () => {
+const EditPatternPage = () => {
   const { push } = useHistory();
   const toggleNotification = useNotification();
   const [loading, setLoading] = useState(false);
+  const [patternEntity, setPatternEntity] = useState<null | any>(null);
   const [contentTypes, setContentTypes] = useState([]);
   const { formatMessage } = useIntl();
+
+  const {
+    params: { id },
+  } = useRouteMatch<{ id: string }>(`/settings/${pluginId}/patterns/:id`)!;
 
   useEffect(() => {
     setLoading(true);
     request(`/url-alias/info/getContentTypes`, { method: 'GET' })
-      .then((res) => {
+      .then((res: any) => {
         setContentTypes(res);
         setLoading(false);
       })
@@ -45,30 +50,42 @@ const CreatePattternPage = () => {
       });
   }, []);
 
-  const handleCreateSubmit = (values, { setSubmitting, setErrors }) => {
-    request(`/url-alias/pattern/create`, {
+  useEffect(() => {
+    setLoading(true);
+    request(`/url-alias/pattern/findOne/${id}`, { method: 'GET' })
+      .then((res: any) => {
+        setPatternEntity(res);
+        setLoading(false);
+      })
+      .catch(() => {
+        setLoading(false);
+      });
+  }, []);
+
+  const handleEditSubmit = (values: any, { setSubmitting, setErrors }: any = {}) => {
+    request(`/url-alias/pattern/update/${patternEntity.id}`, {
       method: 'POST',
       body: {
         data: values,
       },
     })
-      .then((res) => {
-        push(`/settings/${pluginId}/patterns`);
-        toggleNotification({ type: 'success', message: { id: 'url-alias.settings.success.create' } });
-        setSubmitting(false);
-      })
-      .catch((err) => {
-        if (err.response.payload[0].message === 'This attribute must be unique') {
-          setErrors({ code: err.response.payload[0].message });
-        } else {
-          toggleNotification({ type: 'warning', message: { id: 'notification.error' } });
-        }
-        setSubmitting(false);
-      });
+    .then((res: any) => {
+      push(`/settings/${pluginId}/patterns`);
+      toggleNotification({ type: 'success', message: { id: 'url-alias.settings.success.edit' } });
+      setSubmitting(false);
+    })
+    .catch((err: any) => {
+      if (err.response.payload[0].message === 'This attribute must be unique') {
+        setErrors({ code: err.response.payload[0].message });
+      } else {
+        toggleNotification({ type: 'warning', message: { id: 'notification.error' } });
+      }
+      setSubmitting(false);
+    });
   };
 
-  const validatePattern = async (values) => {
-    const errors = {};
+  const validatePattern = async (values: any) => {
+    const errors: Record<string, any> = {};
 
     await request(`/url-alias/pattern/validate`, {
       method: 'POST',
@@ -77,7 +94,7 @@ const CreatePattternPage = () => {
         modelName: values.contenttype,
       },
     })
-      .then((res) => {
+      .then((res: any) => {
         if (res.valid === false) {
           errors.pattern = res.message;
         }
@@ -88,7 +105,7 @@ const CreatePattternPage = () => {
     return errors;
   };
 
-  if (loading || !contentTypes) {
+  if (loading || !contentTypes || !patternEntity) {
     return (
       <Center>
         <Loader>{formatMessage({ id: 'url-alias.settings.loading', defaultMessage: "Loading content..." })}</Loader>
@@ -99,16 +116,22 @@ const CreatePattternPage = () => {
   return (
     <Formik
       enableReinitialize
-      initialValues={{ label: '', pattern: '', contenttype: '', languages: [] }}
-      onSubmit={handleCreateSubmit}
+      initialValues={{
+        label: patternEntity.label,
+        pattern: patternEntity.pattern,
+        contenttype: patternEntity.contenttype,
+        languages: patternEntity.languages,
+        code: patternEntity.code,
+      }}
+      onSubmit={handleEditSubmit}
       validationSchema={schema}
       validate={validatePattern}
     >
       {({ handleSubmit, values, handleChange, errors, touched, isSubmitting, setFieldValue }) => (
         <Form noValidate onSubmit={handleSubmit}>
           <HeaderLayout
-            title={formatMessage({ id: 'url-alias.settings.page.patterns.create.title', defaultMessage: "Add new pattern" })}
-            subtitle={formatMessage({ id: 'url-alias.settings.page.patterns.create.description', defaultMessage: "Add a pattern for automatic URL alias generation." })}
+            title={formatMessage({ id: 'url-alias.settings.page.patterns.edit.title', defaultMessage: "Edit pattern" })}
+            subtitle={formatMessage({ id: 'url-alias.settings.page.patterns.edit.description', defaultMessage: "Edit this pattern for automatic URL alias generation." })}
             as="h2"
             navigationAction={(
               <Link startIcon={<ArrowLeft />} to={`/settings/${pluginId}/patterns`}>
@@ -141,7 +164,7 @@ const CreatePattternPage = () => {
                 <Stack spacing={4}>
                   <Typography variant="delta" as="h2">
                     {formatMessage({
-                      id: 'settings.page.patterns.create.subtitle',
+                      id: 'settings.page.patterns.edit.subtitle',
                       defaultMessage: 'Pattern details',
                     })}
                   </Typography>
@@ -163,6 +186,7 @@ const CreatePattternPage = () => {
                         }
                       />
                     </GridItem>
+                    <GridItem col={12} />
                     <GridItem col={12} />
                     <GridItem col={6}>
                       <LabelField
@@ -204,4 +228,4 @@ const CreatePattternPage = () => {
   );
 };
 
-export default CreatePattternPage;
+export default EditPatternPage;

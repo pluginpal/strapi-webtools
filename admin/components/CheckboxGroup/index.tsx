@@ -1,8 +1,18 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { useIntl } from 'react-intl';
 import { Checkbox, Box, Typography } from '@strapi/design-system';
 
-const CheckboxGroup = ({ values, setFieldValue, title, list, errors, touched, fieldName }) => {
+type Props = {
+  values: any;
+  setFieldValue: any;
+  title: string;
+  list: any[];
+  errors: Record<string, any>;
+  touched: any;
+  fieldName: string;
+}
+
+const CheckboxGroup: FC<Props> = ({ values, setFieldValue, title, list, errors, touched, fieldName }) => {
   const { formatMessage } = useIntl();
 
   if (!list || list.length < 0) {

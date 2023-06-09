@@ -5,4 +5,4 @@ const pluginId = pluginPkg.name.replace(
   '',
 );
 
-module.exports = pluginId;
+export default pluginId;

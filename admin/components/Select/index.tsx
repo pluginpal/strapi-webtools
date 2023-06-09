@@ -1,7 +1,18 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { Select, Option } from '@strapi/design-system';
 
-const SelectComponent = ({
+type Props = {
+  list?: any[];
+  name: string;
+  label?: string;
+  placeholder?: string;
+  hint?: string;
+  value?: string;
+  error?: string | null;
+  setFieldValue: (name: string, value: string) => void;
+}
+
+const SelectComponent: FC<Props> = ({
   list,
   name,
   label,
@@ -23,7 +34,7 @@ const SelectComponent = ({
       hint={hint}
       error={error}
       value={value}
-      onChange={(v) => {
+      onChange={(v: any) => {
         setFieldValue(name, v);
       }}
     >

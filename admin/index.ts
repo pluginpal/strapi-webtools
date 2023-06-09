@@ -8,7 +8,7 @@ const pluginDescription = pluginPkg.strapi.description || pluginPkg.description;
 const { name } = pluginPkg.strapi;
 
 export default {
-  register(app) {
+  register(app: any) {
     app.registerPlugin({
       description: pluginDescription,
       id: pluginId,

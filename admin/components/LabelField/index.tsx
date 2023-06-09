@@ -1,10 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, FC } from 'react';
 import { useIntl } from 'react-intl';
 import _ from 'lodash';
 
 import { TextInput, Box, TextButton } from '@strapi/design-system';
 
-const LabelField = ({
+type Props = {
+  values: any;
+  setFieldValue: any;
+  errors: any;
+  touched: any;
+  hint: any,
+  code?: string;
+};
+
+const LabelField: FC<Props> = ({
   values,
   setFieldValue,
   errors,
@@ -27,7 +36,7 @@ const LabelField = ({
       <TextInput
         name="label"
         value={values.label || ''}
-        onChange={(e) => setFieldValue('label', e.target.value)}
+        onChange={(e: any) => setFieldValue('label', e.target.value)}
         label={formatMessage({
           id: 'settings.form.label.label',
           defaultMessage: 'Label',
@@ -50,7 +59,7 @@ const LabelField = ({
           <TextInput
             name="code"
             value={values.code || generatedCode}
-            onChange={(e) => setFieldValue('code', e.target.value)}
+            onChange={(e: any) => setFieldValue('code', e.target.value)}
             label={formatMessage({
               id: 'global.sde',
               defaultMessage: 'Code',

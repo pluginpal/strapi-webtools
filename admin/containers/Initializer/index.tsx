@@ -4,13 +4,16 @@
  *
  */
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, FC } from 'react';
 import PropTypes from 'prop-types';
 import pluginId from '../../helpers/pluginId';
 
-const Initializer = ({ updatePlugin }) => {
-  const ref = useRef();
-  ref.current = updatePlugin;
+type Props = {
+  updatePlugin: any;
+};
+
+const Initializer: FC<Props> = ({ updatePlugin }) => {
+  const ref = useRef(updatePlugin);
 
   useEffect(() => {
     ref.current(pluginId, 'isReady', true);

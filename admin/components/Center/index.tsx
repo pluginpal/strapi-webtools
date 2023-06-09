@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { PropsWithChildren, FC } from 'react';
 
-const Center = ({ children }) => {
+type Props = PropsWithChildren<{}>;
+
+const Center: FC<Props> = ({ children }) => {
   return (
     <div style={{
       height: '100%',
