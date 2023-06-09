@@ -1,15 +1,14 @@
 'use strict';
 
-const { transformResponse } = require('@strapi/strapi/lib/core-api/controller/transform');
-
-const { getPluginService } = require('../../util/getPluginService');
-const { sanitizeOutput } = require('../../util/sanitizeOutput');
+import { transformResponse } from '@strapi/strapi/lib/core-api/controller/transform';
+import { getPluginService } from '../../util/getPluginService';
+import { sanitizeOutput } from '../../util/sanitizeOutput';
 
 /**
  * ByPath controller
  */
 
-module.exports = {
+export default {
   get: async (ctx) => {
     const { path } = ctx.query;
     const { auth } = ctx.state;

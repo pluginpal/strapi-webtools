@@ -1,9 +1,8 @@
-
 'use strict';
 
-const _ = require('lodash');
+import _ from 'lodash';
 
-module.exports = async (strapi) => {
+export default async (strapi) => {
   // Register the url_path_id field.
   Object.values(strapi.contentTypes).forEach((contentType) => {
     const { attributes, pluginOptions } = contentType;

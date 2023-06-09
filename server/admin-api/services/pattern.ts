@@ -1,11 +1,11 @@
 'use strict';
 
-const _ = require('lodash');
+import _ from 'lodash';
 
-const { getPluginService } = require('../../util/getPluginService');
+import { getPluginService } from '../../util/getPluginService';
 
 
-module.exports = () => ({
+export default () => ({
   /**
    * Create.
    *

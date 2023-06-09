@@ -1,8 +1,8 @@
 'use strict';
 
-const _ = require('lodash');
+import _ from 'lodash';
 
-const { getPluginService } = require('../../util/getPluginService');
+import { getPluginService } from '../../util/getPluginService';
 
 /**
  * Update an entity.
@@ -148,7 +148,7 @@ const subscribeLifecycleMethods = async (modelName) => {
   }
 };
 
-module.exports = () => ({
+export default () => ({
   async loadAllLifecycleMethods() {
     Object.keys(strapi.contentTypes).map(async (contentType) => {
       const { pluginOptions } = strapi.contentTypes[contentType];

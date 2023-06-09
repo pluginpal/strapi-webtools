@@ -1,12 +1,12 @@
 'use strict';
 
-const { getPluginService } = require('../../util/getPluginService');
+import { getPluginService } from '../../util/getPluginService';
 
 /**
  * Path controller
  */
 
-module.exports = {
+export default {
   findOne: async (ctx) => {
     try {
       const { id } = ctx.params;

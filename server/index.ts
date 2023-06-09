@@ -1,20 +1,20 @@
 'use strict';
 
 // Admin API
-const adminApiRegister = require('./admin-api/register');
-const adminApiBootstrap = require('./admin-api/bootstrap');
-const adminApiPathSchema = require('./admin-api/content-types/path/schema.json');
-const adminApiPatternSchema = require('./admin-api/content-types/pattern/schema.json');
-const adminApiPathController = require('./admin-api/controllers/path');
-const adminApiPatternController = require('./admin-api/controllers/pattern');
-const adminApiInfoController = require('./admin-api/controllers/info');
-const adminApiPathService = require('./admin-api/services/path');
-const adminApiPatternService = require('./admin-api/services/pattern');
-const adminApiPathRoutes = require('./admin-api/routes/path');
-const adminApiPatternRoutes = require('./admin-api/routes/pattern');
-const adminApiInfoRoutes = require('./admin-api/routes/info');
-const adminApiLifecycleService = require('./admin-api/services/lifecycle');
-const adminApiOverrideQueryLayerService = require('./admin-api/services/override-query-layer');
+import adminApiRegister from './admin-api/register';
+import adminApiBootstrap from './admin-api/bootstrap';
+import adminApiPathSchema from './admin-api/content-types/path/schema.json';
+import adminApiPatternSchema from './admin-api/content-types/pattern/schema.json';
+import adminApiPathController from './admin-api/controllers/path';
+import adminApiPatternController from './admin-api/controllers/pattern';
+import adminApiInfoController from './admin-api/controllers/info';
+import adminApiPathService from './admin-api/services/path';
+import adminApiPatternService from './admin-api/services/pattern';
+import adminApiPathRoutes from './admin-api/routes/path';
+import adminApiPatternRoutes from './admin-api/routes/pattern';
+import adminApiInfoRoutes from './admin-api/routes/info';
+import adminApiLifecycleService from './admin-api/services/lifecycle';
+import adminApiOverrideQueryLayerService from './admin-api/services/override-query-layer';
 
 // Content API
 const contentApiByPathController = require('./content-api/controllers/by-path');

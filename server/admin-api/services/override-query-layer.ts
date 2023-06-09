@@ -1,8 +1,8 @@
 'use strict';
 
-const { getPluginService } = require('../../util/getPluginService');
+import { getPluginService } from '../../util/getPluginService';
 
-module.exports = () => ({
+export default () => ({
   initialize: () => {
     const queryAPIs = [strapi.entityService, strapi.db.query, strapi.query];
     const methods = ['findMany', 'findOne'];

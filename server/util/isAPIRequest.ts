@@ -7,10 +7,6 @@
  *
  * @return {any} service.
  */
-const isAPIRequest = (ctx, prefix = '/api/') => {
+export const isAPIRequest = (ctx, prefix = '/api/') => {
   return ctx.request && ctx.request.url && ctx.request.url.indexOf(prefix) !== -1;
-};
-
-module.exports = {
-  isAPIRequest,
 };

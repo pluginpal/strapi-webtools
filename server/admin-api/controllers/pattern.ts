@@ -1,6 +1,6 @@
 'use strict';
 
-const _ = require('lodash');
+import _ from 'lodash';
 
 const { getPluginService } = require('../../util/getPluginService');
 
@@ -8,7 +8,7 @@ const { getPluginService } = require('../../util/getPluginService');
  * Pattern controller
  */
 
-module.exports = {
+export default {
   findOne: async (ctx) => {
     try {
       const { id } = ctx.params;

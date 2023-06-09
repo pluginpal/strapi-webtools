@@ -14,7 +14,9 @@
     "eslint": "eslint --max-warnings=0 './**/*.{js,jsx}'",
     "eslint:fix": "eslint --fix './**/*.{js,jsx}'",
     "test:unit": "jest --verbose",
-    "plugin:install": "yarn install && rm -rf node_modules/@strapi/helper-plugin"
+    "plugin:install": "yarn install && rm -rf node_modules/@strapi/helper-plugin",
+    "develop": "tsc -p tsconfig.server.json -w",
+    "build": "tsc -p tsconfig.server.json"
   },
   "dependencies": {},
   "author": {

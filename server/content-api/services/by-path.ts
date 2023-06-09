@@ -1,9 +1,9 @@
 'use strict';
 
-const _ = require('lodash');
-const { getPluginService } = require('../../util/getPluginService');
+import _ from 'lodash';
+import { getPluginService } from '../../util/getPluginService';
 
-module.exports = () => ({
+export default () => ({
   /**
    * Get an entity by it's path.
    *
