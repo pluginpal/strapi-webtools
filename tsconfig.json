@@ -2,7 +2,10 @@
   "extends": "@strapi/typescript-utils/tsconfigs/admin",
 
   "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": ".",
     "target": "ESNext",
+    "noEmit": false,
     "noImplicitAny": false,
     "strict": true
   },
