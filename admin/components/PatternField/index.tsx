@@ -1,12 +1,12 @@
-import React, { useState, useEffect, useRef, FC } from 'react';
-import { useIntl } from 'react-intl';
-import styled from 'styled-components';
+import React, { useState, useEffect, useRef, FC } from "react";
+import { useIntl } from "react-intl";
+import styled from "styled-components";
 
-import { TextInput, Popover, Stack, Box } from '@strapi/design-system';
-import { request } from '@strapi/helper-plugin';
-import { useQuery } from 'react-query';
+import { TextInput, Popover, Stack, Box } from "@strapi/design-system";
+import { request } from "@strapi/helper-plugin";
+import { useQuery } from "react-query";
 
-import useActiveElement from '../../helpers/useActiveElement';
+import useActiveElement from "../../helpers/useActiveElement";
 
 type Props = {
   uid: string;
@@ -14,38 +14,57 @@ type Props = {
   error?: string | null;
   setFieldValue: (name: string, value: any) => void;
   hint: any;
-}
+};
 
-const PatternField: FC<Props> = ({ uid, values, error, setFieldValue, hint }) => {
+const PatternField: FC<Props> = ({
+  uid,
+  values,
+  error = null,
+  setFieldValue,
+  hint,
+}) => {
   const activeElement = useActiveElement();
   const patternRef = useRef<HTMLDivElement>(null);
   const { formatMessage } = useIntl();
 
-  const { data: allowedFields } = useQuery<Record<string, string[]>>(['url-alias', 'pattern', 'allowed-fields'], () => request(`/url-alias/pattern/allowed-fields`, { method: 'GET' }), {
-    refetchOnWindowFocus: false,
-    refetchOnMount: false,
-    retry: false,
-  });
+  const { data: allowedFields } = useQuery<Record<string, string[]>>(
+    ['url-alias', 'pattern', 'allowed-fields'],
+    () => request(`/url-alias/pattern/allowed-fields`, { method: "GET" }),
+    {
+      refetchOnWindowFocus: false,
+      refetchOnMount: false,
+      retry: false,
+    },
+  );
 
   const HoverBox = styled(Box)`
     cursor: pointer;
-    &:hover:not([aria-disabled='true']) {
+    &:hover:not([aria-disabled="true"]) {
       background: ${({ theme }: any) => theme.colors.primary100};
     }
   `;
 
   const patternHint = () => {
-    const base = formatMessage({ id: 'settings.form.pattern.description_1', defaultMessage: 'Create a URL alias pattern' });
-    let suffix = '';
+    const base = formatMessage({
+      id: 'settings.form.pattern.description_1',
+      defaultMessage: 'Create a URL alias pattern',
+    });
+    let suffix = "";
     if (allowedFields?.[uid]) {
-      suffix = ` ${formatMessage({ id: 'settings.form.pattern.description_2', defaultMessage: 'using' })} `;
+      suffix = ` ${formatMessage({
+        id: 'settings.form.pattern.description_2',
+        defaultMessage: 'using',
+      })} `;
       allowedFields[uid].map((fieldName, i) => {
         if (i === 0) {
           suffix = `${suffix}[${fieldName}]`;
         } else if (allowedFields[uid].length !== i + 1) {
           suffix = `${suffix}, [${fieldName}]`;
         } else {
-          suffix = `${suffix} ${formatMessage({ id: 'settings.form.pattern.description_3', defaultMessage: 'or' })} [${fieldName}]`;
+          suffix = `${suffix} ${formatMessage({
+            id: 'settings.form.pattern.description_3',
+            defaultMessage: 'or',
+          })} [${fieldName}]`;
         }
       });
     }
@@ -59,12 +78,15 @@ const PatternField: FC<Props> = ({ uid, values, error, setFieldValue, hint }) =>
     <div>
       <div ref={patternRef}>
         <TextInput
-          label={formatMessage({ id: 'settings.form.pattern.label', defaultMessage: 'Pattern' })}
+          label={formatMessage({
+            id: 'settings.form.pattern.label',
+            defaultMessage: 'Pattern',
+          })}
           name="pattern"
           value={values.pattern}
           placeholder="/en/pages/[id]"
           error={error}
-          onChange={async (e: any) => {
+          onChange={(e: any) => {
             if (e.target.value.match(/^[A-Za-z0-9-_.~[\]/]*$/)) {
               setFieldValue('pattern', e.target.value);
             }
@@ -72,11 +94,8 @@ const PatternField: FC<Props> = ({ uid, values, error, setFieldValue, hint }) =>
         />
       </div>
       {hint(patternHint())}
-      {values.pattern.endsWith('[') && activeElement?.name === 'pattern' && (
-        <Popover
-          source={patternRef}
-          fullWidth
-        >
+      {values.pattern.endsWith('[') && (activeElement as any)?.name === 'pattern' && (
+        <Popover source={patternRef} fullWidth>
           <Stack size={1}>
             {allowedFields[uid].map((fieldName) => (
               <HoverBox

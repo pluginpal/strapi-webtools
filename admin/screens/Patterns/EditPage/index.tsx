@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { useIntl } from 'react-intl';
-import { Formik, Form } from 'formik';
-import { useRouteMatch, useHistory } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useIntl } from "react-intl";
+import { Formik, Form } from "formik";
+import { useRouteMatch, useHistory } from "react-router-dom";
 
 import {
   ContentLayout,
@@ -14,17 +14,17 @@ import {
   GridItem,
   Grid,
   Loader,
-} from '@strapi/design-system';
-import { request, useNotification } from '@strapi/helper-plugin';
-import { ArrowLeft, Check } from '@strapi/icons';
+} from "@strapi/design-system";
+import { request, useNotification } from "@strapi/helper-plugin";
+import { ArrowLeft, Check } from "@strapi/icons";
 
-import schema from './utils/schema';
+import schema from "./utils/schema";
 
-import pluginId from '../../../helpers/pluginId';
-import Center from '../../../components/Center';
-import Select from '../../../components/Select';
-import LabelField from '../../../components/LabelField';
-import PatternField from '../../../components/PatternField';
+import pluginId from "../../../helpers/pluginId";
+import Center from "../../../components/Center";
+import Select from "../../../components/Select";
+import LabelField from "../../../components/LabelField";
+import PatternField from "../../../components/PatternField";
 
 const EditPatternPage = () => {
   const { push } = useHistory();
@@ -40,7 +40,7 @@ const EditPatternPage = () => {
 
   useEffect(() => {
     setLoading(true);
-    request(`/url-alias/info/getContentTypes`, { method: 'GET' })
+    request(`/url-alias/info/getContentTypes`, { method: "GET" })
       .then((res: any) => {
         setContentTypes(res);
         setLoading(false);
@@ -52,7 +52,7 @@ const EditPatternPage = () => {
 
   useEffect(() => {
     setLoading(true);
-    request(`/url-alias/pattern/findOne/${id}`, { method: 'GET' })
+    request(`/url-alias/pattern/findOne/${id}`, { method: "GET" })
       .then((res: any) => {
         setPatternEntity(res);
         setLoading(false);
@@ -62,33 +62,44 @@ const EditPatternPage = () => {
       });
   }, []);
 
-  const handleEditSubmit = (values: any, { setSubmitting, setErrors }: any = {}) => {
+  const handleEditSubmit = (
+    values: any,
+    { setSubmitting, setErrors }: any = {}
+  ) => {
     request(`/url-alias/pattern/update/${patternEntity.id}`, {
-      method: 'POST',
+      method: "POST",
       body: {
         data: values,
       },
     })
-    .then((res: any) => {
-      push(`/settings/${pluginId}/patterns`);
-      toggleNotification({ type: 'success', message: { id: 'url-alias.settings.success.edit' } });
-      setSubmitting(false);
-    })
-    .catch((err: any) => {
-      if (err.response.payload[0].message === 'This attribute must be unique') {
-        setErrors({ code: err.response.payload[0].message });
-      } else {
-        toggleNotification({ type: 'warning', message: { id: 'notification.error' } });
-      }
-      setSubmitting(false);
-    });
+      .then((res: any) => {
+        push(`/settings/${pluginId}/patterns`);
+        toggleNotification({
+          type: "success",
+          message: { id: "url-alias.settings.success.edit" },
+        });
+        setSubmitting(false);
+      })
+      .catch((err: any) => {
+        if (
+          err.response.payload[0].message === "This attribute must be unique"
+        ) {
+          setErrors({ code: err.response.payload[0].message });
+        } else {
+          toggleNotification({
+            type: "warning",
+            message: { id: "notification.error" },
+          });
+        }
+        setSubmitting(false);
+      });
   };
 
   const validatePattern = async (values: any) => {
     const errors: Record<string, any> = {};
 
     await request(`/url-alias/pattern/validate`, {
-      method: 'POST',
+      method: "POST",
       body: {
         pattern: values.pattern,
         modelName: values.contenttype,
@@ -99,8 +110,7 @@ const EditPatternPage = () => {
           errors.pattern = res.message;
         }
       })
-      .catch(() => {
-      });
+      .catch(() => { });
 
     return errors;
   };
@@ -108,7 +118,12 @@ const EditPatternPage = () => {
   if (loading || !contentTypes || !patternEntity) {
     return (
       <Center>
-        <Loader>{formatMessage({ id: 'url-alias.settings.loading', defaultMessage: "Loading content..." })}</Loader>
+        <Loader>
+          {formatMessage({
+            id: "url-alias.settings.loading",
+            defaultMessage: "Loading content...",
+          })}
+        </Loader>
       </Center>
     );
   }
@@ -127,28 +142,50 @@ const EditPatternPage = () => {
       validationSchema={schema}
       validate={validatePattern}
     >
-      {({ handleSubmit, values, handleChange, errors, touched, isSubmitting, setFieldValue }) => (
+      {({
+        handleSubmit,
+        values,
+        handleChange,
+        errors,
+        touched,
+        isSubmitting,
+        setFieldValue,
+      }) => (
         <Form noValidate onSubmit={handleSubmit}>
           <HeaderLayout
-            title={formatMessage({ id: 'url-alias.settings.page.patterns.edit.title', defaultMessage: "Edit pattern" })}
-            subtitle={formatMessage({ id: 'url-alias.settings.page.patterns.edit.description', defaultMessage: "Edit this pattern for automatic URL alias generation." })}
+            title={formatMessage({
+              id: "url-alias.settings.page.patterns.edit.title",
+              defaultMessage: "Edit pattern",
+            })}
+            subtitle={formatMessage({
+              id: "url-alias.settings.page.patterns.edit.description",
+              defaultMessage:
+                "Edit this pattern for automatic URL alias generation.",
+            })}
             as="h2"
-            navigationAction={(
-              <Link startIcon={<ArrowLeft />} to={`/settings/${pluginId}/patterns`}>
+            navigationAction={
+              <Link
+                startIcon={<ArrowLeft />}
+                to={`/settings/${pluginId}/patterns`}
+              >
                 {formatMessage({
-                  id: 'global.back',
-                  defaultMessage: 'Back',
+                  id: "global.back",
+                  defaultMessage: "Back",
                 })}
               </Link>
-            )}
-            primaryAction={(
-              <Button type="submit" loading={isSubmitting} startIcon={<Check />}>
+            }
+            primaryAction={
+              <Button
+                type="submit"
+                loading={isSubmitting}
+                startIcon={<Check />}
+              >
                 {formatMessage({
-                  id: 'global.save',
-                  defaultMessage: 'Save',
+                  id: "global.save",
+                  defaultMessage: "Save",
                 })}
               </Button>
-            )}
+            }
           />
           <ContentLayout>
             <Stack spacing={7}>
@@ -164,8 +201,8 @@ const EditPatternPage = () => {
                 <Stack spacing={4}>
                   <Typography variant="delta" as="h2">
                     {formatMessage({
-                      id: 'settings.page.patterns.edit.subtitle',
-                      defaultMessage: 'Pattern details',
+                      id: "settings.page.patterns.edit.subtitle",
+                      defaultMessage: "Pattern details",
                     })}
                   </Typography>
                   <Grid gap={4}>
@@ -173,15 +210,21 @@ const EditPatternPage = () => {
                       <Select
                         name="contenttype"
                         list={contentTypes}
-                        value={values.contenttype || ''}
+                        value={values.contenttype || ""}
                         setFieldValue={setFieldValue}
                         label={formatMessage({
-                          id: 'settings.form.contenttype.label',
-                          defaultMessage: 'Content type',
+                          id: "settings.form.contenttype.label",
+                          defaultMessage: "Content type",
                         })}
                         error={
                           errors.contenttype && touched.contenttype
-                            ? formatMessage({ id: errors.contenttype, defaultMessage: 'Invalid value' })
+                            ? formatMessage({
+                              id:
+                                typeof errors.contenttype === "string"
+                                  ? errors.contenttype
+                                  : undefined,
+                              defaultMessage: "Invalid value",
+                            })
                             : null
                         }
                       />
@@ -200,7 +243,7 @@ const EditPatternPage = () => {
                       />
                     </GridItem>
                     <GridItem col={12} />
-                    {(values.contenttype !== '') && (
+                    {values.contenttype !== "" && (
                       <GridItem col={6}>
                         <PatternField
                           values={values}
@@ -210,7 +253,9 @@ const EditPatternPage = () => {
                             <Typography variant="pi">{hint}</Typography>
                           )}
                           error={
-                            errors.pattern && touched.pattern
+                            errors.pattern &&
+                              touched.pattern &&
+                              typeof errors.pattern === "string"
                               ? errors.pattern
                               : null
                           }

@@ -16,7 +16,9 @@
     "test:unit": "jest --verbose",
     "plugin:install": "yarn install && rm -rf node_modules/@strapi/helper-plugin",
     "develop": "tsc -p tsconfig.server.json -w",
-    "build": "tsc -p tsconfig.server.json"
+    "build:server": "tsc -p tsconfig.server.json",
+    "build:admin": "tsc -p tsconfig.json",
+    "build": "run-s build:*"
   },
   "dependencies": {},
   "author": {
@@ -48,6 +50,7 @@
     "@strapi/strapi": "^4.5.5",
     "@strapi/utils": "^4.5.5",
     "@types/react-router-dom": "^5.3.3",
+    "@types/styled-components": "^5.1.26",
     "@typescript-eslint/eslint-plugin": "^5.59.11",
     "@typescript-eslint/parser": "^5.59.11",
     "babel-eslint": "9.0.0",
@@ -67,8 +70,10 @@
     "jest-cli": "^29.3.1",
     "jest-styled-components": "^7.1.1",
     "lodash": "^4.17.11",
+    "npm-run-all": "^4.1.5",
     "react": "^17.0.2",
     "react-intl": "^5.20.12",
+    "react-query": "^3.39.3",
     "styled-components": "^5.2.3"
   },
   "bugs": {
