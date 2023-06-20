@@ -33,7 +33,7 @@
   ],
   "files": [
     "admin",
-    "server",
+    "dist",
     "strapi-admin.js",
     "strapi-server.js"
   ],
