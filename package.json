@@ -32,6 +32,7 @@
     }
   ],
   "files": [
+    "LICENSE.md",
     "admin",
     "dist",
     "strapi-admin.js",
