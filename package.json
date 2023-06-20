@@ -18,7 +18,7 @@
     "develop": "tsc -p tsconfig.server.json -w",
     "build:server": "tsc -p tsconfig.server.json",
     "build:admin": "tsc -p tsconfig.json",
-    "build": "run-s build:*"
+    "build": "rimraf dist && run-s build:*"
   },
   "dependencies": {},
   "author": {
@@ -74,6 +74,7 @@
     "react": "^17.0.2",
     "react-intl": "^5.20.12",
     "react-query": "^3.39.3",
+    "rimraf": "^5.0.1",
     "styled-components": "^5.2.3"
   },
   "bugs": {
