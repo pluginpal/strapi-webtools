@@ -24,6 +24,8 @@ jobs:
           cache: 'yarn'
       - name: Install dependencies
         run: yarn --frozen-lockfile
+      - name: Compile typescript
+        run: yarn build
       - name: Run eslint
         run: yarn run eslint
   # unit:
