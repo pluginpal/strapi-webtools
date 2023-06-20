@@ -72,9 +72,7 @@
 
     "react/jsx-closing-tag-location": "warn",
 
-    "import/extensions": "off",
-
-    "import/no-unresolved": "off",
+    "import/extensions": "error",
 
     "newline-per-chained-call": "warn",
 
@@ -503,5 +501,35 @@
     "jsx-a11y/no-noninteractive-tabindex": "warn",
 
     "jsx-a11y/media-has-caption": "off"
-  }
+  },
+
+  "overrides": [
+    {
+      "files": ["server/**/*.{ts,tsx}"],
+      "parser": "@typescript-eslint/parser",
+      "parserOptions": {
+        "project": "./tsconfig.server.json"
+      },
+      "extends": [
+        "airbnb",
+        "airbnb-typescript"
+        // "plugin:@typescript-eslint/eslint-recommended",
+        // "plugin:@typescript-eslint/recommended-requiring-type-checking"
+      ]
+    },
+    {
+      "files": ["admin/**/*.{ts,tsx}"],
+      "parser": "@typescript-eslint/parser",
+      "parserOptions": {
+        "project": "./tsconfig.json"
+      },
+      "extends": [
+        "react-app",
+        "airbnb",
+        "airbnb-typescript"
+        // "plugin:@typescript-eslint/eslint-recommended",
+        // "plugin:@typescript-eslint/recommended-requiring-type-checking"
+      ]
+    }
+  ]
 }
