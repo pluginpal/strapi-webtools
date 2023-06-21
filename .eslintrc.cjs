@@ -497,12 +497,13 @@ const typescriptBaseOverrides = {
     "@typescript-eslint/no-unsafe-assignment": "warn",
     "@typescript-eslint/no-unsafe-member-access": "warn",
     "@typescript-eslint/no-unsafe-call": "warn",
+    // Should follow base rule
     "@typescript-eslint/quotes": [
-      "error",
+      "off",
       "single",
-      { allowTemplateLiterals: true },
     ],
     "@typescript-eslint/restrict-template-expressions": "warn",
+    "@typescript-eslint/no-unsafe-return": "off",
   },
 };
 
