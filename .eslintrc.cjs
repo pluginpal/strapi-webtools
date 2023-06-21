@@ -483,6 +483,29 @@ const baseRules = {
   "jsx-a11y/media-has-caption": "off",
 };
 
+const typescriptBaseOverrides = {
+  files: ["**/*.{ts,tsx}"],
+  parser: "@typescript-eslint/parser",
+  extends: [
+    "airbnb",
+    "airbnb-typescript",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking",
+  ],
+  rules: {
+    ...baseRules,
+    "@typescript-eslint/no-unsafe-assignment": "warn",
+    "@typescript-eslint/no-unsafe-member-access": "warn",
+    "@typescript-eslint/no-unsafe-call": "warn",
+    "@typescript-eslint/quotes": [
+      "error",
+      "single",
+      { allowTemplateLiterals: true },
+    ],
+    "@typescript-eslint/restrict-template-expressions": "warn",
+  },
+};
+
 module.exports = {
   root: true,
   extends: ["react-app", "airbnb"],
@@ -508,29 +531,21 @@ module.exports = {
 
   overrides: [
     {
-      files: ["**/*.{ts,tsx}"],
-      parser: "@typescript-eslint/parser",
+      ...typescriptBaseOverrides,
+      files: ["admin/**/*.{ts,tsx}"],
       parserOptions: {
         project: "./tsconfig.json",
       },
       extends: [
+        ...typescriptBaseOverrides.extends,
         "react-app",
-        "airbnb",
-        "airbnb-typescript",
-        "plugin:@typescript-eslint/eslint-recommended",
-        "plugin:@typescript-eslint/recommended-requiring-type-checking",
       ],
-      rules: {
-        ...baseRules,
-        "@typescript-eslint/no-unsafe-assignment": "warn",
-        "@typescript-eslint/no-unsafe-member-access": "warn",
-        "@typescript-eslint/no-unsafe-call": "warn",
-        "@typescript-eslint/quotes": [
-          "error",
-          "single",
-          { allowTemplateLiterals: true },
-        ],
-        "@typescript-eslint/restrict-template-expressions": "warn",
+    },
+    {
+      ...typescriptBaseOverrides,
+      files: ["server/**/*.{ts,tsx}"],
+      parserOptions: {
+        project: "./tsconfig.server.json",
       },
     },
   ],
