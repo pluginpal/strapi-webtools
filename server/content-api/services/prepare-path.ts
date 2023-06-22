@@ -7,11 +7,11 @@ export default () => ({
   /**
    * Rewrite url_path_id to the actual path.
    *
-   * @param {object} data the data.
+   * @param data the data.
    * @returns {object} transformed data
    */
-  preparePath: async function traverse(data) {
-    if (!_.isObject(data)) {
+  preparePath: async function traverse(data: Record<string, any>) {
+    if (typeof data !== 'object') {
       return data;
     }
 

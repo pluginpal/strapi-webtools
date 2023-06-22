@@ -36,7 +36,7 @@ export default () => ({
    * @param {number} id the id.
    * @returns {void}
    */
-   findOne: async (id) => {
+  findOne: async (id) => {
     const pathEntity = await strapi.entityService.findOne('plugin::url-alias.path', id);
 
     return pathEntity;
@@ -49,7 +49,7 @@ export default () => ({
    * @param {object} query the entity service query.
    * @returns {void}
    */
-   findMany: async (showDrafts: boolean = false, query: Record<string, any> = {}) => {
+  findMany: async (showDrafts: boolean = false, query: Record<string, any> = {}) => {
     const excludeDrafts = false;
 
     // Check drafAndPublish setting.
@@ -79,7 +79,7 @@ export default () => ({
    * @param {number} id the id to ignore.
    * @returns {void}
    */
-   findByPath: async (path, id = 0) => {
+  findByPath: async (path, id = 0) => {
     const pathEntity = await strapi.entityService.findMany('plugin::url-alias.path', {
       filters: {
         url_path: path,
@@ -127,7 +127,7 @@ export default () => ({
    * @param {number} id the id.
    * @returns {void}
    */
-   delete: async (id) => {
+  delete: async (id) => {
     await strapi.entityService.delete('plugin::url-alias.path', id);
   },
 });

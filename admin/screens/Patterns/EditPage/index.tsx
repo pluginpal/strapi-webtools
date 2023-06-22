@@ -64,7 +64,7 @@ const EditPatternPage = () => {
 
   const handleEditSubmit = (
     values: any,
-    { setSubmitting, setErrors }: any = {}
+    { setSubmitting, setErrors }: any = {},
   ) => {
     request(`/url-alias/pattern/update/${patternEntity.id}`, {
       method: "POST",
@@ -163,7 +163,7 @@ const EditPatternPage = () => {
                 "Edit this pattern for automatic URL alias generation.",
             })}
             as="h2"
-            navigationAction={
+            navigationAction={(
               <Link
                 startIcon={<ArrowLeft />}
                 to={`/settings/${pluginId}/patterns`}
@@ -173,8 +173,8 @@ const EditPatternPage = () => {
                   defaultMessage: "Back",
                 })}
               </Link>
-            }
-            primaryAction={
+            )}
+            primaryAction={(
               <Button
                 type="submit"
                 loading={isSubmitting}
@@ -185,7 +185,7 @@ const EditPatternPage = () => {
                   defaultMessage: "Save",
                 })}
               </Button>
-            }
+            )}
           />
           <ContentLayout>
             <Stack spacing={7}>
@@ -253,9 +253,9 @@ const EditPatternPage = () => {
                             <Typography variant="pi">{hint}</Typography>
                           )}
                           error={
-                            errors.pattern &&
-                              touched.pattern &&
-                              typeof errors.pattern === "string"
+                            errors.pattern
+                              && touched.pattern
+                              && typeof errors.pattern === "string"
                               ? errors.pattern
                               : null
                           }

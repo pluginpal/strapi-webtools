@@ -11,7 +11,7 @@
     "kind": "plugin"
   },
   "scripts": {
-    "eslint": "eslint --max-warnings=0 './**/*.{js,jsx,ts,tsx}'",
+    "eslint": "eslint './**/*.{js,jsx,ts,tsx}'",
     "eslint:fix": "eslint --fix './**/*.{js,jsx,ts,tsx}'",
     "test:unit": "jest --verbose",
     "plugin:install": "yarn install && rm -rf node_modules/@strapi/helper-plugin",

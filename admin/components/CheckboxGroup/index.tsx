@@ -10,7 +10,7 @@ type Props = {
   errors: Record<string, any>;
   touched: any;
   fieldName: string;
-}
+};
 
 const CheckboxGroup: FC<Props> = ({ values, setFieldValue, title, list, errors, touched, fieldName }) => {
   const { formatMessage } = useIntl();

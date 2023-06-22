@@ -118,12 +118,12 @@ const subscribeLifecycleMethods = async (modelName) => {
 
       // Delete the path entity.
       async beforeDelete(event) {
-        deleteEntity(event);
+        await deleteEntity(event);
       },
 
       // Delete the path entity.
       async beforeDeleteMany(event) {
-        const ids = event.params.where['$and'][0].id['$in'];
+        const ids = event.params.where.$and[0].id.$in;
         for (let i = 0; i < ids.length; i++) {
           // eslint-disable-next-line no-await-in-loop
           await deleteEntity(event, ids[i]);
@@ -132,7 +132,7 @@ const subscribeLifecycleMethods = async (modelName) => {
 
       // Update or create the path entity.
       async beforeUpdate(event) {
-        updateEntity(event, modelName);
+        await updateEntity(event, modelName);
       },
 
       // Update or create the path entity.

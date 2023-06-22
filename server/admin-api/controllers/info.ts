@@ -29,7 +29,7 @@ export default {
             name: contentType.globalId,
             uid: contentType.uid,
           });
-        })
+        }),
       );
 
       ctx.send(contentTypes);

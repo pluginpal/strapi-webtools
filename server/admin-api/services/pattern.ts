@@ -32,7 +32,7 @@ export default () => ({
    * @param {number} id the id.
    * @returns {void}
    */
-   findOne: async (id) => {
+  findOne: async (id) => {
     const patternEntity = await strapi.entityService.findOne('plugin::url-alias.pattern', id);
 
     return patternEntity;
@@ -44,7 +44,7 @@ export default () => ({
    * @param {object} params the params.
    * @returns {void}
    */
-   findMany: async (params) => {
+  findMany: async (params) => {
     const patternEntities = await strapi.entityService.findMany('plugin::url-alias.pattern', params);
 
     return patternEntities;
@@ -57,7 +57,7 @@ export default () => ({
    * @param {object} data the data.
    * @returns {void}
    */
-   update: async (id, data) => {
+  update: async (id, data) => {
     const patternEntity = await strapi.entityService.update('plugin::url-alias.pattern', id, {
       data,
     });
@@ -71,7 +71,7 @@ export default () => ({
    * @param {number} id the id.
    * @returns {void}
    */
-   delete: async (id) => {
+  delete: async (id) => {
     await strapi.entityService.delete('plugin::url-alias.pattern', id);
   },
 
@@ -156,15 +156,15 @@ export default () => ({
         const relationalField = field.split('.').length > 1 ? field.split('.') : null;
 
         // TODO: Relation fields.
-          if (!relationalField) {
-            // Slugify.
-            const fieldValue = _.kebabCase(_.deburr(_.toLower(entity[field])));
-            pattern = pattern.replace(`[${field}]`, fieldValue || '');
-          } else if (Array.isArray(entity[relationalField[0]])) {
-            strapi.log.error('Something went wrong whilst resolving the pattern.');
-          } else if (typeof entity[relationalField[0]] === 'object') {
-            pattern = pattern.replace(`[${field}]`, entity[relationalField[0]] && entity[relationalField[0]][relationalField[1]] ? entity[relationalField[0]][relationalField[1]] : '');
-          }
+        if (!relationalField) {
+          // Slugify.
+          const fieldValue = _.kebabCase(_.deburr(_.toLower(entity[field])));
+          pattern = pattern.replace(`[${field}]`, fieldValue || '');
+        } else if (Array.isArray(entity[relationalField[0]])) {
+          strapi.log.error('Something went wrong whilst resolving the pattern.');
+        } else if (typeof entity[relationalField[0]] === 'object') {
+          pattern = pattern.replace(`[${field}]`, entity[relationalField[0]] && entity[relationalField[0]][relationalField[1]] ? entity[relationalField[0]][relationalField[1]] : '');
+        }
       });
 
       pattern = pattern.replace(/([^:]\/)\/+/g, "$1"); // Remove duplicate forward slashes.

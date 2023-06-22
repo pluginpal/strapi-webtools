@@ -10,7 +10,7 @@ type Props = {
   value?: string;
   error?: string | null;
   setFieldValue: (name: string, value: string) => void;
-}
+};
 
 const SelectComponent: FC<Props> = ({
   list,

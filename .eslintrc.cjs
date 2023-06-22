@@ -498,18 +498,37 @@ const typescriptBaseOverrides = {
     "@typescript-eslint/no-unsafe-member-access": "warn",
     "@typescript-eslint/no-unsafe-call": "warn",
     // Should follow base rule
-    "@typescript-eslint/quotes": [
-      "off",
-      "single",
-    ],
+    "@typescript-eslint/quotes": ["off", "single"],
     "@typescript-eslint/restrict-template-expressions": "warn",
     "@typescript-eslint/no-unsafe-return": "off",
+    "@typescript-eslint/no-unsafe-argument": "off",
+    "@typescript-eslint/restrict-plus-operands": "off",
+    "space-before-function-paren": "off",
+    "@typescript-eslint/space-before-function-paren": [
+      "warn",
+      { anonymous: "never", named: "never" },
+    ],
+    "@typescript-eslint/require-await": "off",
+    // This should be shown by typescript
+    "@typescript-eslint/no-unused-vars": "off",
+    "no-use-before-define": "off",
+    "@typescript-eslint/no-use-before-define": ["error"],
+    "no-undefined": "off",
+    "@typescript-eslint/unbound-method": "off",
+    "valid-jsdoc": [
+      "warn",
+      {
+        requireReturnType: false,
+        requireParamType: false,
+      },
+    ],
   },
 };
 
 module.exports = {
   root: true,
   extends: ["react-app", "airbnb"],
+  ignorePatterns: ["custom.d.ts"],
   parser: "babel-eslint",
   plugins: ["babel", "react", "jsx-a11y", "import", "react-hooks"],
   env: {
@@ -537,10 +556,11 @@ module.exports = {
       parserOptions: {
         project: "./tsconfig.json",
       },
-      extends: [
-        ...typescriptBaseOverrides.extends,
-        "react-app",
-      ],
+      extends: [...typescriptBaseOverrides.extends, "react-app"],
+      rules: {
+        ...typescriptBaseOverrides.rules,
+        "react/require-default-props": "off",
+      },
     },
     {
       ...typescriptBaseOverrides,

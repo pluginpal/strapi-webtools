@@ -11,7 +11,7 @@ type Props = {
     url_path: string;
     [key: string]: any;
   }[] | null;
-}
+};
 
 const TableComponent: FC<Props> = ({ paths }) => {
   const { formatMessage } = useIntl();

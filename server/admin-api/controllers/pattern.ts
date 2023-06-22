@@ -13,7 +13,7 @@ const controller: ControllerCallback = ({ strapi }) => ({
     try {
       const { id } = ctx.params;
       const patternEntity = await getPluginService("patternService").findOne(
-        id
+        id,
       );
       ctx.send(patternEntity);
     } catch (err) {
@@ -25,7 +25,7 @@ const controller: ControllerCallback = ({ strapi }) => ({
   findMany: async (ctx) => {
     try {
       const patternEntities = await getPluginService(
-        "patternService"
+        "patternService",
       ).findMany();
       ctx.send(patternEntities);
     } catch (err) {
@@ -51,7 +51,7 @@ const controller: ControllerCallback = ({ strapi }) => ({
       const { data } = ctx.request.body;
       const patternEntity = await getPluginService("patternService").update(
         id,
-        data
+        data,
       );
       ctx.send(patternEntity);
     } catch (err) {
@@ -64,7 +64,7 @@ const controller: ControllerCallback = ({ strapi }) => ({
     try {
       const { data } = ctx.request.body;
       const patternEntity = await getPluginService("patternService").create(
-        data
+        data,
       );
       ctx.send(patternEntity);
     } catch (err) {
@@ -88,7 +88,7 @@ const controller: ControllerCallback = ({ strapi }) => ({
 
       const fields = await getPluginService("patternService").getAllowedFields(
         contentType,
-        ["string", "uid", "id"]
+        ["string", "uid", "id"],
       );
       formattedFields[contentType.uid] = fields;
     });

@@ -23,10 +23,9 @@ const EditView = () => {
 
   const { data: pathEntity, isLoading } = useQuery(
     ["url-alias", "findOne", modifiedData.url_path_id, modifiedData.updatedAt],
-    () =>
-      request(`/url-alias/findOne/${modifiedData.url_path_id}`, {
-        method: "GET",
-      })
+    () => request(`/url-alias/findOne/${modifiedData.url_path_id}`, {
+      method: "GET",
+    }),
   );
 
   return (
