@@ -2,6 +2,7 @@
 
 import _ from 'lodash';
 import { getPluginService } from '../../util/getPluginService';
+import { isObject } from '../../util/isObject';
 
 export default () => ({
   /**
@@ -10,8 +11,8 @@ export default () => ({
    * @param data the data.
    * @returns {object} transformed data
    */
-  preparePath: async function traverse(data: Record<string, any>) {
-    if (typeof data !== 'object') {
+  preparePath: async function traverse(data: any) {
+    if (!isObject(data)) {
       return data;
     }
 
