@@ -15,7 +15,9 @@
     "eslint:fix": "eslint --fix './**/*.{js,jsx,ts,tsx}'",
     "test:unit": "jest --verbose",
     "plugin:install": "yarn install && rm -rf node_modules/@strapi/helper-plugin",
-    "develop": "tsc -p tsconfig.server.json -w",
+    "develop:server": "tsc -p tsconfig.server.json -w",
+    "develop:admin": "tsc -p tsconfig.json -w",
+    "develop": "run-p develop:*",
     "build:server": "tsc -p tsconfig.server.json",
     "build:admin": "tsc -p tsconfig.json",
     "build": "rimraf dist && run-s build:*"
