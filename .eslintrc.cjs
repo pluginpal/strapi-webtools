@@ -522,6 +522,9 @@ const typescriptBaseOverrides = {
         requireParamType: false,
       },
     ],
+    // This is currently broken as we cannot pass a function that returns a promise to a jsx prop
+    // that expects a function that returns void
+    "@typescript-eslint/no-misused-promises": "off",
   },
 };
 
