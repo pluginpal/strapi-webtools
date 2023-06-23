@@ -133,10 +133,10 @@ export default () => ({
    * @returns {array} The fields.\[([\w\d\[\]]+)\]
    */
   getFieldsFromPattern: (pattern: string) => {
-    let fields = pattern.match(/[[\w\d.]+]/g); // Get all substrings between [] as array.
+    const fields = pattern.match(/[[\w\d.]+]/g); // Get all substrings between [] as array.
     if (!fields) return [];
-    fields = fields.map((field) => (/(?<=\[)(.*?)(?=\])/).exec(field)?.[0] ?? ''); // Strip [] from string.
-    return fields;
+    const newFields = fields.map((field) => (/(?<=\[)(.*?)(?=\])/).exec(field)?.[0] ?? ''); // Strip [] from string.
+    return newFields;
   },
 
   /**
