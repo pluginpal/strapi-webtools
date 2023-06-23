@@ -37,7 +37,6 @@
   ],
   "files": [
     "LICENSE.md",
-    "admin",
     "dist",
     "strapi-admin.js",
     "strapi-server.js"
@@ -46,11 +45,11 @@
     "@strapi/strapi": "^4.0.0"
   },
   "devDependencies": {
-    "@strapi/design-system": "^1.4.1",
-    "@strapi/helper-plugin": "^4.5.5",
-    "@strapi/icons": "^1.4.1",
-    "@strapi/strapi": "^4.5.5",
-    "@strapi/utils": "^4.5.5",
+    "@strapi/design-system": "^1.8.0",
+    "@strapi/helper-plugin": "^4.11.2",
+    "@strapi/icons": "^1.8.0",
+    "@strapi/strapi": "^4.11.2",
+    "@strapi/utils": "^4.11.2",
     "@types/react-router-dom": "^5.3.3",
     "@types/styled-components": "^5.1.26",
     "@typescript-eslint/eslint-plugin": "^5.59.11",
