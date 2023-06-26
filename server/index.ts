@@ -1,5 +1,7 @@
 "use strict";
 
+// Has to be imported once for build
+import { } from '@strapi/strapi';
 // Admin API
 import adminApiRegister from "./admin-api/register";
 import adminApiBootstrap from "./admin-api/bootstrap";
