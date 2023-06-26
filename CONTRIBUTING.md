@@ -41,7 +41,16 @@ const path = require('path');
 }
 ```
 
-#### 5. Rebuild your Strapi project
+#### 5. Run `yarn develop`
+
+```bash
+yarn develop
+```
+
+This will watch the plugin source code for changes and compile them, so that you are always working with the current code.
+You can also use `yarn build` to only compile once.
+
+#### 6. Rebuild your Strapi project
 
 Rebuild your strapi project to build the admin part of the plugin.
 
@@ -49,7 +58,7 @@ Rebuild your strapi project to build the admin part of the plugin.
 cd YOUR_STRAPI_PROJECT && yarn build
 ```
 
-#### 6. Running the administration panel in development mode
+#### 7. Running the administration panel in development mode
 
 **Start the administration panel server for development**
 

@@ -23,7 +23,10 @@ jobs:
           node-version: ${{ matrix.node }}
           cache: 'yarn'
       - name: Install dependencies
-        run: yarn --frozen-lockfile
+        # We set production to false since we need dev dependencies for building
+        run: yarn install --production=false --frozen-lockfile
+      - name: Compile typescript
+        run: yarn run build
       - name: Run eslint
         run: yarn run eslint
   # unit:
