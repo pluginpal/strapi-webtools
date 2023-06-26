@@ -1,6 +1,5 @@
 "use strict";
 
-import { ControllerCallback } from "@strapi/strapi/lib/types/factories";
 import _ from "lodash";
 import { getPluginService } from "../../util/getPluginService";
 
@@ -8,7 +7,7 @@ import { getPluginService } from "../../util/getPluginService";
  * Pattern controller
  */
 
-const controller: ControllerCallback = ({ strapi }) => ({
+const controller = ({ strapi }) => ({
   findOne: async (ctx) => {
     try {
       const { id } = ctx.params;
