@@ -21,12 +21,18 @@ const EditView = () => {
   const { formatMessage } = useIntl();
   const { modifiedData, onChange } = useCMEditViewDataManager();
 
-  const { data: pathEntity, isLoading } = useQuery(
+  const hasPath = !!Number(modifiedData.url_path_id);
+  const { data: pathEntity = {}, isLoading: isQueryLoading } = useQuery(
     ["url-alias", "findOne", modifiedData.url_path_id, modifiedData.updatedAt],
     () => request(`/url-alias/findOne/${modifiedData.url_path_id}`, {
       method: "GET",
     }),
+    {
+      enabled: hasPath,
+    },
   );
+
+  const isLoading = hasPath ? isQueryLoading : false;
 
   return (
     <Box
