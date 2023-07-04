@@ -27,7 +27,9 @@ const PatternField: FC<Props> = ({
   const patternRef = useRef<HTMLDivElement>(null);
   const { formatMessage } = useIntl();
 
+  const [popoverDismissed, setPopoverDismissed] = useState(false);
   const { data: allowedFields, isLoading: allowedFieldsLoading, isError } = useQuery<Record<string, string[]>>(
+
     ['url-alias', 'pattern', 'allowed-fields'],
     () => request(`/url-alias/pattern/allowed-fields`, { method: "GET" }),
     {
@@ -94,6 +96,7 @@ const PatternField: FC<Props> = ({
           placeholder="/en/pages/[id]"
           error={error}
           onChange={(e: any) => {
+            setPopoverDismissed(false);
             if (e.target.value.match(/^[A-Za-z0-9-_.~[\]/]*$/)) {
               setFieldValue('pattern', e.target.value);
             }
@@ -101,8 +104,8 @@ const PatternField: FC<Props> = ({
         />
       </div>
       {hint(patternHint())}
-      {values.pattern.endsWith('[') && (activeElement as any)?.name === 'pattern' && (
-        <Popover source={patternRef} fullWidth>
+      {values.pattern.endsWith('[') && !popoverDismissed && (
+        <Popover source={patternRef} onDismiss={() => setPopoverDismissed(true)} fullWidth>
           <Stack size={1}>
             {allowedFields[uid].map((fieldName) => (
               <HoverBox
