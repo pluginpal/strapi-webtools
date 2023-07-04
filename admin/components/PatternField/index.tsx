@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, FC } from "react";
 import { useIntl } from "react-intl";
 import styled from "styled-components";
 
-import { TextInput, Popover, Stack, Box } from "@strapi/design-system";
+import { TextInput, Popover, Stack, Box, Loader } from "@strapi/design-system";
 import { request } from "@strapi/helper-plugin";
 import { useQuery } from "react-query";
 
@@ -28,8 +28,8 @@ const PatternField: FC<Props> = ({
   const { formatMessage } = useIntl();
 
   const [popoverDismissed, setPopoverDismissed] = useState(false);
+  const { data: allowedFields, isLoading: allowedFieldsLoading, isError } = useQuery<Record<string, string[]>>(
 
-  const { data: allowedFields } = useQuery<Record<string, string[]>>(
     ['url-alias', 'pattern', 'allowed-fields'],
     () => request(`/url-alias/pattern/allowed-fields`, { method: "GET" }),
     {
@@ -74,7 +74,14 @@ const PatternField: FC<Props> = ({
     return base + suffix;
   };
 
-  if (!allowedFields) return null;
+
+  if (allowedFieldsLoading) {
+    return <Loader>{formatMessage({ id: 'url-alias.settings.loading', defaultMessage: "Loading content..." })}</Loader>;
+  }
+
+  if (isError || !allowedFields) {
+    return <div>{formatMessage({ id: 'url-alias.pattern.allowedFields.fetchError', defaultMessage: "An error occurred while fetching allowed fields" })}</div>;
+  }
 
   return (
     <div>
