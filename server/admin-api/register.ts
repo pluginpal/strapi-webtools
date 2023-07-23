@@ -18,6 +18,12 @@ export default async (strapi) => {
       visible: false,
       default: null,
       type: 'string',
+      unique: true,
+      pluginOptions: {
+        i18n: {
+          localized: true,
+        },
+      },
     });
   });
 
