@@ -50,6 +50,7 @@
     "@strapi/icons": "^1.8.0",
     "@strapi/strapi": "^4.11.2",
     "@strapi/utils": "^4.11.2",
+    "@types/lodash": "^4.14.195",
     "@types/react-router-dom": "^5.3.3",
     "@types/styled-components": "^5.1.26",
     "@typescript-eslint/eslint-plugin": "^5.59.11",
@@ -77,7 +78,8 @@
     "react-query": "^3.39.3",
     "rimraf": "^5.0.1",
     "styled-components": "^5.2.3",
-    "typescript": "~5.0.0"
+    "typescript": "~5.0.0",
+    "yup": "^1.2.0"
   },
   "bugs": {
     "url": "https://github.com/strapi-community/strapi-plugin-url-alias/issues"

@@ -1,4 +1,4 @@
-const pluginPkg = require('../../package.json');
+import pluginPkg from '../../package.json';
 
 const pluginId = pluginPkg.name.replace(
   /^@strapi-community\/strapi-plugin-/i,

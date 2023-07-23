@@ -1,14 +1,18 @@
 import { prefixPluginTranslations } from '@strapi/helper-plugin';
+import * as yup from 'yup';
 import pluginPkg from '../package.json';
 import EditView from './components/EditView';
 import pluginId from './helpers/pluginId';
 import pluginPermissions from './permissions';
+import { App } from './types/app';
+import getTrad from './helpers/getTrad';
+import CheckboxConfirmation from './components/ContentManagerHooks/ConfirmationCheckbox';
 
 const pluginDescription = pluginPkg.strapi.description || pluginPkg.description;
 const { name } = pluginPkg.strapi;
 
 export default {
-  register(app: any) {
+  register(app: App) {
     app.registerPlugin({
       description: pluginDescription,
       id: pluginId,
@@ -61,11 +65,45 @@ export default {
       ],
     );
   },
-  bootstrap(app) {
+  bootstrap(app: App) {
     app.injectContentManagerComponent('editView', 'right-links', {
       name: 'url-alias-edit-view',
       Component: EditView,
     });
+
+    const ctbPlugin = app.getPlugin('content-type-builder');
+
+    if (ctbPlugin) {
+      const ctbFormsAPI = ctbPlugin.apis.forms;
+      // ctbFormsAPI.addContentTypeSchemaMutation(mutateCTBContentTypeSchema);
+      ctbFormsAPI.components.add({ id: 'url-alias.checkboxConfirmation', component: CheckboxConfirmation });
+
+      ctbFormsAPI.extendContentType({
+        validator: () => ({
+          'url-alias': yup.object().shape({
+            enabled: yup.bool().default(true),
+          }),
+        }),
+        form: {
+          advanced() {
+            return [
+              {
+                name: 'pluginOptions.url-alias.enabled',
+                description: {
+                  id: getTrad('url-alias.enabled.description-content-type'),
+                  defaultMessage: 'Enable URL alias - allows urls to be created for this content type',
+                },
+                type: 'url-alias.checkboxConfirmation',
+                intlLabel: {
+                  id: getTrad('url-alias.enabled.label-content-type'),
+                  defaultMessage: 'Url alias',
+                },
+              },
+            ];
+          },
+        },
+      });
+    }
   },
   async registerTrads({ locales }) {
     const importedTrads = await Promise.all(
