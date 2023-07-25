@@ -34,6 +34,7 @@ export default () => ({
           $notNull: true,
         } : {},
       },
+      locale: 'all',
       limit: 1,
     });
 
