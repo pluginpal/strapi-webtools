@@ -123,10 +123,16 @@ const subscribeLifecycleMethods = async (modelName) => {
 
       // Delete the path entity.
       async beforeDeleteMany(event) {
-        const ids = event.params.where.$and[0].id.$in;
-        for (let i = 0; i < ids.length; i++) {
-          // eslint-disable-next-line no-await-in-loop
-          await deleteEntity(event, ids[i]);
+        const result = await strapi.db.query(modelName).findMany({
+          ...event.params,
+        });
+
+        for (let i = 0; i < result.length; i++) {
+          const entity = result[i];
+
+          if (entity.url_path_id) {
+            getPluginService("pathService").delete(entity.url_path_id);
+          }
         }
       },
 
