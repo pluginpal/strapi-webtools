@@ -1,0 +1,36 @@
+{
+  "kind": "collectionType",
+  "collectionName": "url_paths",
+  "info": {
+    "singularName": "path",
+    "pluralName": "paths",
+    "displayName": "path"
+  },
+  "options": {
+    "draftAndPublish": false,
+    "comment": ""
+  },
+  "pluginOptions": {
+    "content-manager": {
+      "visible": false
+    },
+    "content-type-builder": {
+      "visible": false
+    }
+  },
+  "attributes": {
+    "url_path": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "generated": {
+      "type": "boolean",
+      "default": true
+    },
+    "contenttype": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

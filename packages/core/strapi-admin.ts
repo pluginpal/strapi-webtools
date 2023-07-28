@@ -1,1 +1,1 @@
-module.exports = require('./admin/src').default;
+module.exports = require('./admin').default;
