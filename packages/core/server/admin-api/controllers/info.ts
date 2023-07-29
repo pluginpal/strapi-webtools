@@ -19,17 +19,20 @@ export default {
         Object.values(strapi.contentTypes).map(async (contentType: any) => {
           const { pluginOptions } = contentType;
 
-          // Not for CTs that are not visible in the content manager.
+          // Only return content types which have webtools enabled.
           const isInContentManager = _.get(pluginOptions, [
-            "content-manager",
-            "visible",
+            "webtools",
+            "enabled",
           ]);
-          if (isInContentManager === false) return;
+          if (isInContentManager === true) {
+            contentTypes.push({
+              name: contentType.globalId,
+              uid: contentType.uid,
+            });
+          } else {
+            return false;
+          }
 
-          contentTypes.push({
-            name: contentType.globalId,
-            uid: contentType.uid,
-          });
         }),
       );
 

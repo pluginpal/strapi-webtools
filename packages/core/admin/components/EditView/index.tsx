@@ -17,9 +17,9 @@ import {
 import getTrad from "../../helpers/getTrad";
 
 const EditView = () => {
-  // const [pathEntity, setPathEntity] = useState({});
+  const [contentTypes, setContentTypes] = useState([]);
   const { formatMessage } = useIntl();
-  const { modifiedData, onChange } = useCMEditViewDataManager();
+  const { modifiedData, onChange, slug } = useCMEditViewDataManager();
 
   const hasPath = !!Number(modifiedData.url_path_id);
   const { data: pathEntity = {}, isLoading: isQueryLoading } = useQuery(
@@ -32,7 +32,19 @@ const EditView = () => {
     },
   );
 
+  useEffect(() => {
+    request(`/webtools/info/getContentTypes`, { method: 'GET' })
+      .then((res: any) => {
+        setContentTypes(res);
+      })
+      .catch(() => {
+      });
+  }, []);
+
   const isLoading = hasPath ? isQueryLoading : false;
+
+  if (!contentTypes) return null;
+  if (!contentTypes.find((type) => type.uid === slug)) return null;
 
   return (
     <Box
