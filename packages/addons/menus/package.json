@@ -5,10 +5,12 @@
   "strapi": {
     "name": "webtools",
     "icon": "list",
-    "displayName": "Webtools",
+    "displayName": "Webtools Menus",
     "description": "This is the description of the plugin.",
     "required": false,
-    "kind": "plugin"
+    "kind": "plugin",
+    "webtoolsAddon": true,
+    "addonName": "Menus"
   },
   "scripts": {
     "build": "tsc --outDir build",
