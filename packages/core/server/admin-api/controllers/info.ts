@@ -1,6 +1,7 @@
 "use strict";
 
 import _ from "lodash";
+import getAddons from "../../util/getAddons";
 
 /**
  * Info controller
@@ -63,5 +64,10 @@ export default {
       ctx.body = err.message;
       ctx.app.emit("error", err, ctx);
     }
+  },
+
+  getAddons: async (ctx) => {
+    const addons = getAddons(strapi);
+    ctx.send(addons);
   },
 };

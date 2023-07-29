@@ -17,4 +17,12 @@ export default [
       policies: [],
     },
   },
+  {
+    method: "GET",
+    path: "/info/addons",
+    handler: "info.getAddons",
+    config: {
+      policies: [],
+    },
+  },
 ];
