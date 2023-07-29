@@ -52,7 +52,7 @@ const EditView = () => {
       >
         {formatMessage({
           id: getTrad("plugin.name"),
-          defaultMessage: "URL alias",
+          defaultMessage: "Webtools",
         })}
       </Typography>
       <Box paddingTop={2} paddingBottom={6}>

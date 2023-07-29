@@ -28,14 +28,30 @@ export default {
         id: pluginId,
         intlLabel: {
           id: `${pluginId}.settings.title`,
-          defaultMessage: 'URL alias',
+          defaultMessage: 'Webtools',
         },
       },
       [
         {
           intlLabel: {
+            id: `${pluginId}.settings.page.overview.title`,
+            defaultMessage: 'Overview',
+          },
+          id: 'overview',
+          to: `/settings/${pluginId}/overview`,
+          Component: async () => {
+            const component = await import(
+              /* webpackChunkName: "webtools-list" */ './screens/Overview'
+            );
+
+            return component;
+          },
+          permissions: pluginPermissions['settings.overview'],
+        },
+        {
+          intlLabel: {
             id: `${pluginId}.settings.page.list.title`,
-            defaultMessage: 'List',
+            defaultMessage: 'All URLs',
           },
           id: 'webtools-list',
           to: `/settings/${pluginId}/list`,
@@ -51,7 +67,7 @@ export default {
         {
           intlLabel: {
             id: `${pluginId}.settings.page.patterns.title`,
-            defaultMessage: 'Patterns',
+            defaultMessage: 'URL patterns',
           },
           id: 'webtools-patterns',
           to: `/settings/${pluginId}/patterns`,
@@ -93,12 +109,12 @@ export default {
                 name: 'pluginOptions.webtools.enabled',
                 description: {
                   id: getTrad('webtools.enabled.description-content-type'),
-                  defaultMessage: 'Enable URL alias - allows urls to be created for this content type',
+                  defaultMessage: 'Webtools - entries of this type are considered web pages.',
                 },
                 type: 'webtools.checkboxConfirmation',
                 intlLabel: {
                   id: getTrad('webtools.enabled.label-content-type'),
-                  defaultMessage: 'Url alias',
+                  defaultMessage: 'Webtools',
                 },
               },
             ];
