@@ -19,7 +19,7 @@ export default () => ({
       data.code = _.snakeCase(_.deburr(_.toLower(data.label)));
     }
 
-    const patternEntity = await strapi.entityService.create('plugin::webtools.pattern', {
+    const patternEntity = await strapi.entityService.create('plugin::webtools.url-pattern', {
       data,
     });
 
@@ -33,7 +33,7 @@ export default () => ({
    * @returns {void}
    */
   findOne: async (id) => {
-    const patternEntity = await strapi.entityService.findOne('plugin::webtools.pattern', id);
+    const patternEntity = await strapi.entityService.findOne('plugin::webtools.url-pattern', id);
 
     return patternEntity;
   },
@@ -45,7 +45,7 @@ export default () => ({
    * @returns {void}
    */
   findMany: async (params) => {
-    const patternEntities = await strapi.entityService.findMany('plugin::webtools.pattern', params);
+    const patternEntities = await strapi.entityService.findMany('plugin::webtools.url-pattern', params);
 
     return patternEntities;
   },
@@ -58,7 +58,7 @@ export default () => ({
    * @returns {void}
    */
   update: async (id, data) => {
-    const patternEntity = await strapi.entityService.update('plugin::webtools.pattern', id, {
+    const patternEntity = await strapi.entityService.update('plugin::webtools.url-pattern', id, {
       data,
     });
 
@@ -72,7 +72,7 @@ export default () => ({
    * @returns {void}
    */
   delete: async (id) => {
-    await strapi.entityService.delete('plugin::webtools.pattern', id);
+    await strapi.entityService.delete('plugin::webtools.url-pattern', id);
   },
 
   /**
@@ -150,7 +150,7 @@ export default () => ({
 
   resolvePattern: async (uid, entity) => {
     const resolve = (pattern) => {
-      const fields = getPluginService('patternService').getFieldsFromPattern(pattern);
+      const fields = getPluginService('urlPatternService').getFieldsFromPattern(pattern);
 
       fields.map((field) => {
         const relationalField = field.split('.').length > 1 ? field.split('.') : null;
@@ -172,7 +172,7 @@ export default () => ({
       return pattern;
     };
 
-    const patterns = await getPluginService('patternService').findMany({
+    const patterns = await getPluginService('urlPatternService').findMany({
       filters: {
         contenttype: uid,
       },
@@ -225,7 +225,7 @@ export default () => ({
 
     let fieldsAreAllowed = true;
 
-    getPluginService('patternService').getFieldsFromPattern(pattern).map((field) => {
+    getPluginService('urlPatternService').getFieldsFromPattern(pattern).map((field) => {
       if (!allowedFieldNames.includes(field)) fieldsAreAllowed = false;
     });
 

@@ -23,10 +23,10 @@ const updateEntity = async (event, modelName) => {
     let pathEntity;
 
     if (!data.path_generated && data.path_value) {
-      pathEntity = await getPluginService('pathService').create({ url_path: data.path_value, generated: false, contenttype: modelName });
+      pathEntity = await getPluginService('urlAliasService').create({ url_path: data.path_value, generated: false, contenttype: modelName });
     } else {
-      const generatedPath = await getPluginService('patternService').resolvePattern(modelName, entity);
-      pathEntity = await getPluginService('pathService').create({ url_path: generatedPath, generated: true, contenttype: modelName });
+      const generatedPath = await getPluginService('urlPatternService').resolvePattern(modelName, entity);
+      pathEntity = await getPluginService('urlAliasService').create({ url_path: generatedPath, generated: true, contenttype: modelName });
     }
 
     data.url_path_id = pathEntity.id;
@@ -35,17 +35,17 @@ const updateEntity = async (event, modelName) => {
   }
 
   if (!data.path_generated && !data.path_value) {
-    const pathEntity = await getPluginService('pathService').findOne(entity.url_path_id);
+    const pathEntity = await getPluginService('urlAliasService').findOne(entity.url_path_id);
 
     if (pathEntity.generated) {
-      const generatedPath = await getPluginService('patternService').resolvePattern(modelName, entity);
-      await getPluginService('pathService').update(entity.url_path_id, { url_path: generatedPath, generated: true });
+      const generatedPath = await getPluginService('urlPatternService').resolvePattern(modelName, entity);
+      await getPluginService('urlAliasService').update(entity.url_path_id, { url_path: generatedPath, generated: true });
     }
   } else if (!data.path_generated && data.path_value) {
-    await getPluginService('pathService').update(entity.url_path_id, { url_path: data.path_value, generated: false });
+    await getPluginService('urlAliasService').update(entity.url_path_id, { url_path: data.path_value, generated: false });
   } else {
-    const generatedPath = await getPluginService('patternService').resolvePattern(modelName, entity);
-    await getPluginService('pathService').update(entity.url_path_id, { url_path: generatedPath, generated: true });
+    const generatedPath = await getPluginService('urlPatternService').resolvePattern(modelName, entity);
+    await getPluginService('urlAliasService').update(entity.url_path_id, { url_path: generatedPath, generated: true });
   }
 };
 /**
@@ -65,7 +65,7 @@ const deleteEntity = async (event, parentId?) => {
     return null;
   }
 
-  await getPluginService('pathService').delete(entity.url_path_id);
+  await getPluginService('urlAliasService').delete(entity.url_path_id);
 };
 
 /**
@@ -81,10 +81,10 @@ const createEntity = async (event) => {
   let pathEntity;
 
   if (!data.path_generated && data.path_value) {
-    pathEntity = await getPluginService('pathService').create({ url_path: data.path_value, generated: false, contenttype: uid });
+    pathEntity = await getPluginService('urlAliasService').create({ url_path: data.path_value, generated: false, contenttype: uid });
   } else {
-    const generatedPath = await getPluginService('patternService').resolvePattern(uid, data);
-    pathEntity = await getPluginService('pathService').create({ url_path: generatedPath, generated: true, contenttype: uid });
+    const generatedPath = await getPluginService('urlPatternService').resolvePattern(uid, data);
+    pathEntity = await getPluginService('urlAliasService').create({ url_path: generatedPath, generated: true, contenttype: uid });
   }
 
   data.url_path_id = pathEntity.id;

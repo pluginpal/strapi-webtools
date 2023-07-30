@@ -5,15 +5,15 @@ import { } from '@strapi/strapi';
 // Admin API
 import adminApiRegister from "./admin-api/register";
 import adminApiBootstrap from "./admin-api/bootstrap";
-import adminApiPathSchema from "./admin-api/content-types/path/schema.json";
-import adminApiPatternSchema from "./admin-api/content-types/pattern/schema.json";
-import adminApiPathController from "./admin-api/controllers/path";
-import adminApiPatternController from "./admin-api/controllers/pattern";
+import adminApiUrlAliasSchema from "./admin-api/content-types/url-alias/schema.json";
+import adminApiUrlPatternSchema from "./admin-api/content-types/url-pattern/schema.json";
+import adminApiUrlAliasController from "./admin-api/controllers/url-alias";
+import adminApiUrlPatternController from "./admin-api/controllers/url-pattern";
 import adminApiInfoController from "./admin-api/controllers/info";
-import adminApiPathService from "./admin-api/services/path";
-import adminApiPatternService from "./admin-api/services/pattern";
-import adminApiPathRoutes from "./admin-api/routes/path";
-import adminApiPatternRoutes from "./admin-api/routes/pattern";
+import adminApiUrlAliasService from "./admin-api/services/url-alias";
+import adminApiUrlPatternService from "./admin-api/services/url-pattern";
+import adminApiUrlAliasRoutes from "./admin-api/routes/url-alias";
+import adminApiUrlPatternRoutes from "./admin-api/routes/url-pattern";
 import adminApiInfoRoutes from "./admin-api/routes/info";
 import adminApiLifecycleService from "./admin-api/services/lifecycle";
 import adminApiOverrideQueryLayerService from "./admin-api/services/override-query-layer";
@@ -32,19 +32,19 @@ export default {
     await adminApiBootstrap({ strapi });
   },
   contentTypes: {
-    path: {
-      schema: adminApiPathSchema,
+    'url-alias': {
+      schema: adminApiUrlAliasSchema,
     },
-    pattern: {
-      schema: adminApiPatternSchema,
+    'url-pattern': {
+      schema: adminApiUrlPatternSchema,
     },
   },
   routes: {
     admin: {
       type: "admin",
       routes: [
-        ...adminApiPathRoutes,
-        ...adminApiPatternRoutes,
+        ...adminApiUrlAliasRoutes,
+        ...adminApiUrlPatternRoutes,
         ...adminApiInfoRoutes,
       ],
     },
@@ -54,15 +54,15 @@ export default {
     },
   },
   controllers: {
-    path: adminApiPathController,
-    pattern: adminApiPatternController,
+    path: adminApiUrlAliasController,
+    pattern: adminApiUrlPatternController,
     info: adminApiInfoController,
     byPath: contentApiByPathController,
   },
   services: {
     preparePathService: contentApiPreparePathService,
-    pathService: adminApiPathService,
-    patternService: adminApiPatternService,
+    urlAliasService: adminApiUrlAliasService,
+    urlPatternService: adminApiUrlPatternService,
     lifecycleService: adminApiLifecycleService,
     byPathService: contentApiByPathService,
     overrideQueryLayer: adminApiOverrideQueryLayerService,

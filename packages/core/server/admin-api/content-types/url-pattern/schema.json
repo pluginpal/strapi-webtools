@@ -1,10 +1,10 @@
 {
   "kind": "collectionType",
-  "collectionName": "url_patterns",
+  "collectionName": "wt_url_patterns",
   "info": {
-    "singularName": "pattern",
-    "pluralName": "patterns",
-    "displayName": "pattern"
+    "singularName": "url-pattern",
+    "pluralName": "url-patterns",
+    "displayName": "url-pattern"
   },
   "options": {
     "draftAndPublish": false,

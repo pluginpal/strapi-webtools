@@ -1,10 +1,10 @@
 {
   "kind": "collectionType",
-  "collectionName": "url_paths",
+  "collectionName": "wt_url_alias",
   "info": {
-    "singularName": "path",
-    "pluralName": "paths",
-    "displayName": "path"
+    "singularName": "url-alias",
+    "pluralName": "url-alias",
+    "displayName": "url-alias"
   },
   "options": {
     "draftAndPublish": false,

@@ -14,7 +14,7 @@ export default () => ({
   byPath: async (path, query: Record<string, any> = {}) => {
     let excludeDrafts = false;
 
-    const pathEntity = await getPluginService('pathService').findByPath(path);
+    const pathEntity = await getPluginService('urlAliasService').findByPath(path);
     if (!pathEntity) {
       return {};
     }

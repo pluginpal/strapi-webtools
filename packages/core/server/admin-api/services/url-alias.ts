@@ -12,7 +12,7 @@ export default () => ({
   create: async (data) => {
     const duplicateCheck = async (ext = -1) => {
       const extension = ext >= 0 ? `-${ext}` : '';
-      const pathAllreadyExists = await getPluginService('pathService').findByPath(data.url_path + extension);
+      const pathAllreadyExists = await getPluginService('urlAliasService').findByPath(data.url_path + extension);
 
       if (pathAllreadyExists) {
         await duplicateCheck(ext + 1);
@@ -23,7 +23,7 @@ export default () => ({
 
     await duplicateCheck();
 
-    const pathEntity = await strapi.entityService.create('plugin::webtools.path', {
+    const pathEntity = await strapi.entityService.create('plugin::webtools.url-alias', {
       data,
     });
 
@@ -37,7 +37,7 @@ export default () => ({
    * @returns {void}
    */
   findOne: async (id) => {
-    const pathEntity = await strapi.entityService.findOne('plugin::webtools.path', id);
+    const pathEntity = await strapi.entityService.findOne('plugin::webtools.url-alias', id);
 
     return pathEntity;
   },
@@ -59,7 +59,7 @@ export default () => ({
       // We need to check the publication status of the linked entity.
     }
 
-    const { results, pagination } = await strapi.entityService.findPage('plugin::webtools.path', {
+    const { results, pagination } = await strapi.entityService.findPage('plugin::webtools.url-alias', {
       ...query,
       filters: {
         ...query?.filters,
@@ -80,7 +80,7 @@ export default () => ({
    * @returns {void}
    */
   findByPath: async (path, id = 0) => {
-    const pathEntity = await strapi.entityService.findMany('plugin::webtools.path', {
+    const pathEntity = await strapi.entityService.findMany('plugin::webtools.url-alias', {
       filters: {
         url_path: path,
         id: {
@@ -103,7 +103,7 @@ export default () => ({
   update: async (id, data) => {
     const duplicateCheck = async (ext = -1) => {
       const extension = ext >= 0 ? `-${ext}` : '';
-      const pathAllreadyExists = await getPluginService('pathService').findByPath(data.url_path + extension, id);
+      const pathAllreadyExists = await getPluginService('urlAliasService').findByPath(data.url_path + extension, id);
 
       if (pathAllreadyExists) {
         await duplicateCheck(ext + 1);
@@ -114,7 +114,7 @@ export default () => ({
 
     await duplicateCheck();
 
-    const pathEntity = await strapi.entityService.update('plugin::webtools.path', id, {
+    const pathEntity = await strapi.entityService.update('plugin::webtools.url-alias', id, {
       data,
     });
 
@@ -128,6 +128,6 @@ export default () => ({
    * @returns {void}
    */
   delete: async (id) => {
-    await strapi.entityService.delete('plugin::webtools.path', id);
+    await strapi.entityService.delete('plugin::webtools.url-alias', id);
   },
 });

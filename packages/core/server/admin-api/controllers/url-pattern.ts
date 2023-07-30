@@ -11,7 +11,7 @@ const controller = ({ strapi }) => ({
   findOne: async (ctx) => {
     try {
       const { id } = ctx.params;
-      const patternEntity = await getPluginService("patternService").findOne(
+      const patternEntity = await getPluginService("urlPatternService").findOne(
         id,
       );
       ctx.send(patternEntity);
@@ -24,7 +24,7 @@ const controller = ({ strapi }) => ({
   findMany: async (ctx) => {
     try {
       const patternEntities = await getPluginService(
-        "patternService",
+        "urlPatternService",
       ).findMany();
       ctx.send(patternEntities);
     } catch (err) {
@@ -36,7 +36,7 @@ const controller = ({ strapi }) => ({
   delete: async (ctx) => {
     try {
       const { id } = ctx.params;
-      await getPluginService("patternService").delete(id);
+      await getPluginService("urlPatternService").delete(id);
       ctx.send({ succes: true });
     } catch (err) {
       ctx.status = err.status || 500;
@@ -48,7 +48,7 @@ const controller = ({ strapi }) => ({
     try {
       const { id } = ctx.params;
       const { data } = ctx.request.body;
-      const patternEntity = await getPluginService("patternService").update(
+      const patternEntity = await getPluginService("urlPatternService").update(
         id,
         data,
       );
@@ -62,7 +62,7 @@ const controller = ({ strapi }) => ({
   create: async (ctx) => {
     try {
       const { data } = ctx.request.body;
-      const patternEntity = await getPluginService("patternService").create(
+      const patternEntity = await getPluginService("urlPatternService").create(
         data,
       );
       ctx.send(patternEntity);
@@ -85,7 +85,7 @@ const controller = ({ strapi }) => ({
       ]);
       if (isInContentManager === false) return;
 
-      const fields = await getPluginService("patternService").getAllowedFields(
+      const fields = await getPluginService("urlPatternService").getAllowedFields(
         contentType,
         ["string", "uid", "id"],
       );
@@ -96,17 +96,17 @@ const controller = ({ strapi }) => ({
   },
 
   validatePattern: async (ctx) => {
-    const patternService = getPluginService("patternService");
+    const urlPatternService = getPluginService("urlPatternService");
     const { pattern, modelName } = ctx.request.body;
 
     const contentType = strapi.contentTypes[modelName];
 
-    const fields = await patternService.getAllowedFields(contentType, [
+    const fields = await urlPatternService.getAllowedFields(contentType, [
       "string",
       "uid",
       "id",
     ]);
-    const validated = await patternService.validatePattern(pattern, fields);
+    const validated = await urlPatternService.validatePattern(pattern, fields);
 
     ctx.send(validated);
   },

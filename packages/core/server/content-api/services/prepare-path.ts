@@ -24,7 +24,7 @@ export default () => ({
 
       if (key === 'url_path_id') {
         if (Number(value) && value !== null) {
-          const pathEntity = await getPluginService('pathService').findOne(value);
+          const pathEntity = await getPluginService('urlAliasService').findOne(value);
           data.url_path = pathEntity?.url_path;
         }
 

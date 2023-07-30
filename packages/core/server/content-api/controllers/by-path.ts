@@ -37,8 +37,8 @@ export default {
     const { auth } = ctx.state;
     const { query } = ctx;
 
-    const { results, pagination } = await getPluginService('pathService').findMany(false, query);
-    const contentTypeObj = strapi.contentTypes['plugin::webtools.path'];
+    const { results, pagination } = await getPluginService('urlAliasService').findMany(false, query);
+    const contentTypeObj = strapi.contentTypes['plugin::webtools.url-alias'];
 
     if (!results) {
       ctx.notFound();

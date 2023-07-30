@@ -10,7 +10,7 @@ export default {
   findOne: async (ctx) => {
     try {
       const { id } = ctx.params;
-      const pathEntity = await getPluginService('pathService').findOne(id);
+      const pathEntity = await getPluginService('urlAliasService').findOne(id);
       ctx.send(pathEntity);
     } catch (err) {
       ctx.status = err.status || 500;
@@ -20,7 +20,7 @@ export default {
   },
   findMany: async (ctx) => {
     try {
-      const pathEntities = await getPluginService('pathService').findMany(true);
+      const pathEntities = await getPluginService('urlAliasService').findMany(true);
       ctx.send(pathEntities);
     } catch (err) {
       ctx.status = err.status || 500;

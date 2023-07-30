@@ -35,7 +35,7 @@ export default async (strapi) => {
 
     strapi.plugin('config-sync').pluginTypes.push({
       configName: 'url-pattern',
-      queryString: 'plugin::webtools.pattern',
+      queryString: 'plugin::webtools.url-pattern',
       uid: 'code',
     });
   }
