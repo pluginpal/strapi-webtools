@@ -5,6 +5,7 @@ import { } from '@strapi/strapi';
 // Admin API
 import adminApiRegister from "./admin-api/register";
 import adminApiBootstrap from "./admin-api/bootstrap";
+import adminApiConfig from "./admin-api/config";
 import adminApiUrlAliasSchema from "./admin-api/content-types/url-alias/schema.json";
 import adminApiUrlPatternSchema from "./admin-api/content-types/url-pattern/schema.json";
 import adminApiUrlAliasController from "./admin-api/controllers/url-alias";
@@ -31,6 +32,7 @@ export default {
   bootstrap: async ({ strapi }) => {
     await adminApiBootstrap({ strapi });
   },
+  config: adminApiConfig,
   contentTypes: {
     'url-alias': {
       schema: adminApiUrlAliasSchema,

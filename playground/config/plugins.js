@@ -4,6 +4,9 @@ module.exports = {
   webtools: {
     enabled: true,
     resolve: path.resolve(__dirname, '../src/plugins/webtools'),
+    config: {
+      website_url: 'https://www.pluginpal.io'
+    }
   },
 
   'webtools-addon-sitemap': {

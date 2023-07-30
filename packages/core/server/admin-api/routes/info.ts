@@ -25,4 +25,12 @@ export default [
       policies: [],
     },
   },
+  {
+    method: "GET",
+    path: "/info/config",
+    handler: "info.getConfig",
+    config: {
+      policies: [],
+    },
+  },
 ];

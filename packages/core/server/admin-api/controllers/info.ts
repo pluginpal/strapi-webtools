@@ -73,4 +73,9 @@ export default {
     const addons = getAddons(strapi);
     ctx.send(addons);
   },
+
+  getConfig: async (ctx) => {
+    const config = strapi.config.get('plugin.webtools');
+    ctx.send(config);
+  },
 };
