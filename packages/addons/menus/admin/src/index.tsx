@@ -2,6 +2,7 @@ import { prefixPluginTranslations } from '@strapi/helper-plugin';
 import pluginPkg from '../../package.json';
 import pluginId from './helpers/pluginId';
 import getTrad from './helpers/getTrad';
+import EditView from './components/EditView';
 
 const pluginDescription = pluginPkg.strapi.description || pluginPkg.description;
 const { name } = pluginPkg.strapi;
@@ -17,6 +18,11 @@ export default {
     });
   },
   bootstrap(app) {
+    app.injectContentManagerComponent('editView', 'right-links', {
+      name: 'menu-link-edit-view',
+      Component: EditView,
+    });
+
     app.addSettingsLink('webtools', {
       id: 'menus',
       intlLabel: {

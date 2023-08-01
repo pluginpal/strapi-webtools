@@ -85,7 +85,7 @@ export default {
   },
   bootstrap(app: App) {
     app.injectContentManagerComponent('editView', 'right-links', {
-      name: 'webtools-edit-view',
+      name: 'url-alias-edit-view',
       Component: EditView,
     });
 
