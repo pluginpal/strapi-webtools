@@ -1,5 +1,5 @@
 {
-  "name": "@pluginpal/strapi-webtools-addon-menus",
+  "name": "@strapi-webtools/addon-menus",
   "version": "0.0.0",
   "description": "This is the description of the plugin.",
   "strapi": {
@@ -16,7 +16,9 @@
     "build": "tsc --outDir build",
     "develop": "tsc -w"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@strapi-webtools/helper-plugin": "*"
+  },
   "devDependencies": {
     "@strapi/design-system": "^1.6.1",
     "@strapi/helper-plugin": "^4.6.0",
