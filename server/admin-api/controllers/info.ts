@@ -1,6 +1,7 @@
 "use strict";
 
 import _ from "lodash";
+import { getPluginService } from "../../util/getPluginService";
 
 /**
  * Info controller
@@ -62,6 +63,23 @@ export default {
       ctx.status = err.status || 500;
       ctx.body = err.message;
       ctx.app.emit("error", err, ctx);
+    }
+  },
+
+  getPluginOptions: async (ctx) => {
+    const { params } = ctx;
+    const { uid } = params;
+
+    if (typeof uid !== "string") return ctx.badRequest("uid must be a string");
+
+    try {
+      const service = getPluginService("infoService");
+      const pluginOptions = await service.getPluginOptions(uid);
+
+      ctx.send(pluginOptions);
+    } catch (err) {
+      ctx.status = err.status || 500;
+      ctx.body = err.message;
     }
   },
 };

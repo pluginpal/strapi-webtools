@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 import { useQuery } from "react-query";
 
@@ -15,24 +15,38 @@ import {
 } from "@strapi/design-system";
 
 import getTrad from "../../helpers/getTrad";
+import { usePluginOptions } from "../../helpers/queries/info";
 
-const EditView = () => {
+type Props = {
+  /**
+   * The slug of the entity being edited.
+   */
+  slug: string;
+};
+
+const EditView: FC<Props> = ({ slug }) => {
   // const [pathEntity, setPathEntity] = useState({});
   const { formatMessage } = useIntl();
   const { modifiedData, onChange } = useCMEditViewDataManager();
 
   const hasPath = !!Number(modifiedData.url_path_id);
+  const { data: pluginOptions, isLoading: pluginOptionsLoading } = usePluginOptions(slug);
+  const isEnabled = pluginOptions?.enabled ?? false;
   const { data: pathEntity = {}, isLoading: isQueryLoading } = useQuery(
     ["url-alias", "findOne", modifiedData.url_path_id, modifiedData.updatedAt],
     () => request(`/url-alias/findOne/${modifiedData.url_path_id}`, {
       method: "GET",
     }),
     {
-      enabled: hasPath,
+      enabled: hasPath && isEnabled,
     },
   );
 
-  const isLoading = hasPath ? isQueryLoading : false;
+  const isLoading = pluginOptionsLoading ? true : !isEnabled ? false : hasPath ? isQueryLoading : false;
+
+  if (!isEnabled) {
+    return null;
+  }
 
   return (
     <Box
