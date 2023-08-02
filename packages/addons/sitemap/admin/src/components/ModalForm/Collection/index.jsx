@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React from 'react';
 
 import { useIntl } from 'react-intl';
 import { isEmpty } from 'lodash/fp';
@@ -9,8 +9,6 @@ import {
   Select,
   Option,
   Checkbox,
-  Combobox,
-  ComboboxOption,
 } from '@strapi/design-system';
 
 import SelectContentTypes from '../../SelectContentTypes';
@@ -20,11 +18,9 @@ import SelectLanguage from '../../SelectLanguage';
 
 const CollectionForm = (props) => {
   const { formatMessage } = useIntl();
-  const [tmpValue, setTmpValue] = useState(null);
 
   const {
     contentTypes,
-    allowedFields,
     onChange,
     onCancel,
     id,
@@ -33,40 +29,14 @@ const CollectionForm = (props) => {
     setUid,
     langcode,
     setLangcode,
-    patternInvalid,
-    setPatternInvalid,
   } = props;
 
   const handleSelectChange = (contentType, lang = 'und') => {
     setLangcode(lang);
     setUid(contentType);
     onCancel(false);
+    onChange(contentType, lang, 'priority', modifiedState.getIn([contentType, 'languages', lang, 'priority'], form.priority.value));
   };
-
-  const patternHint = () => {
-    const base = formatMessage({ id: 'sitemap.Settings.Field.Pattern.DescriptionPart1', defaultMessage: 'Create a dynamic URL pattern' });
-    let suffix = '';
-    if (allowedFields[uid]) {
-      suffix = ` ${formatMessage({ id: 'sitemap.Settings.Field.Pattern.DescriptionPart2', defaultMessage: 'using' })} `;
-      allowedFields[uid].map((fieldName, i) => {
-        if (i === 0) {
-          suffix = `${suffix}[${fieldName}]`;
-        } else if (allowedFields[uid].length !== i + 1) {
-          suffix = `${suffix}, [${fieldName}]`;
-        } else {
-          suffix = `${suffix} ${formatMessage({ id: 'sitemap.Settings.Field.Pattern.DescriptionPart3', defaultMessage: 'and' })} [${fieldName}]`;
-        }
-      });
-    }
-
-    return base + suffix;
-  };
-
-  const dropdownIsOpened = useCallback((value) => {
-    if (value.endsWith('[')) return true;
-    if ((value.match(/\[/g) || []).length > (value.match(/\]/g) || []).length) return true;
-    return false;
-  });
 
   return (
     <form>
@@ -93,51 +63,6 @@ const CollectionForm = (props) => {
         </GridItem>
         <GridItem col={6} s={12}>
           <Grid gap={4}>
-            <GridItem col={12}>
-              <Combobox
-                autocomplete="both"
-                placeholder="/en/pages/[id]"
-                required
-                disabled={!uid || (contentTypes[uid].locales && !langcode)}
-                name="pattern"
-                label={formatMessage({ id: 'sitemap.Settings.Field.Pattern.Label', defaultMessage: 'Pattern' })}
-                error={patternInvalid.invalid ? patternInvalid.message : ''}
-                hint={patternHint()}
-                onChange={(v) => {
-                  if (modifiedState.getIn([uid, 'languages', langcode, 'pattern'], '') === v) return;
-                  const lastIndex = modifiedState.getIn([uid, 'languages', langcode, 'pattern'], '').lastIndexOf('[');
-                  onChange(uid, langcode, 'pattern', `${modifiedState.getIn([uid, 'languages', langcode, 'pattern'], '').slice(0, lastIndex)}[${v}]`);
-                  setTmpValue(null);
-                }}
-                onInputChange={(e) => {
-                  if (e.target.value.match(/^[A-Za-z0-9-_.~[\]/]*$/)) {
-                    onChange(uid, langcode, 'pattern', e.target.value);
-                    setPatternInvalid({ invalid: false });
-
-                    if (dropdownIsOpened(e.target.value)) {
-                      if (!tmpValue) {
-                        const lastIndex = e.target.value.lastIndexOf('[');
-                        setTmpValue(`${e.target.value.slice(0, lastIndex)}[`);
-                      }
-                    } else {
-                      setTmpValue(null);
-                    }
-                  }
-                }}
-                textValue={modifiedState.getIn([uid, 'languages', langcode, 'pattern'], '')}
-                allowCustomValue
-                open={() => dropdownIsOpened(modifiedState.getIn([uid, 'languages', langcode, 'pattern'], ''))}
-              >
-                {allowedFields[uid]?.map((fieldName) => (
-                  <ComboboxOption
-                    value={fieldName}
-                    key={fieldName}
-                  >
-                    <span style={{ display: 'none' }}>{tmpValue}</span>{fieldName}
-                  </ComboboxOption>
-                ))}
-              </Combobox>
-            </GridItem>
             {Object.keys(form).map((input) => (
               <GridItem col={12} key={input}>
                 <Select

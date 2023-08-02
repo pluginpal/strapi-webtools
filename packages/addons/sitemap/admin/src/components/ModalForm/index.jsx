@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useIntl } from 'react-intl';
-
-import { request, InjectionZone } from '@strapi/helper-plugin';
-
 import { useSelector } from 'react-redux';
+
+import { InjectionZone } from '@strapi/helper-plugin';
 
 import {
   ModalLayout,
@@ -29,7 +28,6 @@ import pluginId from '../../helpers/pluginId';
 const ModalForm = (props) => {
   const [uid, setUid] = useState('');
   const [langcode, setLangcode] = useState('und');
-  const [patternInvalid, setPatternInvalid] = useState({ invalid: false });
   const { formatMessage } = useIntl();
 
   const hasPro = useSelector((state) => state.getIn(['sitemap', 'info', 'hasPro'], false));
@@ -41,13 +39,10 @@ const ModalForm = (props) => {
     id,
     lang,
     type,
-    modifiedState,
     contentTypes,
   } = props;
 
   useEffect(() => {
-    setPatternInvalid({ invalid: false });
-
     if (id && !uid) {
       setUid(id);
     } else {
@@ -65,26 +60,10 @@ const ModalForm = (props) => {
     return null;
   }
 
-  const submitForm = async (e) => {
-    if (type === 'collection') {
-      const response = await request('/sitemap/pattern/validate-pattern', {
-        method: 'POST',
-        body: {
-          pattern: modifiedState.getIn([uid, 'languages', langcode, 'pattern'], null),
-          modelName: uid,
-        },
-      });
-
-      if (!response.valid) {
-        setPatternInvalid({ invalid: true, message: response.message });
-      } else onSubmit(e);
-    } else onSubmit(e);
-  };
-
   const form = () => {
     switch (type) {
       case 'collection':
-        return <CollectionForm uid={uid} setUid={setUid} langcode={langcode} setLangcode={setLangcode} setPatternInvalid={setPatternInvalid} patternInvalid={patternInvalid} {...props} />;
+        return <CollectionForm uid={uid} setUid={setUid} langcode={langcode} setLangcode={setLangcode} {...props} />;
       case 'custom':
         return <CustomForm uid={uid} setUid={setUid} {...props} />;
       default:
@@ -137,7 +116,7 @@ const ModalForm = (props) => {
         )}
         endActions={(
           <Button
-            onClick={submitForm}
+            onClick={onSubmit}
             disabled={!uid || (contentTypes && contentTypes[uid].locales && !langcode)}
           >
             {formatMessage({ id: 'sitemap.Button.Save', defaultMessage: 'Save' })}
