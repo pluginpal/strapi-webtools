@@ -32,7 +32,7 @@ export default {
       to: '/settings/webtools/sitemap',
       async Component() {
         const component = await import(
-          /* webpackChunkName: "upload-settings" */ './pages/Settings'
+          /* webpackChunkName: "upload-settings" */ './containers/App'
         );
 
         return component;
