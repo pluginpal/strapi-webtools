@@ -4,6 +4,7 @@ import _ from "lodash";
 import { getPluginService } from "../../util/getPluginService";
 import { PluginOptions } from "../../../lib/schemas/pluginOptions";
 import { GetContentTypes } from '../../../lib/schemas/getContentTypes';
+import { isContentTypeEnabled } from "../../util/enabledContentTypes";
 
 /**
  * Info controller
@@ -16,19 +17,8 @@ export default {
 
       const infoService = getPluginService("infoService");
       await Promise.all(
-        Object.values(strapi.contentTypes).map(async (contentType: any) => {
-          const { pluginOptions } = contentType;
-
-          // Not for CTs that are not visible in the content manager.
-          const isInContentManager = _.get(pluginOptions, [
-            "content-manager",
-            "visible",
-          ]);
-          if (isInContentManager === false) return;
-
-          const urlAliasPluginOptions = infoService.getPluginOptions(contentType.uid) as PluginOptions;
-
-          if (!urlAliasPluginOptions.enabled) {
+        Object.entries(strapi.contentTypes).map(async ([uid, contentType]: any) => {
+          if (!isContentTypeEnabled(uid)) {
             return;
           }
 
