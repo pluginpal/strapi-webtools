@@ -12,6 +12,7 @@ export const useUrlAliasContentTypes = () => {
     const parsed = getContentTypesSchema.validateSync(response);
     return parsed;
   }, {
+    // TODO: Should refetch in dev after content type changes
     refetchOnMount: false,
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,

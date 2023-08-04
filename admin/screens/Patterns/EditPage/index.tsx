@@ -25,30 +25,20 @@ import Center from "../../../components/Center";
 import Select from "../../../components/Select";
 import LabelField from "../../../components/LabelField";
 import PatternField from "../../../components/PatternField";
+import { useUrlAliasContentTypes } from '../../../helpers/queries/info';
 
 const EditPatternPage = () => {
   const { push } = useHistory();
   const toggleNotification = useNotification();
   const [loading, setLoading] = useState(false);
   const [patternEntity, setPatternEntity] = useState<null | any>(null);
-  const [contentTypes, setContentTypes] = useState([]);
   const { formatMessage } = useIntl();
 
   const {
     params: { id },
   } = useRouteMatch<{ id: string }>(`/settings/${pluginId}/patterns/:id`)!;
 
-  useEffect(() => {
-    setLoading(true);
-    request(`/url-alias/info/getContentTypes`, { method: "GET" })
-      .then((res: any) => {
-        setContentTypes(res);
-        setLoading(false);
-      })
-      .catch(() => {
-        setLoading(false);
-      });
-  }, []);
+  const { data: contentTypes = [], isLoading } = useUrlAliasContentTypes();
 
   useEffect(() => {
     setLoading(true);
@@ -115,7 +105,7 @@ const EditPatternPage = () => {
     return errors;
   };
 
-  if (loading || !contentTypes || !patternEntity) {
+  if (loading || isLoading || !contentTypes || !patternEntity) {
     return (
       <Center>
         <Loader>
