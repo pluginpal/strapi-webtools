@@ -15,7 +15,7 @@ import {
 } from "@strapi/design-system";
 
 import getTrad from "../../helpers/getTrad";
-import { usePluginOptions } from "../../helpers/queries/info";
+import { useUrlAliasContentTypes } from "../../helpers/queries/info";
 
 type Props = {
   /**
@@ -30,8 +30,9 @@ const EditView: FC<Props> = ({ slug }) => {
   const { modifiedData, onChange } = useCMEditViewDataManager();
 
   const hasPath = !!Number(modifiedData.url_path_id);
-  const { data: pluginOptions, isLoading: pluginOptionsLoading } = usePluginOptions(slug);
-  const isEnabled = pluginOptions?.enabled ?? false;
+  // const { data: pluginOptions, isLoading: pluginOptionsLoading } = usePluginOptions(slug);
+  const { data: urlAliasContentTypes, isLoading: contentTypesIsLoading } = useUrlAliasContentTypes();
+  const isEnabled = !urlAliasContentTypes ? false : urlAliasContentTypes.some((contentType) => contentType.uid === slug);
   const { data: pathEntity = {}, isLoading: isQueryLoading } = useQuery(
     ["url-alias", "findOne", modifiedData.url_path_id, modifiedData.updatedAt],
     () => request(`/url-alias/findOne/${modifiedData.url_path_id}`, {
@@ -42,7 +43,7 @@ const EditView: FC<Props> = ({ slug }) => {
     },
   );
 
-  const isLoading = pluginOptionsLoading ? true : !isEnabled ? false : hasPath ? isQueryLoading : false;
+  const isLoading = contentTypesIsLoading ? true : !isEnabled ? false : hasPath ? isQueryLoading : false;
 
   if (!isEnabled) {
     return null;

@@ -2,6 +2,8 @@
 
 import _ from "lodash";
 import { getPluginService } from "../../util/getPluginService";
+import { PluginOptions } from "../../../lib/schemas/pluginOptions";
+import { GetContentTypes } from '../../../lib/schemas/getContentTypes';
 
 /**
  * Info controller
@@ -10,11 +12,9 @@ import { getPluginService } from "../../util/getPluginService";
 export default {
   getContentTypes: async (ctx) => {
     try {
-      const contentTypes: {
-        name: string;
-        uid: string;
-      }[] = [];
+      const contentTypes: GetContentTypes = [];
 
+      const infoService = getPluginService("infoService");
       await Promise.all(
         Object.values(strapi.contentTypes).map(async (contentType: any) => {
           const { pluginOptions } = contentType;
@@ -26,12 +26,20 @@ export default {
           ]);
           if (isInContentManager === false) return;
 
+          const urlAliasPluginOptions = infoService.getPluginOptions(contentType.uid) as PluginOptions;
+
+          if (!urlAliasPluginOptions.enabled) {
+            return;
+          }
+
           contentTypes.push({
             name: contentType.globalId,
             uid: contentType.uid,
           });
         }),
       );
+
+      // No need to validate the type here as it has already been set on the variable.
 
       ctx.send(contentTypes);
     } catch (err) {
@@ -63,23 +71,6 @@ export default {
       ctx.status = err.status || 500;
       ctx.body = err.message;
       ctx.app.emit("error", err, ctx);
-    }
-  },
-
-  getPluginOptions: async (ctx) => {
-    const { params } = ctx;
-    const { uid } = params;
-
-    if (typeof uid !== "string") return ctx.badRequest("uid must be a string");
-
-    try {
-      const service = getPluginService("infoService");
-      const pluginOptions = await service.getPluginOptions(uid);
-
-      ctx.send(pluginOptions);
-    } catch (err) {
-      ctx.status = err.status || 500;
-      ctx.body = err.message;
     }
   },
 };

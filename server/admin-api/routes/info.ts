@@ -17,12 +17,4 @@ export default [
       policies: [],
     },
   },
-  {
-    method: "GET",
-    path: "/info/getPluginOptions/:uid",
-    handler: "info.getPluginOptions",
-    config: {
-      policies: [],
-    },
-  },
 ];
