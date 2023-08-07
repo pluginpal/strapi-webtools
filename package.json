@@ -20,6 +20,7 @@
     "develop": "run-p develop:*",
     "build:server": "tsc -p tsconfig.server.json",
     "build:admin": "tsc -p tsconfig.json",
+    "build:copy": "copyfiles package.json dist/",
     "build": "rimraf dist && run-s build:*"
   },
   "dependencies": {},
@@ -56,6 +57,7 @@
     "@typescript-eslint/eslint-plugin": "^5.59.11",
     "@typescript-eslint/parser": "^5.59.11",
     "babel-eslint": "9.0.0",
+    "copyfiles": "^2.4.1",
     "eslint": "^7.32.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-airbnb-typescript": "^17.0.0",

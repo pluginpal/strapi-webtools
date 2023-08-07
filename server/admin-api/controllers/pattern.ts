@@ -2,6 +2,7 @@
 
 import _ from "lodash";
 import { getPluginService } from "../../util/getPluginService";
+import { isContentTypeEnabled } from "../../util/enabledContentTypes";
 
 /**
  * Pattern controller
@@ -76,14 +77,9 @@ const controller = ({ strapi }) => ({
     const formattedFields = {};
 
     Object.values(strapi.contentTypes).map(async (contentType: any) => {
-      const { pluginOptions } = contentType;
-
-      // Not for CTs that are not visible in the content manager.
-      const isInContentManager = _.get(pluginOptions, [
-        "content-manager",
-        "visible",
-      ]);
-      if (isInContentManager === false) return;
+      if (!isContentTypeEnabled(contentType.uid)) {
+        return;
+      }
 
       const fields = await getPluginService("patternService").getAllowedFields(
         contentType,

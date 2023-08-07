@@ -1,6 +1,10 @@
 "use strict";
 
 import _ from "lodash";
+import { getPluginService } from "../../util/getPluginService";
+import { PluginOptions } from "../../../lib/schemas/pluginOptions";
+import { GetContentTypes } from '../../../lib/schemas/getContentTypes';
+import { isContentTypeEnabled } from "../../util/enabledContentTypes";
 
 /**
  * Info controller
@@ -9,21 +13,14 @@ import _ from "lodash";
 export default {
   getContentTypes: async (ctx) => {
     try {
-      const contentTypes: {
-        name: string;
-        uid: string;
-      }[] = [];
+      const contentTypes: GetContentTypes = [];
 
+      const infoService = getPluginService("infoService");
       await Promise.all(
-        Object.values(strapi.contentTypes).map(async (contentType: any) => {
-          const { pluginOptions } = contentType;
-
-          // Not for CTs that are not visible in the content manager.
-          const isInContentManager = _.get(pluginOptions, [
-            "content-manager",
-            "visible",
-          ]);
-          if (isInContentManager === false) return;
+        Object.entries(strapi.contentTypes).map(async ([uid, contentType]: any) => {
+          if (!isContentTypeEnabled(uid)) {
+            return;
+          }
 
           contentTypes.push({
             name: contentType.globalId,
@@ -31,6 +28,8 @@ export default {
           });
         }),
       );
+
+      // No need to validate the type here as it has already been set on the variable.
 
       ctx.send(contentTypes);
     } catch (err) {

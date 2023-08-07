@@ -25,25 +25,14 @@ import Center from '../../../components/Center';
 import Select from '../../../components/Select';
 import LabelField from '../../../components/LabelField';
 import PatternField from '../../../components/PatternField';
+import { useUrlAliasContentTypes } from '../../../helpers/queries/info';
 
 const CreatePattternPage = () => {
   const { push } = useHistory();
   const toggleNotification = useNotification();
-  const [loading, setLoading] = useState(false);
-  const [contentTypes, setContentTypes] = useState([]);
   const { formatMessage } = useIntl();
 
-  useEffect(() => {
-    setLoading(true);
-    request(`/url-alias/info/getContentTypes`, { method: 'GET' })
-      .then((res: any) => {
-        setContentTypes(res);
-        setLoading(false);
-      })
-      .catch(() => {
-        setLoading(false);
-      });
-  }, []);
+  const { data: contentTypes = [], isLoading } = useUrlAliasContentTypes();
 
   const handleCreateSubmit = (values: any, { setSubmitting, setErrors }: any) => {
     request(`/url-alias/pattern/create`, {
@@ -88,7 +77,7 @@ const CreatePattternPage = () => {
     return errors;
   };
 
-  if (loading || !contentTypes) {
+  if (isLoading || !contentTypes) {
     return (
       <Center>
         <Loader>{formatMessage({ id: 'url-alias.settings.loading', defaultMessage: "Loading content..." })}</Loader>

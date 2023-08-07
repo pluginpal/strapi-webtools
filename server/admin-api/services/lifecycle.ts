@@ -3,6 +3,7 @@
 import _ from "lodash";
 
 import { getPluginService } from "../../util/getPluginService";
+import { isContentTypeEnabled } from "../../util/enabledContentTypes";
 
 /**
  * Update an entity.
@@ -193,14 +194,10 @@ const subscribeLifecycleMethods = async (modelName) => {
 export default () => ({
   async loadAllLifecycleMethods() {
     Object.keys(strapi.contentTypes).map(async (contentType) => {
-      const { pluginOptions } = strapi.contentTypes[contentType];
-
       // Not for CTs that are not visible in the content manager.
-      const isInContentManager = _.get(pluginOptions, [
-        "content-manager",
-        "visible",
-      ]);
-      if (isInContentManager === false) return;
+      if (!isContentTypeEnabled(contentType)) {
+        return;
+      }
 
       await subscribeLifecycleMethods(contentType);
     });

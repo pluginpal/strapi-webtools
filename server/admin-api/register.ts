@@ -1,15 +1,16 @@
 'use strict';
 
 import _ from 'lodash';
+import { isContentTypeEnabled } from '../util/enabledContentTypes';
 
 export default async (strapi) => {
   // Register the url_path_id field.
   Object.values(strapi.contentTypes).forEach((contentType: any) => {
     const { attributes, pluginOptions } = contentType;
 
-    // Not for CTs that are not visible in the content manager.
-    const isInContentManager = _.get(pluginOptions, ['content-manager', 'visible']);
-    if (isInContentManager === false) return;
+    if (!isContentTypeEnabled(contentType.uid)) {
+      return;
+    }
 
     _.set(attributes, 'url_path_id', {
       writable: true,
