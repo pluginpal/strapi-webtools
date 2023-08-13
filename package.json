@@ -88,8 +88,7 @@
   },
   "homepage": "https://github.com/strapi-community/strapi-plugin-url-alias#readme",
   "engines": {
-    "node": ">=10.0.0",
-    "npm": ">=6.0.0"
+    "node": ">=16.0.0",
   },
   "license": "MIT"
 }
