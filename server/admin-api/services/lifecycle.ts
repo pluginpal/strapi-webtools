@@ -45,6 +45,7 @@ const updateEntity = async (event, modelName) => {
     return;
   }
 
+  const redirectService = getPluginService("redirectService");
   if (!data.path_generated && !data.path_value) {
     const pathEntity = await getPluginService("pathService").findOne(
       entity.url_path_id,
@@ -54,22 +55,25 @@ const updateEntity = async (event, modelName) => {
       const generatedPath = await getPluginService(
         "patternService",
       ).resolvePattern(modelName, entity);
+      // TODO: fix double writes
+      await redirectService.createFromChange(pathEntity, generatedPath);
       await getPluginService("pathService").update(entity.url_path_id, {
-        url_path: generatedPath,
         generated: true,
       });
     }
   } else if (!data.path_generated && data.path_value) {
+    // TODO: fix double writes
+    await redirectService.createFromChange(entity.url_path_id, data.path_value);
     await getPluginService("pathService").update(entity.url_path_id, {
-      url_path: data.path_value,
       generated: false,
     });
   } else {
     const generatedPath = await getPluginService(
       "patternService",
     ).resolvePattern(modelName, entity);
+    // TODO: fix double writes
+    await redirectService.createFromChange(entity.url_path_id, generatedPath);
     await getPluginService("pathService").update(entity.url_path_id, {
-      url_path: generatedPath,
       generated: true,
     });
   }

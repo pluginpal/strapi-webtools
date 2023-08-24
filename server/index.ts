@@ -19,6 +19,7 @@ import adminApiInfoRoutes from "./admin-api/routes/info";
 import adminApiLifecycleService from "./admin-api/services/lifecycle";
 import adminApiOverrideQueryLayerService from "./admin-api/services/override-query-layer";
 import adminApiInfoService from "./admin-api/services/info";
+import adminApiRedirectService from "./admin-api/services/redirect";
 
 // Content API
 import contentApiByPathController from "./content-api/controllers/by-path";
@@ -72,5 +73,6 @@ export default {
     byPathService: contentApiByPathService,
     overrideQueryLayer: adminApiOverrideQueryLayerService,
     infoService: adminApiInfoService,
+    redirectService: adminApiRedirectService,
   },
 };
