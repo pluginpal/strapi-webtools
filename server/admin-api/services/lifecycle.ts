@@ -20,7 +20,13 @@ const updateEntity = async (event, modelName) => {
   const fetchedEntity = await strapi.entityService.findOne(uid, id);
   const entity = _.merge(fetchedEntity, data);
 
-  if (!entity.url_path_id) {
+  // In some cases the entity may have a url_path_id but no path entity.
+  // If there is no path entity we need to create one.
+  const initialPathEntity = await getPluginService("pathService").findOne(
+    entity.url_path_id,
+  );
+
+  if (!entity.url_path_id || !initialPathEntity) {
     let pathEntity;
 
     if (!data.path_generated && data.path_value) {
