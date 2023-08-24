@@ -107,12 +107,15 @@ export default () => ({
 
       if (pathAllreadyExists) {
         await duplicateCheck(ext + 1);
-      } else {
-        data.url_path = data.url_path + extension;
+        return;
       }
+
+      data.url_path = data.url_path + extension;
     };
 
-    await duplicateCheck();
+    if (data.url_path !== undefined) {
+      await duplicateCheck();
+    }
 
     const pathEntity = await strapi.entityService.update('plugin::url-alias.path', id, {
       data,
