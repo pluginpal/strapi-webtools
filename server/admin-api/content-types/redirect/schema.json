@@ -1,0 +1,44 @@
+{
+  "kind": "collectionType",
+  "collectionName": "redirects",
+  "info": {
+    "singularName": "redirect",
+    "pluralName": "redirects",
+    "displayName": "Redirect"
+  },
+  "options": {
+    "draftAndPublish": false,
+    "comment": ""
+  },
+  "pluginOptions": {
+    "content-manager": {
+      "visible": false
+    },
+    "content-type-builder": {
+      "visible": false
+    }
+  },
+  "attributes": {
+    "from_path": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::url-alias.path",
+      "required": true,
+      "unique": true
+    },
+    "to_path": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "plugin::url-alias.path"
+    },
+    "to_url": {
+      "type": "string"
+    },
+    "redirect_type": {
+      "type": "enumeration",
+      "enum": ["permanent", "temporary"],
+      "required": true,
+      "default": "permanent"
+    }
+  }
+}

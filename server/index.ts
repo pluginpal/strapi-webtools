@@ -7,6 +7,7 @@ import adminApiRegister from "./admin-api/register";
 import adminApiBootstrap from "./admin-api/bootstrap";
 import adminApiPathSchema from "./admin-api/content-types/path/schema.json";
 import adminApiPatternSchema from "./admin-api/content-types/pattern/schema.json";
+import adminApiRedirectSchema from "./admin-api/content-types/redirect/schema.json";
 import adminApiPathController from "./admin-api/controllers/path";
 import adminApiPatternController from "./admin-api/controllers/pattern";
 import adminApiInfoController from "./admin-api/controllers/info";
@@ -38,6 +39,9 @@ export default {
     },
     pattern: {
       schema: adminApiPatternSchema,
+    },
+    redirect: {
+      schema: adminApiRedirectSchema,
     },
   },
   routes: {
