@@ -11,7 +11,12 @@ export default () => ({
    * @param data the data.
    * @returns {object} transformed data
    */
-  preparePath: async function traverse(data: any) {
+  preparePath: async function traverse(data: any): Promise<any> {
+    if (Array.isArray(data)) {
+      await Promise.all(data.map((item) => traverse(item)));
+      return data;
+    }
+
     if (!isObject(data)) {
       return data;
     }
@@ -21,6 +26,7 @@ export default () => ({
         await traverse(data[key]);
         return;
       }
+
 
       if (key === 'url_path_id') {
         if (Number(value) && value !== null) {
