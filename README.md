@@ -107,6 +107,12 @@ await fetch(`${API_URL}/api/url-alias/get?path=/about-page`);
 // GET /api/url-alias/get?path=/about-page
 ```
 
+## Migration guides
+
+See [MIGRATION.md](./MIGRATION.md)
+
+
+
 ## 🔗 Links
 
 - [NPM package](https://www.npmjs.com/package/@strapi-community/strapi-plugin-url-alias)
