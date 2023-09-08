@@ -4,4 +4,5 @@
 **/config
 **/scripts
 **/playground
+**/*.d.ts
 dist

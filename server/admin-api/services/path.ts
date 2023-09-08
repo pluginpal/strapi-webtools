@@ -1,8 +1,9 @@
 'use strict';
 
+import { Strapi } from '@strapi/strapi';
 import { getPluginService } from '../../util/getPluginService';
 
-export default () => ({
+export default ({ strapi }: { strapi: Strapi }) => ({
   /**
    * Create.
    *
@@ -79,7 +80,7 @@ export default () => ({
    * @param {number} id the id to ignore.
    * @returns {void}
    */
-  findByPath: async (path, id = 0) => {
+  findByPath: async (path: string, id = 0) => {
     const pathEntity = await strapi.entityService.findMany('plugin::url-alias.path', {
       filters: {
         url_path: path,
