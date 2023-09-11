@@ -81,7 +81,7 @@ const controller = ({ strapi }) => ({
         return;
       }
 
-      const fields = await getPluginService("patternService").getAllowedFields(
+      const fields = getPluginService("patternService").getAllowedFields(
         contentType,
         ["string", "uid", "id"],
       );
@@ -97,7 +97,7 @@ const controller = ({ strapi }) => ({
 
     const contentType = strapi.contentTypes[modelName];
 
-    const fields = await patternService.getAllowedFields(contentType, [
+    const fields = patternService.getAllowedFields(contentType, [
       "string",
       "uid",
       "id",
