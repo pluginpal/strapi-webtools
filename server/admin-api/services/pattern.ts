@@ -44,7 +44,7 @@ export default () => ({
    * @param {object} params the params.
    * @returns {void}
    */
-  findMany: async (params) => {
+  findMany: async (params?) => {
     const patternEntities = await strapi.entityService.findMany('plugin::url-alias.pattern', params);
 
     return patternEntities;

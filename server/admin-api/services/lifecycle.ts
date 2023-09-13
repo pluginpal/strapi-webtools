@@ -173,7 +173,7 @@ const subscribeLifecycleMethods = async (modelName) => {
           const entity = result[i];
 
           if (entity.url_path_id) {
-            getPluginService("pathService").delete(entity.url_path_id);
+            getPluginService("pathService").delete(entity.url_path_id).catch(() => {});
           }
         }
       },

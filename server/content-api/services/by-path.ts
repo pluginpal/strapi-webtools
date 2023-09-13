@@ -25,7 +25,7 @@ export default () => ({
       excludeDrafts = true;
     }
 
-    const entity = await strapi.entityService.findMany(pathEntity.contenttype, {
+    const entity = await strapi.entityService.findMany(pathEntity.contenttype as any, {
       ...query,
       filters: {
         ...query?.filters,
@@ -38,7 +38,7 @@ export default () => ({
       limit: 1,
     });
 
-    if (!entity[0]) {
+    if (!entity?.[0]) {
       return {};
     }
 
