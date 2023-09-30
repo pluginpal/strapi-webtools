@@ -10,14 +10,6 @@
     "draftAndPublish": false,
     "comment": ""
   },
-  "pluginOptions": {
-    "content-manager": {
-      "visible": false
-    },
-    "content-type-builder": {
-      "visible": false
-    }
-  },
   "attributes": {
     "url_path": {
       "type": "string",

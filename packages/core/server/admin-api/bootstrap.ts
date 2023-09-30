@@ -4,11 +4,8 @@ import { getPluginService } from '../util/getPluginService';
 
 export default async ({ strapi }) => {
   try {
-    // Register the lifecycle methods.
-    await getPluginService('lifecycleService').loadAllLifecycleMethods();
-
-    // Rewrite the results from the internal query APIs.
-    getPluginService('overrideQueryLayer').initialize();
+    // // Register the lifecycle methods.
+    // await getPluginService('lifecycleService').loadAllLifecycleMethods();
 
     // Register permission actions.
     const actions = [

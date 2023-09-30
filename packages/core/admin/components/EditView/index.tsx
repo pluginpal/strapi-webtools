@@ -26,6 +26,20 @@ const EditView = () => {
   const { formatMessage } = useIntl();
   const { modifiedData, onChange, slug } = useCMEditViewDataManager();
 
+  useEffect(() => {
+    onChange({
+      target: {
+        name: "url_alias",
+        value: {
+          url_path: '/test',
+          contenttype: slug,
+        }
+      },
+    });
+  }, []);
+
+  console.log(modifiedData);
+
   const hasPath = !!Number(modifiedData.url_path_id);
   const { data: pathEntity = {}, isLoading: isQueryLoading } = useQuery(
     ["webtools", "findOne", modifiedData.url_path_id, modifiedData.updatedAt],
