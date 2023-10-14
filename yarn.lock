@@ -2343,7 +2343,7 @@
     "@strapi/utils" "4.14.4"
     fs-extra "10.0.0"
 
-"@strapi/strapi@4.14.4", "@strapi/strapi@^4.14.4":
+"@strapi/strapi@4.14.4", "@strapi/strapi@^4.13.3":
   version "4.14.4"
   resolved "https://registry.yarnpkg.com/@strapi/strapi/-/strapi-4.14.4.tgz#c1e13c841de35e5023c8db2e5f1c87b71dcc06ba"
   integrity sha512-XCg/DV4GpmYEz0IJJhR/YqcQLYB++EiYSUy5H40Ta2oKruCrfibFWxoNJt/LWuVqYu2YYZFJI8peQd+mXXRdxQ==
@@ -2466,7 +2466,7 @@
     aria-hidden "^1.2.3"
     react-remove-scroll "^2.5.6"
 
-"@strapi/utils@4.14.4", "@strapi/utils@^4.14.4":
+"@strapi/utils@4.14.4", "@strapi/utils@^4.13.3":
   version "4.14.4"
   resolved "https://registry.yarnpkg.com/@strapi/utils/-/utils-4.14.4.tgz#856bd5e459138327e2a0b07e46eab80f8d129d8f"
   integrity sha512-Eyj9PB4Gz6r8cHsWzVOCnmEDTgYr17n3P8xOGHoLUN9Uz7dB7eeloeUNhYiAZHKzNDd02LETySWTglwwA5NpXQ==
