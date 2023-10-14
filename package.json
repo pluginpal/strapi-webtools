@@ -42,7 +42,7 @@
     "strapi-server.js"
   ],
   "peerDependencies": {
-    "@strapi/strapi": "^4.14.4"
+    "@strapi/strapi": "^4.0.0"
   },
   "devDependencies": {
     "@strapi/design-system": "^1.11.0",
