@@ -42,14 +42,14 @@
     "strapi-server.js"
   ],
   "peerDependencies": {
-    "@strapi/strapi": "^4.0.0"
+    "@strapi/strapi": "^4.14.4"
   },
   "devDependencies": {
-    "@strapi/design-system": "^1.8.0",
-    "@strapi/helper-plugin": "^4.13.3",
-    "@strapi/icons": "^1.8.0",
+    "@strapi/design-system": "^1.11.0",
+    "@strapi/helper-plugin": "^4.14.4",
+    "@strapi/icons": "^1.11.0",
     "@strapi/strapi": "^4.13.3",
-    "@strapi/utils": "^4.13.3",
+    "@strapi/utils": "^4.14.4",
     "@types/lodash": "^4.14.195",
     "@types/react-router-dom": "^5.3.3",
     "@types/styled-components": "^5.1.26",
@@ -87,7 +87,7 @@
   },
   "homepage": "https://github.com/strapi-community/strapi-plugin-url-alias#readme",
   "engines": {
-    "node": ">=16.0.0"
+    "node": ">=18.0.0"
   },
   "license": "MIT"
 }
