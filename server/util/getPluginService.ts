@@ -12,6 +12,6 @@ type Services = Config['services'];
  * @return {any} service.
  */
 export const getPluginService = <ServiceName extends keyof Services>(name: ServiceName) => {
-  const service = strapi.service<ReturnType<Services[ServiceName]>>(`plugin::${pluginId}.${name}`);
-  return service as Exclude<typeof service, undefined>;
+  const service = strapi.service(`plugin::${pluginId}.${name}`);
+  return service as ReturnType<Services[ServiceName]>;
 };
