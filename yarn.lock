@@ -89,7 +89,7 @@
     json5 "^2.2.3"
     semver "^6.3.1"
 
-"@babel/generator@^7.22.7", "@babel/generator@^7.22.9", "@babel/generator@^7.7.2":
+"@babel/generator@^7.22.9", "@babel/generator@^7.7.2":
   version "7.22.9"
   resolved "https://registry.yarnpkg.com/@babel/generator/-/generator-7.22.9.tgz#572ecfa7a31002fa1de2a9d91621fd895da8493d"
   integrity sha512-KtLMbmicyuK2Ak/FTCJVbDnkN1SlT8/kceFTiuDiiRUUSMnHMidxSCdG4ndkTOHHpoomWe/4xkvHkEOncwjYIw==
@@ -147,14 +147,6 @@
   version "7.22.5"
   resolved "https://registry.yarnpkg.com/@babel/helper-environment-visitor/-/helper-environment-visitor-7.22.5.tgz#f06dd41b7c1f44e1f8da6c4055b41ab3a09a7e98"
   integrity sha512-XGmhECfVA/5sAt+H+xpSg0mfrHq6FzNr9Oxh7PSEBBRUb/mL7Kz3NICXb194rCqAEdxkhPT1a88teizAFyvk8Q==
-
-"@babel/helper-function-name@^7.22.5":
-  version "7.22.5"
-  resolved "https://registry.yarnpkg.com/@babel/helper-function-name/-/helper-function-name-7.22.5.tgz#ede300828905bb15e582c037162f99d5183af1be"
-  integrity sha512-wtHSq6jMRE3uF2otvfuD3DIvVhOsSNshQl0Qrd7qC9oQJzHvOL4qQXlQn2916+CXGywIjpGuIkoyZRRxHPiNQQ==
-  dependencies:
-    "@babel/template" "^7.22.5"
-    "@babel/types" "^7.22.5"
 
 "@babel/helper-function-name@^7.23.0":
   version "7.23.0"
@@ -442,23 +434,7 @@
     "@babel/parser" "^7.22.5"
     "@babel/types" "^7.22.5"
 
-"@babel/traverse@^7.0.0", "@babel/traverse@^7.22.6", "@babel/traverse@^7.22.8", "@babel/traverse@^7.4.5":
-  version "7.22.8"
-  resolved "https://registry.yarnpkg.com/@babel/traverse/-/traverse-7.22.8.tgz#4d4451d31bc34efeae01eac222b514a77aa4000e"
-  integrity sha512-y6LPR+wpM2I3qJrsheCTwhIinzkETbplIgPBbwvqPKc+uljeA5gP+3nP8irdYt1mjQaDnlIcG+dw8OjAco4GXw==
-  dependencies:
-    "@babel/code-frame" "^7.22.5"
-    "@babel/generator" "^7.22.7"
-    "@babel/helper-environment-visitor" "^7.22.5"
-    "@babel/helper-function-name" "^7.22.5"
-    "@babel/helper-hoist-variables" "^7.22.5"
-    "@babel/helper-split-export-declaration" "^7.22.6"
-    "@babel/parser" "^7.22.7"
-    "@babel/types" "^7.22.5"
-    debug "^4.1.0"
-    globals "^11.1.0"
-
-"@babel/traverse@^7.23.2":
+"@babel/traverse@^7.0.0", "@babel/traverse@^7.22.6", "@babel/traverse@^7.22.8", "@babel/traverse@^7.23.2", "@babel/traverse@^7.4.5":
   version "7.23.2"
   resolved "https://registry.yarnpkg.com/@babel/traverse/-/traverse-7.23.2.tgz#329c7a06735e144a506bdb2cad0268b7f46f4ad8"
   integrity sha512-azpe59SQ48qG6nu2CzcMLbxUudtN+dOM9kDbUqGq3HXUJRlo7i8fvPoxQUzYgLZ4cMVmuZgm8vvBpNeRhd6XSw==
