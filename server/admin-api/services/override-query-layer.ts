@@ -14,6 +14,7 @@ export default () => ({
 
           return async function() {
             // eslint-disable-next-line prefer-rest-params
+            // @ts-ignore
             let response = await storedMethod.apply(this, arguments);
             response = await getPluginService('preparePathService').response(response);
             return response;
