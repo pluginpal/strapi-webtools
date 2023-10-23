@@ -10,7 +10,7 @@ export const isContentTypeEnabled = (uid: string) => {
   if (isInContentManager === false) return false;
 
   const urlAliasPluginOptionsRaw = _.get(pluginOptions, [pluginId], {});
-  const urlAliasOptions = pluginOptionsSchema.cast(urlAliasPluginOptionsRaw);
+  const urlAliasOptions = pluginOptionsSchema.cast(urlAliasPluginOptionsRaw );
 
   if (!urlAliasOptions.enabled) return false;
 
