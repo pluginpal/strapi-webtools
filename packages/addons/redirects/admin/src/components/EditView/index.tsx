@@ -1,6 +1,6 @@
 import React from "react";
 import { useIntl } from "react-intl";
-import { SidebarItem } from "@strapi-webtools/helper-plugin";
+import { SidebarDropdown } from "@strapi-webtools/helper-plugin";
 
 import getTrad from "../../helpers/getTrad";
 
@@ -8,14 +8,14 @@ const EditView = () => {
   const { formatMessage } = useIntl();
 
   return (
-    <SidebarItem
+    <SidebarDropdown
       label={formatMessage({
         id: getTrad("plugin.name"),
         defaultMessage: "Redirects",
       })}
     >
       Some redirects info
-    </SidebarItem>
+    </SidebarDropdown>
   );
 };
 
