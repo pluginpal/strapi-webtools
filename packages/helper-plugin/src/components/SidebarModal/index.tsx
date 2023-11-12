@@ -12,9 +12,21 @@ import Sidebar from '../Sidebar';
 
 const SidebarModal = ({
   label,
-  children
+  children,
+  onSubmit,
+  onCancel,
 }) => {
   const [opened, setOpened] = useState<boolean>(false);
+
+  const onSave = () => {
+    onSubmit();
+    setOpened(prev => !prev)
+  };
+
+  const onClose = () => {
+    onCancel();
+    setOpened(prev => !prev)
+  };
 
   return (
     <Sidebar onClick={() => !opened && setOpened(true)}>
@@ -26,7 +38,7 @@ const SidebarModal = ({
         }}
       />
       {opened && (
-        <ModalLayout onClose={() => setOpened((prev) => !prev)} labelledBy="title">
+        <ModalLayout onClose={onClose} labelledBy="title">
           <ModalHeader>
             <Typography fontWeight="bold" textColor="neutral800" as="h2" id="title">
               {label}
@@ -37,12 +49,12 @@ const SidebarModal = ({
           </ModalBody>
           <ModalFooter
             startActions={(
-              <Button onClick={() => setOpened(prev => !prev)} variant="tertiary">
+              <Button onClick={onClose} variant="tertiary">
                 Cancel
               </Button>
             )}
             endActions={(
-              <Button onClick={() => setOpened(prev => !prev)}>Save</Button>
+              <Button onClick={onSave}>Save</Button>
             )}
           />
         </ModalLayout>
