@@ -29,7 +29,7 @@ const EditForm = () => {
             onValueChange={(value: any) => {
               updateValue("generated", value);
             }}
-            value={modifiedData.url_alias.generated !== undefined ? modifiedData.url_alias.generated : true}
+            value={modifiedData.url_alias?.generated !== undefined ? modifiedData.url_alias?.generated : true}
             name="generated"
             hint="Uncheck this to create a custom alias below."
           >
@@ -47,7 +47,7 @@ const EditForm = () => {
             label="URL alias"
             name="path"
             hint='Specify a path by which this data can be accessed in the browser. For example, type "/about" when writing an about page.'
-            disabled={modifiedData.url_alias.generated !== undefined ? modifiedData.url_alias.generated : true}
+            disabled={modifiedData.url_alias?.generated !== undefined ? modifiedData.url_alias?.generated : true}
             onChange={async (e: any) => {
               if (e.target.value.match(/^[A-Za-z0-9-_.~[\]/]*$/)) {
                 updateValue("url_path", e.target.value);
