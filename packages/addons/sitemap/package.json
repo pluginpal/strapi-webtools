@@ -13,7 +13,8 @@
     "addonName": "Sitemap"
   },
   "scripts": {
-    "build": "tsc --outDir build",
+    "build": "tsc",
+    "build:release": "tsc --outDir build",
     "develop": "yarn develop:copy-files && tsc -w",
     "develop:copy-files": "copyfiles -u 1 xsl/**/* ../../../playground/src/plugins/webtools-addon-sitemap/xsl/"
   },

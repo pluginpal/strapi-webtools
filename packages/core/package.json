@@ -11,7 +11,8 @@
     "kind": "plugin"
   },
   "scripts": {
-    "build": "tsc --outDir build",
+    "build": "tsc",
+    "build:release": "tsc --outDir build",
     "develop": "tsc -w"
   },
   "dependencies": {},

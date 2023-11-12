@@ -12,7 +12,8 @@
     "playground:install": "cd playground && yarn install",
     "playground:build": "cd playground && yarn build",
     "playground:start": "cd playground && yarn start",
-    "playground:develop": "cd playground && yarn develop"
+    "playground:develop": "cd playground && yarn develop",
+    "test:integration": "ENV_PATH=./playground/.env jest --verbose --runInBand --testMatch **/healthcheck.test.js"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.19.1",
