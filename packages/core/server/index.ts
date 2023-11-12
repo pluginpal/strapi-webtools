@@ -16,7 +16,6 @@ import adminApiUrlPatternService from "./admin-api/services/url-pattern";
 import adminApiUrlAliasRoutes from "./admin-api/routes/url-alias";
 import adminApiUrlPatternRoutes from "./admin-api/routes/url-pattern";
 import adminApiInfoRoutes from "./admin-api/routes/info";
-import adminApiLifecycleService from "./admin-api/services/lifecycle";
 import queryLayerDecoratorService from "./admin-api/services/query-layer-decorator";
 
 // Content API
@@ -63,7 +62,6 @@ export default {
   services: {
     urlAliasService: adminApiUrlAliasService,
     urlPatternService: adminApiUrlPatternService,
-    lifecycleService: adminApiLifecycleService,
     byPathService: contentApiByPathService,
     queryLayerDecorator: queryLayerDecoratorService,
   },
