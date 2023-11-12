@@ -21,11 +21,11 @@ export default async (strapi) => {
       relation: "oneToOne",
       target: "plugin::webtools.url-alias",
       unique: true,
-      // pluginOptions: {
-      //   i18n: {
-      //     localized: true,
-      //   },
-      // },
+      pluginOptions: {
+        i18n: {
+          localized: true,
+        },
+      },
     });
   });
 
