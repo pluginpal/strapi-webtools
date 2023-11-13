@@ -18,13 +18,7 @@
     "develop": "tsc -w"
   },
   "dependencies": {},
-  "devDependencies": {
-    "@strapi/design-system": "^1.6.1",
-    "@strapi/helper-plugin": "^4.6.0",
-    "@strapi/icons": "^1.6.1",
-    "@strapi/strapi": "^4.6.0",
-    "typescript": "4.6.2"
-  },
+  "devDependencies": {},
   "author": {
     "name": "TODO"
   },
