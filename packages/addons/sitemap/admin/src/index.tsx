@@ -45,7 +45,7 @@ export default {
         /* webpackChunkName: "sitemap-translation-[request]" */ `./translations/${locale}.json`
       )
         .then(({ default: data }) => ({
-          data: prefixPluginTranslations(data, pluginId) as string,
+          data: prefixPluginTranslations(data, pluginId),
           locale,
         }))
         .catch(() => ({
