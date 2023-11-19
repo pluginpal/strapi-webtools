@@ -1,6 +1,6 @@
 'use strict';
 
-import { transformResponse } from '@strapi/strapi/lib/core-api/controller/transform';
+import { transformResponse } from '@strapi/strapi/dist/core-api/controller/transform';
 import { getPluginService } from '../../util/getPluginService';
 import { sanitizeOutput } from '../../util/sanitizeOutput';
 

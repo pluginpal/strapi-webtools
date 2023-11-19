@@ -6,6 +6,7 @@ on:
       - master
   pull_request:
     branches:
+      - monorepo
       - master
       - develop
 
@@ -15,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node: [14, 16, 18]
+        node: [18, 20]
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
@@ -28,8 +29,26 @@ jobs:
         run: yarn run build
       - name: Run eslint
         run: yarn run lint
-      - name: Upload plugin build
-        uses: actions/upload-artifact@v3
+  test:
+    name: 'test'
+    needs: [lint]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node: [18, 20]
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
         with:
-          name: plugin-build
-          path: build
+          node-version: ${{ matrix.node }}
+          cache: 'yarn'
+      - name: Install plugin dependencies
+        run: yarn install --frozen-lockfile
+      - name: Build the packages
+        run: yarn run build
+      - name: Install playground dependencies
+        run: yarn playground:install --frozen-lockfile --unsafe-perm
+      - name: Run integration tests
+        run: NODE_ENV=ci yarn test:integration
+
+

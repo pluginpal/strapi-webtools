@@ -1,6 +1,6 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { CheckPagePermissions, NotFound } from '@strapi/helper-plugin';
+import { CheckPagePermissions } from '@strapi/helper-plugin';
 import pluginId from '../../helpers/pluginId';
 import pluginPermissions from '../../permissions';
 import PatternsListPage from './ListPage';
@@ -18,7 +18,7 @@ const Patterns = () => {
         />
         <Route path={`/settings/${pluginId}/patterns/:id`} component={PatternsEditPage} exact />
         <Route path={`/settings/${pluginId}/patterns`} component={PatternsListPage} exact />
-        <Route path="" component={NotFound} />
+        {/* <Route path="" component={NotFound} /> */}
       </Switch>
     </CheckPagePermissions>
   );

@@ -13,7 +13,8 @@
     "addonName": "Sitemap"
   },
   "scripts": {
-    "build": "tsc --outDir build",
+    "build": "tsc",
+    "build:release": "tsc --outDir build",
     "develop": "yarn develop:copy-files && tsc -w",
     "develop:copy-files": "copyfiles -u 1 xsl/**/* ../../../playground/src/plugins/webtools-addon-sitemap/xsl/"
   },
@@ -27,20 +28,13 @@
     "sitemap": "^7.1.0",
     "xml2js": "^0.5.0"
   },
-  "devDependencies": {
-    "@strapi/design-system": "^1.6.1",
-    "@strapi/helper-plugin": "^4.6.0",
-    "@strapi/icons": "^1.6.1",
-    "@strapi/strapi": "^4.6.0",
-    "copyfiles": "^2.4.1",
-    "typescript": "4.6.2"
-  },
+  "devDependencies": {},
   "author": {
     "name": "TODO"
   },
   "maintainers": [],
   "engines": {
-    "node": ">=14.x.x <=18.x.x",
+    "node": ">=18.x.x <=20.x.x",
     "npm": ">=6.0.0"
   },
   "license": "MIT"

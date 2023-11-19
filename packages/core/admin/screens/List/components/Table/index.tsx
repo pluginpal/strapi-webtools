@@ -38,10 +38,15 @@ const TableComponent: FC<Props> = ({ paths }) => {
           {/* TODO: Pagination */}
         </Table>
       ) : (
-        <EmptyStateLayout content={{
-          id: 'settings.page.list.table.empty',
-          defaultMessage: "You don't have any URL paths yet.",
-        }} />
+        <EmptyStateLayout
+          content={{
+            id: 'settings.page.list.table.empty',
+            defaultMessage: "You don't have any URL paths yet.",
+          }}
+          action={() => {}}
+          shadow="tableShadow"
+          hasRadius
+        />
       )}
     </div>
   );

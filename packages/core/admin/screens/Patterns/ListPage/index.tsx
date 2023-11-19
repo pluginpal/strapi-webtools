@@ -24,7 +24,7 @@ const ListPatternPage = () => {
 
   useEffect(() => {
     setLoading(true);
-    request(`/webtools/pattern/findMany`, { method: 'GET' })
+    request<any>(`/webtools/pattern/findMany`, { method: 'GET' })
       .then((res) => {
         setPatterns(res);
         setLoading(false);
