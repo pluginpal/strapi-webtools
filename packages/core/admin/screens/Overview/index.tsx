@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 
-import { ContentLayout, HeaderLayout, Typography, Grid, GridItem, Flex, Link, Box } from '@strapi/design-system';
+import {
+  ContentLayout, HeaderLayout, Typography, Grid, GridItem, Flex, Link, Box,
+} from '@strapi/design-system';
 import { ExternalLink } from '@strapi/icons';
 import { CheckPagePermissions, request } from '@strapi/helper-plugin';
 
@@ -12,7 +14,7 @@ const List = () => {
   const { formatMessage } = useIntl();
 
   useEffect(() => {
-    request(`/webtools/info/addons`, { method: 'GET' })
+    request('/webtools/info/addons', { method: 'GET' })
       .then((res: any) => {
         setAddons(res);
       })
@@ -32,8 +34,8 @@ const List = () => {
   return (
     <CheckPagePermissions permissions={pluginPermissions['settings.patterns']}>
       <HeaderLayout
-        title={formatMessage({ id: 'webtools.settings.page.overview.title', defaultMessage: "Overview" })}
-        subtitle={formatMessage({ id: 'webtools.settings.page.overview.description', defaultMessage: "Webtools global information" })}
+        title={formatMessage({ id: 'webtools.settings.page.overview.title', defaultMessage: 'Overview' })}
+        subtitle={formatMessage({ id: 'webtools.settings.page.overview.description', defaultMessage: 'Webtools global information' })}
         as="h2"
         // TODO: Generate all button.
         // primaryAction={(
@@ -149,11 +151,9 @@ const List = () => {
             )}
           </Typography>
           <Flex>
-            {Object.values(addons).map((addon: any) => {
-              return (
-                <div>{addon.info.addonName}</div>
-              );
-            })}
+            {Object.values(addons).map((addon: any) => (
+              <div>{addon.info.addonName}</div>
+            ))}
           </Flex>
         </Box>
       </ContentLayout>

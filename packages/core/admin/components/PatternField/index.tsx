@@ -1,12 +1,16 @@
-import React, { useState, useEffect, useRef, FC } from "react";
-import { useIntl } from "react-intl";
-import styled from "styled-components";
+import React, {
+  useState, useEffect, useRef, FC,
+} from 'react';
+import { useIntl } from 'react-intl';
+import styled from 'styled-components';
 
-import { TextInput, Popover, Stack, Box, Loader } from "@strapi/design-system";
-import { request } from "@strapi/helper-plugin";
-import { useQuery } from "react-query";
+import {
+  TextInput, Popover, Stack, Box, Loader,
+} from '@strapi/design-system';
+import { request } from '@strapi/helper-plugin';
+import { useQuery } from 'react-query';
 
-import useActiveElement from "../../helpers/useActiveElement";
+import useActiveElement from '../../helpers/useActiveElement';
 
 type Props = {
   uid: string;
@@ -31,7 +35,7 @@ const PatternField: FC<Props> = ({
   const { data: allowedFields, isLoading: allowedFieldsLoading, isError } = useQuery<Record<string, string[]>>(
 
     ['webtools', 'pattern', 'allowed-fields'],
-    () => request(`/webtools/pattern/allowed-fields`, { method: "GET" }),
+    () => request('/webtools/pattern/allowed-fields', { method: 'GET' }),
     {
       refetchOnWindowFocus: false,
       refetchOnMount: false,
@@ -51,7 +55,7 @@ const PatternField: FC<Props> = ({
       id: 'settings.form.pattern.description_1',
       defaultMessage: 'Create a URL alias pattern',
     });
-    let suffix = "";
+    let suffix = '';
     if (allowedFields?.[uid]) {
       suffix = ` ${formatMessage({
         id: 'settings.form.pattern.description_2',
@@ -76,11 +80,11 @@ const PatternField: FC<Props> = ({
 
 
   if (allowedFieldsLoading) {
-    return <Loader>{formatMessage({ id: 'webtools.settings.loading', defaultMessage: "Loading content..." })}</Loader>;
+    return <Loader>{formatMessage({ id: 'webtools.settings.loading', defaultMessage: 'Loading content...' })}</Loader>;
   }
 
   if (isError || !allowedFields) {
-    return <div>{formatMessage({ id: 'webtools.pattern.allowedFields.fetchError', defaultMessage: "An error occurred while fetching allowed fields" })}</div>;
+    return <div>{formatMessage({ id: 'webtools.pattern.allowedFields.fetchError', defaultMessage: 'An error occurred while fetching allowed fields' })}</div>;
   }
 
   return (

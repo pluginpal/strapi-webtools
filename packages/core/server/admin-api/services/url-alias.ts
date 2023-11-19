@@ -1,4 +1,4 @@
-'use strict';
+
 
 import { getPluginService } from '../../util/getPluginService';
 
@@ -17,7 +17,7 @@ export default () => ({
       if (pathAllreadyExists) {
         await duplicateCheck(ext + 1);
       } else {
-        data.url_path = data.url_path + extension;
+        data.url_path += extension;
       }
     };
 
@@ -108,7 +108,7 @@ export default () => ({
       if (pathAllreadyExists) {
         await duplicateCheck(ext + 1);
       } else {
-        data.url_path = data.url_path + extension;
+        data.url_path += extension;
       }
     };
 

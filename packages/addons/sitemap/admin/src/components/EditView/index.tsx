@@ -1,8 +1,8 @@
-import React from "react";
-import { useIntl } from "react-intl";
-import { SidebarItem } from "@strapi-webtools/helper-plugin";
+import React from 'react';
+import { useIntl } from 'react-intl';
+import { SidebarItem } from '@strapi-webtools/helper-plugin';
 
-import getTrad from "../../helpers/getTrad";
+import getTrad from '../../helpers/getTrad';
 
 const EditView = () => {
   const { formatMessage } = useIntl();
@@ -10,8 +10,8 @@ const EditView = () => {
   return (
     <SidebarItem
       label={formatMessage({
-        id: getTrad("plugin.name"),
-        defaultMessage: "Sitemap",
+        id: getTrad('plugin.name'),
+        defaultMessage: 'Sitemap',
       })}
     >
       Some sitemap info

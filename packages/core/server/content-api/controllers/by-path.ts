@@ -1,4 +1,4 @@
-'use strict';
+
 
 import { transformResponse } from '@strapi/strapi/dist/core-api/controller/transform';
 import { getPluginService } from '../../util/getPluginService';

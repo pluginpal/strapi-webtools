@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { useIntl } from "react-intl";
-import { Formik, Form } from "formik";
-import { useRouteMatch, useHistory } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { useIntl } from 'react-intl';
+import { Formik, Form } from 'formik';
+import { useRouteMatch, useHistory } from 'react-router-dom';
 
 import {
   ContentLayout,
@@ -14,17 +14,17 @@ import {
   GridItem,
   Grid,
   Loader,
-} from "@strapi/design-system";
-import { request, useNotification } from "@strapi/helper-plugin";
-import { ArrowLeft, Check } from "@strapi/icons";
+} from '@strapi/design-system';
+import { request, useNotification } from '@strapi/helper-plugin';
+import { ArrowLeft, Check } from '@strapi/icons';
 
-import schema from "./utils/schema";
+import schema from './utils/schema';
 
-import pluginId from "../../../helpers/pluginId";
-import Center from "../../../components/Center";
-import Select from "../../../components/Select";
-import LabelField from "../../../components/LabelField";
-import PatternField from "../../../components/PatternField";
+import pluginId from '../../../helpers/pluginId';
+import Center from '../../../components/Center';
+import Select from '../../../components/Select';
+import LabelField from '../../../components/LabelField';
+import PatternField from '../../../components/PatternField';
 
 const EditPatternPage = () => {
   const { push } = useHistory();
@@ -40,7 +40,7 @@ const EditPatternPage = () => {
 
   useEffect(() => {
     setLoading(true);
-    request(`/webtools/info/getContentTypes`, { method: "GET" })
+    request('/webtools/info/getContentTypes', { method: 'GET' })
       .then((res: any) => {
         setContentTypes(res);
         setLoading(false);
@@ -52,7 +52,7 @@ const EditPatternPage = () => {
 
   useEffect(() => {
     setLoading(true);
-    request(`/webtools/pattern/findOne/${id}`, { method: "GET" })
+    request(`/webtools/pattern/findOne/${id}`, { method: 'GET' })
       .then((res: any) => {
         setPatternEntity(res);
         setLoading(false);
@@ -67,7 +67,7 @@ const EditPatternPage = () => {
     { setSubmitting, setErrors }: any = {},
   ) => {
     request(`/webtools/pattern/update/${patternEntity.id}`, {
-      method: "POST",
+      method: 'POST',
       body: JSON.stringify({
         data: values,
       }),
@@ -75,20 +75,20 @@ const EditPatternPage = () => {
       .then((res: any) => {
         push(`/settings/${pluginId}/patterns`);
         toggleNotification({
-          type: "success",
-          message: { id: "webtools.settings.success.edit" },
+          type: 'success',
+          message: { id: 'webtools.settings.success.edit' },
         });
         setSubmitting(false);
       })
       .catch((err: any) => {
         if (
-          err.response.payload[0].message === "This attribute must be unique"
+          err.response.payload[0].message === 'This attribute must be unique'
         ) {
           setErrors({ code: err.response.payload[0].message });
         } else {
           toggleNotification({
-            type: "warning",
-            message: { id: "notification.error" },
+            type: 'warning',
+            message: { id: 'notification.error' },
           });
         }
         setSubmitting(false);
@@ -98,8 +98,8 @@ const EditPatternPage = () => {
   const validatePattern = async (values: any) => {
     const errors: Record<string, any> = {};
 
-    await request(`/webtools/pattern/validate`, {
-      method: "POST",
+    await request('/webtools/pattern/validate', {
+      method: 'POST',
       body: JSON.stringify({
         pattern: values.pattern,
         modelName: values.contenttype,
@@ -120,8 +120,8 @@ const EditPatternPage = () => {
       <Center>
         <Loader>
           {formatMessage({
-            id: "webtools.settings.loading",
-            defaultMessage: "Loading content...",
+            id: 'webtools.settings.loading',
+            defaultMessage: 'Loading content...',
           })}
         </Loader>
       </Center>
@@ -154,13 +154,13 @@ const EditPatternPage = () => {
         <Form noValidate onSubmit={handleSubmit}>
           <HeaderLayout
             title={formatMessage({
-              id: "webtools.settings.page.patterns.edit.title",
-              defaultMessage: "Edit pattern",
+              id: 'webtools.settings.page.patterns.edit.title',
+              defaultMessage: 'Edit pattern',
             })}
             subtitle={formatMessage({
-              id: "webtools.settings.page.patterns.edit.description",
+              id: 'webtools.settings.page.patterns.edit.description',
               defaultMessage:
-                "Edit this pattern for automatic URL alias generation.",
+                'Edit this pattern for automatic URL alias generation.',
             })}
             as="h2"
             navigationAction={(
@@ -169,8 +169,8 @@ const EditPatternPage = () => {
                 to={`/settings/${pluginId}/patterns`}
               >
                 {formatMessage({
-                  id: "global.back",
-                  defaultMessage: "Back",
+                  id: 'global.back',
+                  defaultMessage: 'Back',
                 })}
               </Link>
             )}
@@ -181,8 +181,8 @@ const EditPatternPage = () => {
                 startIcon={<Check />}
               >
                 {formatMessage({
-                  id: "global.save",
-                  defaultMessage: "Save",
+                  id: 'global.save',
+                  defaultMessage: 'Save',
                 })}
               </Button>
             )}
@@ -201,8 +201,8 @@ const EditPatternPage = () => {
                 <Stack spacing={4}>
                   <Typography variant="delta" as="h2">
                     {formatMessage({
-                      id: "settings.page.patterns.edit.subtitle",
-                      defaultMessage: "Pattern details",
+                      id: 'settings.page.patterns.edit.subtitle',
+                      defaultMessage: 'Pattern details',
                     })}
                   </Typography>
                   <Grid gap={4}>
@@ -210,20 +210,20 @@ const EditPatternPage = () => {
                       <Select
                         name="contenttype"
                         list={contentTypes}
-                        value={values.contenttype || ""}
+                        value={values.contenttype || ''}
                         setFieldValue={setFieldValue}
                         label={formatMessage({
-                          id: "settings.form.contenttype.label",
-                          defaultMessage: "Content type",
+                          id: 'settings.form.contenttype.label',
+                          defaultMessage: 'Content type',
                         })}
                         error={
                           errors.contenttype && touched.contenttype
                             ? formatMessage({
                               id:
-                                typeof errors.contenttype === "string"
+                                typeof errors.contenttype === 'string'
                                   ? errors.contenttype
                                   : undefined,
-                              defaultMessage: "Invalid value",
+                              defaultMessage: 'Invalid value',
                             })
                             : null
                         }
@@ -243,7 +243,7 @@ const EditPatternPage = () => {
                       />
                     </GridItem>
                     <GridItem col={12} />
-                    {values.contenttype !== "" && (
+                    {values.contenttype !== '' && (
                       <GridItem col={6}>
                         <PatternField
                           values={values}
@@ -255,7 +255,7 @@ const EditPatternPage = () => {
                           error={
                             errors.pattern
                               && touched.pattern
-                              && typeof errors.pattern === "string"
+                              && typeof errors.pattern === 'string'
                               ? errors.pattern
                               : null
                           }

@@ -1,7 +1,9 @@
 import React, { FC } from 'react';
 import { useIntl } from 'react-intl';
 
-import { Table, Tr, Thead, Th, Typography } from '@strapi/design-system';
+import {
+  Table, Tr, Thead, Th, Typography,
+} from '@strapi/design-system';
 import { EmptyStateLayout } from '@strapi/helper-plugin';
 
 import TableBody from '../TableBody';
@@ -41,7 +43,7 @@ const TableComponent: FC<Props> = ({ paths }) => {
         <EmptyStateLayout
           content={{
             id: 'settings.page.list.table.empty',
-            defaultMessage: "You don't have any URL paths yet.",
+            defaultMessage: 'You don\'t have any URL paths yet.',
           }}
           action={() => {}}
           shadow="tableShadow"

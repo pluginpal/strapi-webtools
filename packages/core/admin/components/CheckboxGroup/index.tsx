@@ -12,7 +12,9 @@ type Props = {
   fieldName: string;
 };
 
-const CheckboxGroup: FC<Props> = ({ values, setFieldValue, title, list, errors, touched, fieldName }) => {
+const CheckboxGroup: FC<Props> = ({
+  values, setFieldValue, title, list, errors, touched, fieldName,
+}) => {
   const { formatMessage } = useIntl();
 
   if (!list || list.length < 0) {

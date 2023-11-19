@@ -1,4 +1,4 @@
-'use strict';
+
 
 /**
  * A helper function to obtain a plugin service.
@@ -7,6 +7,4 @@
  *
  * @return {any} service.
  */
-export const isAPIRequest = (ctx, prefix = '/api/') => {
-  return ctx.request && ctx.request.url && ctx.request.url.indexOf(prefix) !== -1;
-};
+export const isAPIRequest = (ctx, prefix = '/api/') => ctx.request && ctx.request.url && ctx.request.url.indexOf(prefix) !== -1;

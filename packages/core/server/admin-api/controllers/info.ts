@@ -1,7 +1,7 @@
-"use strict";
 
-import _ from "lodash";
-import getAddons from "../../util/getAddons";
+
+import _ from 'lodash';
+import getAddons from '../../util/getAddons';
 
 /**
  * Info controller
@@ -21,8 +21,8 @@ export default {
 
           // Only return content types which have webtools enabled.
           const isInContentManager = _.get(pluginOptions, [
-            "webtools",
-            "enabled",
+            'webtools',
+            'enabled',
           ]);
           if (isInContentManager === true) {
             contentTypes.push({
@@ -32,7 +32,6 @@ export default {
           } else {
             return false;
           }
-
         }),
       );
 
@@ -40,7 +39,7 @@ export default {
     } catch (err) {
       ctx.status = err.status || 500;
       ctx.body = err.message;
-      ctx.app.emit("error", err, ctx);
+      ctx.app.emit('error', err, ctx);
     }
   },
 
@@ -50,8 +49,8 @@ export default {
         name: string;
         uid: string;
       }[] = [];
-      if (strapi.plugin("i18n")) {
-        const locales = await strapi.query("plugin::i18n.locale").findMany();
+      if (strapi.plugin('i18n')) {
+        const locales = await strapi.query('plugin::i18n.locale').findMany();
         locales.map((locale) => {
           formattedLocales.push({
             name: locale.name,
@@ -65,7 +64,7 @@ export default {
     } catch (err) {
       ctx.status = err.status || 500;
       ctx.body = err.message;
-      ctx.app.emit("error", err, ctx);
+      ctx.app.emit('error', err, ctx);
     }
   },
 

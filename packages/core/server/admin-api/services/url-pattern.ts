@@ -1,4 +1,4 @@
-'use strict';
+
 
 import _ from 'lodash';
 
@@ -167,7 +167,7 @@ export default () => ({
         }
       });
 
-      pattern = pattern.replace(/([^:]\/)\/+/g, "$1"); // Remove duplicate forward slashes.
+      pattern = pattern.replace(/([^:]\/)\/+/g, '$1'); // Remove duplicate forward slashes.
       pattern = pattern.startsWith('/') ? pattern : `/${pattern}`; // Add a starting slash.
       return pattern;
     };

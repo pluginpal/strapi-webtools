@@ -1,4 +1,4 @@
-'use strict';
+
 
 import { getPluginService } from '../../util/getPluginService';
 
@@ -12,7 +12,7 @@ export default () => ({
         API[method] = (() => {
           const storedMethod = API[method];
 
-          return async function() {
+          return async function () {
             // eslint-disable-next-line prefer-rest-params
             let response = await storedMethod.apply(this, arguments);
             response = await getPluginService('preparePathService').response(response);

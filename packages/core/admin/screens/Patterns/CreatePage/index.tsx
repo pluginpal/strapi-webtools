@@ -35,7 +35,7 @@ const CreatePattternPage = () => {
 
   useEffect(() => {
     setLoading(true);
-    request(`/webtools/info/getContentTypes`, { method: 'GET' })
+    request('/webtools/info/getContentTypes', { method: 'GET' })
       .then((res: any) => {
         setContentTypes(res);
         setLoading(false);
@@ -46,7 +46,7 @@ const CreatePattternPage = () => {
   }, []);
 
   const handleCreateSubmit = (values: any, { setSubmitting, setErrors }: any) => {
-    request(`/webtools/pattern/create`, {
+    request('/webtools/pattern/create', {
       method: 'POST',
       body: JSON.stringify({
         data: values,
@@ -70,7 +70,7 @@ const CreatePattternPage = () => {
   const validatePattern = async (values: any) => {
     const errors: any = {};
 
-    await request(`/webtools/pattern/validate`, {
+    await request('/webtools/pattern/validate', {
       method: 'POST',
       body: JSON.stringify({
         pattern: values.pattern,
@@ -91,7 +91,7 @@ const CreatePattternPage = () => {
   if (loading || !contentTypes) {
     return (
       <Center>
-        <Loader>{formatMessage({ id: 'webtools.settings.loading', defaultMessage: "Loading content..." })}</Loader>
+        <Loader>{formatMessage({ id: 'webtools.settings.loading', defaultMessage: 'Loading content...' })}</Loader>
       </Center>
     );
   }
@@ -99,16 +99,20 @@ const CreatePattternPage = () => {
   return (
     <Formik
       enableReinitialize
-      initialValues={{ label: '', pattern: '', contenttype: '', languages: [] }}
+      initialValues={{
+        label: '', pattern: '', contenttype: '', languages: [],
+      }}
       onSubmit={handleCreateSubmit}
       validationSchema={schema}
       validate={validatePattern}
     >
-      {({ handleSubmit, values, handleChange, errors, touched, isSubmitting, setFieldValue }) => (
+      {({
+        handleSubmit, values, handleChange, errors, touched, isSubmitting, setFieldValue,
+      }) => (
         <Form noValidate onSubmit={handleSubmit}>
           <HeaderLayout
-            title={formatMessage({ id: 'webtools.settings.page.patterns.create.title', defaultMessage: "Add new pattern" })}
-            subtitle={formatMessage({ id: 'webtools.settings.page.patterns.create.description', defaultMessage: "Add a pattern for automatic URL alias generation." })}
+            title={formatMessage({ id: 'webtools.settings.page.patterns.create.title', defaultMessage: 'Add new pattern' })}
+            subtitle={formatMessage({ id: 'webtools.settings.page.patterns.create.description', defaultMessage: 'Add a pattern for automatic URL alias generation.' })}
             as="h2"
             navigationAction={(
               <Link startIcon={<ArrowLeft />} to={`/settings/${pluginId}/patterns`}>
@@ -141,44 +145,44 @@ const CreatePattternPage = () => {
                 <Stack spacing={4}>
                   <Typography variant="delta" as="h2">
                     {formatMessage({
-                      id: 'settings.page.patterns.create.subtitle',
-                      defaultMessage: 'Pattern details',
-                    })}
+                id: 'settings.page.patterns.create.subtitle',
+                defaultMessage: 'Pattern details',
+              })}
                   </Typography>
                   <Grid gap={4}>
                     <GridItem col={6}>
-                      <Select
-                        name="contenttype"
-                        list={contentTypes}
-                        value={values.contenttype || ''}
-                        setFieldValue={setFieldValue}
-                        label={formatMessage({
+                <Select
+                  name="contenttype"
+                  list={contentTypes}
+                  value={values.contenttype || ''}
+                  setFieldValue={setFieldValue}
+                  label={formatMessage({
                           id: 'settings.form.contenttype.label',
                           defaultMessage: 'Content type',
                         })}
-                        error={
+                  error={
                           errors.contenttype && touched.contenttype
                             ? formatMessage({ id: String(errors.contenttype), defaultMessage: 'Invalid value' })
                             : null
                         }
-                      />
-                    </GridItem>
+                />
+              </GridItem>
                     <GridItem col={12} />
                     <GridItem col={6}>
-                      <LabelField
-                        values={values}
-                        setFieldValue={setFieldValue}
-                        errors={errors}
-                        touched={touched}
-                        hint={(code: any) => (
+                <LabelField
+                  values={values}
+                  setFieldValue={setFieldValue}
+                  errors={errors}
+                  touched={touched}
+                  hint={(code: any) => (
                           <Typography>Machine name: {code} </Typography>
                         )}
-                      />
-                    </GridItem>
+                />
+              </GridItem>
                     <GridItem col={12} />
                     {(values.contenttype !== '') && (
-                      <GridItem col={6}>
-                        <PatternField
+              <GridItem col={6}>
+                <PatternField
                           values={values}
                           uid={values.contenttype}
                           setFieldValue={setFieldValue}
@@ -191,8 +195,8 @@ const CreatePattternPage = () => {
                               : null
                           }
                         />
-                      </GridItem>
-                    )}
+              </GridItem>
+              )}
                   </Grid>
                 </Stack>
               </Box>

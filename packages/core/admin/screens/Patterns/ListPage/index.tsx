@@ -24,7 +24,7 @@ const ListPatternPage = () => {
 
   useEffect(() => {
     setLoading(true);
-    request<any>(`/webtools/pattern/findMany`, { method: 'GET' })
+    request<any>('/webtools/pattern/findMany', { method: 'GET' })
       .then((res) => {
         setPatterns(res);
         setLoading(false);
@@ -37,7 +37,7 @@ const ListPatternPage = () => {
   if (loading || !patterns) {
     return (
       <Center>
-        <Loader>{formatMessage({ id: 'webtools.settings.loading', defaultMessage: "Loading content..." })}</Loader>
+        <Loader>{formatMessage({ id: 'webtools.settings.loading', defaultMessage: 'Loading content...' })}</Loader>
       </Center>
     );
   }
@@ -45,8 +45,8 @@ const ListPatternPage = () => {
   return (
     <Box>
       <HeaderLayout
-        title={formatMessage({ id: 'webtools.settings.page.patterns.title', defaultMessage: "Patterns" })}
-        subtitle={formatMessage({ id: 'webtools.settings.page.patterns.description', defaultMessage: "A list of all the known URL alias patterns." })}
+        title={formatMessage({ id: 'webtools.settings.page.patterns.title', defaultMessage: 'Patterns' })}
+        subtitle={formatMessage({ id: 'webtools.settings.page.patterns.description', defaultMessage: 'A list of all the known URL alias patterns.' })}
         as="h2"
         primaryAction={(
           <Button onClick={() => push(`/settings/${pluginId}/patterns/new`)} startIcon={<Plus />} size="L">

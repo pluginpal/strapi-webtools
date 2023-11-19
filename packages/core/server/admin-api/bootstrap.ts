@@ -1,4 +1,4 @@
-'use strict';
+
 
 import { getPluginService } from '../util/getPluginService';
 

@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react";
+import React, { FC, useState } from 'react';
 
 import {
   Button,
@@ -8,11 +8,11 @@ import {
   DialogFooter,
   Flex,
   Typography,
-} from "@strapi/design-system";
-import { ExclamationMarkCircle } from "@strapi/icons";
-import { useIntl } from "react-intl";
-import styled from "styled-components";
-import getTrad from "../../../helpers/getTrad";
+} from '@strapi/design-system';
+import { ExclamationMarkCircle } from '@strapi/icons';
+import { useIntl } from 'react-intl';
+import styled from 'styled-components';
+import getTrad from '../../../helpers/getTrad';
 
 const TextAlignTypography = styled(Typography)`
   text-align: center;
@@ -50,7 +50,7 @@ const CheckboxConfirmation: FC<Props> = ({
 
   const handleChange = (newValue: boolean) => {
     if (isCreating || newValue) {
-      return onChange({ target: { name, value: newValue, type: "checkbox" } });
+      return onChange({ target: { name, value: newValue, type: 'checkbox' } });
     }
 
     if (!newValue) {
@@ -61,7 +61,7 @@ const CheckboxConfirmation: FC<Props> = ({
   };
 
   const handleConfirm = () => {
-    onChange({ target: { name, value: false, type: "checkbox" } });
+    onChange({ target: { name, value: false, type: 'checkbox' } });
     setIsOpen(false);
   };
 
@@ -79,7 +79,7 @@ const CheckboxConfirmation: FC<Props> = ({
       { id: description.id, defaultMessage: description.defaultMessage },
       { ...description.values },
     )
-    : "";
+    : '';
 
   return (
     <>
@@ -100,17 +100,17 @@ const CheckboxConfirmation: FC<Props> = ({
               <Flex justifyContent="center">
                 <TextAlignTypography id="confirm-description">
                   {formatMessage({
-                    id: getTrad("webtools.CheckboxConfirmation.Modal.content"),
+                    id: getTrad('webtools.CheckboxConfirmation.Modal.content'),
                     defaultMessage:
-                      "Disabling url alias will engender the deletion of all your paths for this content type",
+                      'Disabling url alias will engender the deletion of all your paths for this content type',
                   })}
                 </TextAlignTypography>
               </Flex>
               <Flex justifyContent="center">
                 <Typography fontWeight="semiBold" id="confirm-description">
                   {formatMessage({
-                    id: getTrad("CheckboxConfirmation.Modal.body"),
-                    defaultMessage: "Do you want to disable it?",
+                    id: getTrad('CheckboxConfirmation.Modal.body'),
+                    defaultMessage: 'Do you want to disable it?',
                   })}
                 </Typography>
               </Flex>
@@ -121,8 +121,8 @@ const CheckboxConfirmation: FC<Props> = ({
               (
                 <Button onClick={handleToggle} variant="tertiary">
                   {formatMessage({
-                    id: "components.popUpWarning.button.cancel",
-                    defaultMessage: "No, cancel",
+                    id: 'components.popUpWarning.button.cancel',
+                    defaultMessage: 'No, cancel',
                   })}
                 </Button>
               )
@@ -131,8 +131,8 @@ const CheckboxConfirmation: FC<Props> = ({
               (
                 <Button variant="danger-light" onClick={handleConfirm}>
                   {formatMessage({
-                    id: getTrad("CheckboxConfirmation.Modal.button-confirm"),
-                    defaultMessage: "Yes, disable",
+                    id: getTrad('CheckboxConfirmation.Modal.button-confirm'),
+                    defaultMessage: 'Yes, disable',
                   })}
                 </Button>
               )

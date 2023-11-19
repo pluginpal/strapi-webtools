@@ -7,7 +7,7 @@ const EditViewRightLinks = ({ path }) => {
   const [url, setUrl] = useState();
 
   useEffect(() => {
-    request(`/webtools/info/config`, { method: 'GET' })
+    request('/webtools/info/config', { method: 'GET' })
       .then((res: any) => {
         setUrl(res.website_url);
       })

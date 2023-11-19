@@ -11,4 +11,4 @@ const getAddons = (strapi) => {
   return addons;
 };
 
-export default getAddons;;
+export default getAddons;

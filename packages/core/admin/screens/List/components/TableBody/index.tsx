@@ -1,7 +1,9 @@
-import React, { FC } from "react";
-import { Typography, Box, Tbody, Tr, Td } from "@strapi/design-system";
-import { onRowClick, request } from "@strapi/helper-plugin";
-import { useHistory } from "react-router-dom";
+import React, { FC } from 'react';
+import {
+  Typography, Box, Tbody, Tr, Td,
+} from '@strapi/design-system';
+import { onRowClick, request } from '@strapi/helper-plugin';
+import { useHistory } from 'react-router-dom';
 
 type Props = {
   paths: {
@@ -14,7 +16,7 @@ const TableBody: FC<Props> = ({ paths }) => {
   const { push } = useHistory();
 
   const handleClick = (path: string) => {
-    request(`/webtools/path/editLink?path=${path}`, { method: "GET" })
+    request(`/webtools/path/editLink?path=${path}`, { method: 'GET' })
       .then((res: any) => {
         push(res.link);
       })

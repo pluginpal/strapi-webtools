@@ -98,7 +98,7 @@ export default {
 
       ctbFormsAPI.extendContentType({
         validator: () => ({
-          'webtools': yup.object().shape({
+          webtools: yup.object().shape({
             enabled: yup.bool().default(true),
           }),
         }),
@@ -125,23 +125,17 @@ export default {
   },
   async registerTrads({ locales }) {
     const importedTrads = await Promise.all(
-      locales.map((locale) => {
-        return import(
-          /* webpackChunkName: "webtools-translation-[request]" */ `./translations/${locale}.json`
-        )
-          .then(({ default: data }) => {
-            return {
-              data: prefixPluginTranslations(data, pluginId),
-              locale,
-            };
-          })
-          .catch(() => {
-            return {
-              data: {},
-              locale,
-            };
-          });
-      }),
+      locales.map((locale) => import(
+        /* webpackChunkName: "webtools-translation-[request]" */ `./translations/${locale}.json`
+      )
+        .then(({ default: data }) => ({
+          data: prefixPluginTranslations(data, pluginId),
+          locale,
+        }))
+        .catch(() => ({
+          data: {},
+          locale,
+        }))),
     );
 
     return Promise.resolve(importedTrads);

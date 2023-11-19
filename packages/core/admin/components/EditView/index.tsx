@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { useIntl } from "react-intl";
-import { useQuery } from "react-query";
+import React, { useEffect, useState } from 'react';
+import { useIntl } from 'react-intl';
+import { useQuery } from 'react-query';
 
-import { useCMEditViewDataManager, request } from "@strapi/helper-plugin";
+import { useCMEditViewDataManager, request } from '@strapi/helper-plugin';
 import {
   Box,
   Divider,
@@ -13,12 +13,12 @@ import {
   Link,
   Loader,
   Icon,
-  Flex
-} from "@strapi/design-system";
+  Flex,
+} from '@strapi/design-system';
 import { Play } from '@strapi/icons';
 
 import Permalink from './Permalink';
-import getTrad from "../../helpers/getTrad";
+import getTrad from '../../helpers/getTrad';
 
 const EditView = () => {
   const [opened, setOpened] = useState<boolean>(false);
@@ -28,9 +28,9 @@ const EditView = () => {
 
   const hasPath = !!Number(modifiedData.url_path_id);
   const { data: pathEntity = {}, isLoading: isQueryLoading } = useQuery<any>(
-    ["webtools", "findOne", modifiedData.url_path_id, modifiedData.updatedAt],
+    ['webtools', 'findOne', modifiedData.url_path_id, modifiedData.updatedAt],
     () => request(`/webtools/findOne/${modifiedData.url_path_id}`, {
-      method: "GET",
+      method: 'GET',
     }),
     {
       enabled: hasPath,
@@ -38,7 +38,7 @@ const EditView = () => {
   );
 
   useEffect(() => {
-    request(`/webtools/info/getContentTypes`, { method: 'GET' })
+    request('/webtools/info/getContentTypes', { method: 'GET' })
       .then((res: any) => {
         setContentTypes(res);
       })
@@ -70,15 +70,15 @@ const EditView = () => {
             id="webtools-sidebar-title"
           >
             {formatMessage({
-              id: getTrad("plugin.name"),
-              defaultMessage: "URL alias",
+              id: getTrad('plugin.name'),
+              defaultMessage: 'URL alias',
             })}
           </Typography>
           <Icon
             width="0.5rem"
             height="0.5rem"
             as={Play}
-            transform={!opened ? "rotate(90deg)" : "rotate(-90deg)"}
+            transform={!opened ? 'rotate(90deg)' : 'rotate(-90deg)'}
             marginLeft="auto"
           />
         </Flex>
@@ -92,8 +92,8 @@ const EditView = () => {
                 <Box>
                   <Loader>
                     {formatMessage({
-                      id: "webtools.settings.loading",
-                      defaultMessage: "Loading content...",
+                      id: 'webtools.settings.loading',
+                      defaultMessage: 'Loading content...',
                     })}
                   </Loader>
                 </Box>
@@ -102,20 +102,20 @@ const EditView = () => {
                   <Box>
                     <Checkbox
                       onValueChange={(value: any) => {
-                        onChange({ target: { name: "path_generated", value } });
-                        if (!("path_value" in modifiedData)) {
+                        onChange({ target: { name: 'path_generated', value } });
+                        if (!('path_value' in modifiedData)) {
                           onChange({
                             target: {
-                              name: "path_value",
+                              name: 'path_value',
                               value: pathEntity.url_path,
                             },
                           });
                         }
                       }}
                       value={
-                        "path_generated" in modifiedData
+                        'path_generated' in modifiedData
                           ? modifiedData.path_generated
-                          : "generated" in pathEntity
+                          : 'generated' in pathEntity
                             ? pathEntity.generated
                             : true
                       }
@@ -123,8 +123,8 @@ const EditView = () => {
                       hint="Uncheck this to create a custom alias below."
                     >
                       {formatMessage({
-                        id: getTrad("EditView.ExcludeFromSitemap"),
-                        defaultMessage: " Generate automatic URL alias",
+                        id: getTrad('EditView.ExcludeFromSitemap'),
+                        defaultMessage: ' Generate automatic URL alias',
                       })}
                     </Checkbox>
                     <Link to="/settings/webtools/patterns">
@@ -137,21 +137,21 @@ const EditView = () => {
                       name="path"
                       hint='Specify a path by which this data can be accessed in the browser. For example, type "/about" when writing an about page.'
                       disabled={
-                        "path_generated" in modifiedData
+                        'path_generated' in modifiedData
                           ? modifiedData.path_generated
-                          : "generated" in pathEntity
+                          : 'generated' in pathEntity
                             ? pathEntity.generated
                             : true
                       }
                       onChange={async (e: any) => {
                         if (e.target.value.match(/^[A-Za-z0-9-_.~[\]/]*$/)) {
                           onChange({
-                            target: { name: "path_value", value: e.target.value },
+                            target: { name: 'path_value', value: e.target.value },
                           });
                         }
                       }}
                       value={
-                        "path_value" in modifiedData
+                        'path_value' in modifiedData
                           ? modifiedData.path_value
                           : pathEntity.url_path
                       }
@@ -165,7 +165,7 @@ const EditView = () => {
       </Box>
       <Permalink
         path={
-          "path_value" in modifiedData
+          'path_value' in modifiedData
             ? modifiedData.path_value
             : pathEntity.url_path
         }

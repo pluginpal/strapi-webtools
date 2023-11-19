@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
-import { IconButton, Typography, Flex, Tbody, Tr, Td } from '@strapi/design-system';
+import {
+  IconButton, Typography, Flex, Tbody, Tr, Td,
+} from '@strapi/design-system';
 import { Pencil, Trash } from '@strapi/icons';
-import { onRowClick, stopPropagation, request, useNotification } from '@strapi/helper-plugin';
+import {
+  onRowClick, stopPropagation, request, useNotification,
+} from '@strapi/helper-plugin';
 import { useIntl } from 'react-intl';
 import { useHistory } from 'react-router-dom';
 

@@ -7,34 +7,34 @@ import { LinkButton } from '@strapi/design-system';
 import { Link } from '@strapi/icons';
 import getTrad from '../../helpers/getTrad';
 
-const CopyLinkButton = ( { url } ) => {
+const CopyLinkButton = ({ url }) => {
   const { formatMessage } = useIntl();
   const toggleNotification = useNotification();
 
   return (
     <CopyToClipboard
-      text={ url }
-      onCopy={ () => {
-        toggleNotification( {
+      text={url}
+      onCopy={() => {
+        toggleNotification({
           type: 'success',
           message: {
-            id: getTrad( 'notification.success.permalink-copied' ),
+            id: getTrad('notification.success.permalink-copied'),
             defaultMessage: 'Permalink copied to the clipboard',
           },
-        } );
-      } }
+        });
+      }}
     >
       <LinkButton
         size="S"
-        startIcon={ <Link /> }
+        startIcon={<Link />}
         variant="secondary"
-        style={ { width: '100%' } }
+        style={{ width: '100%' }}
         to={null}
       >
-        { formatMessage( {
-          id: getTrad( 'form.button.copy-permalink' ),
+        { formatMessage({
+          id: getTrad('form.button.copy-permalink'),
           defaultMessage: 'Copy permalink',
-        } ) }
+        }) }
       </LinkButton>
     </CopyToClipboard>
   );
@@ -44,4 +44,4 @@ CopyLinkButton.propTypes = {
   url: PropTypes.string.isRequired,
 };
 
-export default memo( CopyLinkButton );
+export default memo(CopyLinkButton);

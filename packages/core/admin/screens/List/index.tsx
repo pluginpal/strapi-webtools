@@ -12,7 +12,7 @@ const List = () => {
   const { formatMessage } = useIntl();
 
   useEffect(() => {
-    request(`/webtools/path/findMany`, { method: 'GET' })
+    request('/webtools/path/findMany', { method: 'GET' })
       .then((res: any) => {
         setPaths(res.results);
       })
@@ -32,8 +32,8 @@ const List = () => {
   return (
     <CheckPagePermissions permissions={pluginPermissions['settings.patterns']}>
       <HeaderLayout
-        title={formatMessage({ id: 'webtools.settings.page.list.title', defaultMessage: "List" })}
-        subtitle={formatMessage({ id: 'webtools.settings.page.list.description', defaultMessage: "A list of all the known URL aliases." })}
+        title={formatMessage({ id: 'webtools.settings.page.list.title', defaultMessage: 'List' })}
+        subtitle={formatMessage({ id: 'webtools.settings.page.list.description', defaultMessage: 'A list of all the known URL aliases.' })}
         as="h2"
         // TODO: Generate all button.
         // primaryAction={(

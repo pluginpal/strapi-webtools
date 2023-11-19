@@ -1,4 +1,4 @@
-'use strict';
+
 
 import pluginPkg from '../../package.json';
 

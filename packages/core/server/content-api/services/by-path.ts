@@ -1,4 +1,4 @@
-'use strict';
+
 
 import _ from 'lodash';
 import { getPluginService } from '../../util/getPluginService';

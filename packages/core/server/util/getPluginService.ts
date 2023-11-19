@@ -1,6 +1,6 @@
-"use strict";
 
-import { pluginId } from "./pluginId";
+
+import { pluginId } from './pluginId';
 
 /**
  * A helper function to obtain a plugin service.
