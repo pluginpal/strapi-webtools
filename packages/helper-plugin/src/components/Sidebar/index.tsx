@@ -8,7 +8,6 @@ import Dropdown from "./Dropdown";
 
 const Sidebar = ({
   children,
-  onClick
 }) => {
   return (
     <>
@@ -20,7 +19,6 @@ const Sidebar = ({
         hasRadius
         padding={4}
         shadow="tableShadow"
-        onClick={onClick}
       >
         {children}
       </Box>

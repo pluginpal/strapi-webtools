@@ -29,10 +29,10 @@ const SidebarModal = ({
   };
 
   return (
-    <Sidebar onClick={() => !opened && setOpened(true)}>
+    <Sidebar>
       <Sidebar.ActionButton
         label={label}
-        onClick={() => opened && setOpened(false)}
+        onClick={() => setOpened(!opened)}
         iconProps={{
           transform: !opened ? "rotate(90deg)" : "rotate(-90deg)"
         }}
