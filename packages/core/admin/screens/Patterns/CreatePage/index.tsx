@@ -145,58 +145,58 @@ const CreatePattternPage = () => {
                 <Stack spacing={4}>
                   <Typography variant="delta" as="h2">
                     {formatMessage({
-                id: 'settings.page.patterns.create.subtitle',
-                defaultMessage: 'Pattern details',
-              })}
+                      id: 'settings.page.patterns.create.subtitle',
+                      defaultMessage: 'Pattern details',
+                    })}
                   </Typography>
                   <Grid gap={4}>
                     <GridItem col={6}>
-                <Select
-                  name="contenttype"
-                  list={contentTypes}
-                  value={values.contenttype || ''}
-                  setFieldValue={setFieldValue}
-                  label={formatMessage({
+                      <Select
+                        name="contenttype"
+                        list={contentTypes}
+                        value={values.contenttype || ''}
+                        setFieldValue={setFieldValue}
+                        label={formatMessage({
                           id: 'settings.form.contenttype.label',
                           defaultMessage: 'Content type',
                         })}
-                  error={
+                        error={
                           errors.contenttype && touched.contenttype
                             ? formatMessage({ id: String(errors.contenttype), defaultMessage: 'Invalid value' })
                             : null
                         }
-                />
-              </GridItem>
+                      />
+                    </GridItem>
                     <GridItem col={12} />
                     <GridItem col={6}>
-                <LabelField
-                  values={values}
-                  setFieldValue={setFieldValue}
-                  errors={errors}
-                  touched={touched}
-                  hint={(code: any) => (
+                      <LabelField
+                        values={values}
+                        setFieldValue={setFieldValue}
+                        errors={errors}
+                        touched={touched}
+                        hint={(code: any) => (
                           <Typography>Machine name: {code} </Typography>
                         )}
-                />
-              </GridItem>
+                      />
+                    </GridItem>
                     <GridItem col={12} />
                     {(values.contenttype !== '') && (
-              <GridItem col={6}>
-                <PatternField
-                          values={values}
-                          uid={values.contenttype}
-                          setFieldValue={setFieldValue}
-                          hint={(hint: any) => (
-                            <Typography variant="pi">{hint}</Typography>
-                          )}
-                          error={
+                    <GridItem col={6}>
+                      <PatternField
+                        values={values}
+                        uid={values.contenttype}
+                        setFieldValue={setFieldValue}
+                        hint={(hint: any) => (
+                          <Typography variant="pi">{hint}</Typography>
+                        )}
+                        error={
                             errors.pattern && touched.pattern
                               ? errors.pattern
                               : null
                           }
-                        />
-              </GridItem>
-              )}
+                      />
+                    </GridItem>
+                    )}
                   </Grid>
                 </Stack>
               </Box>
