@@ -47,10 +47,15 @@ const TableComponent = ({ patterns }) => {
           {/* TODO: Pagination */}
         </Table>
       ) : (
-        <EmptyStateLayout content={{
-          id: 'settings.page.patterns.table.empty',
-          defaultMessage: "You don't have any patterns yet.",
-        }} />
+        <EmptyStateLayout
+          content={{
+            id: 'settings.page.patterns.table.empty',
+            defaultMessage: "You don't have any patterns yet.",
+          }}
+          action={() => {}}
+          shadow="tableShadow"
+          hasRadius
+        />
       )}
     </div>
   );
