@@ -1,7 +1,7 @@
 import { request } from '@strapi/helper-plugin';
 
-export const create = async (body, slug) => {
-  return await request('/content-manager/collection-types/plugin::webtools.url-alias', {
+export const createUrlAlias = async (body, slug) => {
+  return request('/content-manager/collection-types/plugin::webtools.url-alias', {
     method: 'POST',
     body: {
       ...body,
@@ -10,8 +10,8 @@ export const create = async (body, slug) => {
   });
 };
 
-export const update = async (body, slug) => {
-  return await request(`/content-manager/collection-types/plugin::webtools.url-alias/${body.id}`, {
+export const updateUrlAlias = async (body, slug) => {
+  return request(`/content-manager/collection-types/plugin::webtools.url-alias/${body.id}`, {
     method: 'PUT',
     body: {
       ...body,

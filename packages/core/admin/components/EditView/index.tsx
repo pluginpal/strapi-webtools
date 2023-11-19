@@ -7,7 +7,7 @@ import { useCMEditViewDataManager } from "@strapi/helper-plugin";
 import getTrad from "../../helpers/getTrad";
 import EditForm from "../EditForm";
 import Permalink from "./Permalink";
-import { create, update } from "../../api/url-alias";
+import { createUrlAlias, updateUrlAlias } from "../../api/url-alias";
 
 const EditView = () => {
   const { formatMessage } = useIntl();
@@ -17,10 +17,10 @@ const EditView = () => {
 
   const onSubmit = async () => {
     if (!initialData.url_alias) {
-      const url_alias = await create(modifiedData.url_alias, slug);
+      const url_alias = await createUrlAlias(modifiedData.url_alias, slug);
       onChange({ target: { name: `url_alias`, value: url_alias } });
     } else {
-      update(modifiedData.url_alias, slug);
+      updateUrlAlias(modifiedData.url_alias, slug);
     }
   };
 

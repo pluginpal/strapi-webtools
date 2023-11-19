@@ -20,12 +20,12 @@ const SidebarModal = ({
 
   const onSave = () => {
     onSubmit();
-    setOpened(prev => !prev)
+    setOpened(false)
   };
 
   const onClose = () => {
     onCancel();
-    setOpened(prev => !prev)
+    setOpened(false)
   };
 
   return (
