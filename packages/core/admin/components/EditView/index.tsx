@@ -27,7 +27,7 @@ const EditView = () => {
   const { modifiedData, onChange, slug } = useCMEditViewDataManager();
 
   const hasPath = !!Number(modifiedData.url_path_id);
-  const { data: pathEntity = {}, isLoading: isQueryLoading } = useQuery(
+  const { data: pathEntity = {}, isLoading: isQueryLoading } = useQuery<any>(
     ["webtools", "findOne", modifiedData.url_path_id, modifiedData.updatedAt],
     () => request(`/webtools/findOne/${modifiedData.url_path_id}`, {
       method: "GET",

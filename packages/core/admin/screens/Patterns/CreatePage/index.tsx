@@ -48,9 +48,9 @@ const CreatePattternPage = () => {
   const handleCreateSubmit = (values: any, { setSubmitting, setErrors }: any) => {
     request(`/webtools/pattern/create`, {
       method: 'POST',
-      body: {
+      body: JSON.stringify({
         data: values,
-      },
+      }),
     })
       .then((res: any) => {
         push(`/settings/${pluginId}/patterns`);
@@ -72,10 +72,10 @@ const CreatePattternPage = () => {
 
     await request(`/webtools/pattern/validate`, {
       method: 'POST',
-      body: {
+      body: JSON.stringify({
         pattern: values.pattern,
         modelName: values.contenttype,
-      },
+      }),
     })
       .then((res: any) => {
         if (res.valid === false) {
