@@ -15,7 +15,9 @@
     "build:release": "tsc --outDir build",
     "develop": "tsc -w"
   },
-  "dependencies": {},
+  "dependencies": {
+    "react-copy-to-clipboard": "^5.1.0"
+  },
   "devDependencies": {},
   "author": {
     "name": "TODO"
