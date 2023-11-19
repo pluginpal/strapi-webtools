@@ -2,5 +2,8 @@
   "extends": ["@uncinc/eslint-config"],
   "globals": {
     "strapi": true
+  },
+  "rules": {
+    "import/prefer-default-export": "off"
   }
 }
