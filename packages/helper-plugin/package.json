@@ -15,7 +15,9 @@
   "main": "build/src/index.js",
   "scripts": {
     "build": "tsc --outDir build",
-    "develop": "tsc -w"
+    "develop": "tsc -w",
+    "eslint": "eslint --max-warnings=0 './**/*.{js,jsx,ts,tsx}'",
+    "eslint:fix": "eslint --fix './**/*.{js,jsx,ts,tsx}'"
   },
   "dependencies": {},
   "devDependencies": {},

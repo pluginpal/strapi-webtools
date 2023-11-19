@@ -5,7 +5,10 @@
     "build": {
       "dependsOn": ["^build"]
     },
-    "lint": {
+    "eslint": {
+      "outputs": []
+    },
+    "eslint:fix": {
       "outputs": []
     },
     "develop": {

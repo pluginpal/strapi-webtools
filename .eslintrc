@@ -1,0 +1,6 @@
+{
+  "extends": ["@uncinc/eslint-config"],
+  "globals": {
+    "strapi": true
+  }
+}
