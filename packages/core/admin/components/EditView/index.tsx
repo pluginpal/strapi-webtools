@@ -11,9 +11,8 @@ import { create, update } from "../../api/url-alias";
 
 const EditView = () => {
   const { formatMessage } = useIntl();
-  const { allLayoutData, modifiedData, initialData, onChange, slug } = useCMEditViewDataManager();
+  const { allLayoutData, modifiedData, initialData, onChange, slug }: any = useCMEditViewDataManager();
 
-  // @ts-ignore
   if (!allLayoutData.contentType.pluginOptions?.webtools?.enabled) return null;
 
   const onSubmit = async () => {
@@ -38,7 +37,6 @@ const EditView = () => {
         <EditForm />
       </SidebarModal>
       <Permalink
-        // @ts-ignore
         path={modifiedData.url_alias?.url_path}
       />
     </>

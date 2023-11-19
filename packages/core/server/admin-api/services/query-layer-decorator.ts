@@ -96,7 +96,7 @@ const decorator = (service) => ({
     }
 
     // Fetch the entity because we need the url_alias id.
-    const entity = await strapi.entityService.findOne(uid, entityId, {
+    const entity: any = await strapi.entityService.findOne(uid, entityId, {
       populate: 'url_alias',
     });
 

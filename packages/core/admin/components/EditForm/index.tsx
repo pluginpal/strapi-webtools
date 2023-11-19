@@ -14,7 +14,7 @@ import {
 import getTrad from "../../helpers/getTrad";
 
 const EditForm = () => {
-  const { modifiedData, onChange } = useCMEditViewDataManager();
+  const { modifiedData, onChange }: any = useCMEditViewDataManager();
   const { formatMessage } = useIntl();
 
   const updateValue = (name: string, value: any) => {
