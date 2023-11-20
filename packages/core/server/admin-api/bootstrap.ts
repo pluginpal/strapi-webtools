@@ -4,11 +4,9 @@ import { getPluginService } from '../util/getPluginService';
 
 export default async ({ strapi }) => {
   try {
-    // Register the lifecycle methods.
-    await getPluginService('lifecycleService').loadAllLifecycleMethods();
-
-    // Rewrite the results from the internal query APIs.
-    getPluginService('overrideQueryLayer').initialize();
+    // Decorate the entity service with review workflow logic
+    const { decorator } = getPluginService('queryLayerDecorator');
+    strapi.entityService.decorate(decorator);
 
     // Register permission actions.
     const actions = [

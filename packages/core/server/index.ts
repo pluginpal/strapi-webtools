@@ -16,12 +16,10 @@ import adminApiUrlPatternService from "./admin-api/services/url-pattern";
 import adminApiUrlAliasRoutes from "./admin-api/routes/url-alias";
 import adminApiUrlPatternRoutes from "./admin-api/routes/url-pattern";
 import adminApiInfoRoutes from "./admin-api/routes/info";
-import adminApiLifecycleService from "./admin-api/services/lifecycle";
-import adminApiOverrideQueryLayerService from "./admin-api/services/override-query-layer";
+import queryLayerDecoratorService from "./admin-api/services/query-layer-decorator";
 
 // Content API
 import contentApiByPathController from "./content-api/controllers/by-path";
-import contentApiPreparePathService from "./content-api/services/prepare-path";
 import contentApiByPathService from "./content-api/services/by-path";
 import contentApiPathRoutes from "./content-api/routes/path";
 
@@ -62,11 +60,9 @@ export default {
     byPath: contentApiByPathController,
   },
   services: {
-    preparePathService: contentApiPreparePathService,
     urlAliasService: adminApiUrlAliasService,
     urlPatternService: adminApiUrlPatternService,
-    lifecycleService: adminApiLifecycleService,
     byPathService: contentApiByPathService,
-    overrideQueryLayer: adminApiOverrideQueryLayerService,
+    queryLayerDecorator: queryLayerDecoratorService,
   },
 };

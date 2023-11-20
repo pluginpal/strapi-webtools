@@ -3,7 +3,7 @@
 import _ from 'lodash';
 
 export default async (strapi) => {
-  // Register the url_path_id field.
+  // Register the url_alias field.
   Object.values(strapi.contentTypes).forEach((contentType: any) => {
     const { attributes, pluginOptions } = contentType;
 
@@ -11,13 +11,15 @@ export default async (strapi) => {
     const isInContentManager = _.get(pluginOptions, ['content-manager', 'visible']);
     if (isInContentManager === false) return;
 
-    _.set(attributes, 'url_path_id', {
+    _.set(attributes, 'url_alias', {
       writable: true,
       private: false,
       configurable: false,
       visible: false,
       default: null,
-      type: 'string',
+      type: "relation",
+      relation: "oneToOne",
+      target: "plugin::webtools.url-alias",
       unique: true,
       pluginOptions: {
         i18n: {

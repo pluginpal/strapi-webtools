@@ -16,6 +16,7 @@
     "develop": "tsc -w"
   },
   "dependencies": {
+    "@strapi-webtools/helper-plugin": "*",
     "react-copy-to-clipboard": "^5.1.0"
   },
   "devDependencies": {},
