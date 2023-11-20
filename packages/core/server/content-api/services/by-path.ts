@@ -14,22 +14,22 @@ export default () => ({
   byPath: async (path, query: Record<string, any> = {}) => {
     let excludeDrafts = false;
 
-    const pathEntity = await getPluginService('urlAliasService').findByPath(path);
-    if (!pathEntity) {
+    const urlAliasEntity = await getPluginService('urlAliasService').findByPath(path);
+    if (!urlAliasEntity) {
       return {};
     }
 
     // Check drafAndPublish setting.
-    const contentType = strapi.contentTypes[pathEntity.contenttype];
+    const contentType = strapi.contentTypes[urlAliasEntity.contenttype];
     if (_.get(contentType, ['options', 'draftAndPublish'], false)) {
       excludeDrafts = true;
     }
 
-    const entity = await strapi.entityService.findMany(pathEntity.contenttype, {
+    const entity = await strapi.entityService.findMany(urlAliasEntity.contenttype, {
       ...query,
       filters: {
         ...query?.filters,
-        url_path_id: pathEntity.id,
+        url_alias: urlAliasEntity.id,
         published_at: excludeDrafts ? {
           $notNull: true,
         } : {},
@@ -44,7 +44,7 @@ export default () => ({
 
     return {
       entity: entity[0],
-      contentType: pathEntity.contenttype,
+      contentType: urlAliasEntity.contenttype,
     };
   },
 });

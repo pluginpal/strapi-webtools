@@ -18,6 +18,7 @@
     "eslint:fix": "eslint --fix './**/*.{js,jsx,ts,tsx}'"
   },
   "dependencies": {
+    "@strapi-webtools/helper-plugin": "*",
     "react-copy-to-clipboard": "^5.1.0"
   },
   "devDependencies": {},
