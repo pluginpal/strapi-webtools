@@ -1,6 +1,9 @@
 
 
 import _ from 'lodash';
+import { Schema } from '@strapi/strapi';
+import { Context } from 'koa';
+
 import getAddons from '../../util/getAddons';
 
 /**
@@ -8,73 +11,57 @@ import getAddons from '../../util/getAddons';
  */
 
 export default {
-  getContentTypes: async (ctx) => {
-    try {
-      const contentTypes: {
-        name: string;
-        uid: string;
-      }[] = [];
+  getContentTypes: (ctx: Context) => {
+    const contentTypes: {
+      name: string;
+      uid: string;
+    }[] = [];
 
-      await Promise.all(
-        Object.values(strapi.contentTypes).map(async (contentType: any) => {
-          const { pluginOptions } = contentType;
+    Object.values(strapi.contentTypes).forEach((contentType: Schema.ContentType) => {
+      const { pluginOptions } = contentType;
 
-          // Only return content types which have webtools enabled.
-          const isInContentManager = _.get(pluginOptions, [
-            'webtools',
-            'enabled',
-          ]);
-          if (isInContentManager === true) {
-            contentTypes.push({
-              name: contentType.globalId,
-              uid: contentType.uid,
-            });
-          } else {
-            return false;
-          }
-        }),
-      );
-
-      ctx.send(contentTypes);
-    } catch (err) {
-      ctx.status = err.status || 500;
-      ctx.body = err.message;
-      ctx.app.emit('error', err, ctx);
-    }
-  },
-
-  getLanguages: async (ctx) => {
-    try {
-      const formattedLocales: {
-        name: string;
-        uid: string;
-      }[] = [];
-      if (strapi.plugin('i18n')) {
-        const locales = await strapi.query('plugin::i18n.locale').findMany();
-        locales.map((locale) => {
-          formattedLocales.push({
-            name: locale.name,
-            uid: locale.code,
-          });
+      // Only return content types which have webtools enabled.
+      const isInContentManager = _.get(pluginOptions, [
+        'webtools',
+        'enabled',
+      ]) as boolean;
+      if (isInContentManager === true) {
+        contentTypes.push({
+          name: contentType.globalId,
+          uid: contentType.uid,
         });
-        ctx.send(formattedLocales);
-      } else {
-        ctx.send([]);
       }
-    } catch (err) {
-      ctx.status = err.status || 500;
-      ctx.body = err.message;
-      ctx.app.emit('error', err, ctx);
+    });
+
+    ctx.body = contentTypes;
+  },
+
+  getLanguages: async (ctx: Context) => {
+    const formattedLocales: {
+      name: string;
+      uid: string;
+    }[] = [];
+    if (strapi.plugin('i18n')) {
+      const locales = await strapi.entityService.findMany('plugin::i18n.locale');
+      locales.forEach((locale) => {
+        formattedLocales.push({
+          name: locale.name,
+          uid: locale.code,
+        });
+      });
+      ctx.body = formattedLocales;
+    } else {
+      ctx.body = [];
     }
   },
 
-  getAddons: async (ctx) => {
+  getAddons: (ctx: Context) => {
     const addons = getAddons(strapi);
-    ctx.send(addons);
+    ctx.body = addons;
   },
 
-  getConfig: async (ctx) => {
+  getConfig: (ctx: Context) => {
     const config = strapi.config.get('plugin.webtools');
-    ctx.send(config);
+    ctx.body = config;
   },
 };

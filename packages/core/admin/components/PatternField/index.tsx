@@ -1,23 +1,23 @@
 import React, {
-  useState, useEffect, useRef, FC,
+  useState, useRef, FC,
 } from 'react';
 import { useIntl } from 'react-intl';
 import styled from 'styled-components';
+import { FormikErrors } from 'formik';
 
 import {
-  TextInput, Popover, Stack, Box, Loader,
+  TextInput, Popover, Stack, Box, Loader, Typography,
 } from '@strapi/design-system';
 import { request } from '@strapi/helper-plugin';
 import { useQuery } from 'react-query';
-
-import useActiveElement from '../../helpers/useActiveElement';
+import { PatternFormValues } from '../../types/url-patterns';
+import { Theme } from '../../types/theme';
 
 type Props = {
   uid: string;
-  values: any;
-  error?: any;
-  setFieldValue: (name: string, value: any) => void;
-  hint: any;
+  error?: string;
+  values: PatternFormValues;
+  setFieldValue: (field: string, value: any) => Promise<void | FormikErrors<PatternFormValues>>;
 };
 
 const PatternField: FC<Props> = ({
@@ -25,14 +25,16 @@ const PatternField: FC<Props> = ({
   values,
   error = null,
   setFieldValue,
-  hint,
 }) => {
-  const activeElement = useActiveElement();
   const patternRef = useRef<HTMLDivElement>(null);
   const { formatMessage } = useIntl();
 
   const [popoverDismissed, setPopoverDismissed] = useState(false);
-  const { data: allowedFields, isLoading: allowedFieldsLoading, isError } = useQuery<Record<string, string[]>>(
+  const {
+    data: allowedFields,
+    isLoading: allowedFieldsLoading,
+    isError,
+  } = useQuery<Record<string, string[]>>(
 
     ['webtools', 'pattern', 'allowed-fields'],
     () => request('/webtools/pattern/allowed-fields', { method: 'GET' }),
@@ -46,7 +48,7 @@ const PatternField: FC<Props> = ({
   const HoverBox = styled(Box)`
     cursor: pointer;
     &:hover:not([aria-disabled="true"]) {
-      background: ${({ theme }: any) => theme.colors.primary100};
+      background: ${({ theme }: { theme: Theme }) => theme.colors.primary100};
     }
   `;
 
@@ -61,7 +63,7 @@ const PatternField: FC<Props> = ({
         id: 'settings.form.pattern.description_2',
         defaultMessage: 'using',
       })} `;
-      allowedFields[uid].map((fieldName, i) => {
+      allowedFields[uid].forEach((fieldName, i) => {
         if (i === 0) {
           suffix = `${suffix}[${fieldName}]`;
         } else if (allowedFields[uid].length !== i + 1) {
@@ -99,15 +101,17 @@ const PatternField: FC<Props> = ({
           value={values.pattern}
           placeholder="/en/pages/[id]"
           error={error}
-          onChange={(e: any) => {
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             setPopoverDismissed(false);
             if (e.target.value.match(/^[A-Za-z0-9-_.~[\]/]*$/)) {
-              setFieldValue('pattern', e.target.value);
+              return setFieldValue('pattern', e.target.value);
             }
+
+            return null;
           }}
         />
       </div>
-      {hint(patternHint())}
+      <Typography variant="pi">{patternHint()}</Typography>
       {values.pattern.endsWith('[') && !popoverDismissed && (
         <Popover source={patternRef} onDismiss={() => setPopoverDismissed(true)} fullWidth>
           <Stack size={1}>
@@ -117,7 +121,7 @@ const PatternField: FC<Props> = ({
                 padding={2}
                 onClick={() => {
                   const newPattern = `${values.pattern}${fieldName}]`;
-                  setFieldValue('pattern', newPattern);
+                  return setFieldValue('pattern', newPattern);
                 }}
               >
                 {fieldName}

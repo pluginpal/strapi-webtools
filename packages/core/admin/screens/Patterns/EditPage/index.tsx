@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { Formik, Form } from 'formik';
+import { Formik, Form, FormikProps } from 'formik';
 import { useRouteMatch, useHistory } from 'react-router-dom';
 
 import {
@@ -25,12 +25,14 @@ import Center from '../../../components/Center';
 import Select from '../../../components/Select';
 import LabelField from '../../../components/LabelField';
 import PatternField from '../../../components/PatternField';
+import { PatternEntity, PatternFormValues } from '../../../types/url-patterns';
+import { EnabledContentTypes } from '../../../types/enabled-contenttypes';
 
 const EditPatternPage = () => {
   const { push } = useHistory();
   const toggleNotification = useNotification();
   const [loading, setLoading] = useState(false);
-  const [patternEntity, setPatternEntity] = useState<null | any>(null);
+  const [patternEntity, setPatternEntity] = useState<null | PatternEntity>(null);
   const [contentTypes, setContentTypes] = useState([]);
   const { formatMessage } = useIntl();
 
@@ -41,7 +43,7 @@ const EditPatternPage = () => {
   useEffect(() => {
     setLoading(true);
     request('/webtools/info/getContentTypes', { method: 'GET' })
-      .then((res: any) => {
+      .then((res: EnabledContentTypes) => {
         setContentTypes(res);
         setLoading(false);
       })
@@ -53,7 +55,7 @@ const EditPatternPage = () => {
   useEffect(() => {
     setLoading(true);
     request(`/webtools/pattern/findOne/${id}`, { method: 'GET' })
-      .then((res: any) => {
+      .then((res: PatternEntity) => {
         setPatternEntity(res);
         setLoading(false);
       })
@@ -63,8 +65,8 @@ const EditPatternPage = () => {
   }, []);
 
   const handleEditSubmit = (
-    values: any,
-    { setSubmitting, setErrors }: any = {},
+    values: PatternFormValues,
+    { setSubmitting, setErrors }: FormikProps<PatternFormValues>,
   ) => {
     request(`/webtools/pattern/update/${patternEntity.id}`, {
       method: 'POST',
@@ -72,7 +74,7 @@ const EditPatternPage = () => {
         data: values,
       }),
     })
-      .then((res: any) => {
+      .then(() => {
         push(`/settings/${pluginId}/patterns`);
         toggleNotification({
           type: 'success',
@@ -80,7 +82,7 @@ const EditPatternPage = () => {
         });
         setSubmitting(false);
       })
-      .catch((err: any) => {
+      .catch((err) => {
         if (
           err.response.payload[0].message === 'This attribute must be unique'
         ) {
@@ -95,7 +97,7 @@ const EditPatternPage = () => {
       });
   };
 
-  const validatePattern = async (values: any) => {
+  const validatePattern = async (values: PatternFormValues) => {
     const errors: Record<string, any> = {};
 
     await request('/webtools/pattern/validate', {
@@ -129,7 +131,7 @@ const EditPatternPage = () => {
   }
 
   return (
-    <Formik
+    <Formik<PatternFormValues>
       enableReinitialize
       initialValues={{
         label: patternEntity.label,
@@ -145,7 +147,6 @@ const EditPatternPage = () => {
       {({
         handleSubmit,
         values,
-        handleChange,
         errors,
         touched,
         isSubmitting,
@@ -237,9 +238,6 @@ const EditPatternPage = () => {
                         setFieldValue={setFieldValue}
                         errors={errors}
                         touched={touched}
-                        hint={(code) => (
-                          <Typography>Machine name: {code} </Typography>
-                        )}
                       />
                     </GridItem>
                     <GridItem col={12} />
@@ -249,9 +247,6 @@ const EditPatternPage = () => {
                           values={values}
                           uid={values.contenttype}
                           setFieldValue={setFieldValue}
-                          hint={(hint) => (
-                            <Typography variant="pi">{hint}</Typography>
-                          )}
                           error={
                             errors.pattern
                               && touched.pattern

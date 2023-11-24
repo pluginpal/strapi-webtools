@@ -27,9 +27,8 @@ type Props = {
   intlLabel: {
     id: string;
     defaultMessage: string;
-    values: {
-      [key: string]: any;
-    };
+    values: object;
+
   },
   isCreating: boolean,
   name: string,

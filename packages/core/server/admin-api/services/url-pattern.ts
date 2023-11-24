@@ -1,6 +1,7 @@
 
 
 import _ from 'lodash';
+import { EntityService, Schema } from '@strapi/strapi';
 
 import { getPluginService } from '../../util/getPluginService';
 
@@ -12,11 +13,13 @@ export default () => ({
    * @param {object} data the data.
    * @returns {void}
    */
-  create: async (data) => {
+  create: async (data: EntityService.Params.Pick<'plugin::webtools.url-pattern', 'data'>['data']) => {
+    const formattedData = data;
+
     if (data.code) {
-      data.code = _.snakeCase(_.deburr(_.toLower(data.code)));
+      formattedData.code = _.snakeCase(_.deburr(_.toLower(data.code)));
     } else {
-      data.code = _.snakeCase(_.deburr(_.toLower(data.label)));
+      formattedData.code = _.snakeCase(_.deburr(_.toLower(data.label)));
     }
 
     const patternEntity = await strapi.entityService.create('plugin::webtools.url-pattern', {
@@ -32,7 +35,7 @@ export default () => ({
    * @param {number} id the id.
    * @returns {void}
    */
-  findOne: async (id) => {
+  findOne: async (id: number) => {
     const patternEntity = await strapi.entityService.findOne('plugin::webtools.url-pattern', id);
 
     return patternEntity;
@@ -57,7 +60,7 @@ export default () => ({
    * @param {object} data the data.
    * @returns {void}
    */
-  update: async (id, data) => {
+  update: async (id: number, data: EntityService.Params.Pick<'plugin::webtools.url-pattern', 'data'>['data']) => {
     const patternEntity = await strapi.entityService.update('plugin::webtools.url-pattern', id, {
       data,
     });
@@ -71,7 +74,7 @@ export default () => ({
    * @param {number} id the id.
    * @returns {void}
    */
-  delete: async (id) => {
+  delete: async (id: number) => {
     await strapi.entityService.delete('plugin::webtools.url-pattern', id);
   },
 
@@ -83,15 +86,14 @@ export default () => ({
    *
    * @returns {string[]} The fields.
    */
-  getAllowedFields: (contentType, allowedFields: string[] = []) => {
+  getAllowedFields: (contentType: Schema.ContentType, allowedFields: string[] = []) => {
     const fields: string[] = [];
-    allowedFields.map((fieldType) => {
-      Object.entries(contentType.attributes).map(([fieldName, field]: [string, any]) => {
+    allowedFields.forEach((fieldType) => {
+      Object.entries(contentType.attributes).forEach(([fieldName, field]) => {
         if ((field.type === fieldType || fieldName === fieldType) && field.type !== 'relation' && fieldName !== 'url_path_id') {
           fields.push(fieldName);
         } else if (
           field.type === 'relation'
-          && field.target
           && field.relation.endsWith('ToOne') // TODO: implement `ToMany` relations.
           && fieldName !== 'localizations'
           && fieldName !== 'createdBy'
@@ -148,28 +150,29 @@ export default () => ({
    * @returns {string} The path.
    */
 
-  resolvePattern: async (uid, entity) => {
-    const resolve = (pattern) => {
+  resolvePattern: async (uid: string, entity: { [key: string]: string | number }) => {
+    const resolve = (pattern: string) => {
+      let resolvedPattern: string;
       const fields = getPluginService('urlPatternService').getFieldsFromPattern(pattern);
 
-      fields.map((field) => {
+      fields.forEach((field) => {
         const relationalField = field.split('.').length > 1 ? field.split('.') : null;
 
         // TODO: Relation fields.
         if (!relationalField) {
           // Slugify.
-          const fieldValue = _.kebabCase(_.deburr(_.toLower(entity[field])));
-          pattern = pattern.replace(`[${field}]`, fieldValue || '');
+          const fieldValue = _.kebabCase(_.deburr(_.toLower(String(entity[field]))));
+          resolvedPattern = pattern.replace(`[${field}]`, fieldValue || '');
         } else if (Array.isArray(entity[relationalField[0]])) {
           strapi.log.error('Something went wrong whilst resolving the pattern.');
         } else if (typeof entity[relationalField[0]] === 'object') {
-          pattern = pattern.replace(`[${field}]`, entity[relationalField[0]] && entity[relationalField[0]][relationalField[1]] ? entity[relationalField[0]][relationalField[1]] : '');
+          resolvedPattern = pattern.replace(`[${field}]`, entity[relationalField[0]] && String(entity[relationalField[0]][relationalField[1]]) ? String(entity[relationalField[0]][relationalField[1]]) : '');
         }
       });
 
-      pattern = pattern.replace(/([^:]\/)\/+/g, '$1'); // Remove duplicate forward slashes.
-      pattern = pattern.startsWith('/') ? pattern : `/${pattern}`; // Add a starting slash.
-      return pattern;
+      resolvedPattern = pattern.replace(/([^:]\/)\/+/g, '$1'); // Remove duplicate forward slashes.
+      resolvedPattern = pattern.startsWith('/') ? pattern : `/${pattern}`; // Add a starting slash.
+      return resolvedPattern;
     };
 
     const patterns = await getPluginService('urlPatternService').findMany({
@@ -198,7 +201,7 @@ export default () => ({
    * @returns {boolean} object.valid Validation boolean.
    * @returns {string} object.message Validation string.
    */
-  validatePattern: async (pattern, allowedFieldNames) => {
+  validatePattern: (pattern: string, allowedFieldNames: string[]) => {
     if (!pattern) {
       return {
         valid: false,
@@ -225,7 +228,7 @@ export default () => ({
 
     let fieldsAreAllowed = true;
 
-    getPluginService('urlPatternService').getFieldsFromPattern(pattern).map((field) => {
+    getPluginService('urlPatternService').getFieldsFromPattern(pattern).forEach((field) => {
       if (!allowedFieldNames.includes(field)) fieldsAreAllowed = false;
     });
 

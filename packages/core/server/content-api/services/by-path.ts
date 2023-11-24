@@ -1,6 +1,7 @@
 
 
 import _ from 'lodash';
+import { Common, EntityService } from '@strapi/strapi';
 import { getPluginService } from '../../util/getPluginService';
 
 export default () => ({
@@ -11,7 +12,7 @@ export default () => ({
    * @param {object} query the entity service query.
    * @returns {object} the entity.
    */
-  byPath: async (path, query: Record<string, any> = {}) => {
+  byPath: async (path: string, query: EntityService.Params.Pick<any, 'fields' | 'populate' | 'pagination' | 'sort' | 'filters' | '_q' | 'publicationState' | 'plugin'> = {}) => {
     let excludeDrafts = false;
 
     const urlAliasEntity = await getPluginService('urlAliasService').findByPath(path);
@@ -19,16 +20,19 @@ export default () => ({
       return {};
     }
 
+    const contentTypeUid = urlAliasEntity.contenttype as Common.UID.ContentType;
+
     // Check drafAndPublish setting.
-    const contentType = strapi.contentTypes[urlAliasEntity.contenttype];
+    const contentType = strapi.contentTypes[contentTypeUid];
     if (_.get(contentType, ['options', 'draftAndPublish'], false)) {
       excludeDrafts = true;
     }
 
-    const entity = await strapi.entityService.findMany(urlAliasEntity.contenttype, {
+    const entity = await strapi.entityService.findMany(contentTypeUid, {
       ...query,
       filters: {
         ...query?.filters,
+        // @ts-ignore
         url_alias: urlAliasEntity.id,
         published_at: excludeDrafts ? {
           $notNull: true,
@@ -44,7 +48,7 @@ export default () => ({
 
     return {
       entity: entity[0],
-      contentType: urlAliasEntity.contenttype,
+      contentType: urlAliasEntity.contenttype as Common.UID.ContentType,
     };
   },
 });

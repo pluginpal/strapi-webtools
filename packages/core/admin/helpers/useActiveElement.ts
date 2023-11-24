@@ -3,7 +3,7 @@ import React from 'react';
 export default () => {
   const [active, setActive] = React.useState(document.activeElement);
 
-  const handleFocusIn = (e) => {
+  const handleFocusIn = () => {
     setActive(document.activeElement);
   };
 

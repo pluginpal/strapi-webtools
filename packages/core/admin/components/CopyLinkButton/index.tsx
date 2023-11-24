@@ -4,10 +4,14 @@ import { useIntl } from 'react-intl';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { useNotification } from '@strapi/helper-plugin';
 import { LinkButton } from '@strapi/design-system';
-import { Link } from '@strapi/icons';
+import { Link as LinkIcon } from '@strapi/icons';
 import getTrad from '../../helpers/getTrad';
 
-const CopyLinkButton = ({ url }) => {
+interface Props {
+  url: string,
+}
+
+const CopyLinkButton: React.FC<Props> = ({ url }) => {
   const { formatMessage } = useIntl();
   const toggleNotification = useNotification();
 
@@ -26,7 +30,7 @@ const CopyLinkButton = ({ url }) => {
     >
       <LinkButton
         size="S"
-        startIcon={<Link />}
+        startIcon={<LinkIcon />}
         variant="secondary"
         style={{ width: '100%' }}
         to={null}

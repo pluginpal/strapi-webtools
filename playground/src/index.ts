@@ -1,4 +1,5 @@
 'use strict';
+import { Strapi } from '@strapi/strapi';
 
 module.exports = {
   /**
@@ -16,5 +17,5 @@ module.exports = {
    * This gives you an opportunity to set up your data model,
    * run jobs, or perform some special logic.
    */
-  bootstrap(/*{ strapi }*/) {},
+  async bootstrap({ strapi }: { strapi: Strapi }) {},
 };

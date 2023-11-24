@@ -15,6 +15,7 @@ import { request } from '@strapi/helper-plugin';
 import pluginId from '../../../helpers/pluginId';
 import Table from './components/Table';
 import Center from '../../../components/Center';
+import { PatternEntity } from '../../../types/url-patterns';
 
 const ListPatternPage = () => {
   const [patterns, setPatterns] = useState([]);
@@ -24,7 +25,7 @@ const ListPatternPage = () => {
 
   useEffect(() => {
     setLoading(true);
-    request<any>('/webtools/pattern/findMany', { method: 'GET' })
+    request<PatternEntity[]>('/webtools/pattern/findMany', { method: 'GET' })
       .then((res) => {
         setPatterns(res);
         setLoading(false);

@@ -7,8 +7,13 @@ import {
 import { EmptyStateLayout } from '@strapi/helper-plugin';
 
 import TableBody from '../TableBody';
+import { PatternEntity } from '../../../../../types/url-patterns';
 
-const TableComponent = ({ patterns }) => {
+interface Props {
+  patterns: PatternEntity[]
+}
+
+const TableComponent: React.FC<Props> = ({ patterns }) => {
   const { formatMessage } = useIntl();
 
   const colCount = 3;

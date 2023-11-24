@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { Formik, Form } from 'formik';
+import { Formik, Form, FormikProps } from 'formik';
 import { useHistory } from 'react-router-dom';
 
 import {
@@ -25,6 +25,8 @@ import Center from '../../../components/Center';
 import Select from '../../../components/Select';
 import LabelField from '../../../components/LabelField';
 import PatternField from '../../../components/PatternField';
+import { PatternFormValues } from '../../../types/url-patterns';
+import { EnabledContentTypes } from '../../../types/enabled-contenttypes';
 
 const CreatePattternPage = () => {
   const { push } = useHistory();
@@ -36,7 +38,7 @@ const CreatePattternPage = () => {
   useEffect(() => {
     setLoading(true);
     request('/webtools/info/getContentTypes', { method: 'GET' })
-      .then((res: any) => {
+      .then((res: EnabledContentTypes) => {
         setContentTypes(res);
         setLoading(false);
       })
@@ -45,19 +47,22 @@ const CreatePattternPage = () => {
       });
   }, []);
 
-  const handleCreateSubmit = (values: any, { setSubmitting, setErrors }: any) => {
+  const handleCreateSubmit = (
+    values: PatternFormValues,
+    { setSubmitting, setErrors }: FormikProps<PatternFormValues>,
+  ) => {
     request('/webtools/pattern/create', {
       method: 'POST',
       body: JSON.stringify({
         data: values,
       }),
     })
-      .then((res: any) => {
+      .then(() => {
         push(`/settings/${pluginId}/patterns`);
         toggleNotification({ type: 'success', message: { id: 'webtools.settings.success.create' } });
         setSubmitting(false);
       })
-      .catch((err: any) => {
+      .catch((err) => {
         if (err.response.payload[0].message === 'This attribute must be unique') {
           setErrors({ code: err.response.payload[0].message });
         } else {
@@ -67,7 +72,7 @@ const CreatePattternPage = () => {
       });
   };
 
-  const validatePattern = async (values: any) => {
+  const validatePattern = async (values: PatternFormValues) => {
     const errors: any = {};
 
     await request('/webtools/pattern/validate', {
@@ -97,7 +102,7 @@ const CreatePattternPage = () => {
   }
 
   return (
-    <Formik
+    <Formik<PatternFormValues>
       enableReinitialize
       initialValues={{
         label: '', pattern: '', contenttype: '', languages: [],
@@ -107,7 +112,7 @@ const CreatePattternPage = () => {
       validate={validatePattern}
     >
       {({
-        handleSubmit, values, handleChange, errors, touched, isSubmitting, setFieldValue,
+        handleSubmit, values, errors, touched, isSubmitting, setFieldValue,
       }) => (
         <Form noValidate onSubmit={handleSubmit}>
           <HeaderLayout
@@ -174,9 +179,6 @@ const CreatePattternPage = () => {
                         setFieldValue={setFieldValue}
                         errors={errors}
                         touched={touched}
-                        hint={(code: any) => (
-                          <Typography>Machine name: {code} </Typography>
-                        )}
                       />
                     </GridItem>
                     <GridItem col={12} />
@@ -186,9 +188,6 @@ const CreatePattternPage = () => {
                         values={values}
                         uid={values.contenttype}
                         setFieldValue={setFieldValue}
-                        hint={(hint: any) => (
-                          <Typography variant="pi">{hint}</Typography>
-                        )}
                         error={
                             errors.pattern && touched.pattern
                               ? errors.pattern

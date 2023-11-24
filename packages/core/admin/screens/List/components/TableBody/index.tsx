@@ -17,7 +17,7 @@ const TableBody: FC<Props> = ({ paths }) => {
 
   const handleClick = (path: string) => {
     request(`/webtools/path/editLink?path=${path}`, { method: 'GET' })
-      .then((res: any) => {
+      .then((res: { link: string }) => {
         push(res.link);
       })
       .catch(() => { });

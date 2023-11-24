@@ -5,4 +5,5 @@
 **/config
 **/scripts
 **/docs
+**/server/types/generated
 **/__tests__

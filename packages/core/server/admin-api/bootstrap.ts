@@ -1,8 +1,9 @@
 
 
 import { getPluginService } from '../util/getPluginService';
+import { IStrapi } from '../types/strapi';
 
-export default async ({ strapi }) => {
+export default (strapi: IStrapi) => {
   try {
     // Decorate the entity service with review workflow logic
     const { decorator } = getPluginService('queryLayerDecorator');
@@ -23,8 +24,9 @@ export default async ({ strapi }) => {
         pluginName: 'webtools',
       },
     ];
-    await strapi.admin.services.permission.actionProvider.registerMany(actions);
+
+    strapi.admin.services.permission.actionProvider.registerMany(actions);
   } catch (error) {
-    strapi.log.error(`Bootstrap failed. ${error}`);
+    strapi.log.error(`Bootstrap failed. ${String(error)}`);
   }
 };

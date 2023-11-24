@@ -22,13 +22,14 @@ import queryLayerDecoratorService from './admin-api/services/query-layer-decorat
 import contentApiByPathController from './content-api/controllers/by-path';
 import contentApiByPathService from './content-api/services/by-path';
 import contentApiPathRoutes from './content-api/routes/path';
+import { IStrapi } from './types/strapi';
 
 export default {
-  register: async ({ strapi }) => {
-    await adminApiRegister(strapi);
+  register: ({ strapi }: { strapi: IStrapi }) => {
+    adminApiRegister(strapi);
   },
-  bootstrap: async ({ strapi }) => {
-    await adminApiBootstrap({ strapi });
+  bootstrap: ({ strapi }: { strapi: IStrapi }) => {
+    adminApiBootstrap(strapi);
   },
   config: adminApiConfig,
   contentTypes: {

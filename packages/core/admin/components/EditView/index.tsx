@@ -8,6 +8,8 @@ import getTrad from '../../helpers/getTrad';
 import EditForm from '../EditForm';
 import Permalink from './Permalink';
 import { createUrlAlias, updateUrlAlias } from '../../api/url-alias';
+import { isContentTypeEnabled } from '../../../server/util/enabledContentTypes';
+import { UrlAliasEntity } from '../../types/url-aliases';
 
 const EditView = () => {
   const { formatMessage } = useIntl();
@@ -17,16 +19,17 @@ const EditView = () => {
     initialData,
     onChange,
     slug,
-  }: any = useCMEditViewDataManager();
+  } = useCMEditViewDataManager();
 
-  if (!allLayoutData.contentType.pluginOptions?.webtools?.enabled) return null;
+  if (!isContentTypeEnabled(allLayoutData.contentType)) return null;
+  const modifiedUrlAlias = modifiedData.url_alias as UrlAliasEntity;
 
   const onSubmit = async () => {
     if (!initialData.url_alias) {
-      const urlAlias = await createUrlAlias(modifiedData.url_alias, slug);
+      const urlAlias = await createUrlAlias(modifiedUrlAlias, slug);
       onChange({ target: { name: 'url_alias', value: urlAlias } });
     } else {
-      await updateUrlAlias(modifiedData.url_alias, slug);
+      await updateUrlAlias(modifiedUrlAlias, slug);
     }
   };
 
@@ -34,16 +37,16 @@ const EditView = () => {
     <>
       <SidebarModal
         label={formatMessage({
-          id: getTrad("plugin.name"),
-          defaultMessage: `URL alias`,
+          id: getTrad('plugin.name'),
+          defaultMessage: 'URL alias',
         })}
         onSubmit={onSubmit}
-        onCancel={() => onChange({ target: { name: `url_alias`, value: initialData.url_alias } })}
+        onCancel={() => onChange({ target: { name: 'url_alias', value: initialData.url_alias } })}
       >
         <EditForm />
       </SidebarModal>
       <Permalink
-        path={modifiedData.url_alias?.url_path}
+        path={modifiedUrlAlias?.url_path}
       />
     </>
   );

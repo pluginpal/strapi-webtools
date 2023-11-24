@@ -5,6 +5,7 @@
   },
   "rules": {
     "import/prefer-default-export": "off",
+    "arrow-body-style": "off",
     "@typescript-eslint/unbound-method": "off"
   }
 }

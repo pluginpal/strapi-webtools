@@ -24,7 +24,11 @@ const List = () => {
   // if (loading || !paths) {
   //   return (
   //     <Center>
-  //       <Loader>{formatMessage({ id: 'webtools.settings.loading', defaultMessage: "Loading content..." })}</Loader>
+  //       <Loader>
+  //        {formatMessage({
+  //          id: 'webtools.settings.loading', defaultMessage: "Loading content..."
+  //        })}
+  //       </Loader>
   //     </Center>
   //   );
   // }

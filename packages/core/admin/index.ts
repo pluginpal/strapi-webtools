@@ -1,3 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { prefixPluginTranslations } from '@strapi/helper-plugin';
 import * as yup from 'yup';
 import pluginPkg from '../package.json';
@@ -13,8 +17,6 @@ const { name } = pluginPkg.strapi;
 
 export default {
   register(app: App) {
-    console.log('test');
-
     app.registerPlugin({
       description: pluginDescription,
       id: pluginId,
@@ -93,7 +95,6 @@ export default {
 
     if (ctbPlugin) {
       const ctbFormsAPI = ctbPlugin.apis.forms;
-      // ctbFormsAPI.addContentTypeSchemaMutation(mutateCTBContentTypeSchema);
       ctbFormsAPI.components.add({ id: 'webtools.checkboxConfirmation', component: CheckboxConfirmation });
 
       ctbFormsAPI.extendContentType({
@@ -125,7 +126,7 @@ export default {
   },
   async registerTrads({ locales }) {
     const importedTrads = await Promise.all(
-      locales.map((locale) => import(
+      locales.map((locale: string) => import(
         /* webpackChunkName: "webtools-translation-[request]" */ `./translations/${locale}.json`
       )
         .then(({ default: data }) => ({
