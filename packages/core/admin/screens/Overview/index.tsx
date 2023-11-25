@@ -8,14 +8,15 @@ import { ExternalLink } from '@strapi/icons';
 import { CheckPagePermissions, request } from '@strapi/helper-plugin';
 
 import pluginPermissions from '../../permissions';
+import { WebtoolsAddonInfo } from '../../types/addons';
 
 const List = () => {
-  const [addons, setAddons] = useState(null);
+  const [addons, setAddons] = useState<WebtoolsAddonInfo[]>(null);
   const { formatMessage } = useIntl();
 
   useEffect(() => {
-    request('/webtools/info/addons', { method: 'GET' })
-      .then((res: any) => {
+    request<WebtoolsAddonInfo[]>('/webtools/info/addons', { method: 'GET' })
+      .then((res) => {
         setAddons(res);
       })
       .catch(() => {
@@ -29,7 +30,6 @@ const List = () => {
     );
   }
   const strapiVersion = '1.0.0';
-  const communityEdition = 'wahatevar';
 
   return (
     <CheckPagePermissions permissions={pluginPermissions['settings.patterns']}>
@@ -151,7 +151,7 @@ const List = () => {
             )}
           </Typography>
           <Flex>
-            {Object.values(addons).map((addon: any) => (
+            {Object.values(addons).map((addon) => (
               <div>{addon.info.addonName}</div>
             ))}
           </Flex>

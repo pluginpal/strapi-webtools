@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { Formik, Form, FormikProps } from 'formik';
+import {
+  Formik,
+  Form,
+  FormikProps,
+  FormikErrors,
+} from 'formik';
 import { useHistory } from 'react-router-dom';
 
 import {
@@ -25,7 +30,7 @@ import Center from '../../../components/Center';
 import Select from '../../../components/Select';
 import LabelField from '../../../components/LabelField';
 import PatternField from '../../../components/PatternField';
-import { PatternFormValues } from '../../../types/url-patterns';
+import { PatternFormValues, ValidatePatternResponse } from '../../../types/url-patterns';
 import { EnabledContentTypes } from '../../../types/enabled-contenttypes';
 
 const CreatePattternPage = () => {
@@ -63,8 +68,10 @@ const CreatePattternPage = () => {
         setSubmitting(false);
       })
       .catch((err) => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         if (err.response.payload[0].message === 'This attribute must be unique') {
-          setErrors({ code: err.response.payload[0].message });
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+          setErrors({ code: err.response.payload[0].message as string });
         } else {
           toggleNotification({ type: 'warning', message: { id: 'notification.error' } });
         }
@@ -73,7 +80,7 @@ const CreatePattternPage = () => {
   };
 
   const validatePattern = async (values: PatternFormValues) => {
-    const errors: any = {};
+    const errors: FormikErrors<PatternFormValues> = {};
 
     await request('/webtools/pattern/validate', {
       method: 'POST',
@@ -82,7 +89,7 @@ const CreatePattternPage = () => {
         modelName: values.contenttype,
       }),
     })
-      .then((res: any) => {
+      .then((res: ValidatePatternResponse) => {
         if (res.valid === false) {
           errors.pattern = res.message;
         }

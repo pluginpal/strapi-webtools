@@ -3,12 +3,12 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { prefixPluginTranslations } from '@strapi/helper-plugin';
+import { AdminApp } from '@strapi-webtools/helper-plugin';
 import * as yup from 'yup';
 import pluginPkg from '../package.json';
 import EditView from './components/EditView';
 import pluginId from './helpers/pluginId';
 import pluginPermissions from './permissions';
-import { App } from './types/app';
 import getTrad from './helpers/getTrad';
 import CheckboxConfirmation from './components/ContentManagerHooks/ConfirmationCheckbox';
 
@@ -16,7 +16,7 @@ const pluginDescription = pluginPkg.strapi.description || pluginPkg.description;
 const { name } = pluginPkg.strapi;
 
 export default {
-  register(app: App) {
+  register(app: AdminApp) {
     app.registerPlugin({
       description: pluginDescription,
       id: pluginId,
@@ -85,7 +85,7 @@ export default {
       ],
     );
   },
-  bootstrap(app: App) {
+  bootstrap(app: AdminApp) {
     app.injectContentManagerComponent('editView', 'right-links', {
       name: 'url-alias-edit-view',
       Component: EditView,

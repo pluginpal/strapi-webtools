@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { EntityService, Attribute } from '@strapi/types';
 import { useIntl } from 'react-intl';
 
 import { ContentLayout, HeaderLayout } from '@strapi/design-system';
@@ -8,12 +9,12 @@ import pluginPermissions from '../../permissions';
 import Table from './components/Table';
 
 const List = () => {
-  const [paths, setPaths] = useState(null);
+  const [paths, setPaths] = useState<Attribute.GetValues<'plugin::webtools.url-alias'>[]>(null);
   const { formatMessage } = useIntl();
 
   useEffect(() => {
     request('/webtools/path/findMany', { method: 'GET' })
-      .then((res: any) => {
+      .then((res: EntityService.PaginatedResult<'plugin::webtools.url-alias'>) => {
         setPaths(res.results);
       })
       .catch(() => {

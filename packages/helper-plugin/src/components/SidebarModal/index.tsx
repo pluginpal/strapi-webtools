@@ -5,12 +5,19 @@ import {
   ModalHeader,
   ModalFooter,
   Typography,
-  Button
+  Button,
 } from '@strapi/design-system';
 
 import Sidebar from '../Sidebar';
 
-const SidebarModal = ({
+interface Props {
+  onSubmit: Function,
+  onCancel: Function,
+  label: string,
+  children: React.ReactNode
+}
+
+const SidebarModal: React.FC<Props> = ({
   label,
   children,
   onSubmit,
@@ -20,12 +27,12 @@ const SidebarModal = ({
 
   const onSave = () => {
     onSubmit();
-    setOpened(false)
+    setOpened(false);
   };
 
   const onClose = () => {
     onCancel();
-    setOpened(false)
+    setOpened(false);
   };
 
   return (
@@ -34,7 +41,7 @@ const SidebarModal = ({
         label={label}
         onClick={() => setOpened(!opened)}
         iconProps={{
-          transform: !opened ? "rotate(90deg)" : "rotate(-90deg)"
+          transform: !opened ? 'rotate(90deg)' : 'rotate(-90deg)',
         }}
       />
       {opened && (
@@ -61,6 +68,6 @@ const SidebarModal = ({
       )}
     </Sidebar>
   );
-}
+};
 
 export default SidebarModal;

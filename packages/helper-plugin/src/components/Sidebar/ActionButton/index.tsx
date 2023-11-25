@@ -1,17 +1,17 @@
-import React from "react";
+import React from 'react';
 
 import {
   Typography,
   Icon,
-  Flex
-} from "@strapi/design-system";
+  Flex,
+} from '@strapi/design-system';
 import { Play } from '@strapi/icons';
 
 type Props = {
   label: string,
   onClick: Function,
   iconProps?: object
-}
+};
 
 const ActionButton: React.FC<Props> = ({
   label,

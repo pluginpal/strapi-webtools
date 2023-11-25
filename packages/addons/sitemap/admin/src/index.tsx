@@ -1,4 +1,5 @@
 import { prefixPluginTranslations } from '@strapi/helper-plugin';
+import { AdminApp } from '@strapi-webtools/helper-plugin';
 import pluginPkg from '../../package.json';
 import pluginId from './helpers/pluginId';
 import getTrad from './helpers/getTrad';
@@ -8,7 +9,7 @@ const pluginDescription = pluginPkg.strapi.description || pluginPkg.description;
 const { name } = pluginPkg.strapi;
 
 export default {
-  register(app) {
+  register(app: AdminApp) {
     app.registerPlugin({
       description: pluginDescription,
       id: pluginId,
@@ -17,7 +18,7 @@ export default {
       name,
     });
   },
-  bootstrap(app) {
+  bootstrap(app: AdminApp) {
     app.injectContentManagerComponent('editView', 'right-links', {
       name: 'sitemap-edit-view',
       Component: EditView,
@@ -45,7 +46,7 @@ export default {
         /* webpackChunkName: "sitemap-translation-[request]" */ `./translations/${locale}.json`
       )
         .then(({ default: data }) => ({
-          data: prefixPluginTranslations(data, pluginId),
+          data: prefixPluginTranslations(data as Record<string, string>, pluginId),
           locale,
         }))
         .catch(() => ({

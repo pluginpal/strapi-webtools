@@ -25,7 +25,7 @@ import Center from '../../../components/Center';
 import Select from '../../../components/Select';
 import LabelField from '../../../components/LabelField';
 import PatternField from '../../../components/PatternField';
-import { PatternEntity, PatternFormValues } from '../../../types/url-patterns';
+import { PatternEntity, PatternFormValues, ValidatePatternResponse } from '../../../types/url-patterns';
 import { EnabledContentTypes } from '../../../types/enabled-contenttypes';
 
 const EditPatternPage = () => {
@@ -62,6 +62,7 @@ const EditPatternPage = () => {
       .catch(() => {
         setLoading(false);
       });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleEditSubmit = (
@@ -84,9 +85,11 @@ const EditPatternPage = () => {
       })
       .catch((err) => {
         if (
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
           err.response.payload[0].message === 'This attribute must be unique'
         ) {
-          setErrors({ code: err.response.payload[0].message });
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+          setErrors({ code: err.response.payload[0].message as string });
         } else {
           toggleNotification({
             type: 'warning',
@@ -107,7 +110,7 @@ const EditPatternPage = () => {
         modelName: values.contenttype,
       }),
     })
-      .then((res: any) => {
+      .then((res: ValidatePatternResponse) => {
         if (res.valid === false) {
           errors.pattern = res.message;
         }

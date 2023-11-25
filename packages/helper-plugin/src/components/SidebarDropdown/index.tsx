@@ -1,9 +1,14 @@
 import React, { useState } from 'react';
 import Sidebar from '../Sidebar';
 
-const SidebarDropdown = ({
+interface Props {
+  label: string,
+  children: React.ReactNode,
+}
+
+const SidebarDropdown: React.FC<Props> = ({
   label,
-  children
+  children,
 }) => {
   const [opened, setOpened] = useState<boolean>(false);
 
@@ -13,7 +18,7 @@ const SidebarDropdown = ({
         label={label}
         onClick={() => setOpened(!opened)}
         iconProps={{
-          transform: !opened ? "rotate(90deg)" : "rotate(-90deg)"
+          transform: !opened ? 'rotate(90deg)' : 'rotate(-90deg)',
         }}
       />
       {opened && (
@@ -23,6 +28,6 @@ const SidebarDropdown = ({
       )}
     </Sidebar>
   );
-}
+};
 
 export default SidebarDropdown;

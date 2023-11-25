@@ -1,5 +1,6 @@
 import React, { FC } from 'react';
 import { useIntl } from 'react-intl';
+import { Attribute } from '@strapi/strapi';
 
 import {
   Table, Tr, Thead, Th, Typography,
@@ -9,10 +10,7 @@ import { EmptyStateLayout } from '@strapi/helper-plugin';
 import TableBody from '../TableBody';
 
 type Props = {
-  paths?: {
-    url_path: string;
-    [key: string]: any;
-  }[] | null;
+  paths: Attribute.GetValues<'plugin::webtools.url-alias'>[],
 };
 
 const TableComponent: FC<Props> = ({ paths }) => {

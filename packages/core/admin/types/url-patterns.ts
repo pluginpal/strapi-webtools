@@ -18,5 +18,6 @@ export interface PatternFormValues {
 }
 
 export interface ValidatePatternResponse {
-
+  message: string,
+  valid: boolean,
 }

@@ -3,10 +3,10 @@ import { request } from '@strapi/helper-plugin';
 export const createUrlAlias = async (body, slug: string) => {
   return request('/content-manager/collection-types/plugin::webtools.url-alias', {
     method: 'POST',
-    body: {
+    body: JSON.stringify({
       ...body,
       contenttype: slug,
-    },
+    }),
   });
 };
 
