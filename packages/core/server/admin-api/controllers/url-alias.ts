@@ -1,5 +1,6 @@
-'use strict';
 
+
+import { Context } from 'koa';
 import { getPluginService } from '../../util/getPluginService';
 
 /**
@@ -7,46 +8,28 @@ import { getPluginService } from '../../util/getPluginService';
  */
 
 export default {
-  findOne: async (ctx) => {
-    try {
-      const { id } = ctx.params;
-      const pathEntity = await getPluginService('urlAliasService').findOne(id);
-      ctx.send(pathEntity);
-    } catch (err) {
-      ctx.status = err.status || 500;
-      ctx.body = err.message;
-      ctx.app.emit('error', err, ctx);
-    }
+  findOne: async (ctx: Context & { params: { id: number } }) => {
+    const { id } = ctx.params;
+    const pathEntity = await getPluginService('urlAliasService').findOne(id);
+    ctx.body = pathEntity;
   },
-  findMany: async (ctx) => {
-    try {
-      const pathEntities = await getPluginService('urlAliasService').findMany(true);
-      ctx.send(pathEntities);
-    } catch (err) {
-      ctx.status = err.status || 500;
-      ctx.body = err.message;
-      ctx.app.emit('error', err, ctx);
-    }
+  findMany: async (ctx: Context) => {
+    const pathEntities = await getPluginService('urlAliasService').findMany(true);
+    ctx.body = pathEntities;
   },
-  editLink: async (ctx) => {
-    try {
-      const { path } = ctx.query;
-      const { entity, contentType } = await getPluginService('byPathService').byPath(path);
+  editLink: async (ctx: Context) => {
+    const { path } = ctx.query;
+    const { entity, contentType } = await getPluginService('byPathService').byPath(path as string);
 
-      if (!entity) {
-        ctx.notFound();
-        return;
-      }
-
-      const contentTypeObj = strapi.contentTypes[contentType];
-
-      ctx.send({
-        link: `/content-manager/${contentTypeObj.kind}/${contentType}/${entity.id}`,
-      });
-    } catch (err) {
-      ctx.status = err.status || 500;
-      ctx.body = err.message;
-      ctx.app.emit('error', err, ctx);
+    if (!entity) {
+      ctx.notFound();
+      return;
     }
+
+    const contentTypeObj = strapi.contentTypes[contentType];
+
+    ctx.body = {
+      link: `/content-manager/${contentTypeObj.kind}/${contentType}/${entity.id}`,
+    };
   },
 };

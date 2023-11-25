@@ -1,10 +1,14 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { prefixPluginTranslations } from '@strapi/helper-plugin';
+import { AdminApp } from '@strapi-webtools/helper-plugin';
 import * as yup from 'yup';
 import pluginPkg from '../package.json';
 import EditView from './components/EditView';
 import pluginId from './helpers/pluginId';
 import pluginPermissions from './permissions';
-import { App } from './types/app';
 import getTrad from './helpers/getTrad';
 import CheckboxConfirmation from './components/ContentManagerHooks/ConfirmationCheckbox';
 
@@ -12,9 +16,7 @@ const pluginDescription = pluginPkg.strapi.description || pluginPkg.description;
 const { name } = pluginPkg.strapi;
 
 export default {
-  register(app: App) {
-    console.log('test');
-
+  register(app: AdminApp) {
     app.registerPlugin({
       description: pluginDescription,
       id: pluginId,
@@ -83,7 +85,7 @@ export default {
       ],
     );
   },
-  bootstrap(app: App) {
+  bootstrap(app: AdminApp) {
     app.injectContentManagerComponent('editView', 'right-links', {
       name: 'url-alias-edit-view',
       Component: EditView,
@@ -93,12 +95,11 @@ export default {
 
     if (ctbPlugin) {
       const ctbFormsAPI = ctbPlugin.apis.forms;
-      // ctbFormsAPI.addContentTypeSchemaMutation(mutateCTBContentTypeSchema);
       ctbFormsAPI.components.add({ id: 'webtools.checkboxConfirmation', component: CheckboxConfirmation });
 
       ctbFormsAPI.extendContentType({
         validator: () => ({
-          'webtools': yup.object().shape({
+          webtools: yup.object().shape({
             enabled: yup.bool().default(true),
           }),
         }),
@@ -125,23 +126,17 @@ export default {
   },
   async registerTrads({ locales }) {
     const importedTrads = await Promise.all(
-      locales.map((locale) => {
-        return import(
-          /* webpackChunkName: "webtools-translation-[request]" */ `./translations/${locale}.json`
-        )
-          .then(({ default: data }) => {
-            return {
-              data: prefixPluginTranslations(data, pluginId),
-              locale,
-            };
-          })
-          .catch(() => {
-            return {
-              data: {},
-              locale,
-            };
-          });
-      }),
+      locales.map((locale: string) => import(
+        /* webpackChunkName: "webtools-translation-[request]" */ `./translations/${locale}.json`
+      )
+        .then(({ default: data }) => ({
+          data: prefixPluginTranslations(data, pluginId),
+          locale,
+        }))
+        .catch(() => ({
+          data: {},
+          locale,
+        }))),
     );
 
     return Promise.resolve(importedTrads);

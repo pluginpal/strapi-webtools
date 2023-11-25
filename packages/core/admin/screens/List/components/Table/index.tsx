@@ -1,16 +1,16 @@
 import React, { FC } from 'react';
 import { useIntl } from 'react-intl';
+import { Attribute } from '@strapi/strapi';
 
-import { Table, Tr, Thead, Th, Typography } from '@strapi/design-system';
+import {
+  Table, Tr, Thead, Th, Typography,
+} from '@strapi/design-system';
 import { EmptyStateLayout } from '@strapi/helper-plugin';
 
 import TableBody from '../TableBody';
 
 type Props = {
-  paths?: {
-    url_path: string;
-    [key: string]: any;
-  }[] | null;
+  paths: Attribute.GetValues<'plugin::webtools.url-alias'>[],
 };
 
 const TableComponent: FC<Props> = ({ paths }) => {
@@ -41,7 +41,7 @@ const TableComponent: FC<Props> = ({ paths }) => {
         <EmptyStateLayout
           content={{
             id: 'settings.page.list.table.empty',
-            defaultMessage: "You don't have any URL paths yet.",
+            defaultMessage: 'You don\'t have any URL paths yet.',
           }}
           action={() => {}}
           shadow="tableShadow"

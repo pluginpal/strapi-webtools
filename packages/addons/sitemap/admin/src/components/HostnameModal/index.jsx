@@ -33,6 +33,7 @@ const ModalForm = (props) => {
     } else {
       setHostnames({});
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen]);
 
   if (!isOpen) {

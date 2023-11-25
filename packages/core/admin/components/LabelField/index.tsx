@@ -1,15 +1,21 @@
 import React, { useState, useEffect, FC } from 'react';
 import { useIntl } from 'react-intl';
+import { FormikErrors, FormikTouched } from 'formik';
 import _ from 'lodash';
 
-import { TextInput, Box, TextButton } from '@strapi/design-system';
+import {
+  TextInput,
+  Box,
+  TextButton,
+  Typography,
+} from '@strapi/design-system';
+import { PatternFormValues } from '../../types/url-patterns';
 
 type Props = {
-  values: any;
-  setFieldValue: any;
-  errors: any;
-  touched: any;
-  hint: any,
+  values: PatternFormValues;
+  setFieldValue: (field: string, value: any) => Promise<void | FormikErrors<PatternFormValues>>;
+  errors: FormikErrors<PatternFormValues>;
+  touched: FormikTouched<PatternFormValues>;
   code?: string;
 };
 
@@ -18,7 +24,6 @@ const LabelField: FC<Props> = ({
   setFieldValue,
   errors,
   touched,
-  hint,
   code,
 }) => {
   const [open, setOpen] = useState(false);
@@ -36,7 +41,7 @@ const LabelField: FC<Props> = ({
       <TextInput
         name="label"
         value={values.label || ''}
-        onChange={(e: any) => setFieldValue('label', e.target.value)}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFieldValue('label', e.target.value)}
         label={formatMessage({
           id: 'settings.form.label.label',
           defaultMessage: 'Label',
@@ -49,7 +54,7 @@ const LabelField: FC<Props> = ({
       />
       {(generatedCode && !open) && (
         <Box style={{ display: 'flex', marginTop: 5 }}>
-          {hint(generatedCode)}
+          <Typography>Machine name: {generatedCode}</Typography>
           <TextButton style={{ marginLeft: 5 }} onClick={() => setOpen(true)}>Edit</TextButton>
         </Box>
       )}
@@ -59,7 +64,7 @@ const LabelField: FC<Props> = ({
           <TextInput
             name="code"
             value={values.code || generatedCode}
-            onChange={(e: any) => setFieldValue('code', e.target.value)}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFieldValue('code', e.target.value)}
             label={formatMessage({
               id: 'global.sde',
               defaultMessage: 'Code',

@@ -1,12 +1,19 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
 
-import { Table, Tr, Thead, Th, VisuallyHidden, Typography } from '@strapi/design-system';
+import {
+  Table, Tr, Thead, Th, VisuallyHidden, Typography,
+} from '@strapi/design-system';
 import { EmptyStateLayout } from '@strapi/helper-plugin';
 
 import TableBody from '../TableBody';
+import { PatternEntity } from '../../../../../types/url-patterns';
 
-const TableComponent = ({ patterns }) => {
+interface Props {
+  patterns: PatternEntity[]
+}
+
+const TableComponent: React.FC<Props> = ({ patterns }) => {
   const { formatMessage } = useIntl();
 
   const colCount = 3;
@@ -50,7 +57,7 @@ const TableComponent = ({ patterns }) => {
         <EmptyStateLayout
           content={{
             id: 'settings.page.patterns.table.empty',
-            defaultMessage: "You don't have any patterns yet.",
+            defaultMessage: 'You don\'t have any patterns yet.',
           }}
           action={() => {}}
           shadow="tableShadow"

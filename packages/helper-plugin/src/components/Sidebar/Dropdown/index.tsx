@@ -1,13 +1,13 @@
-import React from "react";
+import React from 'react';
 
 import {
   Box,
   Divider,
   Stack,
-} from "@strapi/design-system";
+} from '@strapi/design-system';
 
 const Dropdown = ({
-  children
+  children,
 }) => {
   return (
     <>

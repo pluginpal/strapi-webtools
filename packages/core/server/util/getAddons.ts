@@ -1,14 +1,22 @@
-const getAddons = (strapi) => {
-  const enabledPlugins = strapi.config.get('enabledPlugins');
-  const addons = {};
+import { Strapi } from '@strapi/strapi';
 
-  for (const plugin of Object.keys(enabledPlugins)) {
-    if (enabledPlugins[plugin].info.webtoolsAddon === true) {
+const getAddons = (strapi: Strapi) => {
+  const enabledPlugins = strapi.config.get('enabledPlugins');
+
+  const addons: {
+    [key: string]: unknown
+  } = {};
+
+  Object.keys(enabledPlugins).forEach((plugin) => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    const webtoolsAddon = enabledPlugins[plugin]?.info?.webtoolsAddon as boolean;
+
+    if (webtoolsAddon === true) {
       addons[plugin] = enabledPlugins[plugin];
     }
-  }
+  });
 
   return addons;
 };
 
-export default getAddons;;
+export default getAddons;

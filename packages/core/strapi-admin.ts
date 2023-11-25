@@ -1,1 +1,3 @@
-module.exports = require('./admin').default;
+import admin from './admin';
+
+export default admin;

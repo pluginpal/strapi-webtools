@@ -1,5 +1,5 @@
-'use strict';
-
+import { Common, Attribute } from '@strapi/types';
+import { IDecoratedService, IDecoratedServiceOptions } from '../../types/strapi';
 import { isContentTypeEnabled } from '../../util/enabledContentTypes';
 import { getPluginService } from '../../util/getPluginService';
 
@@ -7,10 +7,10 @@ import { getPluginService } from '../../util/getPluginService';
  * Decorates the entity service with WT business logic
  * @param {object} service - entity service
  */
-const decorator = (service) => ({
-  async create(uid, opts: any = {}) {
+const decorator = (service: IDecoratedService) => ({
+  async create(uid: Common.UID.ContentType, opts: IDecoratedServiceOptions<{ url_alias: number }>) {
     const hasWT = isContentTypeEnabled(uid);
-    let urlAliasEntity;
+    let urlAliasEntity: Attribute.GetValues<'plugin::webtools.url-alias', Attribute.GetNonPopulatableKeys<'plugin::webtools.url-alias'>>;
 
     // If Webtools isn't enabled, do nothing.
     if (!hasWT) {
@@ -48,13 +48,19 @@ const decorator = (service) => ({
 
     // Eventually update the entity to include the URL alias.
     const dataWithUrlAlias = { ...opts.data, url_alias: urlAliasEntity.id };
-    const updatedEntity = await service.update.call(this, uid, newEntity.id, { ...opts, data: dataWithUrlAlias });
+    const updatedEntity = await service.update.call(this, uid, newEntity.id, {
+      ...opts, data: dataWithUrlAlias,
+    });
 
     return updatedEntity;
   },
-  async update(uid, entityId, opts: any = {}) {
+  async update(
+    uid: Common.UID.ContentType,
+    entityId: number,
+    opts: IDecoratedServiceOptions<{ url_alias: number }>,
+  ) {
     const hasWT = isContentTypeEnabled(uid);
-    let urlAliasEntity;
+    let urlAliasEntity: Attribute.GetValues<'plugin::webtools.url-alias', Attribute.GetNonPopulatableKeys<'plugin::webtools.url-alias'>>;
 
     // If Webtools isn't enabled, do nothing.
     if (!hasWT) {
@@ -87,7 +93,7 @@ const decorator = (service) => ({
     // Eventually update the entity.
     return service.update.call(this, uid, entityId, opts);
   },
-  async delete(uid, entityId) {
+  async delete(uid: Common.UID.ContentType, entityId: number) {
     const hasWT = isContentTypeEnabled(uid);
 
     // If Webtools isn't enabled, do nothing.
@@ -96,18 +102,23 @@ const decorator = (service) => ({
     }
 
     // Fetch the entity because we need the url_alias id.
-    const entity: any = await strapi.entityService.findOne(uid, entityId, {
+    const entity = await strapi.entityService.findOne(uid, entityId, {
+      // @ts-ignore
       populate: 'url_alias',
     });
 
     // If a URL alias is present, delete it.
+    // @ts-ignore
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     if (entity.url_alias?.id) {
-      await getPluginService('urlAliasService').delete(entity.url_alias.id);
+      // @ts-ignore
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      await getPluginService('urlAliasService').delete(Number(entity.url_alias.id));
     }
 
     // Eventually delete the entity.
     return service.delete.call(this, uid, entityId);
-  }
+  },
 });
 
 export default () => ({

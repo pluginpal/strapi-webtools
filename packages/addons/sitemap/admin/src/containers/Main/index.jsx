@@ -29,6 +29,7 @@ const App = () => {
     dispatch(getContentTypes(toggleNotification));
     dispatch(getSitemapInfo(toggleNotification));
     dispatch(getAllowedFields(toggleNotification));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
 
   return (

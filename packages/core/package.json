@@ -13,13 +13,18 @@
   "scripts": {
     "build": "tsc",
     "build:release": "tsc --outDir build",
-    "develop": "tsc -w"
+    "develop": "tsc -w",
+    "eslint": "eslint --max-warnings=0 './**/*.{js,jsx,ts,tsx}'",
+    "eslint:fix": "eslint --fix './**/*.{js,jsx,ts,tsx}'"
   },
   "dependencies": {
     "@strapi-webtools/helper-plugin": "*",
     "react-copy-to-clipboard": "^5.1.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@types/react-router-dom": "^5.3.3",
+    "strapi-typed": "^1.0.16"
+  },
   "author": {
     "name": "TODO"
   },

@@ -1,33 +1,42 @@
 import React, { useState } from 'react';
-import { IconButton, Typography, Flex, Tbody, Tr, Td } from '@strapi/design-system';
+import {
+  IconButton, Typography, Flex, Tbody, Tr, Td,
+} from '@strapi/design-system';
 import { Pencil, Trash } from '@strapi/icons';
-import { onRowClick, stopPropagation, request, useNotification } from '@strapi/helper-plugin';
+import {
+  onRowClick, stopPropagation, request, useNotification,
+} from '@strapi/helper-plugin';
 import { useIntl } from 'react-intl';
 import { useHistory } from 'react-router-dom';
 
 import pluginId from '../../../../../helpers/pluginId';
+import { PatternEntity } from '../../../../../types/url-patterns';
 
-const TableBody = ({ patterns }) => {
+interface Props {
+  patterns: PatternEntity[]
+}
+
+const TableBody: React.FC<Props> = ({ patterns }) => {
   const [statePatterns, setStatePatterns] = useState(patterns);
   const { formatMessage } = useIntl();
   const { push } = useHistory();
   const toggleNotification = useNotification();
 
-  const handleClickDelete = (id) => {
+  const handleClickDelete = (id: number) => {
     request(`/webtools/pattern/delete/${id}`, {
       method: 'GET',
     })
-      .then((res) => {
+      .then(() => {
         const newPatterns = statePatterns.filter((pattern) => pattern.id !== id);
         setStatePatterns(newPatterns);
         toggleNotification({ type: 'success', message: { id: 'webtools.settings.success.delete' } });
       })
-      .catch((err) => {
+      .catch(() => {
         toggleNotification({ type: 'warning', message: { id: 'notification.error' } });
       });
   };
 
-  const handleClickEdit = (id) => {
+  const handleClickEdit = (id: number) => {
     push(`/settings/${pluginId}/patterns/${id}`);
   };
 

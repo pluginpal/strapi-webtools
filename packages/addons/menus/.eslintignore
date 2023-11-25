@@ -1,0 +1,8 @@
+**/node_modules
+**/playground
+**/public
+**/build
+**/config
+**/scripts
+**/docs
+**/__tests__

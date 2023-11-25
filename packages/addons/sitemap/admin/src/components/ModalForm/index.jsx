@@ -54,6 +54,7 @@ const ModalForm = (props) => {
       setLangcode('und');
     }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen]);
 
   if (!isOpen) {

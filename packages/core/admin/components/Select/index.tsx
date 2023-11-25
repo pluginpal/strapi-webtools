@@ -1,15 +1,22 @@
 import React, { FC } from 'react';
 import { Select, Option } from '@strapi/design-system';
+import { FormikErrors } from 'formik';
+import { PatternFormValues } from '../../types/url-patterns';
+
+type ListItem = {
+  uid: string,
+  name: string,
+};
 
 type Props = {
-  list?: any[];
+  list?: ListItem[];
   name: string;
   label?: string;
   placeholder?: string;
   hint?: string;
   value?: string;
   error?: string | null;
-  setFieldValue: (name: string, value: string) => void;
+  setFieldValue: (field: string, value: any) => Promise<void | FormikErrors<PatternFormValues>>;
 };
 
 const SelectComponent: FC<Props> = ({
@@ -34,9 +41,7 @@ const SelectComponent: FC<Props> = ({
       hint={hint}
       error={error}
       value={value}
-      onChange={(v: any) => {
-        setFieldValue(name, v);
-      }}
+      onChange={(v: any) => setFieldValue(name, v)}
     >
       {list.map((item) => (
         <Option key={item.uid} value={item.uid}>

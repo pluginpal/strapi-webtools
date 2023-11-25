@@ -1,7 +1,7 @@
 import register from './server/register';
 import bootstrap from './server/bootstrap';
 
-module.exports = () => ({
+export default () => ({
   register,
   bootstrap,
 });

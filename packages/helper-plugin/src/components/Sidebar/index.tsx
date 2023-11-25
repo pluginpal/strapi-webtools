@@ -1,28 +1,26 @@
-import React from "react";
+import React from 'react';
 
 import {
   Box,
-} from "@strapi/design-system";
-import ActionButton from "./ActionButton";
-import Dropdown from "./Dropdown";
+} from '@strapi/design-system';
+import ActionButton from './ActionButton';
+import Dropdown from './Dropdown';
 
 const Sidebar = ({
   children,
 }) => {
   return (
-    <>
-      <Box
-        as="aside"
-        aria-labelledby="webtools-sidebar-title"
-        background="neutral0"
-        borderColor="neutral150"
-        hasRadius
-        padding={4}
-        shadow="tableShadow"
-      >
-        {children}
-      </Box>
-    </>
+    <Box
+      as="aside"
+      aria-labelledby="webtools-sidebar-title"
+      background="neutral0"
+      borderColor="neutral150"
+      hasRadius
+      padding={4}
+      shadow="tableShadow"
+    >
+      {children}
+    </Box>
   );
 };
 

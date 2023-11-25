@@ -1,6 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { Formik, Form } from 'formik';
+import {
+  Formik,
+  Form,
+  FormikProps,
+  FormikErrors,
+} from 'formik';
 import { useHistory } from 'react-router-dom';
 
 import {
@@ -25,6 +30,8 @@ import Center from '../../../components/Center';
 import Select from '../../../components/Select';
 import LabelField from '../../../components/LabelField';
 import PatternField from '../../../components/PatternField';
+import { PatternFormValues, ValidatePatternResponse } from '../../../types/url-patterns';
+import { EnabledContentTypes } from '../../../types/enabled-contenttypes';
 
 const CreatePattternPage = () => {
   const { push } = useHistory();
@@ -35,8 +42,8 @@ const CreatePattternPage = () => {
 
   useEffect(() => {
     setLoading(true);
-    request(`/webtools/info/getContentTypes`, { method: 'GET' })
-      .then((res: any) => {
+    request('/webtools/info/getContentTypes', { method: 'GET' })
+      .then((res: EnabledContentTypes) => {
         setContentTypes(res);
         setLoading(false);
       })
@@ -45,21 +52,26 @@ const CreatePattternPage = () => {
       });
   }, []);
 
-  const handleCreateSubmit = (values: any, { setSubmitting, setErrors }: any) => {
-    request(`/webtools/pattern/create`, {
+  const handleCreateSubmit = (
+    values: PatternFormValues,
+    { setSubmitting, setErrors }: FormikProps<PatternFormValues>,
+  ) => {
+    request('/webtools/pattern/create', {
       method: 'POST',
       body: JSON.stringify({
         data: values,
       }),
     })
-      .then((res: any) => {
+      .then(() => {
         push(`/settings/${pluginId}/patterns`);
         toggleNotification({ type: 'success', message: { id: 'webtools.settings.success.create' } });
         setSubmitting(false);
       })
-      .catch((err: any) => {
+      .catch((err) => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         if (err.response.payload[0].message === 'This attribute must be unique') {
-          setErrors({ code: err.response.payload[0].message });
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+          setErrors({ code: err.response.payload[0].message as string });
         } else {
           toggleNotification({ type: 'warning', message: { id: 'notification.error' } });
         }
@@ -67,17 +79,17 @@ const CreatePattternPage = () => {
       });
   };
 
-  const validatePattern = async (values: any) => {
-    const errors: any = {};
+  const validatePattern = async (values: PatternFormValues) => {
+    const errors: FormikErrors<PatternFormValues> = {};
 
-    await request(`/webtools/pattern/validate`, {
+    await request('/webtools/pattern/validate', {
       method: 'POST',
       body: JSON.stringify({
         pattern: values.pattern,
         modelName: values.contenttype,
       }),
     })
-      .then((res: any) => {
+      .then((res: ValidatePatternResponse) => {
         if (res.valid === false) {
           errors.pattern = res.message;
         }
@@ -91,24 +103,28 @@ const CreatePattternPage = () => {
   if (loading || !contentTypes) {
     return (
       <Center>
-        <Loader>{formatMessage({ id: 'webtools.settings.loading', defaultMessage: "Loading content..." })}</Loader>
+        <Loader>{formatMessage({ id: 'webtools.settings.loading', defaultMessage: 'Loading content...' })}</Loader>
       </Center>
     );
   }
 
   return (
-    <Formik
+    <Formik<PatternFormValues>
       enableReinitialize
-      initialValues={{ label: '', pattern: '', contenttype: '', languages: [] }}
+      initialValues={{
+        label: '', pattern: '', contenttype: '', languages: [],
+      }}
       onSubmit={handleCreateSubmit}
       validationSchema={schema}
       validate={validatePattern}
     >
-      {({ handleSubmit, values, handleChange, errors, touched, isSubmitting, setFieldValue }) => (
+      {({
+        handleSubmit, values, errors, touched, isSubmitting, setFieldValue,
+      }) => (
         <Form noValidate onSubmit={handleSubmit}>
           <HeaderLayout
-            title={formatMessage({ id: 'webtools.settings.page.patterns.create.title', defaultMessage: "Add new pattern" })}
-            subtitle={formatMessage({ id: 'webtools.settings.page.patterns.create.description', defaultMessage: "Add a pattern for automatic URL alias generation." })}
+            title={formatMessage({ id: 'webtools.settings.page.patterns.create.title', defaultMessage: 'Add new pattern' })}
+            subtitle={formatMessage({ id: 'webtools.settings.page.patterns.create.description', defaultMessage: 'Add a pattern for automatic URL alias generation.' })}
             as="h2"
             navigationAction={(
               <Link startIcon={<ArrowLeft />} to={`/settings/${pluginId}/patterns`}>
@@ -170,28 +186,22 @@ const CreatePattternPage = () => {
                         setFieldValue={setFieldValue}
                         errors={errors}
                         touched={touched}
-                        hint={(code: any) => (
-                          <Typography>Machine name: {code} </Typography>
-                        )}
                       />
                     </GridItem>
                     <GridItem col={12} />
                     {(values.contenttype !== '') && (
-                      <GridItem col={6}>
-                        <PatternField
-                          values={values}
-                          uid={values.contenttype}
-                          setFieldValue={setFieldValue}
-                          hint={(hint: any) => (
-                            <Typography variant="pi">{hint}</Typography>
-                          )}
-                          error={
+                    <GridItem col={6}>
+                      <PatternField
+                        values={values}
+                        uid={values.contenttype}
+                        setFieldValue={setFieldValue}
+                        error={
                             errors.pattern && touched.pattern
                               ? errors.pattern
                               : null
                           }
-                        />
-                      </GridItem>
+                      />
+                    </GridItem>
                     )}
                   </Grid>
                 </Stack>

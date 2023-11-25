@@ -28,7 +28,7 @@ jobs:
       - name: Make build
         run: yarn run build
       - name: Run eslint
-        run: yarn run lint
+        run: yarn run eslint
   test:
     name: 'test'
     needs: [lint]

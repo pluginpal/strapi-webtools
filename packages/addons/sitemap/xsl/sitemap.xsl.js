@@ -25,15 +25,15 @@ if (document) {
     }
   }
 
-  setTimeout(function() {
+  setTimeout(() => {
     // Set data-sort attribute for changefreq field.
-    var tds = document.getElementsByClassName("changefreq");
-    for (var i = 0; i < tds.length; i++) {
-      tds[i].setAttribute('data-sort', formatChangeFreq(tds[i].textContent))
+    let tds = document.getElementsByClassName('changefreq');
+    for (let i = 0; i < tds.length; i++) {
+      tds[i].setAttribute('data-sort', formatChangeFreq(tds[i].textContent));
     }
 
     // Add URL to title.
-    var h1 = document.getElementsByTagName("h1")[0];
+    let h1 = document.getElementsByTagName('h1')[0];
     h1.innerHTML = h1.textContent + ': ' + location;
     document.title = h1.textContent;
 

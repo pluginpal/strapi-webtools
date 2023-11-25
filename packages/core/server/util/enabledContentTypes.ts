@@ -1,13 +1,21 @@
 import _ from 'lodash';
+import { Common, Schema } from '@strapi/strapi';
+
 import { pluginId } from './pluginId';
 
-export const isContentTypeEnabled = (uid: string) => {
-  const contentType = strapi.contentTypes[uid];
+export const isContentTypeEnabled = (ct: Common.UID.ContentType | Schema.ContentType) => {
+  let contentType: Schema.ContentType;
+
+  if (typeof ct === 'string') {
+    contentType = strapi.contentTypes[ct];
+  } else {
+    contentType = ct;
+  }
+
   const { pluginOptions } = contentType;
+  const enabled = _.get(pluginOptions, [pluginId, 'enabled'], false) as boolean;
 
-  const urlAliasPluginOptionsRaw = _.get(pluginOptions, [pluginId], {});
-
-  if (!urlAliasPluginOptionsRaw.enabled) return false;
+  if (!enabled) return false;
 
   return true;
 };

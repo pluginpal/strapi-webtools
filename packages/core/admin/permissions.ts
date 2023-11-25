@@ -4,6 +4,7 @@ const pluginPermissions = {
   // And also if the plugin is accessible. This use case is found when a user types the url of the
   // plugin directly in the browser
   'settings.list': [{ action: 'plugin::webtools.settings.list', subject: null }],
+  'settings.overview': [{ action: 'plugin::webtools.settings.overview', subject: null }],
   'settings.patterns': [{ action: 'plugin::webtools.settings.patterns', subject: null }],
 };
 

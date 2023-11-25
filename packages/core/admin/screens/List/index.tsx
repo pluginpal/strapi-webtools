@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { EntityService, Attribute } from '@strapi/types';
 import { useIntl } from 'react-intl';
 
 import { ContentLayout, HeaderLayout } from '@strapi/design-system';
@@ -8,12 +9,12 @@ import pluginPermissions from '../../permissions';
 import Table from './components/Table';
 
 const List = () => {
-  const [paths, setPaths] = useState(null);
+  const [paths, setPaths] = useState<Attribute.GetValues<'plugin::webtools.url-alias'>[]>(null);
   const { formatMessage } = useIntl();
 
   useEffect(() => {
-    request(`/webtools/path/findMany`, { method: 'GET' })
-      .then((res: any) => {
+    request('/webtools/path/findMany', { method: 'GET' })
+      .then((res: EntityService.PaginatedResult<'plugin::webtools.url-alias'>) => {
         setPaths(res.results);
       })
       .catch(() => {
@@ -24,7 +25,11 @@ const List = () => {
   // if (loading || !paths) {
   //   return (
   //     <Center>
-  //       <Loader>{formatMessage({ id: 'webtools.settings.loading', defaultMessage: "Loading content..." })}</Loader>
+  //       <Loader>
+  //        {formatMessage({
+  //          id: 'webtools.settings.loading', defaultMessage: "Loading content..."
+  //        })}
+  //       </Loader>
   //     </Center>
   //   );
   // }
@@ -32,8 +37,8 @@ const List = () => {
   return (
     <CheckPagePermissions permissions={pluginPermissions['settings.patterns']}>
       <HeaderLayout
-        title={formatMessage({ id: 'webtools.settings.page.list.title', defaultMessage: "List" })}
-        subtitle={formatMessage({ id: 'webtools.settings.page.list.description', defaultMessage: "A list of all the known URL aliases." })}
+        title={formatMessage({ id: 'webtools.settings.page.list.title', defaultMessage: 'List' })}
+        subtitle={formatMessage({ id: 'webtools.settings.page.list.description', defaultMessage: 'A list of all the known URL aliases.' })}
         as="h2"
         // TODO: Generate all button.
         // primaryAction={(
