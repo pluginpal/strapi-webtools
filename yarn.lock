@@ -5104,7 +5104,6 @@ __metadata:
   resolution: "@strapi-webtools/core@workspace:packages/core"
   dependencies:
     "@strapi-webtools/helper-plugin": "npm:*"
-    "@types/react-router-dom": "npm:^5.3.3"
     react-copy-to-clipboard: "npm:^5.1.0"
     strapi-typed: "npm:^1.0.16"
   peerDependencies:
@@ -5983,13 +5982,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/history@npm:^4.7.11":
-  version: 4.7.11
-  resolution: "@types/history@npm:4.7.11"
-  checksum: 3facf37c2493d1f92b2e93a22cac7ea70b06351c2ab9aaceaa3c56aa6099fb63516f6c4ec1616deb5c56b4093c026a043ea2d3373e6c0644d55710364d02c934
-  languageName: node
-  linkType: hard
-
 "@types/hoist-non-react-statics@npm:*, @types/hoist-non-react-statics@npm:^3.3.1":
   version: 3.3.5
   resolution: "@types/hoist-non-react-statics@npm:3.3.5"
@@ -6295,27 +6287,6 @@ __metadata:
   dependencies:
     "@types/react": "npm:*"
   checksum: f1085c3c27aed16b89fac137ee3771ce161b6faa63be90e47f91a3867864c4612df24e9937d2eb621feaa84d29cb8829cf2c42f69f611fad8abc15929377e5db
-  languageName: node
-  linkType: hard
-
-"@types/react-router-dom@npm:^5.3.3":
-  version: 5.3.3
-  resolution: "@types/react-router-dom@npm:5.3.3"
-  dependencies:
-    "@types/history": "npm:^4.7.11"
-    "@types/react": "npm:*"
-    "@types/react-router": "npm:*"
-  checksum: a9231a16afb9ed5142678147eafec9d48582809295754fb60946e29fcd3757a4c7a3180fa94b45763e4c7f6e3f02379e2fcb8dd986db479dcab40eff5fc62a91
-  languageName: node
-  linkType: hard
-
-"@types/react-router@npm:*":
-  version: 5.1.20
-  resolution: "@types/react-router@npm:5.1.20"
-  dependencies:
-    "@types/history": "npm:^4.7.11"
-    "@types/react": "npm:*"
-  checksum: 1f7eee61981d2f807fa01a34a0ef98ebc0774023832b6611a69c7f28fdff01de5a38cabf399f32e376bf8099dcb7afaf724775bea9d38870224492bea4cb5737
   languageName: node
   linkType: hard
 

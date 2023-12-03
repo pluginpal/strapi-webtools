@@ -18,14 +18,14 @@
     "eslint:fix": "eslint --fix './**/*.{js,jsx,ts,tsx}'"
   },
   "peerDependencies": {
-    "@strapi/strapi": "^4"
+    "@strapi/strapi": "^4",
+    "react": "*"
   },
   "dependencies": {
     "@strapi-webtools/helper-plugin": "*",
     "react-copy-to-clipboard": "^5.1.0"
   },
   "devDependencies": {
-    "@types/react-router-dom": "^5.3.3",
     "strapi-typed": "^1.0.16"
   },
   "author": {

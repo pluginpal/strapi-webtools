@@ -20,9 +20,8 @@
     "eslint:fix": "eslint --fix './**/*.{js,jsx,ts,tsx}'"
   },
   "peerDependencies": {
-    "@strapi-webtools/core": "^1"
+    "@strapi-webtools/core": "*"
   },
-  "devDependencies": {},
   "author": {
     "name": "TODO"
   },

@@ -21,7 +21,8 @@
     "eslint:fix": "eslint --fix './**/*.{js,jsx,ts,tsx}'"
   },
   "peerDependencies": {
-    "@strapi-webtools/core": "^1"
+    "@strapi-webtools/core": "*",
+    "redux": "*"
   },
   "dependencies": {
     "chalk": "^4.1.2",
@@ -32,7 +33,6 @@
     "sitemap": "^7.1.0",
     "xml2js": "^0.5.0"
   },
-  "devDependencies": {},
   "author": {
     "name": "TODO"
   },
