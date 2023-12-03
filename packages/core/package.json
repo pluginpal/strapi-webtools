@@ -17,6 +17,9 @@
     "eslint": "eslint --max-warnings=0 './**/*.{js,jsx,ts,tsx}'",
     "eslint:fix": "eslint --fix './**/*.{js,jsx,ts,tsx}'"
   },
+  "peerDependencies": {
+    "@strapi/strapi": "^4"
+  },
   "dependencies": {
     "@strapi-webtools/helper-plugin": "*",
     "react-copy-to-clipboard": "^5.1.0"

@@ -20,8 +20,10 @@
     "eslint": "eslint --max-warnings=0 './**/*.{js,jsx,ts,tsx}'",
     "eslint:fix": "eslint --fix './**/*.{js,jsx,ts,tsx}'"
   },
+  "peerDependencies": {
+    "@strapi-webtools/core": "^1"
+  },
   "dependencies": {
-    "@strapi-webtools/helper-plugin": "*",
     "chalk": "^4.1.2",
     "commander": "^8.3.0",
     "immutable": "^3.8.2",

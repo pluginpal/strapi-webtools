@@ -19,8 +19,8 @@
     "eslint": "eslint --max-warnings=0 './**/*.{js,jsx,ts,tsx}'",
     "eslint:fix": "eslint --fix './**/*.{js,jsx,ts,tsx}'"
   },
-  "dependencies": {
-    "@strapi-webtools/helper-plugin": "*"
+  "peerDependencies": {
+    "@strapi-webtools/core": "^1"
   },
   "devDependencies": {},
   "author": {
