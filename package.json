@@ -2,6 +2,7 @@
   "name": "strapi-plugin-webtools",
   "private": true,
   "workspaces": [
+    "playground",
     "packages/*",
     "packages/addons/*"
   ],
