@@ -19,7 +19,7 @@
   },
   "peerDependencies": {
     "@strapi/strapi": "^4",
-    "react": "*"
+    "react": "^18"
   },
   "dependencies": {
     "@strapi-webtools/helper-plugin": "*",
