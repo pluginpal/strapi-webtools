@@ -47,7 +47,7 @@ jobs:
       - name: Build the packages
         run: yarn run build
       - name: Install playground dependencies
-        run: yarn playground:install --frozen-lockfile --unsafe-perm
+        run: yarn playground:install
       - name: Build the playground
         run: NODE_ENV=ci yarn playground:build
       - name: Run integration tests
