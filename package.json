@@ -14,7 +14,7 @@
     "playground:build": "cd playground && yarn build",
     "playground:start": "cd playground && yarn start",
     "playground:develop": "cd playground && yarn develop",
-    "test:integration": "ENV_PATH=./playground/.env jest --verbose --runInBand --testMatch **/healthcheck.test.js"
+    "test:integration": "ENV_PATH=./playground/.env jest --verbose --runInBand --testMatch '**/healthcheck.test.js'"
   },
   "dependencies": {
     "@strapi-webtools/core": "*",
