@@ -17,11 +17,14 @@
     "build:release": "tsc --outDir build",
     "develop": "yarn develop:copy-files && tsc -w",
     "develop:copy-files": "copyfiles -u 1 xsl/**/* ../../../playground/src/plugins/webtools-addon-sitemap/xsl/",
-    "eslint": "eslint --max-warnings=0 './**/*.{js,jsx,ts,tsx}'",
-    "eslint:fix": "eslint --fix './**/*.{js,jsx,ts,tsx}'"
+    "eslint": "../../../node_modules/.bin/eslint --max-warnings=0 './**/*.{js,jsx,ts,tsx}'",
+    "eslint:fix": "../../../node_modules/.bin/eslint --fix './**/*.{js,jsx,ts,tsx}'"
+  },
+  "peerDependencies": {
+    "@strapi-webtools/core": "*",
+    "redux": "*"
   },
   "dependencies": {
-    "@strapi-webtools/helper-plugin": "*",
     "chalk": "^4.1.2",
     "commander": "^8.3.0",
     "immutable": "^3.8.2",
@@ -30,7 +33,6 @@
     "sitemap": "^7.1.0",
     "xml2js": "^0.5.0"
   },
-  "devDependencies": {},
   "author": {
     "name": "TODO"
   },

@@ -16,13 +16,12 @@
     "build": "tsc",
     "build:release": "tsc --outDir build",
     "develop": "tsc -w",
-    "eslint": "eslint --max-warnings=0 './**/*.{js,jsx,ts,tsx}'",
-    "eslint:fix": "eslint --fix './**/*.{js,jsx,ts,tsx}'"
+    "eslint": "../../../node_modules/.bin/eslint --max-warnings=0 './**/*.{js,jsx,ts,tsx}'",
+    "eslint:fix": "../../../node_modules/.bin/eslint --fix './**/*.{js,jsx,ts,tsx}'"
   },
-  "dependencies": {
-    "@strapi-webtools/helper-plugin": "*"
+  "peerDependencies": {
+    "@strapi-webtools/core": "*"
   },
-  "devDependencies": {},
   "author": {
     "name": "TODO"
   },

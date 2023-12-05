@@ -96,6 +96,18 @@ node_modules
 .node_history
 
 ############################
+# Yarn
+############################
+
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
+############################
 # Tests
 ############################
 
@@ -107,7 +119,6 @@ coverage
 ############################
 
 # .env
-yarn.lock
 license.txt
 exports
 *.cache
