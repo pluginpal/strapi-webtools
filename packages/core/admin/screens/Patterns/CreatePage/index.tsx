@@ -56,11 +56,12 @@ const CreatePattternPage = () => {
     values: PatternFormValues,
     { setSubmitting, setErrors }: FormikProps<PatternFormValues>,
   ) => {
-    request('/webtools/pattern/create', {
+    request('/webtools/url-pattern/create', {
       method: 'POST',
-      body: JSON.stringify({
+      body: {
+        // @ts-ignore
         data: values,
-      }),
+      },
     })
       .then(() => {
         push(`/settings/${pluginId}/patterns`);
@@ -82,12 +83,13 @@ const CreatePattternPage = () => {
   const validatePattern = async (values: PatternFormValues) => {
     const errors: FormikErrors<PatternFormValues> = {};
 
-    await request('/webtools/pattern/validate', {
+    await request('/webtools/url-pattern/validate', {
       method: 'POST',
-      body: JSON.stringify({
+      body: {
+        // @ts-ignore
         pattern: values.pattern,
         modelName: values.contenttype,
-      }),
+      },
     })
       .then((res: ValidatePatternResponse) => {
         if (res.valid === false) {

@@ -37,7 +37,7 @@ const PatternField: FC<Props> = ({
   } = useQuery<Record<string, string[]>>(
 
     ['webtools', 'pattern', 'allowed-fields'],
-    () => request('/webtools/pattern/allowed-fields', { method: 'GET' }),
+    () => request('/webtools/url-pattern/allowed-fields', { method: 'GET' }),
     {
       refetchOnWindowFocus: false,
       refetchOnMount: false,

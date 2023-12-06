@@ -23,7 +23,7 @@ const TableBody: React.FC<Props> = ({ patterns }) => {
   const toggleNotification = useNotification();
 
   const handleClickDelete = (id: number) => {
-    request(`/webtools/pattern/delete/${id}`, {
+    request(`/webtools/url-pattern/delete/${id}`, {
       method: 'GET',
     })
       .then(() => {

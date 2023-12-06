@@ -54,7 +54,7 @@ const EditPatternPage = () => {
 
   useEffect(() => {
     setLoading(true);
-    request(`/webtools/pattern/findOne/${id}`, { method: 'GET' })
+    request(`/webtools/url-pattern/findOne/${id}`, { method: 'GET' })
       .then((res: PatternEntity) => {
         setPatternEntity(res);
         setLoading(false);
@@ -69,11 +69,12 @@ const EditPatternPage = () => {
     values: PatternFormValues,
     { setSubmitting, setErrors }: FormikProps<PatternFormValues>,
   ) => {
-    request(`/webtools/pattern/update/${patternEntity.id}`, {
-      method: 'POST',
-      body: JSON.stringify({
+    request(`/webtools/url-pattern/update/${patternEntity.id}`, {
+      method: 'PUT',
+      body: {
+        // @ts-ignore
         data: values,
-      }),
+      },
     })
       .then(() => {
         push(`/settings/${pluginId}/patterns`);
@@ -103,12 +104,13 @@ const EditPatternPage = () => {
   const validatePattern = async (values: PatternFormValues) => {
     const errors: Record<string, any> = {};
 
-    await request('/webtools/pattern/validate', {
+    await request('/webtools/url-pattern/validate', {
       method: 'POST',
-      body: JSON.stringify({
+      body: {
+        // @ts-ignore
         pattern: values.pattern,
         modelName: values.contenttype,
-      }),
+      },
     })
       .then((res: ValidatePatternResponse) => {
         if (res.valid === false) {
