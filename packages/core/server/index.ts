@@ -55,8 +55,8 @@ export default {
     },
   },
   controllers: {
-    path: adminApiUrlAliasController,
-    pattern: adminApiUrlPatternController,
+    'url-alias': adminApiUrlAliasController,
+    'url-pattern': adminApiUrlPatternController,
     info: adminApiInfoController,
     byPath: contentApiByPathController,
   },

@@ -1,22 +1,24 @@
 import { request } from '@strapi/helper-plugin';
 
 export const createUrlAlias = async (body: { id: number }, slug: string) => {
-  return request('/content-manager/collection-types/plugin::webtools.url-alias', {
+  return request('/webtools/url-alias/create', {
     method: 'POST',
     body: {
-      ...body,
       // @ts-ignore
-      contenttype: slug,
+      data: {
+        ...body,
+        contenttype: slug,
+      },
     },
   });
 };
 
 export const updateUrlAlias = async (body: { id: number }, slug: string) => {
-  return request(`/content-manager/collection-types/plugin::webtools.url-alias/${body.id}`, {
+  return request(`/webtools/url-alias/update/${body.id}`, {
     method: 'PUT',
     body: {
-      ...body,
       // @ts-ignore
+      data: body,
       contenttype: slug,
     },
   });
