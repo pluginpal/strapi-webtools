@@ -30,8 +30,6 @@ export default {
     entity.contentType = contentType;
     const contentTypeObj = strapi.contentTypes[contentType];
 
-    // ctx.body = entity;
-
     // Format response.
     const sanitizedEntity = await sanitizeOutput(entity, contentTypeObj, auth);
     ctx.body = transformResponse(sanitizedEntity, {}, { contentType: contentTypeObj });
