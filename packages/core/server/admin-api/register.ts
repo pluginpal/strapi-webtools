@@ -3,32 +3,59 @@
 import _ from 'lodash';
 import { Schema } from '@strapi/strapi';
 import { IStrapi } from '../types/strapi';
+import { isContentTypeEnabled } from '../util/enabledContentTypes';
 
 export default (strapi: IStrapi) => {
   // Register the url_alias field.
   Object.values(strapi.contentTypes).forEach((contentType: Schema.ContentType) => {
-    const { attributes, pluginOptions } = contentType;
+    const { attributes } = contentType;
+    const notMigrated = _.get(contentType.pluginOptions, ['url-alias', 'enabled'], false) as boolean;
 
-    // Not for CTs that are not visible in the content manager.
-    const isInContentManager = _.get(pluginOptions, ['content-manager', 'visible']) as boolean;
-    if (isInContentManager === false) return;
-
-    _.set(attributes, 'url_alias', {
-      writable: true,
-      private: false,
-      configurable: false,
-      visible: false,
-      default: null,
-      type: 'relation',
-      relation: 'oneToOne',
-      target: 'plugin::webtools.url-alias',
-      unique: true,
-      pluginOptions: {
-        i18n: {
-          localized: true,
+    // Add a relation field to the url_alias content type, only
+    // when webtools is explicitly enabled using pluginOptions.
+    if (isContentTypeEnabled(contentType.uid) || notMigrated) {
+      _.set(attributes, 'url_alias', {
+        writable: true,
+        private: false,
+        configurable: false,
+        visible: false,
+        default: null,
+        type: 'relation',
+        relation: 'oneToOne',
+        target: 'plugin::webtools.url-alias',
+        unique: true,
+        pluginOptions: {
+          i18n: {
+            localized: true,
+          },
         },
-      },
-    });
+      });
+    }
+
+    // We explicitly check if the content type is enabled using the
+    // old pluginId 'url-alias'. If it is, we add the old url_path_id
+    // field one last time. After the 'plugin-options-rename' migration
+    // this if statement will not be satisfied anymore.
+    //
+    // By doing this Strapi will bootstrap one single time with both
+    // the old and the new fields in the database. This gives the opportunity
+    // to easily migrate the data from the one to the other field.
+    if (notMigrated) {
+      _.set(attributes, 'url_path_id', {
+        writable: true,
+        private: true,
+        configurable: false,
+        visible: false,
+        default: null,
+        type: 'string',
+        unique: true,
+        pluginOptions: {
+          i18n: {
+            localized: true,
+          },
+        },
+      });
+    }
   });
 
   // Register the pattern config type when using the config-sync plugin.
