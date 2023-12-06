@@ -170,8 +170,8 @@ export default () => ({
         }
       });
 
-      resolvedPattern = pattern.replace(/([^:]\/)\/+/g, '$1'); // Remove duplicate forward slashes.
-      resolvedPattern = pattern.startsWith('/') ? pattern : `/${pattern}`; // Add a starting slash.
+      resolvedPattern = resolvedPattern.replace(/([^:]\/)\/+/g, '$1'); // Remove duplicate forward slashes.
+      resolvedPattern = resolvedPattern.startsWith('/') ? resolvedPattern : `/${resolvedPattern}`; // Add a starting slash.
       return resolvedPattern;
     };
 

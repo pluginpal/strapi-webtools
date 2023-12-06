@@ -1,4 +1,5 @@
-
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 
 import _ from 'lodash';
 import { Schema } from '@strapi/strapi';
@@ -33,14 +34,12 @@ export default (strapi: IStrapi) => {
 
   // Register the pattern config type when using the config-sync plugin.
   if (strapi.plugin('config-sync')) {
-    const configSyncPluginTypes = strapi.plugin('config-sync').pluginTypes as any[];
-
     if (!strapi.plugin('config-sync').pluginTypes) {
       // eslint-disable-next-line no-param-reassign
       strapi.plugin('config-sync').pluginTypes = [];
     }
 
-    configSyncPluginTypes.push({
+    strapi.plugin('config-sync').pluginTypes.push({
       configName: 'url-pattern',
       queryString: 'plugin::webtools.url-pattern',
       uid: 'code',

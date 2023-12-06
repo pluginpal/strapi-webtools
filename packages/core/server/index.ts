@@ -19,9 +19,11 @@ import adminApiInfoRoutes from './admin-api/routes/info';
 import queryLayerDecoratorService from './admin-api/services/query-layer-decorator';
 
 // Content API
-import contentApiByPathController from './content-api/controllers/by-path';
+import contentApiUrlAliasController from './content-api/controllers/url-alias';
+import contentApiCoreController from './content-api/controllers/core';
 import contentApiByPathService from './content-api/services/by-path';
-import contentApiPathRoutes from './content-api/routes/path';
+import contentApiUrlAliasRoutes from './content-api/routes/url-alias';
+import contentApiCoreRoutes from './content-api/routes/core';
 import { IStrapi } from './types/strapi';
 
 export default {
@@ -51,14 +53,20 @@ export default {
     },
     'content-api': {
       type: 'content-api',
-      routes: [...contentApiPathRoutes],
+      routes: [
+        ...contentApiUrlAliasRoutes,
+        ...contentApiCoreRoutes,
+      ],
     },
   },
   controllers: {
-    path: adminApiUrlAliasController,
-    pattern: adminApiUrlPatternController,
+    'url-alias': {
+      ...adminApiUrlAliasController,
+      ...contentApiUrlAliasController,
+    },
+    'url-pattern': adminApiUrlPatternController,
     info: adminApiInfoController,
-    byPath: contentApiByPathController,
+    core: contentApiCoreController,
   },
   services: {
     urlAliasService: adminApiUrlAliasService,
