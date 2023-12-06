@@ -19,7 +19,7 @@
       "types",
       "server/strapi.d.ts"
     ],
-    "jsx": "react",
+    "jsx": "react-jsx",
     "allowSyntheticDefaultImports": true,
     // "noUnusedLocals": true,
     // "noUnusedParameters": true,
