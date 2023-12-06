@@ -71,9 +71,10 @@ const EditPatternPage = () => {
   ) => {
     request(`/webtools/pattern/update/${patternEntity.id}`, {
       method: 'POST',
-      body: JSON.stringify({
+      body: {
+        // @ts-ignore
         data: values,
-      }),
+      },
     })
       .then(() => {
         push(`/settings/${pluginId}/patterns`);
@@ -105,10 +106,11 @@ const EditPatternPage = () => {
 
     await request('/webtools/pattern/validate', {
       method: 'POST',
-      body: JSON.stringify({
+      body: {
+        // @ts-ignore
         pattern: values.pattern,
         modelName: values.contenttype,
-      }),
+      },
     })
       .then((res: ValidatePatternResponse) => {
         if (res.valid === false) {

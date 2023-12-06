@@ -58,9 +58,10 @@ const CreatePattternPage = () => {
   ) => {
     request('/webtools/pattern/create', {
       method: 'POST',
-      body: JSON.stringify({
+      body: {
+        // @ts-ignore
         data: values,
-      }),
+      },
     })
       .then(() => {
         push(`/settings/${pluginId}/patterns`);
@@ -84,10 +85,11 @@ const CreatePattternPage = () => {
 
     await request('/webtools/pattern/validate', {
       method: 'POST',
-      body: JSON.stringify({
+      body: {
+        // @ts-ignore
         pattern: values.pattern,
         modelName: values.contenttype,
-      }),
+      },
     })
       .then((res: ValidatePatternResponse) => {
         if (res.valid === false) {
