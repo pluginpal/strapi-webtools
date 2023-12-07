@@ -28,30 +28,30 @@ In you're frontend you'll have to update the code to reflect that change.
 
 ##### 2. Query responses
 
-Prior to beta.1, the plugin would alter query responses by adding a field called `url_path`. Starting beta.1 that field will be replacd with the `url_alias` field. which is a native relation field. Meaning that if you wish to fetch it's response in a query, you'll have to use `populate` to include it in the response.
+Prior to beta.1, the plugin would alter query responses by adding a field called `url_path`. Starting beta.1 that field will be replacd with the `url_alias` field, which is a native relations field. Meaning that if you wish to fetch it's response in a query, you'll have to use `populate` to include it in the response.
 
-##### 2. Stop your Strapi app
+##### 3. Database migrations
 
-You'll start the database migration locally by stopping your Strapi app. If it wasn't running you can just continue to step 2.
+You'll start the database migration locally by stopping your Strapi app. If it wasn't running, you can just continue to step 4.
 
-##### 3. Database schema migration
+##### 4. Database schema migration
 
 To trigger the schema migrations we utilize Strapi [database migrations](https://docs.strapi.io/dev-docs/database-migrations). The plugin provides the migration file needed. You just need to copy [the migration file](https://github.com/strapi-community/strapi-plugin-url-alias/blob/master/migrations/2023.06.12T00.00.00.url-alias-to-webtools.js) and place it in the `./database/migrations` folder of your Strapi app.
 
-##### 4. Update the package
+##### 5. Update the package
 
 Updating the package will go in two steps:
 
 1. `yarn remove @strapi-community/strapi-plugin-url-alias`
 2. `yarn add @strapi-webtools/core`
 
-##### 5. Build Strapi
+##### 6. Build Strapi
 
 Build Strapi by running the following command
 
 - `yarn build`
 
-##### 6. Start Strapi
+##### 7. Start Strapi
 
 When starting Strapi, the migrations will automatically trigger and preserve all the data about URL alias you had previously stored in the database.
 
