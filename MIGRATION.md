@@ -1,7 +1,7 @@
 
 <h1>Migration guides</h1>
 
-## From 1.0.0-alpha.11 to 1.0.0-beta.1
+## From alpha.11 to beta.1
 
 Starting with beta, the plugin will be renamed to `@strapi-webtools/core`.
 
@@ -57,7 +57,7 @@ In the alpha versions, when you'd fetch an entry that had a URL alias, you would
 
 Starting from beta, this behavior will change as the URL alias becomes a native relation. Meaning you will have to use `populate` to get it in the response of a fetch query.
 
-## From v1.0.0-alpha.9 (or alpha.10) to 1.0.0-alpha.11
+## From alpha.9 (or 10) to alpha.11
 
 Url alias will be disabled by default for all content types. Make sure to enable it **before** updating to `1.0.0-alpha.11`. 
 
