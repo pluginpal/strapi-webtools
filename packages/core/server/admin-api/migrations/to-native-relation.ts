@@ -6,6 +6,7 @@ const migrateToNativeRelation = (strapi: IStrapi) => {
   Object.values(strapi.contentTypes).map(async (contentType: Schema.ContentType) => {
     const notMigrated = _.get(contentType.pluginOptions, ['url-alias', 'enabled'], false) as boolean;
 
+    // Return when the migration is allready finished.
     if (!notMigrated) {
       return;
     }
