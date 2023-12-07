@@ -16,15 +16,19 @@ In you're frontend you'll have to update the code to reflect that change.
 
 ###### From
 ```
-/api/url-alias/get
-/api/url-alias/all
+/api/url-alias/get // Fetches a page, based on a URL alias.
+/api/url-alias/all // Fetches all URL aliases.
 ```
 
 ###### To
 ```
-/api/webtools/get
-/api/webtools/all
+/api/webtools/router
+/api/webtools/url-alias
 ```
+
+##### 2. Query responses
+
+Prior to beta.1, the plugin would alter query responses by adding a field called `url_path`. Starting beta.1 that field will be replacd with the `url_alias` field. which is a native relation field. Meaning that if you wish to fetch it's response in a query, you'll have to use `populate` to include it in the response.
 
 ##### 2. Stop your Strapi app
 
@@ -50,12 +54,6 @@ Build Strapi by running the following command
 ##### 6. Start Strapi
 
 When starting Strapi, the migrations will automatically trigger and preserve all the data about URL alias you had previously stored in the database.
-
-##### 7. Data structure change
-
-In the alpha versions, when you'd fetch an entry that had a URL alias, you would see that alias in the response. That field (`url_path`) would be injected through a query hook.
-
-Starting from beta, this behavior will change as the URL alias becomes a native relation. Meaning you will have to use `populate` to get it in the response of a fetch query.
 
 ## From alpha.9 (or 10) to alpha.11
 
