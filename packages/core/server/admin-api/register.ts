@@ -59,13 +59,10 @@ export default (strapi: IStrapi) => {
   });
 
   // Register the pattern config type when using the config-sync plugin.
-  if (strapi.plugin('config-sync')) {
-    const configSyncPluginTypes = strapi.plugin('config-sync').pluginTypes as any[];
-
-    if (!strapi.plugin('config-sync').pluginTypes) {
-      // eslint-disable-next-line no-param-reassign
-      strapi.plugin('config-sync').pluginTypes = [];
-    }
+  const configSync = strapi.plugin('config-sync');
+  if (configSync) {
+    configSync.pluginTypes ??= [];
+    const configSyncPluginTypes = configSync.pluginTypes as any[];
 
     configSyncPluginTypes.push({
       configName: 'url-pattern',
