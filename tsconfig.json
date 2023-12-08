@@ -17,7 +17,7 @@
     "typeRoots": [
       "node_modules/@types",
       "types",
-      "server/strapi.d.ts"
+      "server/types/strapi.d.ts"
     ],
     "jsx": "react-jsx",
     "allowSyntheticDefaultImports": true,

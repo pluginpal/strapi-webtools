@@ -1,4 +1,4 @@
-import { Strapi } from '@strapi/strapi';
+import { Strapi, PluginOptions as OriginalPluginOptions } from '@strapi/strapi';
 
 /**
  * An extension of the Strapi type to include unsupported types.
@@ -32,4 +32,14 @@ export interface IDecoratedService {
 
 export interface IDecoratedServiceOptions<Fields> {
   data: Fields
+}
+
+declare module '@strapi/strapi' {
+  export module Schema {
+    interface PluginOptions extends OriginalPluginOptions {
+      webtools?: {
+        enabled?: boolean;
+      };
+    }
+  }
 }
