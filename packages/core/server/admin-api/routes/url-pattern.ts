@@ -3,56 +3,56 @@
 export default [
   {
     method: 'GET',
-    path: '/pattern/findOne/:id',
-    handler: 'pattern.findOne',
+    path: '/url-pattern/findOne/:id',
+    handler: 'url-pattern.findOne',
     config: {
       policies: [],
     },
   },
   {
     method: 'GET',
-    path: '/pattern/findMany',
-    handler: 'pattern.findMany',
+    path: '/url-pattern/findMany',
+    handler: 'url-pattern.findMany',
     config: {
       policies: [],
     },
   },
   {
     method: 'GET',
-    path: '/pattern/delete/:id',
-    handler: 'pattern.delete',
+    path: '/url-pattern/delete/:id',
+    handler: 'url-pattern.delete',
+    config: {
+      policies: [],
+    },
+  },
+  {
+    method: 'PUT',
+    path: '/url-pattern/update/:id',
+    handler: 'url-pattern.update',
     config: {
       policies: [],
     },
   },
   {
     method: 'POST',
-    path: '/pattern/update/:id',
-    handler: 'pattern.update',
-    config: {
-      policies: [],
-    },
-  },
-  {
-    method: 'POST',
-    path: '/pattern/create',
-    handler: 'pattern.create',
+    path: '/url-pattern/create',
+    handler: 'url-pattern.create',
     config: {
       policies: [],
     },
   },
   {
     method: 'GET',
-    path: '/pattern/allowed-fields',
-    handler: 'pattern.allowedFields',
+    path: '/url-pattern/allowed-fields',
+    handler: 'url-pattern.allowedFields',
     config: {
       policies: [],
     },
   },
   {
     method: 'POST',
-    path: '/pattern/validate',
-    handler: 'pattern.validatePattern',
+    path: '/url-pattern/validate',
+    handler: 'url-pattern.validatePattern',
     config: {
       policies: [],
     },

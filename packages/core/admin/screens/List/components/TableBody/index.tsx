@@ -16,7 +16,7 @@ const TableBody: FC<Props> = ({ paths }) => {
   const { push } = useHistory();
 
   const handleClick = (path: string) => {
-    request(`/webtools/path/editLink?path=${path}`, { method: 'GET' })
+    request(`/webtools/url-alias/editLink?path=${path}`, { method: 'GET' })
       .then((res: { link: string }) => {
         push(res.link);
       })

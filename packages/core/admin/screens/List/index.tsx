@@ -13,7 +13,7 @@ const List = () => {
   const { formatMessage } = useIntl();
 
   useEffect(() => {
-    request('/webtools/path/findMany', { method: 'GET' })
+    request('/webtools/url-alias/findMany', { method: 'GET' })
       .then((res: EntityService.PaginatedResult<'plugin::webtools.url-alias'>) => {
         setPaths(res.results);
       })
