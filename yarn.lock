@@ -5632,6 +5632,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/copyfiles@npm:^2":
+  version: 2.4.4
+  resolution: "@types/copyfiles@npm:2.4.4"
+  checksum: c57d13c4a4fa85ba052cce3921cc73624a64df40077e2fa9ba704ddf43a2c342e151c0e090531e3366dc5545cc2e48649933aaf501070923f11374fac42f9e2a
+  languageName: node
+  linkType: hard
+
 "@types/eslint-scope@npm:^3.7.3":
   version: 3.7.7
   resolution: "@types/eslint-scope@npm:3.7.7"
@@ -8786,7 +8793,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"copyfiles@npm:2.4.1":
+"copyfiles@npm:2.4.1, copyfiles@npm:^2.4.1":
   version: 2.4.1
   resolution: "copyfiles@npm:2.4.1"
   dependencies:
@@ -18689,11 +18696,13 @@ __metadata:
     "@changesets/cli": "npm:^2.27.1"
     "@strapi-webtools/core": "npm:*"
     "@strapi/strapi": "npm:^4"
+    "@types/copyfiles": "npm:^2"
     "@types/jest": "npm:^29.4.0"
     "@types/react-router-dom": "npm:^5.3.3"
     "@types/styled-components": "npm:^5.1.32"
     "@uncinc/eslint-config": "npm:^1.1.2"
     codecov: "npm:^3.8.3"
+    copyfiles: "npm:^2.4.1"
     jest: "npm:^29.4.1"
     jest-cli: "npm:^29.2.2"
     react: "npm:^18"
