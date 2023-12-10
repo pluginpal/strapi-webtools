@@ -16,6 +16,7 @@ const migratePluginOptionsRename = (strapi: IStrapi) => {
     delete updatedContentType.pluginOptions['url-alias'];
 
     // Set the new options
+    // @ts-ignore
     updatedContentType.pluginOptions.webtools = deprecatedPluginOptions;
 
     // Format the content type
