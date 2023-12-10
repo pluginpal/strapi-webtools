@@ -3836,6 +3836,58 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@pluginpal/webtools-addon-menus@workspace:packages/addons/menus":
+  version: 0.0.0-use.local
+  resolution: "@pluginpal/webtools-addon-menus@workspace:packages/addons/menus"
+  peerDependencies:
+    "@pluginpal/webtools-core": "*"
+  languageName: unknown
+  linkType: soft
+
+"@pluginpal/webtools-addon-redirects@workspace:packages/addons/redirects":
+  version: 0.0.0-use.local
+  resolution: "@pluginpal/webtools-addon-redirects@workspace:packages/addons/redirects"
+  peerDependencies:
+    "@pluginpal/webtools-core": "*"
+  languageName: unknown
+  linkType: soft
+
+"@pluginpal/webtools-addon-sitemap@workspace:packages/addons/sitemap":
+  version: 0.0.0-use.local
+  resolution: "@pluginpal/webtools-addon-sitemap@workspace:packages/addons/sitemap"
+  dependencies:
+    chalk: "npm:^4.1.2"
+    commander: "npm:^8.3.0"
+    immutable: "npm:^3.8.2"
+    redux-immutable: "npm:^4.0.0"
+    redux-thunk: "npm:^2.3.0"
+    sitemap: "npm:^7.1.0"
+    xml2js: "npm:^0.5.0"
+  peerDependencies:
+    "@pluginpal/webtools-core": "*"
+    redux: "*"
+  languageName: unknown
+  linkType: soft
+
+"@pluginpal/webtools-core@npm:*, @pluginpal/webtools-core@workspace:packages/core":
+  version: 0.0.0-use.local
+  resolution: "@pluginpal/webtools-core@workspace:packages/core"
+  dependencies:
+    "@pluginpal/webtools-helper-plugin": "npm:*"
+    react-copy-to-clipboard: "npm:^5.1.0"
+    strapi-typed: "npm:^1.0.16"
+  peerDependencies:
+    "@strapi/strapi": ^4
+    react: ^18
+  languageName: unknown
+  linkType: soft
+
+"@pluginpal/webtools-helper-plugin@npm:*, @pluginpal/webtools-helper-plugin@workspace:packages/helper-plugin":
+  version: 0.0.0-use.local
+  resolution: "@pluginpal/webtools-helper-plugin@workspace:packages/helper-plugin"
+  languageName: unknown
+  linkType: soft
+
 "@pmmmwh/react-refresh-webpack-plugin@npm:0.5.10":
   version: 0.5.10
   resolution: "@pmmmwh/react-refresh-webpack-plugin@npm:0.5.10"
@@ -4773,58 +4825,6 @@ __metadata:
   checksum: 2e2fb6cc57f227912814085b7b01fede050cd4746ea8d49a1e44d5a0e56a804663b0340ae2f11af7559ea9bf4d087a11f2f646197a660ea3cb04e19efc04aa63
   languageName: node
   linkType: hard
-
-"@pluginpal/webtools-addon-menus@workspace:packages/addons/menus":
-  version: 0.0.0-use.local
-  resolution: "@pluginpal/webtools-addon-menus@workspace:packages/addons/menus"
-  peerDependencies:
-    "@pluginpal/webtools-core": "*"
-  languageName: unknown
-  linkType: soft
-
-"@pluginpal/webtools-addon-redirects@workspace:packages/addons/redirects":
-  version: 0.0.0-use.local
-  resolution: "@pluginpal/webtools-addon-redirects@workspace:packages/addons/redirects"
-  peerDependencies:
-    "@pluginpal/webtools-core": "*"
-  languageName: unknown
-  linkType: soft
-
-"@pluginpal/webtools-addon-sitemap@workspace:packages/addons/sitemap":
-  version: 0.0.0-use.local
-  resolution: "@pluginpal/webtools-addon-sitemap@workspace:packages/addons/sitemap"
-  dependencies:
-    chalk: "npm:^4.1.2"
-    commander: "npm:^8.3.0"
-    immutable: "npm:^3.8.2"
-    redux-immutable: "npm:^4.0.0"
-    redux-thunk: "npm:^2.3.0"
-    sitemap: "npm:^7.1.0"
-    xml2js: "npm:^0.5.0"
-  peerDependencies:
-    "@pluginpal/webtools-core": "*"
-    redux: "*"
-  languageName: unknown
-  linkType: soft
-
-"@pluginpal/webtools-core@npm:*, @pluginpal/webtools-core@workspace:packages/core":
-  version: 0.0.0-use.local
-  resolution: "@pluginpal/webtools-core@workspace:packages/core"
-  dependencies:
-    "@pluginpal/webtools-helper-plugin": "npm:*"
-    react-copy-to-clipboard: "npm:^5.1.0"
-    strapi-typed: "npm:^1.0.16"
-  peerDependencies:
-    "@strapi/strapi": ^4
-    react: ^18
-  languageName: unknown
-  linkType: soft
-
-"@pluginpal/webtools-helper-plugin@npm:*, @pluginpal/webtools-helper-plugin@workspace:packages/helper-plugin":
-  version: 0.0.0-use.local
-  resolution: "@pluginpal/webtools-helper-plugin@workspace:packages/helper-plugin"
-  languageName: unknown
-  linkType: soft
 
 "@strapi/admin@npm:4.15.5":
   version: 4.15.5
