@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { prefixPluginTranslations } from '@strapi/helper-plugin';
-import { AdminApp } from '@strapi-webtools/helper-plugin';
+import { AdminApp } from '@pluginpal/webtools-helper-plugin';
 import * as yup from 'yup';
 import pluginPkg from '../package.json';
 import EditView from './components/EditView';

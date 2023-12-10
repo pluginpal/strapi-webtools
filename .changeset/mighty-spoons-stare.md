@@ -1,5 +1,5 @@
 ---
-"@strapi-webtools/helper-plugin": major
+"@pluginpal/webtools-helper-plugin": major
 ---
 
 Initial release! :tada:

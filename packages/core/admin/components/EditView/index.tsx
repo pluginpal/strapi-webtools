@@ -1,6 +1,6 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
-import { SidebarModal } from '@strapi-webtools/helper-plugin';
+import { SidebarModal } from '@pluginpal/webtools-helper-plugin';
 
 import { useCMEditViewDataManager } from '@strapi/helper-plugin';
 

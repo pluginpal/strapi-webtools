@@ -1,5 +1,5 @@
 {
-  "name": "@strapi-webtools/addon-redirects",
+  "name": "@pluginpal/webtools-addon-redirects",
   "version": "0.0.0",
   "description": "This is the description of the plugin.",
   "strapi": {
@@ -20,7 +20,7 @@
     "eslint:fix": "../../../node_modules/.bin/eslint --fix './**/*.{js,jsx,ts,tsx}'"
   },
   "peerDependencies": {
-    "@strapi-webtools/core": "*"
+    "@pluginpal/webtools-core": "*"
   },
   "author": {
     "name": "TODO"

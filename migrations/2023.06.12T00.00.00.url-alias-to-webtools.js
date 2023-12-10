@@ -7,7 +7,7 @@
  * was stored in these tables.
  *
  * @from @strapi-community/strapi-plugin-url-alias@alpha
- * @to @strapi-webtools/core@beta
+ * @to @pluginpal/webtools-core@beta
  */
 module.exports = {
   async up(knex) {
