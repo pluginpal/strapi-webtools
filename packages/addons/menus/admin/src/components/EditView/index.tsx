@@ -1,6 +1,6 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
-import { SidebarDropdown } from '@strapi-webtools/helper-plugin';
+import { SidebarDropdown } from '@pluginpal/webtools-helper-plugin';
 
 import getTrad from '../../helpers/getTrad';
 

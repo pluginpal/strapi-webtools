@@ -3,7 +3,7 @@
 
 ## From alpha.11 to beta.1
 
-Starting with beta, the plugin will be renamed to `@strapi-webtools/core`.
+Starting with beta, the plugin will be renamed to `@pluginpal/webtools-core`.
 
 ### Migration steps
 
@@ -43,7 +43,7 @@ To trigger the schema migrations we utilize Strapi [database migrations](https:/
 Updating the package will go in two steps:
 
 1. `yarn remove @strapi-community/strapi-plugin-url-alias`
-2. `yarn add @strapi-webtools/core`
+2. `yarn add @pluginpal/webtools-core`
 
 ##### 6. Build Strapi
 

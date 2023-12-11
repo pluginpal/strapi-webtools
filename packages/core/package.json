@@ -1,5 +1,5 @@
 {
-  "name": "@strapi-webtools/core",
+  "name": "@pluginpal/webtools-core",
   "version": "0.0.0",
   "description": "This is the description of the plugin.",
   "strapi": {
@@ -22,7 +22,7 @@
     "react": "^18"
   },
   "dependencies": {
-    "@strapi-webtools/helper-plugin": "*",
+    "@pluginpal/webtools-helper-plugin": "*",
     "react-copy-to-clipboard": "^5.1.0"
   },
   "devDependencies": {

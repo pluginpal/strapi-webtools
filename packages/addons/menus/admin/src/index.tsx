@@ -1,5 +1,5 @@
 import { prefixPluginTranslations } from '@strapi/helper-plugin';
-import { AdminApp } from '@strapi-webtools/helper-plugin';
+import { AdminApp } from '@pluginpal/webtools-helper-plugin';
 
 import pluginPkg from '../../package.json';
 import pluginId from './helpers/pluginId';
