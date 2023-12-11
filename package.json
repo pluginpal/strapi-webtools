@@ -17,7 +17,7 @@
     "test:integration": "ENV_PATH=./playground/.env jest --verbose --runInBand --testMatch '**/healthcheck.test.js'"
   },
   "dependencies": {
-    "@strapi-webtools/core": "1.0.0-alpha.1",
+    "@strapi-webtools/core": "*",
     "@strapi/strapi": "^4",
     "react": "^18"
   },
