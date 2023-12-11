@@ -18689,9 +18689,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"strapi-plugin-webtools@workspace:.":
+"strapi-typed@npm:^1.0.16":
+  version: 1.0.16
+  resolution: "strapi-typed@npm:1.0.16"
+  dependencies:
+    "@strapi/plugin-graphql": "npm:^4.7.1"
+    "@strapi/utils": "npm:^4.7.1"
+    "@types/react": "npm:^18.0.28"
+    "@types/react-intl": "npm:^3.0.0"
+  peerDependencies:
+    "@strapi/strapi": ^4.0.0
+  checksum: 8f5bf604662c8c44ccb0eba81cb39515cd161709bcae0218e9a9d970285ab5bf739766549a8d4e6a2ff313145973f8b7c25c4810a8a1e0bb734d3dcb81552039
+  languageName: node
+  linkType: hard
+
+"strapi-webtools@workspace:.":
   version: 0.0.0-use.local
-  resolution: "strapi-plugin-webtools@workspace:."
+  resolution: "strapi-webtools@workspace:."
   dependencies:
     "@changesets/cli": "npm:^2.27.1"
     "@strapi/strapi": "npm:^4"
@@ -18711,20 +18725,6 @@ __metadata:
     typescript: "npm:5.2.2"
   languageName: unknown
   linkType: soft
-
-"strapi-typed@npm:^1.0.16":
-  version: 1.0.16
-  resolution: "strapi-typed@npm:1.0.16"
-  dependencies:
-    "@strapi/plugin-graphql": "npm:^4.7.1"
-    "@strapi/utils": "npm:^4.7.1"
-    "@types/react": "npm:^18.0.28"
-    "@types/react-intl": "npm:^3.0.0"
-  peerDependencies:
-    "@strapi/strapi": ^4.0.0
-  checksum: 8f5bf604662c8c44ccb0eba81cb39515cd161709bcae0218e9a9d970285ab5bf739766549a8d4e6a2ff313145973f8b7c25c4810a8a1e0bb734d3dcb81552039
-  languageName: node
-  linkType: hard
 
 "stream-browserify@npm:^2.0.1":
   version: 2.0.2
