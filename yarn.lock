@@ -3869,7 +3869,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@pluginpal/webtools-core@npm:1.0.0-beta.0, @pluginpal/webtools-core@workspace:packages/core":
+"@pluginpal/webtools-core@workspace:packages/core":
   version: 0.0.0-use.local
   resolution: "@pluginpal/webtools-core@workspace:packages/core"
   dependencies:
@@ -18694,7 +18694,6 @@ __metadata:
   resolution: "strapi-plugin-webtools@workspace:."
   dependencies:
     "@changesets/cli": "npm:^2.27.1"
-    "@pluginpal/webtools-core": "npm:1.0.0-beta.0"
     "@strapi/strapi": "npm:^4"
     "@types/copyfiles": "npm:^2"
     "@types/jest": "npm:^29.4.0"
