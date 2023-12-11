@@ -1,5 +1,5 @@
 {
-  "name": "strapi-plugin-webtools",
+  "name": "strapi-webtools",
   "private": true,
   "workspaces": [
     "packages/*",
@@ -17,7 +17,6 @@
     "test:integration": "ENV_PATH=./playground/.env jest --verbose --runInBand --testMatch '**/healthcheck.test.js'"
   },
   "dependencies": {
-    "@pluginpal/webtools-core": "*",
     "@strapi/strapi": "^4",
     "react": "^18"
   },

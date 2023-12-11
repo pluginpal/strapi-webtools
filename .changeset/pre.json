@@ -1,0 +1,12 @@
+{
+  "mode": "pre",
+  "tag": "beta",
+  "initialVersions": {
+    "@pluginpal/webtools-addon-menus": "0.0.0",
+    "@pluginpal/webtools-addon-redirects": "0.0.0",
+    "@pluginpal/webtools-addon-sitemap": "0.0.0",
+    "@pluginpal/webtools-core": "1.0.0-beta.0",
+    "@pluginpal/webtools-helper-plugin": "1.0.0-beta.0"
+  },
+  "changesets": []
+}
