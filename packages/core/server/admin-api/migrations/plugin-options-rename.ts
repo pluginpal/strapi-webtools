@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import { Schema } from '@strapi/strapi';
-import { IStrapi } from '../../types/strapi';
+import { IStrapi } from '../../../types/strapi';
 
 const migratePluginOptionsRename = (strapi: IStrapi) => {
   Object.values(strapi.contentTypes).forEach((contentType: Schema.ContentType) => {
@@ -16,7 +16,6 @@ const migratePluginOptionsRename = (strapi: IStrapi) => {
     delete updatedContentType.pluginOptions['url-alias'];
 
     // Set the new options
-    // @ts-ignore
     updatedContentType.pluginOptions.webtools = deprecatedPluginOptions;
 
     // Format the content type

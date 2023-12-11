@@ -4,7 +4,7 @@ import { Context } from 'koa';
 import { EntityService } from '@strapi/strapi';
 
 import { getPluginService } from '../../util/getPluginService';
-import { KoaContext } from '../../types/koa';
+import { KoaContext } from '../../../types/koa';
 
 /**
  * Path controller

@@ -1,5 +1,5 @@
 import { Common, Attribute } from '@strapi/types';
-import { IDecoratedService, IDecoratedServiceOptions } from '../../types/strapi';
+import { IDecoratedService, IDecoratedServiceOptions } from '../../../types/strapi';
 import { isContentTypeEnabled } from '../../util/enabledContentTypes';
 import { getPluginService } from '../../util/getPluginService';
 

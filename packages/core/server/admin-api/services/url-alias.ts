@@ -91,6 +91,10 @@ const findByPath = async (path: string, id: number | string = 0) => {
     limit: 1,
   });
 
+  if (!Array.isArray(pathEntity)) {
+    return pathEntity;
+  }
+
   return pathEntity[0];
 };
 

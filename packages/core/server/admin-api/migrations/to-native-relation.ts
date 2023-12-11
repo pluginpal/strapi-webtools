@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import { Schema } from '@strapi/strapi';
-import { IStrapi } from '../../types/strapi';
+import { IStrapi } from '../../../types/strapi';
 
 const migrateToNativeRelation = (strapi: IStrapi) => {
   Object.values(strapi.contentTypes).map(async (contentType: Schema.ContentType) => {
@@ -11,7 +11,7 @@ const migrateToNativeRelation = (strapi: IStrapi) => {
       return;
     }
 
-    const pagesToBeMigrated = await strapi.entityService.findMany(contentType.uid, {
+    const pagesToBeMigratedResult = await strapi.entityService.findMany(contentType.uid, {
       // @ts-ignore
       fields: 'url_path_id',
       filters: {
@@ -21,6 +21,11 @@ const migrateToNativeRelation = (strapi: IStrapi) => {
         },
       },
     });
+
+    const pagesToBeMigrated =
+      Array.isArray(pagesToBeMigratedResult) ?
+        pagesToBeMigratedResult :
+        [pagesToBeMigratedResult];
 
     pagesToBeMigrated.map(async (page) => {
       await strapi.entityService.update(contentType.uid, page.id, {

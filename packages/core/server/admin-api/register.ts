@@ -3,7 +3,7 @@
 
 import _ from 'lodash';
 import { Schema } from '@strapi/strapi';
-import { IStrapi } from '../types/strapi';
+import { IStrapi } from '../../types/strapi';
 import { isContentTypeEnabled } from '../util/enabledContentTypes';
 
 export default (strapi: IStrapi) => {

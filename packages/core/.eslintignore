@@ -7,3 +7,5 @@
 **/docs
 **/server/types/generated
 **/__tests__
+
+types/generated/**/*.d.ts

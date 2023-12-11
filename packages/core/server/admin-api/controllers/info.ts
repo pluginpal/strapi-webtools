@@ -24,7 +24,7 @@ export default {
       const isInContentManager = _.get(pluginOptions, [
         'webtools',
         'enabled',
-      ]) as boolean;
+      ], false);
       if (isInContentManager === true) {
         contentTypes.push({
           name: contentType.globalId,
@@ -42,7 +42,8 @@ export default {
       uid: string;
     }[] = [];
     if (strapi.plugin('i18n')) {
-      const locales = await strapi.entityService.findMany('plugin::i18n.locale');
+      const localesResult = await strapi.entityService.findMany('plugin::i18n.locale');
+      const locales = Array.isArray(localesResult) ? localesResult : [];
       locales.forEach((locale) => {
         formattedLocales.push({
           name: locale.name,

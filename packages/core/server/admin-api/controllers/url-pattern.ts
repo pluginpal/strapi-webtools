@@ -5,7 +5,7 @@ import { Context } from 'koa';
 import { Common, EntityService, Schema } from '@strapi/strapi';
 
 import { getPluginService } from '../../util/getPluginService';
-import { KoaContext } from '../../types/koa';
+import { KoaContext } from '../../../types/koa';
 
 /**
  * Pattern controller

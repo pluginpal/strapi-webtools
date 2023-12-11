@@ -24,7 +24,7 @@ import contentApiCoreController from './content-api/controllers/core';
 import contentApiByPathService from './content-api/services/by-path';
 import contentApiUrlAliasRoutes from './content-api/routes/url-alias';
 import contentApiCoreRoutes from './content-api/routes/core';
-import { IStrapi } from './types/strapi';
+import { IStrapi } from '../types/strapi';
 
 export default {
   register: ({ strapi }: { strapi: IStrapi }) => {
