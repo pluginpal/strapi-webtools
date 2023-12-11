@@ -20,7 +20,7 @@
     "eslint:fix": "../../../node_modules/.bin/eslint --fix './**/*.{js,jsx,ts,tsx}'"
   },
   "peerDependencies": {
-    "@strapi-webtools/core": "*"
+    "@strapi-webtools/core": "1.0.0-alpha.1"
   },
   "author": {
     "name": "TODO"

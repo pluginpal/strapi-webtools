@@ -1,6 +1,6 @@
 {
   "name": "@strapi-webtools/helper-plugin",
-  "version": "0.0.0",
+  "version": "1.0.0-alpha.1",
   "description": "This is the description of the plugin.",
   "strapi": {
     "name": "webtools",

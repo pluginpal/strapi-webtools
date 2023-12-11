@@ -1,6 +1,6 @@
 {
   "name": "@strapi-webtools/core",
-  "version": "0.0.0",
+  "version": "1.0.0-alpha.1",
   "description": "This is the description of the plugin.",
   "strapi": {
     "name": "webtools",
@@ -22,7 +22,7 @@
     "react": "^18"
   },
   "dependencies": {
-    "@strapi-webtools/helper-plugin": "*",
+    "@strapi-webtools/helper-plugin": "1.0.0-alpha.1",
     "react-copy-to-clipboard": "^5.1.0"
   },
   "devDependencies": {
