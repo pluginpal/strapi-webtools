@@ -3869,11 +3869,11 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@pluginpal/webtools-core@npm:*, @pluginpal/webtools-core@workspace:packages/core":
+"@pluginpal/webtools-core@npm:1.0.0-beta.0, @pluginpal/webtools-core@workspace:packages/core":
   version: 0.0.0-use.local
   resolution: "@pluginpal/webtools-core@workspace:packages/core"
   dependencies:
-    "@pluginpal/webtools-helper-plugin": "npm:*"
+    "@pluginpal/webtools-helper-plugin": "npm:1.0.0-beta.0"
     react-copy-to-clipboard: "npm:^5.1.0"
     strapi-typed: "npm:^1.0.16"
   peerDependencies:
@@ -3882,7 +3882,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@pluginpal/webtools-helper-plugin@npm:*, @pluginpal/webtools-helper-plugin@workspace:packages/helper-plugin":
+"@pluginpal/webtools-helper-plugin@npm:1.0.0-beta.0, @pluginpal/webtools-helper-plugin@workspace:packages/helper-plugin":
   version: 0.0.0-use.local
   resolution: "@pluginpal/webtools-helper-plugin@workspace:packages/helper-plugin"
   languageName: unknown
@@ -18694,7 +18694,7 @@ __metadata:
   resolution: "strapi-plugin-webtools@workspace:."
   dependencies:
     "@changesets/cli": "npm:^2.27.1"
-    "@pluginpal/webtools-core": "npm:*"
+    "@pluginpal/webtools-core": "npm:1.0.0-beta.0"
     "@strapi/strapi": "npm:^4"
     "@types/copyfiles": "npm:^2"
     "@types/jest": "npm:^29.4.0"

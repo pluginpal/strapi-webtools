@@ -17,7 +17,7 @@
     "test:integration": "ENV_PATH=./playground/.env jest --verbose --runInBand --testMatch '**/healthcheck.test.js'"
   },
   "dependencies": {
-    "@pluginpal/webtools-core": "*",
+    "@pluginpal/webtools-core": "1.0.0-beta.0",
     "@strapi/strapi": "^4",
     "react": "^18"
   },
