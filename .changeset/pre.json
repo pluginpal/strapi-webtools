@@ -8,5 +8,7 @@
     "@pluginpal/webtools-core": "1.0.0-beta.0",
     "@pluginpal/webtools-helper-plugin": "1.0.0-beta.0"
   },
-  "changesets": []
+  "changesets": [
+    "mighty-spoons-stare"
+  ]
 }
