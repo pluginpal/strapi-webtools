@@ -1,5 +1,5 @@
 {
-  "name": "strapi-plugin-webtools",
+  "name": "strapi-webtools",
   "private": true,
   "workspaces": [
     "packages/*",
