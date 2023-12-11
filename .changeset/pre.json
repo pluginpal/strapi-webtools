@@ -5,8 +5,8 @@
     "@strapi-webtools/addon-menus": "0.0.0",
     "@strapi-webtools/addon-redirects": "0.0.0",
     "@strapi-webtools/addon-sitemap": "0.0.0",
-    "@strapi-webtools/core": "1.0.0-alpha.1",
-    "@strapi-webtools/helper-plugin": "1.0.0-alpha.1"
+    "@strapi-webtools/core": "1.0.0-beta.0",
+    "@strapi-webtools/helper-plugin": "1.0.0-beta.0"
   },
   "changesets": []
 }

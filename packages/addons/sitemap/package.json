@@ -21,7 +21,7 @@
     "eslint:fix": "../../../node_modules/.bin/eslint --fix './**/*.{js,jsx,ts,tsx}'"
   },
   "peerDependencies": {
-    "@strapi-webtools/core": "1.0.0-alpha.1",
+    "@strapi-webtools/core": "1.0.0-beta.0",
     "redux": "*"
   },
   "dependencies": {
