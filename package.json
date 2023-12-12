@@ -7,6 +7,7 @@
   ],
   "scripts": {
     "build": "turbo run build",
+    "build:release": "turbo run build:release",
     "develop": "turbo run develop",
     "eslint": "turbo run eslint",
     "eslint:fix": "turbo run eslint:fix",
