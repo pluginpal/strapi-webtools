@@ -13,6 +13,7 @@
   "scripts": {
     "build": "tsc",
     "build:release": "tsc --outDir build",
+    "prepublishOnly": "cp -r ./build/* . && rm -rf ./build",
     "develop": "tsc -w",
     "eslint": "../../node_modules/.bin/eslint --max-warnings=0 './**/*.{js,jsx,ts,tsx}'",
     "eslint:fix": "../../node_modules/.bin/eslint --fix './**/*.{js,jsx,ts,tsx}'"
