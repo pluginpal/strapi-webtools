@@ -11,6 +11,7 @@
     "eslint": "turbo run eslint",
     "eslint:fix": "turbo run eslint:fix",
     "release": "turbo run build:release && changeset publish",
+    "version": "changeset version && yarn install",
     "playground:install": "cd playground && yarn install",
     "playground:build": "cd playground && yarn build",
     "playground:start": "cd playground && yarn start",
