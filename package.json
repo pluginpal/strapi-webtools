@@ -11,7 +11,7 @@
     "eslint": "turbo run eslint",
     "eslint:fix": "turbo run eslint:fix",
     "release:publish": "turbo run build:release && changeset publish",
-    "release:prepare": "changeset version && yarn install",
+    "release:prepare": "YARN_ENABLE_IMMUTABLE_INSTALLS=false changeset version && yarn install",
     "playground:install": "cd playground && yarn install",
     "playground:build": "cd playground && yarn build",
     "playground:start": "cd playground && yarn start",
