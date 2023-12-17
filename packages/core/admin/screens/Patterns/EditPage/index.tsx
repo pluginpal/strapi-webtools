@@ -157,7 +157,7 @@ const EditPatternPage = () => {
         isSubmitting,
         setFieldValue,
       }) => (
-        <Form noValidate onSubmit={handleSubmit}>
+        <Form noValidate onSubmit={handleSubmit} placeholder={null}>
           <HeaderLayout
             title={formatMessage({
               id: 'webtools.settings.page.patterns.edit.title',
