@@ -123,7 +123,7 @@ const CreatePattternPage = () => {
       {({
         handleSubmit, values, errors, touched, isSubmitting, setFieldValue,
       }) => (
-        <Form noValidate onSubmit={handleSubmit}>
+        <Form noValidate onSubmit={handleSubmit} placeholder={null}>
           <HeaderLayout
             title={formatMessage({ id: 'webtools.settings.page.patterns.create.title', defaultMessage: 'Add new pattern' })}
             subtitle={formatMessage({ id: 'webtools.settings.page.patterns.create.description', defaultMessage: 'Add a pattern for automatic URL alias generation.' })}
