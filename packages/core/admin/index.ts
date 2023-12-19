@@ -34,22 +34,22 @@ export default {
         },
       },
       [
-        {
-          intlLabel: {
-            id: `${pluginId}.settings.page.overview.title`,
-            defaultMessage: 'Overview',
-          },
-          id: 'overview',
-          to: `/settings/${pluginId}/overview`,
-          Component: async () => {
-            const component = await import(
-              /* webpackChunkName: "webtools-list" */ './screens/Overview'
-            );
+        // {
+        //   intlLabel: {
+        //     id: `${pluginId}.settings.page.overview.title`,
+        //     defaultMessage: 'Overview',
+        //   },
+        //   id: 'overview',
+        //   to: `/settings/${pluginId}/overview`,
+        //   Component: async () => {
+        //     const component = await import(
+        //       /* webpackChunkName: "webtools-list" */ './screens/Overview'
+        //     );
 
-            return component;
-          },
-          permissions: pluginPermissions['settings.overview'],
-        },
+        //     return component;
+        //   },
+        //   permissions: pluginPermissions['settings.overview'],
+        // },
         {
           intlLabel: {
             id: `${pluginId}.settings.page.list.title`,
