@@ -15,8 +15,6 @@ export default {
     const { auth } = ctx.state;
     const { query } = ctx;
 
-    console.log('asdf');
-
     const { results, pagination } = await strapi.entityService.findPage(contentTypeSlug, {
       ...query,
     });
