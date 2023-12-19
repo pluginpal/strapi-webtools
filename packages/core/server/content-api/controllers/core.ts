@@ -1,6 +1,5 @@
 
 import { Context } from 'koa';
-import { transformResponse } from '@strapi/strapi/dist/core-api/controller/transform';
 
 import { getPluginService } from '../../util/getPluginService';
 import { sanitizeOutput } from '../../util/sanitizeOutput';
@@ -32,6 +31,8 @@ export default {
 
     // Format response.
     const sanitizedEntity = await sanitizeOutput(entity, contentTypeObj, auth);
-    ctx.body = transformResponse(sanitizedEntity, {}, { contentType: contentTypeObj });
+    ctx.body = strapi.controller(contentType)
+      // @ts-ignore
+      .transformResponse(sanitizedEntity, {});
   },
 };
