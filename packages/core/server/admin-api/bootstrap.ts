@@ -1,5 +1,3 @@
-
-
 import { getPluginService } from '../util/getPluginService';
 import { IStrapi } from '../types/strapi';
 import migrateToNativeRelation from './migrations/to-native-relation';

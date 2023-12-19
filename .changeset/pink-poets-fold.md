@@ -13,6 +13,7 @@ Refer to the migration guide when updating from `alpha` to `beta`.
 - The API endpoints got renamed as well
 - Refactored the repository into a monorepo
 - Native relations (#43)
+- Give API permissions to the public UP role by default (#22)
 
 **Chores**
 
