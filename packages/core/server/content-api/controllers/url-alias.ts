@@ -1,7 +1,6 @@
 
 import Koa from 'koa';
 import { errors } from '@strapi/utils';
-import { transformResponse } from '@strapi/strapi/dist/core-api/controller/transform';
 
 import { sanitizeOutput } from '../../util/sanitizeOutput';
 
@@ -27,6 +26,8 @@ export default {
     // Format response.
     const contentTypeObj = strapi.contentTypes[contentTypeSlug];
     const sanitizedEntity = await sanitizeOutput(results, contentTypeObj, auth);
-    ctx.body = transformResponse(sanitizedEntity, { pagination }, { contentType: contentTypeObj });
+    ctx.body = strapi.controller(contentTypeSlug)
+      // @ts-ignore
+      .transformResponse(sanitizedEntity, { pagination });
   },
 };
