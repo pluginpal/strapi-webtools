@@ -1,6 +1,6 @@
 {
   "name": "@pluginpal/webtools-core",
-  "version": "1.0.0-beta.1",
+  "version": "1.0.0-beta.0",
   "description": "This is the description of the plugin.",
   "strapi": {
     "name": "webtools",
@@ -23,7 +23,7 @@
     "react": "^18"
   },
   "dependencies": {
-    "@pluginpal/webtools-helper-plugin": "1.0.0-beta.1",
+    "@pluginpal/webtools-helper-plugin": "1.0.0-beta.0",
     "react-copy-to-clipboard": "^5.1.0"
   },
   "devDependencies": {
