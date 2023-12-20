@@ -20,7 +20,7 @@
   },
   "peerDependencies": {
     "@strapi/strapi": "^4",
-    "react": "^18"
+    "react": "^17 || ^18"
   },
   "dependencies": {
     "@pluginpal/webtools-helper-plugin": "1.0.0-beta.1",

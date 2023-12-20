@@ -3740,7 +3740,7 @@ __metadata:
     strapi-typed: "npm:^1.0.16"
   peerDependencies:
     "@strapi/strapi": ^4
-    react: ^18
+    react: ^17 || ^18
   languageName: unknown
   linkType: soft
 
