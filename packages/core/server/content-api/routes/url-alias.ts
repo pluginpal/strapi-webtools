@@ -3,7 +3,7 @@
 export default [
   {
     method: 'GET',
-    path: '/url-alias/all',
+    path: '/url-alias',
     handler: 'url-alias.find',
     config: {
       policies: [],
