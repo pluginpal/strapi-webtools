@@ -1,5 +1,11 @@
 # @pluginpal/webtools-core
 
+## 1.0.0-beta.3
+
+### Patch Changes
+
+- 401bfcd: Rename API endpoint /webtools/url-alias/all to /webtools/url-alias
+
 ## 1.0.0-beta.2
 
 ### Patch Changes
