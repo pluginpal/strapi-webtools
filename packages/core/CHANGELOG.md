@@ -1,5 +1,11 @@
 # @pluginpal/webtools-core
 
+## 1.0.0-beta.2
+
+### Patch Changes
+
+- d37fb75: Updated react peer-dependency range to allow ^17 || ^18
+
 ## 1.0.0-beta.1
 
 ### Major Changes
