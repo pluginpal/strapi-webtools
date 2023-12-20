@@ -4,7 +4,7 @@ export default [
   {
     method: 'GET',
     path: '/url-alias/findOne/:id',
-    handler: 'url-alias.findOne',
+    handler: 'url-alias-admin.findOne',
     config: {
       policies: [],
     },
@@ -12,7 +12,7 @@ export default [
   {
     method: 'GET',
     path: '/url-alias/findMany',
-    handler: 'url-alias.findMany',
+    handler: 'url-alias-admin.findMany',
     config: {
       policies: [],
     },
@@ -20,7 +20,7 @@ export default [
   {
     method: 'GET',
     path: '/url-alias/delete/:id',
-    handler: 'url-alias.delete',
+    handler: 'url-alias-admin.delete',
     config: {
       policies: [],
     },
@@ -28,7 +28,7 @@ export default [
   {
     method: 'PUT',
     path: '/url-alias/update/:id',
-    handler: 'url-alias.update',
+    handler: 'url-alias-admin.update',
     config: {
       policies: [],
     },
@@ -36,7 +36,7 @@ export default [
   {
     method: 'POST',
     path: '/url-alias/create',
-    handler: 'url-alias.create',
+    handler: 'url-alias-admin.create',
     config: {
       policies: [],
     },
@@ -44,7 +44,7 @@ export default [
   {
     method: 'GET',
     path: '/url-alias/editLink',
-    handler: 'url-alias.editLink',
+    handler: 'url-alias-admin.editLink',
     config: {
       policies: [],
     },

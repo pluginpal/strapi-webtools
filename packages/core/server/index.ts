@@ -24,6 +24,7 @@ import contentApiUrlAliasController from './content-api/controllers/url-alias';
 import contentApiCoreController from './content-api/controllers/core';
 import contentApiByPathService from './content-api/services/by-path';
 import contentApiUrlAliasRoutes from './content-api/routes/url-alias';
+import contentApiUrlAliasService from './content-api/services/url-alias';
 import contentApiCoreRoutes from './content-api/routes/core';
 import { IStrapi } from './types/strapi';
 
@@ -62,15 +63,14 @@ export default {
     },
   },
   controllers: {
-    'url-alias': {
-      ...adminApiUrlAliasController,
-      ...contentApiUrlAliasController,
-    },
+    'url-alias': contentApiUrlAliasController,
+    'url-alias-admin': adminApiUrlAliasController,
     'url-pattern': adminApiUrlPatternController,
     info: adminApiInfoController,
     core: contentApiCoreController,
   },
   services: {
+    'url-alias': contentApiUrlAliasService,
     urlAliasService: adminApiUrlAliasService,
     urlPatternService: adminApiUrlPatternService,
     byPathService: contentApiByPathService,
