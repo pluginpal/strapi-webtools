@@ -12,9 +12,17 @@
 module.exports = {
   async up(knex) {
     // Rename the url_paths table.
-    await knex.schema.renameTable('url_paths', 'wt_url_alias');
+    knex.schema.hasTable('url_paths').then((exists) => {
+      if (!exists) {
+        knex.schema.renameTable('url_paths', 'wt_url_alias');
+      }
+    });
 
     // Rename the url_patterns table.
-    await knex.schema.renameTable('url_patterns', 'wt_url_patterns');
+    knex.schema.hasTable('url_patterns').then((exists) => {
+      if (!exists) {
+        knex.schema.renameTable('url_patterns', 'wt_url_patterns');
+      }
+    });
   },
 };
