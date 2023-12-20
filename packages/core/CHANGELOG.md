@@ -1,5 +1,11 @@
 # @pluginpal/webtools-core
 
+## 1.0.0-beta.4
+
+### Patch Changes
+
+- 239af0a: Use Strapi native factories for url-alias controllers & services
+
 ## 1.0.0-beta.3
 
 ### Patch Changes
