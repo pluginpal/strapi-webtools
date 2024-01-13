@@ -851,17 +851,6 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'admin::user'
     > &
       Attribute.Private;
-    url_alias: Attribute.Relation<
-      'plugin::users-permissions.user',
-      'oneToOne',
-      'plugin::webtools.url-alias'
-    > &
-      Attribute.Unique &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
     sitemap_exclude: Attribute.Boolean &
       Attribute.Private &
       Attribute.DefaultTo<false>;
