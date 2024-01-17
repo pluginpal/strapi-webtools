@@ -32,7 +32,7 @@ export default () => ({
       ...query,
       filters: {
         ...query?.filters,
-        // @ts-ignore
+        // @ts-expect-error
         url_alias: urlAliasEntity.id,
         published_at: excludeDrafts ? {
           $notNull: true,

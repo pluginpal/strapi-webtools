@@ -12,10 +12,10 @@ const migrateToNativeRelation = (strapi: IStrapi) => {
     }
 
     const pagesToBeMigrated = await strapi.entityService.findMany(contentType.uid, {
-      // @ts-ignore
+      // @ts-expect-error
       fields: 'url_path_id',
       filters: {
-        // @ts-ignore
+        // @ts-expect-error
         url_path_id: {
           $notNull: true,
         },
@@ -25,7 +25,7 @@ const migrateToNativeRelation = (strapi: IStrapi) => {
     pagesToBeMigrated.map(async (page) => {
       await strapi.entityService.update(contentType.uid, page.id, {
         data: {
-          // @ts-ignore
+          // @ts-expect-error
           url_alias: Number(page.url_path_id),
           url_path_id: null,
         },

@@ -72,7 +72,7 @@ const EditPatternPage = () => {
     request(`/webtools/url-pattern/update/${patternEntity.id}`, {
       method: 'PUT',
       body: {
-        // @ts-ignore
+        // @ts-expect-error
         data: values,
       },
     })
@@ -107,7 +107,7 @@ const EditPatternPage = () => {
     await request('/webtools/url-pattern/validate', {
       method: 'POST',
       body: {
-        // @ts-ignore
+        // @ts-expect-error
         pattern: values.pattern,
         modelName: values.contenttype,
       },

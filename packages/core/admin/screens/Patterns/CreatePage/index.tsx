@@ -59,7 +59,7 @@ const CreatePattternPage = () => {
     request('/webtools/url-pattern/create', {
       method: 'POST',
       body: {
-        // @ts-ignore
+        // @ts-expect-error
         data: values,
       },
     })
@@ -86,7 +86,7 @@ const CreatePattternPage = () => {
     await request('/webtools/url-pattern/validate', {
       method: 'POST',
       body: {
-        // @ts-ignore
+        // @ts-expect-error
         pattern: values.pattern,
         modelName: values.contenttype,
       },

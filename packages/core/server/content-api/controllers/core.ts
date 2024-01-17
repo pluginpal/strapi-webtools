@@ -25,14 +25,14 @@ export default {
     // If there is no permission throw a 403.
 
     // Add content type to response.
-    // @ts-ignore
+    // @ts-expect-error
     entity.contentType = contentType;
     const contentTypeObj = strapi.contentTypes[contentType];
 
     // Format response.
     const sanitizedEntity = await sanitizeOutput(entity, contentTypeObj, auth);
     ctx.body = strapi.controller(contentType)
-      // @ts-ignore
+      // @ts-expect-error
       .transformResponse(sanitizedEntity, {});
   },
 };

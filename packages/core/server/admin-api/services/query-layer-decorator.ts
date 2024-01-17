@@ -103,15 +103,15 @@ const decorator = (service: IDecoratedService) => ({
 
     // Fetch the entity because we need the url_alias id.
     const entity = await strapi.entityService.findOne(uid, entityId, {
-      // @ts-ignore
+      // @ts-expect-error
       populate: 'url_alias',
     });
 
     // If a URL alias is present, delete it.
-    // @ts-ignore
+    // @ts-expect-error
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     if (entity.url_alias?.id) {
-      // @ts-ignore
+      // @ts-expect-error
       // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       await getPluginService('urlAliasService').delete(Number(entity.url_alias.id));
     }
