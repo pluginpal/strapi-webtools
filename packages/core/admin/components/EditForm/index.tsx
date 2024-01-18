@@ -20,7 +20,7 @@ const EditForm = () => {
   const { formatMessage } = useIntl();
 
   const updateValue = (name: string, value: string | number) => {
-    onChange({ target: { name: `url_alias.${name}`, value } });
+    onChange({ target: { name: `url_alias.${name}`, value, type: 'text' } });
   };
 
   return (

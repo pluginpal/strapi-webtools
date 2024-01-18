@@ -23,11 +23,12 @@ const EditView = () => {
 
   if (!isContentTypeEnabled(allLayoutData.contentType)) return null;
   const modifiedUrlAlias = modifiedData.url_alias as UrlAliasEntity;
+  const initialUrlAlias = initialData.url_alias as UrlAliasEntity;
 
   const onSubmit = async () => {
-    if (!initialData.url_alias) {
+    if (!initialUrlAlias) {
       const urlAlias = await createUrlAlias(modifiedUrlAlias, slug);
-      onChange({ target: { name: 'url_alias', value: urlAlias } });
+      onChange({ target: { name: 'url_alias', value: urlAlias, type: 'text' } });
     } else {
       await updateUrlAlias(modifiedUrlAlias, slug);
     }
@@ -41,7 +42,13 @@ const EditView = () => {
           defaultMessage: 'URL alias',
         })}
         onSubmit={onSubmit}
-        onCancel={() => onChange({ target: { name: 'url_alias', value: initialData.url_alias } })}
+        onCancel={() => {
+          if (initialUrlAlias) {
+            onChange({ target: { name: 'url_alias', value: initialUrlAlias, type: 'text' } });
+          } else {
+            onChange({ target: { name: 'url_alias', value: null, type: 'text' } });
+          }
+        }}
       >
         <EditForm />
       </SidebarModal>
