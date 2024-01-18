@@ -16,7 +16,7 @@
   "scripts": {
     "build": "tsc",
     "build:release": "tsc --outDir build",
-    "prepublishOnly": "cp -r ./build/* . && rm -rf ./build",
+    "prepublishOnly": "cp -r ./build/* . && rm -rf ./build .eslintignore ./.turbo CHANGELOG.md tsconfig.json tsconfig.buildinfo",
     "develop": "yarn develop:copy-files && tsc -w",
     "develop:copy-files": "copyfiles -u 1 xsl/**/* ../../../playground/src/plugins/webtools-addon-sitemap/xsl/",
     "eslint": "../../../node_modules/.bin/eslint --max-warnings=0 './**/*.{js,jsx,ts,tsx}'",
