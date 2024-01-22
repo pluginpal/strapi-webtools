@@ -124,19 +124,23 @@ export default {
       });
     }
   },
-  async registerTrads({ locales }) {
+  async registerTrads({ locales }: { locales: string[] }) {
     const importedTrads = await Promise.all(
-      locales.map((locale: string) => import(
-        /* webpackChunkName: "webtools-translation-[request]" */ `./translations/${locale}.json`
-      )
-        .then(({ default: data }) => ({
-          data: prefixPluginTranslations(data, pluginId),
-          locale,
-        }))
-        .catch(() => ({
-          data: {},
-          locale,
-        }))),
+      locales.map((locale) => {
+        try {
+          // eslint-disable-next-line import/no-dynamic-require, global-require
+          const data = require(`./translations/${locale}.json`);
+          return {
+            data: prefixPluginTranslations(data, pluginId),
+            locale,
+          };
+        } catch {
+          return {
+            data: {},
+            locale,
+          };
+        }
+      }),
     );
 
     return Promise.resolve(importedTrads);
