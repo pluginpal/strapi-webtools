@@ -26,9 +26,6 @@
     "@pluginpal/webtools-helper-plugin": "1.0.0-beta.1",
     "react-copy-to-clipboard": "^5.1.0"
   },
-  "devDependencies": {
-    "strapi-typed": "^1.0.16"
-  },
   "author": {
     "name": "TODO"
   },
