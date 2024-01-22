@@ -52,5 +52,12 @@ jobs:
         run: NODE_ENV=ci yarn playground:build
       - name: Run integration tests
         run: NODE_ENV=ci yarn test:integration
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV }}
+          flags: unit
+          verbose: true
+          fail_ci_if_error: true
 
 

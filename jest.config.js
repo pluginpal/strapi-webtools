@@ -6,6 +6,6 @@ module.exports = {
   // globalSetup: './playground/__tests__/setup-strapi.ts',
   // setupFilesAfterEnv: ['./playground/__tests__/setup-strapi.ts'],
   // globalTeardown: './playground/__tests__/teardown-strapi.ts',
-  // coverageDirectory: "./coverage/",
-  // collectCoverage: true,
+  coverageDirectory: './coverage/',
+  collectCoverage: true,
 };
