@@ -28,6 +28,9 @@ export interface IDecoratedService {
   delete: {
     call: (context: any, uid: any, options: any) => Promise<{ id: number }>
   }
+  findOne: {
+    call: (context: any, uid: any, options: any) => Promise<{ id: number }>
+  }
 }
 
 export interface IDecoratedServiceOptions<Fields> {
