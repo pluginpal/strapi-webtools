@@ -9,11 +9,16 @@
     "@pluginpal/webtools-helper-plugin": "1.0.0-beta.0"
   },
   "changesets": [
+    "calm-geese-dream",
     "dirty-books-fail",
+    "grumpy-terms-smoke",
+    "happy-shirts-act",
+    "lucky-tomatoes-breathe",
     "mighty-spoons-stare",
     "ninety-gorillas-dress",
     "pink-poets-fold",
     "short-zoos-argue",
+    "wet-bats-battle",
     "witty-plants-type"
   ]
 }

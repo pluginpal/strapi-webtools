@@ -1,5 +1,17 @@
 # @pluginpal/webtools-core
 
+## 1.0.0-beta.5
+
+### Patch Changes
+
+- 0b32de2: Fix issue with path generation (#96)
+- feb9d87: Removed redundant files from the npm builds
+- d7be9d5: Remove strapi-typed from the devDependencies
+- e5ba503: Add an MIT license file
+- dee1907: Fix issue with the admin translations
+- Updated dependencies [e5ba503]
+  - @pluginpal/webtools-helper-plugin@1.0.0-beta.2
+
 ## 1.0.0-beta.4
 
 ### Patch Changes
