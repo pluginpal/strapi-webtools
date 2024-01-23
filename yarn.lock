@@ -3379,7 +3379,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@pluginpal/webtools-addon-menus@workspace:packages/addons/menus"
   peerDependencies:
-    "@pluginpal/webtools-core": "*"
+    "@pluginpal/webtools-core": 1.0.0-beta.5
   languageName: unknown
   linkType: soft
 
@@ -3387,7 +3387,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@pluginpal/webtools-addon-redirects@workspace:packages/addons/redirects"
   peerDependencies:
-    "@pluginpal/webtools-core": "*"
+    "@pluginpal/webtools-core": 1.0.0-beta.5
   languageName: unknown
   linkType: soft
 
@@ -3403,7 +3403,7 @@ __metadata:
     sitemap: "npm:^7.1.0"
     xml2js: "npm:^0.5.0"
   peerDependencies:
-    "@pluginpal/webtools-core": "*"
+    "@pluginpal/webtools-core": 1.0.0-beta.5
     redux: "*"
   languageName: unknown
   linkType: soft
@@ -3412,7 +3412,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@pluginpal/webtools-core@workspace:packages/core"
   dependencies:
-    "@pluginpal/webtools-helper-plugin": "npm:1.0.0-beta.1"
+    "@pluginpal/webtools-helper-plugin": "npm:1.0.0-beta.2"
     react-copy-to-clipboard: "npm:^5.1.0"
   peerDependencies:
     "@strapi/strapi": ^4
@@ -3420,7 +3420,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@pluginpal/webtools-helper-plugin@npm:1.0.0-beta.1, @pluginpal/webtools-helper-plugin@workspace:packages/helper-plugin":
+"@pluginpal/webtools-helper-plugin@npm:1.0.0-beta.2, @pluginpal/webtools-helper-plugin@workspace:packages/helper-plugin":
   version: 0.0.0-use.local
   resolution: "@pluginpal/webtools-helper-plugin@workspace:packages/helper-plugin"
   languageName: unknown
