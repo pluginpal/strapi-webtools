@@ -12,17 +12,24 @@
 module.exports = {
   async up(knex) {
     // Rename the url_paths table.
-    knex.schema.hasTable('url_paths').then((exists) => {
-      if (!exists) {
-        knex.schema.renameTable('url_paths', 'wt_url_alias');
-      }
-    });
+    const hasUrlPathsTable = await knex.schema.hasTable('url_paths');
+    if (hasUrlPathsTable) {
+      console.log('Renaming "url_paths" table to "wt_url_alias"...');
+      await knex.schema.renameTable('url_paths', 'wt_url_alias');
+      console.log('Renamed "url_paths" table to "wt_url_alias".');
+    } else {
+      console.log('No url_paths table found. Skipping...');
+    }
 
     // Rename the url_patterns table.
-    knex.schema.hasTable('url_patterns').then((exists) => {
-      if (!exists) {
-        knex.schema.renameTable('url_patterns', 'wt_url_patterns');
-      }
-    });
+    const hasUrlPatternsTable = await knex.schema.hasTable('url_patterns');
+    if (hasUrlPatternsTable) {
+      console.log('Renaming "url_patterns" table to "wt_url_patterns"...');
+      await knex.schema.renameTable('url_patterns', 'wt_url_patterns');
+      console.log('Renamed "url_patterns" table to "wt_url_patterns".');
+    } else {
+      console.log('No url_patterns table found. Skipping...');
+    }
   },
 };
+
