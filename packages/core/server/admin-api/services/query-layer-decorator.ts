@@ -34,7 +34,7 @@ const decorator = (service: IDecoratedService) => ({
     // the id, can we create the URL alias entity and can we update
     // the previously created entity.
     const newEntity = await service.create.call(this, uid, { ...opts, data: opts.data });
-    const generatedPath = await getPluginService('urlPatternService').resolvePattern(uid, { ...opts.data, ...newEntity });
+    const generatedPath = await getPluginService('urlPatternService').resolvePattern(uid, { ...newEntity, ...opts.data });
 
     // If a URL alias was created and 'generated' is set to true, update the alias.
     if (urlAliasEntity?.generated === true) {
@@ -82,7 +82,7 @@ const decorator = (service: IDecoratedService) => ({
     const entity = await service.findOne.call(this, uid, entityId);
 
     // Generate the path.
-    const generatedPath = await getPluginService('urlPatternService').resolvePattern(uid, { ...opts.data, ...entity });
+    const generatedPath = await getPluginService('urlPatternService').resolvePattern(uid, { ...entity, ...opts.data });
 
     // If a URL alias is present and 'generated' is set to true, update the alias.
     if (urlAliasEntity?.generated === true) {
