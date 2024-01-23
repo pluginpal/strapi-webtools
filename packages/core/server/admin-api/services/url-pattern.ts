@@ -152,7 +152,7 @@ export default () => ({
 
   resolvePattern: async (uid: string, entity: { [key: string]: string | number }) => {
     const resolve = (pattern: string) => {
-      let resolvedPattern: string;
+      let resolvedPattern: string = pattern;
       const fields = getPluginService('urlPatternService').getFieldsFromPattern(pattern);
 
       fields.forEach((field) => {
@@ -162,11 +162,11 @@ export default () => ({
         if (!relationalField) {
           // Slugify.
           const fieldValue = _.kebabCase(_.deburr(_.toLower(String(entity[field]))));
-          resolvedPattern = pattern.replace(`[${field}]`, fieldValue || '');
+          resolvedPattern = resolvedPattern.replace(`[${field}]`, fieldValue || '');
         } else if (Array.isArray(entity[relationalField[0]])) {
           strapi.log.error('Something went wrong whilst resolving the pattern.');
         } else if (typeof entity[relationalField[0]] === 'object') {
-          resolvedPattern = pattern.replace(`[${field}]`, entity[relationalField[0]] && String(entity[relationalField[0]][relationalField[1]]) ? String(entity[relationalField[0]][relationalField[1]]) : '');
+          resolvedPattern = resolvedPattern.replace(`[${field}]`, entity[relationalField[0]] && String(entity[relationalField[0]][relationalField[1]]) ? String(entity[relationalField[0]][relationalField[1]]) : '');
         }
       });
 
