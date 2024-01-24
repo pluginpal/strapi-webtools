@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
-
 import _ from 'lodash';
 import { Schema } from '@strapi/strapi';
 import { IStrapi } from '../types/strapi';
@@ -8,13 +7,20 @@ import { isContentTypeEnabled } from '../util/enabledContentTypes';
 
 export default (strapi: IStrapi) => {
   // Register the url_alias field.
-  Object.values(strapi.contentTypes).forEach((contentType: Schema.ContentType) => {
+  Object.values(strapi.contentTypes).map(async (contentType: Schema.ContentType) => {
     const { attributes } = contentType;
-    const notMigrated = _.get(contentType.pluginOptions, ['url-alias', 'enabled'], false) as boolean;
+
+    const migrated = await strapi.db
+      .getConnection()
+      .select('name')
+      .where({
+        name: 'to-native-relation',
+      })
+      .from('strapi_migrations');
 
     // Add a relation field to the url_alias content type, only
     // when webtools is explicitly enabled using pluginOptions.
-    if (isContentTypeEnabled(contentType.uid) || notMigrated) {
+    if (isContentTypeEnabled(contentType.uid) || migrated.length === 0) {
       _.set(attributes, 'url_alias', {
         writable: true,
         private: false,
@@ -41,7 +47,7 @@ export default (strapi: IStrapi) => {
     // By doing this Strapi will bootstrap one single time with both
     // the old and the new fields in the database. This gives the opportunity
     // to easily migrate the data from the one to the other field.
-    if (notMigrated) {
+    if (migrated.length === 0) {
       _.set(attributes, 'url_path_id', {
         writable: true,
         private: true,
