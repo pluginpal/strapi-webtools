@@ -9,9 +9,6 @@ export default (strapi: IStrapi) => {
     const { decorator } = getPluginService('queryLayerDecorator');
     strapi.entityService.decorate(decorator);
 
-    // Migrate to a native relation.
-    migrateToNativeRelation(strapi);
-
     // Migrate the pluginOptions to reflect the plugin rename.
     migratePluginOptionsRename(strapi);
 
