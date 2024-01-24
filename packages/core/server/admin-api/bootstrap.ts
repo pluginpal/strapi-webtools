@@ -3,14 +3,14 @@ import { IStrapi } from '../types/strapi';
 import migrateToNativeRelation from './migrations/to-native-relation';
 import migratePluginOptionsRename from './migrations/plugin-options-rename';
 
-export default (strapi: IStrapi) => {
+export default async (strapi: IStrapi) => {
   try {
     // Decorate the entity service with review workflow logic
     const { decorator } = getPluginService('queryLayerDecorator');
     strapi.entityService.decorate(decorator);
 
     // Migrate to a native relation.
-    migrateToNativeRelation(strapi);
+    await migrateToNativeRelation(strapi);
 
     // Migrate the pluginOptions to reflect the plugin rename.
     migratePluginOptionsRename(strapi);
