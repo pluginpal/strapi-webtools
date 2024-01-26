@@ -16,7 +16,6 @@ const Sidebar = ({
       background="neutral0"
       borderColor="neutral150"
       hasRadius
-      padding={4}
       shadow="tableShadow"
     >
       {children}

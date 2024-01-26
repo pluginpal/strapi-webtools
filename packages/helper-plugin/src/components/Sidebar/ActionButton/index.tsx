@@ -19,7 +19,13 @@ const ActionButton: React.FC<Props> = ({
   iconProps,
 }) => {
   return (
-    <Flex onClick={onClick}>
+    <Flex
+      onClick={onClick}
+      padding={4}
+      style={{
+        cursor: 'pointer',
+      }}
+    >
       <Typography
         textColor="neutral600"
         variant="sigma"
