@@ -19,7 +19,6 @@ import adminApiInfoRoutes from './admin-api/routes/info';
 import queryLayerDecoratorService from './admin-api/services/query-layer-decorator';
 
 // Content API
-import contentApiBootstrap from './content-api/bootstrap';
 import contentApiUrlAliasController from './content-api/controllers/url-alias';
 import contentApiCoreController from './content-api/controllers/core';
 import contentApiByPathService from './content-api/services/by-path';
@@ -32,9 +31,8 @@ export default {
   register: ({ strapi }: { strapi: IStrapi }) => {
     adminApiRegister(strapi);
   },
-  bootstrap: async ({ strapi }: { strapi: IStrapi }) => {
+  bootstrap: ({ strapi }: { strapi: IStrapi }) => {
     adminApiBootstrap(strapi);
-    await contentApiBootstrap(strapi);
   },
   config: adminApiConfig,
   contentTypes: {
