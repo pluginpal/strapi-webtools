@@ -7,6 +7,7 @@ export default [
     handler: 'core.router',
     config: {
       policies: [],
+      auth: false,
     },
   },
 ];

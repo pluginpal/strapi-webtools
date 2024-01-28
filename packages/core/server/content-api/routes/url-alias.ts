@@ -7,6 +7,7 @@ export default [
     handler: 'url-alias.find',
     config: {
       policies: [],
+      auth: false,
     },
   },
 ];
