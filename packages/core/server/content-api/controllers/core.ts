@@ -20,9 +20,9 @@ export default {
       return;
     }
 
-    // TODO:
     // Check 'find' permissions for the content type we're querying.
-    // If there is no permission throw a 403.
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    await strapi.auth.verify(auth, { scope: [`${contentType}.find`] });
 
     // Add content type to response.
     // @ts-ignore
