@@ -30,6 +30,7 @@ export default () => ({
 
     const entity = await strapi.entityService.findMany(contentTypeUid, {
       ...query,
+      publicationState: query.publicationState || 'live',
       filters: {
         ...query?.filters,
         // @ts-ignore
