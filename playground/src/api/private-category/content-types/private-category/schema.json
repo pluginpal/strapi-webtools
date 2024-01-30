@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "private_categories",
+  "info": {
+    "singularName": "private-category",
+    "pluralName": "private-categories",
+    "displayName": "Private category",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "webtools": {
+      "enabled": true
+    }
+  },
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "test": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::test.test",
+      "mappedBy": "private_category"
+    }
+  }
+}
