@@ -48,6 +48,11 @@ module.exports = {
 
           console.log('migrating existing links for', contentType);
           const entries = await knex.from(collectionName).select('id', 'url_path_id').whereNotNull('url_path_id');
+
+          if (!entries || entries.length <= 0) {
+            console.log('no links found for', contentType);
+            return;
+          }
           const links = entries.map((entry) => ({
             [`${singularName}_id`]: entry.id,
             url_alias_id: entry.url_path_id,
