@@ -67,19 +67,25 @@ const decorator = (service: IDecoratedService) => ({
       return service.update.call(this, uid, entityId, opts);
     }
 
+    // Manually fetch the entity that's being updated.
+    // We do this becuase not all it's data is present in opts.data.
+    const entity = await service.findOne.call(this, uid, entityId, {
+      populate: {
+        url_alias: {
+          fields: ['id'],
+        },
+      },
+    });
+
     // If a URL alias is allready present, fetch it.
-    if (opts.data.url_alias) {
-      urlAliasEntity = await getPluginService('urlAliasService').findOne(opts.data.url_alias);
+    if (opts.data.url_alias || entity.url_alias?.id) {
+      urlAliasEntity = await getPluginService('urlAliasService').findOne(opts.data.url_alias || entity.url_alias?.id);
     }
 
     // If a URL alias is present and 'generated' is set to false, do nothing.
     if (urlAliasEntity?.generated === false) {
       return service.update.call(this, uid, entityId, opts);
     }
-
-    // Manually fetch the entity that's being updated.
-    // We do this becuase not all it's data is present in opts.data.
-    const entity = await service.findOne.call(this, uid, entityId);
 
     // Generate the path.
     const generatedPath = await getPluginService('urlPatternService').resolvePattern(uid, { ...entity, ...opts.data });
@@ -106,18 +112,17 @@ const decorator = (service: IDecoratedService) => ({
     }
 
     // Fetch the entity because we need the url_alias id.
-    const entity = await strapi.entityService.findOne(uid, entityId, {
-      // @ts-ignore
-      populate: 'url_alias',
+    const entity = await service.findOne.call(this, uid, entityId, {
+      populate: {
+        url_alias: {
+          fields: ['id'],
+        },
+      },
     });
 
     // If a URL alias is present, delete it.
-    // @ts-ignore
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
     if (entity.url_alias?.id) {
-      // @ts-ignore
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-      await getPluginService('urlAliasService').delete(Number(entity.url_alias.id));
+      await getPluginService('urlAliasService').delete(entity.url_alias.id);
     }
 
     // Eventually delete the entity.

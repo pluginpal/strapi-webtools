@@ -29,7 +29,9 @@ export interface IDecoratedService {
     call: (context: any, uid: any, options: any) => Promise<{ id: number }>
   }
   findOne: {
-    call: (context: any, uid: any, options: any) => Promise<{ id: number }>
+    call: (context: any, uid: any, id: any, options: any) => Promise<{
+      id: number, url_alias?: { id: number }
+    }>
   }
 }
 
