@@ -72,14 +72,16 @@ const decorator = (service: IDecoratedService) => ({
     const entity = await service.findOne.call(this, uid, entityId, {
       populate: {
         url_alias: {
-          fields: ['id'],
+          fields: ['id', 'generated'],
         },
       },
     });
 
     // If a URL alias is allready present, fetch it.
-    if (opts.data.url_alias || entity.url_alias?.id) {
-      urlAliasEntity = await getPluginService('urlAliasService').findOne(opts.data.url_alias || entity.url_alias?.id);
+    if (opts.data.url_alias) {
+      urlAliasEntity = await getPluginService('urlAliasService').findOne(opts.data.url_alias);
+    } else if (entity.url_alias) {
+      urlAliasEntity = entity.url_alias;
     }
 
     // If a URL alias is present and 'generated' is set to false, do nothing.
@@ -101,7 +103,13 @@ const decorator = (service: IDecoratedService) => ({
     }
 
     // Eventually update the entity.
-    return service.update.call(this, uid, entityId, opts);
+    return service.update.call(this, uid, entityId, {
+      ...opts,
+      data: {
+        ...opts.data,
+        url_alias: urlAliasEntity.id,
+      },
+    });
   },
   async delete(uid: Common.UID.ContentType, entityId: number) {
     const hasWT = isContentTypeEnabled(uid);
