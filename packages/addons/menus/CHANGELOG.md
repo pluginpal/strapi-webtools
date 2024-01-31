@@ -1,4 +1,4 @@
-# @pluginpal/webtools-addon-menus
+# addon-menus
 
 ## 0.0.1-beta.0
 
