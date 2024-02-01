@@ -1,4 +1,4 @@
-# @pluginpal/webtools-helper-plugin
+# helper-plugin
 
 ## 1.0.0-beta.2
 

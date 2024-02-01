@@ -1,4 +1,4 @@
-# @pluginpal/webtools-addon-redirects
+# addon-redirects
 
 ## 0.0.1-beta.0
 
