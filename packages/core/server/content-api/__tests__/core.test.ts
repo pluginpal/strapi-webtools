@@ -42,20 +42,20 @@ describe('Core controller - Router', () => {
     expect(page).toHaveProperty('error.status', 403);
   });
 
-  it('Should not fetch a draft entry by default', async () => {
+  it('Should fetch a draft entries by default', async () => {
     const page = await request(strapi.server.httpServer)
       .get('/api/webtools/router?path=/page/unpublished-test-page')
       .expect(404)
       .then((data) => data.body);
-  });
-
-  it('Should fetch a draft entry with publicationState set to preview', async () => {
-    const page = await request(strapi.server.httpServer)
-      .get('/api/webtools/router?path=/page/unpublished-test-page&publicationState=preview')
-      .expect(200)
-      .then((data) => data.body);
 
     expect(page).toHaveProperty('data.attributes.title', 'Unpublished test page');
+  });
+
+  it('Should not fetch draft entries with publicationState set to live', async () => {
+    const page = await request(strapi.server.httpServer)
+      .get('/api/webtools/router?path=/page/unpublished-test-page&publicationState=live')
+      .expect(404)
+      .then((data) => data.body);
   });
 
   it('Should allow query parameters for population', async () => {
