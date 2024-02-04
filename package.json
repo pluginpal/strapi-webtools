@@ -21,7 +21,7 @@
     "test:integration": "ENV_PATH=./playground/.env jest --verbose --runInBand --forceExit --testMatch '**/healthcheck.test.js'"
   },
   "dependencies": {
-    "@strapi/strapi": "^4.17.1",
+    "@strapi/strapi": "^4.19.0",
     "react": "^18"
   },
   "devDependencies": {
