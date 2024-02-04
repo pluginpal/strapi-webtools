@@ -21,6 +21,12 @@ export default (strapi: IStrapi) => {
         uid: 'settings.patterns',
         pluginName: 'webtools',
       },
+      {
+        section: 'plugins',
+        displayName: 'Access the URL alias sidebar',
+        uid: 'edit-view.sidebar',
+        pluginName: 'webtools',
+      },
     ];
 
     strapi.admin.services.permission.actionProvider.registerMany(actions);
