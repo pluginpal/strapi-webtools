@@ -1,5 +1,6 @@
 export interface Config {
   website_url: string;
+  default_pattern: string,
 }
 
 const config: {
@@ -8,6 +9,7 @@ const config: {
 } = {
   default: {
     website_url: null,
+    default_pattern: '/[pluralName]/[id]',
   },
   validator() {},
 };

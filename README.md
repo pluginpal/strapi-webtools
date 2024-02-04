@@ -98,6 +98,7 @@ The following field types are allowed in a pattern:
 - `id`
 - `uid`
 - `string`
+- `pluralName`
 
 See below a screenshot of the URL pattern creation form in Strapi.
 
@@ -114,6 +115,21 @@ await fetch(`${API_URL}/api/webtools/router?path=/about-page`);
 // GET /api/webtools/router?path=/about-page
 ```
 
+## 🔧 Config
+Config can be changed in the `config/plugins.js` file in your Strapi project.
+You can overwrite the config like so:
+
+```
+module.exports = ({ env }) => ({
+  // ...
+  'webtools': {
+    config: {
+      website_url: string;
+      default_pattern: string,  
+    },
+  },
+});
+```
 ## ✨ #StrapiPluginWeek
 
 This plugin was initially made as an entry to the <a href="https://lu.ma/strapihacks">Strapi Plugin Week</a> hackathon. Back then it went under the name "URL alias". Since then a lot has changed and the plugin has been renamed to Webtools where the URL alias feature is just a part of it.
