@@ -1,4 +1,4 @@
-import { Strapi } from '@strapi/strapi';
+import { Attribute, Strapi } from '@strapi/strapi';
 
 /**
  * An extension of the Strapi type to include unsupported types.
@@ -29,7 +29,9 @@ export interface IDecoratedService {
     call: (context: any, uid: any, options: any) => Promise<{ id: number }>
   }
   findOne: {
-    call: (context: any, uid: any, options: any) => Promise<{ id: number }>
+    call: (context: any, uid: any, id: any, options: any) => Promise<{
+      id: number, url_alias?: Attribute.GetValues<'plugin::webtools.url-alias', Attribute.GetNonPopulatableKeys<'plugin::webtools.url-alias'>>
+    }>
   }
 }
 

@@ -4,29 +4,34 @@ import { EntityService } from '@strapi/types';
 import { getPluginService } from '../../util/getPluginService';
 
 /**
+ * Finds a path from the original path that is unique
+ */
+const duplicateCheck = async (originalPath: string, ext = -1): Promise<string> => {
+  const extension = ext >= 0 ? `-${ext}` : '';
+  const newPath = originalPath + extension;
+  const pathAlreadyExists = await getPluginService('urlAliasService').findByPath(newPath);
+
+  if (pathAlreadyExists) {
+    return duplicateCheck(originalPath, ext + 1);
+  }
+
+  return newPath;
+};
+
+/**
    * Create.
    *
    * @param {object} data the data.
    * @returns {void}
    */
 const create = async (data: EntityService.Params.Pick<'plugin::webtools.url-alias', 'data'>['data']) => {
-  let urlPath = String(data.url_path);
-
-  const duplicateCheck = async (ext = -1) => {
-    const extension = ext >= 0 ? `-${ext}` : '';
-    const pathAllreadyExists = await getPluginService('urlAliasService').findByPath(urlPath + extension);
-
-    if (pathAllreadyExists) {
-      await duplicateCheck(ext + 1);
-    } else {
-      urlPath += extension;
-    }
-  };
-
-  await duplicateCheck();
+  const urlPath = await duplicateCheck(data.url_path);
 
   const pathEntity = await strapi.entityService.create('plugin::webtools.url-alias', {
-    data,
+    data: {
+      ...data,
+      url_path: urlPath,
+    },
   });
 
   return pathEntity;
@@ -102,23 +107,13 @@ const findByPath = async (path: string, id: number | string = 0) => {
  * @returns {void}
  */
 const update = async (id: number | string, data: EntityService.Params.Pick<'plugin::webtools.url-alias', 'data'>['data']) => {
-  let urlPath = String(data.url_path);
-
-  const duplicateCheck = async (ext = -1) => {
-    const extension = ext >= 0 ? `-${ext}` : '';
-    const pathAllreadyExists = await findByPath(urlPath + extension, id);
-
-    if (pathAllreadyExists) {
-      await duplicateCheck(ext + 1);
-    } else {
-      urlPath += extension;
-    }
-  };
-
-  await duplicateCheck();
+  const urlPath = await duplicateCheck(data.url_path);
 
   const pathEntity = await strapi.entityService.update('plugin::webtools.url-alias', id, {
-    data,
+    data: {
+      ...data,
+      url_path: urlPath,
+    },
   });
 
   return pathEntity;
