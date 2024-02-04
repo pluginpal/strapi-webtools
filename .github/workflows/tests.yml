@@ -49,9 +49,11 @@ jobs:
       - name: Install playground dependencies
         run: yarn playground:install
       - name: Build the playground
-        run: NODE_ENV=ci yarn playground:build
+        run: yarn playground:build
+      - name: Run unit tests
+        run: yarn test:unit
       - name: Run integration tests
-        run: NODE_ENV=ci yarn test:integration
+        run: yarn test:integration
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2
         with:

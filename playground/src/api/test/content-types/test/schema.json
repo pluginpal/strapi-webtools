@@ -26,6 +26,18 @@
           "localized": true
         }
       }
+    },
+    "category": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::category.category",
+      "mappedBy": "test"
+    },
+    "private_category": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::private-category.private-category",
+      "inversedBy": "test"
     }
   }
 }
