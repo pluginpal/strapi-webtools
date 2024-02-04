@@ -114,6 +114,27 @@ await fetch(`${API_URL}/api/webtools/router?path=/about-page`);
 // GET /api/webtools/router?path=/about-page
 ```
 
+## 🔧 Config
+Config can be changed in the `config/plugins.js` file in your Strapi project.
+You can overwrite the config like so:
+
+```
+module.exports = ({ env }) => ({
+  // ...
+  'sitemap': {
+    enabled: true,
+    config: {
+      cron: '0 0 0 * * *',
+      limit: 45000,
+      xsl: true,
+      autoGenerate: false,
+      caching: true,
+      allowedFields: ['id', 'uid'],
+      excludedTypes: [],
+    },
+  },
+});
+```
 ## ✨ #StrapiPluginWeek
 
 This plugin was initially made as an entry to the <a href="https://lu.ma/strapihacks">Strapi Plugin Week</a> hackathon. Back then it went under the name "URL alias". Since then a lot has changed and the plugin has been renamed to Webtools where the URL alias feature is just a part of it.
