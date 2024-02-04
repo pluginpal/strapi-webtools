@@ -112,13 +112,13 @@ describe('Query layer decorator', () => {
     const updatedPage = await strapi.entityService.update("api::test.test", page.id, {
       data: {
         // @ts-ignore
-        title: 'Some updated page',
+        title: 'Some updated page with overwritten url alias',
       },
       populate: ['url_alias']
     });
 
     expect(updatedPage).toHaveProperty('url_alias.id', page.url_alias.id);
-    expect(updatedPage).toHaveProperty('url_alias.url_path', '/page/some-updated-page');
+    expect(updatedPage).toHaveProperty('url_alias.url_path', '/page/some-updated-page-with-overwritten-url-alias');
     expect(updatedPage).toHaveProperty('url_alias.generated', true);
   });
 

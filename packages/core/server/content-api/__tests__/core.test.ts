@@ -45,7 +45,7 @@ describe('Core controller - Router', () => {
   it('Should fetch a draft entries by default', async () => {
     const page = await request(strapi.server.httpServer)
       .get('/api/webtools/router?path=/page/unpublished-test-page')
-      .expect(404)
+      .expect(200)
       .then((data) => data.body);
 
     expect(page).toHaveProperty('data.attributes.title', 'Unpublished test page');
@@ -76,22 +76,22 @@ describe('Core controller - Router', () => {
     expect(page).not.toHaveProperty('data.attributes.private-category');
   });
 
-  it('Should sanitize unpublished populated relations', async () => {
+  it('Should not sanitize unpublished populated relations', async () => {
     const page = await request(strapi.server.httpServer)
       .get('/api/webtools/router?path=/page/published-test-page&populate=*')
       .expect(200)
       .then((data) => data.body);
 
-    expect(page.data.attributes.category.data).toBe(null);
+    expect(page.data.attributes.category.data).not.toBe(null);
   });
 
-  it('Should not sanitize unpublished populated relations with publicationState set to preview', async () => {
+  it('Should sanitize unpublished populated relations with publicationState set to live', async () => {
     const page = await request(strapi.server.httpServer)
-      .get('/api/webtools/router?path=/page/published-test-page&populate=*&publicationState=preview')
+      .get('/api/webtools/router?path=/page/published-test-page&populate=*&publicationState=live')
       .expect(200)
       .then((data) => data.body);
 
-    expect(page.data.attributes.category.data).not.toBe(null);
+    expect(page.data.attributes.category.data).toBe(null);
   });
 
   it('Should allow query parameters for field selection', async () => {
