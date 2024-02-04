@@ -123,6 +123,10 @@ export default () => ({
       fields.push('id');
     }
 
+    if (allowedFields.includes('pluralName')) {
+      fields.push('pluralName');
+    }
+
     return fields;
   },
 

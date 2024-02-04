@@ -98,6 +98,7 @@ The following field types are allowed in a pattern:
 - `id`
 - `uid`
 - `string`
+- `pluralName`
 
 See below a screenshot of the URL pattern creation form in Strapi.
 
@@ -121,16 +122,10 @@ You can overwrite the config like so:
 ```
 module.exports = ({ env }) => ({
   // ...
-  'sitemap': {
-    enabled: true,
+  'webtools': {
     config: {
-      cron: '0 0 0 * * *',
-      limit: 45000,
-      xsl: true,
-      autoGenerate: false,
-      caching: true,
-      allowedFields: ['id', 'uid'],
-      excludedTypes: [],
+      website_url: string;
+      default_pattern: string,  
     },
   },
 });

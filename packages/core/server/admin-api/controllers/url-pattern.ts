@@ -61,7 +61,7 @@ const controller = () => ({
 
       const fields = getPluginService('urlPatternService').getAllowedFields(
         contentType,
-        ['string', 'uid', 'id'],
+        ['pluralName', 'string', 'uid', 'id'],
       );
       formattedFields[contentType.uid] = fields;
     });
@@ -76,6 +76,7 @@ const controller = () => ({
     const contentType = strapi.contentTypes[modelName];
 
     const fields = urlPatternService.getAllowedFields(contentType, [
+      'pluralName',
       'string',
       'uid',
       'id',
