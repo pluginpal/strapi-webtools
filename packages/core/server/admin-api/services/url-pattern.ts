@@ -154,7 +154,6 @@ export default () => ({
     const resolve = (pattern: string) => {
       let resolvedPattern: string = pattern;
       const fields = getPluginService('urlPatternService').getFieldsFromPattern(pattern);
-
       fields.forEach((field) => {
         const relationalField = field.split('.').length > 1 ? field.split('.') : null;
 
@@ -183,7 +182,10 @@ export default () => ({
     });
 
     if (!patterns[0]) {
-      return '';
+      const pluralName = strapi.contentTypes[uid]?.info?.pluralName;
+      const id = entity?.id;
+
+      return pluralName ? `/${pluralName}/${id}` : '';
     }
 
     const path = resolve(patterns[0].pattern);
