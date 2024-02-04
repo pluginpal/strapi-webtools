@@ -154,11 +154,15 @@ export default () => ({
     const resolve = (pattern: string) => {
       let resolvedPattern: string = pattern;
       const fields = getPluginService('urlPatternService').getFieldsFromPattern(pattern);
+
       fields.forEach((field) => {
         const relationalField = field.split('.').length > 1 ? field.split('.') : null;
 
         // TODO: Relation fields.
-        if (!relationalField) {
+        if (field === 'pluralName') {
+          const fieldValue = strapi.contentTypes[uid]?.info?.pluralName;
+          resolvedPattern = resolvedPattern.replace(`[${field}]`, fieldValue || '');
+        } else if (!relationalField) {
           // Slugify.
           const fieldValue = _.kebabCase(_.deburr(_.toLower(String(entity[field]))));
           resolvedPattern = resolvedPattern.replace(`[${field}]`, fieldValue || '');
@@ -182,14 +186,10 @@ export default () => ({
     });
 
     if (!patterns[0]) {
-      const pluralName = strapi.contentTypes[uid]?.info?.pluralName;
-      const id = entity?.id;
-
-      return pluralName ? `/${pluralName}/${id}` : '';
+      return resolve(strapi.config.get('plugin.webtools.default_pattern'));
     }
 
     const path = resolve(patterns[0].pattern);
-
     return path;
   },
 
