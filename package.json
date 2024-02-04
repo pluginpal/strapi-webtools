@@ -17,6 +17,7 @@
     "playground:build": "cd playground && yarn build",
     "playground:start": "cd playground && yarn start",
     "playground:develop": "cd playground && yarn develop",
+    "test:unit": "ENV_PATH=./playground/.env jest --verbose --runInBand",
     "test:integration": "ENV_PATH=./playground/.env jest --verbose --runInBand --forceExit --testMatch '**/healthcheck.test.js'"
   },
   "dependencies": {
