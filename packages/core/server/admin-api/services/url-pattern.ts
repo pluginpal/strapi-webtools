@@ -2,6 +2,7 @@
 
 import _ from 'lodash';
 import { EntityService, Schema } from '@strapi/strapi';
+import { Common } from '@strapi/types';
 
 import { getPluginService } from '../../util/getPluginService';
 
@@ -154,7 +155,10 @@ export default () => ({
    * @returns {string} The path.
    */
 
-  resolvePattern: async (uid: string, entity: { [key: string]: string | number }) => {
+  resolvePattern: async (
+    uid: Common.UID.ContentType,
+    entity: { [key: string]: string | number },
+  ): Promise<string> => {
     const resolve = (pattern: string) => {
       let resolvedPattern: string = pattern;
       const fields = getPluginService('urlPatternService').getFieldsFromPattern(pattern);
@@ -164,7 +168,12 @@ export default () => ({
 
         // TODO: Relation fields.
         if (field === 'pluralName') {
-          const fieldValue = strapi.contentTypes[uid]?.info?.pluralName;
+          const fieldValue = strapi.contentTypes[uid].info.pluralName;
+
+          if (!fieldValue) {
+            return;
+          }
+
           resolvedPattern = resolvedPattern.replace(`[${field}]`, fieldValue || '');
         } else if (!relationalField) {
           // Slugify.
