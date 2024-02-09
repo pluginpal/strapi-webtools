@@ -37,7 +37,7 @@ You'll start the database migration locally by stopping your Strapi app. If it w
 ##### 4. Database schema migration
 
 To trigger the schema migrations we utilize Strapi [database migrations](https://docs.strapi.io/dev-docs/database-migrations). The plugin provides the migration file needed. You need to copy [the migration file](https://github.com/pluginpal/strapi-webtools/blob/master/migrations/2023.06.12T00.00.00.url-alias-to-webtools.js) and place it in the `./database/migrations` folder of your Strapi app.
-In the migration file you have to fill out the object with content types that uses url aliases in your project. You can find the collectionName and singularName in the schema.json file of the content type, expample: `src/api/page/content-types/page/schema.json`.
+In the migration file you have to fill out the object with content types that uses url aliases in your project (NOTE: that these fields should use snake case). You can find the collectionName and singularName in the schema.json file of the content type, expample: `src/api/page/content-types/page/schema.json`.
 
 ##### 5. Update the package
 

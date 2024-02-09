@@ -21,6 +21,11 @@ module.exports = {
       //   collectionName: 'pages',
       //   singularName: 'page',
       // },
+      // 'api::page-post.page-post': {
+      //   collectionName: 'page_posts',
+      //   // NOTE: The singularName should be snake_case, not kebab-case.
+      //   singularName: 'page_post',
+      // },
     };
     // Rename the url_paths table.
     const hasUrlPathsTable = await knex.schema.hasTable('url_paths');
