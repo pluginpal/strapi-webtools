@@ -31,6 +31,17 @@ module.exports = {
       await knex.schema.renameTable(oldUrlPathsName, newUrlPathsName);
       console.log(`Renamed "${oldUrlPathsName}" table to "${newUrlPathsName}".`);
 
+      // Also migrate for commit b14eb26f76b53a3a9ad91f050b04266224fc244d
+      // which changed the path column to url_path
+      const hasPathColumn = await knex.schema.hasColumn(newUrlPathsName, 'path');
+      if (hasPathColumn) {
+        console.log('Renaming "path" column to "url_path"...');
+        await knex.schema.alterTable(newUrlPathsName, (table) => {
+          table.renameColumn('path', 'url_path');
+        });
+        console.log('Renamed "path" column to "url_path".');
+      }
+
       // create link tables
 
       await Promise.all(
