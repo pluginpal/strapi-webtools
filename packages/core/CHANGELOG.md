@@ -1,5 +1,11 @@
 # core
 
+## 1.0.0-beta.7
+
+### Patch Changes
+
+- [#119](https://github.com/pluginpal/strapi-webtools/pull/119) [`fae4c75`](https://github.com/pluginpal/strapi-webtools/commit/fae4c75d7fb67ab9cc60d5b8a48d4f136b24e128) Thanks [@Alexnortung](https://github.com/Alexnortung)! - Duplicate check will use an ignore id so that it does not update the url path because it is a duplicate of itself
+
 ## 1.0.0-beta.6
 
 ### Minor Changes
