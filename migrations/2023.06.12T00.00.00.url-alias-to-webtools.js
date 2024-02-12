@@ -27,6 +27,13 @@ module.exports = {
       //   singularName: 'page_post',
       // },
     };
+    // In commit b14eb26f76b53a3a9ad91f050b04266224fc244d the paths table was renamed to url_paths
+    const hasPathsTable = await knex.schema.hasTable('paths');
+    if (hasPathsTable) {
+      console.log('Renaming "paths" table to "url_paths"...');
+      await knex.schema.renameTable('paths', 'url_paths');
+      console.log('Renamed "paths" table to "url_paths".');
+    }
     // Rename the url_paths table.
     const hasUrlPathsTable = await knex.schema.hasTable('url_paths');
     if (hasUrlPathsTable) {
@@ -36,7 +43,7 @@ module.exports = {
       await knex.schema.renameTable(oldUrlPathsName, newUrlPathsName);
       console.log(`Renamed "${oldUrlPathsName}" table to "${newUrlPathsName}".`);
 
-      // Also migrate for commit b14eb26f76b53a3a9ad91f050b04266224fc244d
+      // Also migrate for commit db0dea6c521915ced354709b52d678ae436e62dd
       // which changed the path column to url_path
       const hasPathColumn = await knex.schema.hasColumn(newUrlPathsName, 'path');
       if (hasPathColumn) {
@@ -79,6 +86,14 @@ module.exports = {
       );
     } else {
       console.log('No url_paths table found. Skipping...');
+    }
+
+    // In commit b14eb26f76b53a3a9ad91f050b04266224fc244d the patterns table was renamed to url_patterns
+    const hasPatternsTable = await knex.schema.hasTable('patterns');
+    if (hasPatternsTable) {
+      console.log('Renaming "patterns" table to "url_patterns"...');
+      await knex.schema.renameTable('patterns', 'url_patterns');
+      console.log('Renamed "patterns" table to "url_patterns".');
     }
 
     // Rename the url_patterns table.
