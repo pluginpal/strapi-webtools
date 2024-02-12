@@ -1,18 +1,22 @@
 
 
-import { EntityService } from '@strapi/types';
+import { EntityService, Entity } from '@strapi/types';
 import { getPluginService } from '../../util/getPluginService';
 
 /**
  * Finds a path from the original path that is unique
  */
-const duplicateCheck = async (originalPath: string, ext = -1): Promise<string> => {
+const duplicateCheck = async (
+  originalPath: string,
+  ignoreId?: Entity.ID,
+  ext: number = -1,
+): Promise<string> => {
   const extension = ext >= 0 ? `-${ext}` : '';
   const newPath = originalPath + extension;
-  const pathAlreadyExists = await getPluginService('urlAliasService').findByPath(newPath);
+  const pathAlreadyExists = await getPluginService('urlAliasService').findByPath(newPath, ignoreId);
 
   if (pathAlreadyExists) {
-    return duplicateCheck(originalPath, ext + 1);
+    return duplicateCheck(originalPath, ignoreId, ext + 1);
   }
 
   return newPath;
@@ -85,7 +89,7 @@ const findMany = async (showDrafts: boolean = false, query: EntityService.Params
  * @param {string} path the path.
  * @param {number} id the id to ignore.
  */
-const findByPath = async (path: string, id: number | string = 0) => {
+const findByPath = async (path: string, id: Entity.ID = 0) => {
   const pathEntity = await strapi.entityService.findMany('plugin::webtools.url-alias', {
     filters: {
       url_path: path,
@@ -106,8 +110,8 @@ const findByPath = async (path: string, id: number | string = 0) => {
  * @param {object} data the data.
  * @returns {void}
  */
-const update = async (id: number | string, data: EntityService.Params.Pick<'plugin::webtools.url-alias', 'data'>['data']) => {
-  const urlPath = await duplicateCheck(data.url_path);
+const update = async (id: Entity.ID, data: EntityService.Params.Pick<'plugin::webtools.url-alias', 'data'>['data']) => {
+  const urlPath = await duplicateCheck(data.url_path, id);
 
   const pathEntity = await strapi.entityService.update('plugin::webtools.url-alias', id, {
     data: {

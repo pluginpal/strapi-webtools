@@ -8,7 +8,7 @@ module.exports = {
    *
    * This gives you an opportunity to extend code.
    */
-  register(/*{ strapi }*/) {},
+  register(/*{ strapi }*/) { },
 
   /**
    * An asynchronous bootstrap function that runs before
@@ -64,7 +64,7 @@ module.exports = {
           .updateRole(publicRole.id, publicRole);
       }
 
-      strapi.entityService.create('plugin::webtools.url-pattern', {
+      await strapi.entityService.create('plugin::webtools.url-pattern', {
         data: {
           pattern: '/page/[title]',
           label: 'Test API pattern',
@@ -74,7 +74,7 @@ module.exports = {
         }
       });
 
-      strapi.entityService.create('plugin::webtools.url-pattern', {
+      await strapi.entityService.create('plugin::webtools.url-pattern', {
         data: {
           pattern: '/category/[title]',
           label: 'Category API pattern',
@@ -84,7 +84,7 @@ module.exports = {
         }
       });
 
-      strapi.entityService.create('plugin::webtools.url-pattern', {
+      await strapi.entityService.create('plugin::webtools.url-pattern', {
         data: {
           pattern: '/private-category/[title]',
           label: 'Private category API pattern',
@@ -114,7 +114,7 @@ module.exports = {
         }
       });
 
-      strapi.entityService.create('api::test.test', {
+      await strapi.entityService.create('api::test.test', {
         data: {
           title: 'Published test page',
           publishedAt: new Date(),
@@ -123,7 +123,7 @@ module.exports = {
         }
       });
 
-      strapi.entityService.create('api::test.test', {
+      await strapi.entityService.create('api::test.test', {
         data: {
           title: 'Unpublished test page',
           category: publishedCategory.id,

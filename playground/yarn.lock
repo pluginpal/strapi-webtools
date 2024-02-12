@@ -4079,14 +4079,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"better-sqlite3@npm:8.6.0":
-  version: 8.6.0
-  resolution: "better-sqlite3@npm:8.6.0"
+"better-sqlite3@npm:^9.4.0":
+  version: 9.4.0
+  resolution: "better-sqlite3@npm:9.4.0"
   dependencies:
     bindings: "npm:^1.5.0"
     node-gyp: "npm:latest"
     prebuild-install: "npm:^7.1.1"
-  checksum: 4d5481bd173331c163add61c2fd12577e235d62abb1f72500b3856fd2af70a448a5515a3f12dd48f34bb97cfdf13d200ca81cd2ae16fc55627b96c5b9bd47bb0
+  checksum: 42b2edfa46d62763514b87122245a3513a5ff20f05fef4fb49fec33f3de0a51a29025596178f57c634b8013f16bbdf8169a308fb3e3b8d126d715788d72d1e74
   languageName: node
   linkType: hard
 
@@ -10544,7 +10544,7 @@ __metadata:
     "@strapi/plugin-i18n": "npm:^4.19.0"
     "@strapi/plugin-users-permissions": "npm:^4.19.0"
     "@strapi/strapi": "npm:^4.19.0"
-    better-sqlite3: "npm:8.6.0"
+    better-sqlite3: "npm:^9.4.0"
     pg: "npm:^8.10.0"
     react: "npm:^18.0.0"
     react-dom: "npm:^18.0.0"
