@@ -1,5 +1,12 @@
 # addon-sitemap
 
+## 1.0.0-beta.2
+
+### Patch Changes
+
+- Updated dependencies [[`fae4c75`](https://github.com/pluginpal/strapi-webtools/commit/fae4c75d7fb67ab9cc60d5b8a48d4f136b24e128)]:
+  - @pluginpal/webtools-core@1.0.0-beta.7
+
 ## 1.0.0-beta.1
 
 ### Patch Changes

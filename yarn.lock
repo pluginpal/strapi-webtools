@@ -3372,7 +3372,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@pluginpal/webtools-addon-menus@workspace:packages/addons/menus"
   peerDependencies:
-    "@pluginpal/webtools-core": 1.0.0-beta.6
+    "@pluginpal/webtools-core": 1.0.0-beta.7
   languageName: unknown
   linkType: soft
 
@@ -3380,7 +3380,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@pluginpal/webtools-addon-redirects@workspace:packages/addons/redirects"
   peerDependencies:
-    "@pluginpal/webtools-core": 1.0.0-beta.6
+    "@pluginpal/webtools-core": 1.0.0-beta.7
   languageName: unknown
   linkType: soft
 
@@ -3396,7 +3396,7 @@ __metadata:
     sitemap: "npm:^7.1.0"
     xml2js: "npm:^0.5.0"
   peerDependencies:
-    "@pluginpal/webtools-core": 1.0.0-beta.6
+    "@pluginpal/webtools-core": 1.0.0-beta.7
     redux: "*"
   languageName: unknown
   linkType: soft
