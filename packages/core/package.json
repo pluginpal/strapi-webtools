@@ -33,7 +33,7 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "../../node_modules/.bin/strapi plugin:build",
+    "build": "../../node_modules/.bin/strapi plugin:build --force",
     "develop": "../../node_modules/.bin/strapi plugin:watch",
     "eslint": "../../node_modules/.bin/eslint --max-warnings=0 './**/*.{js,jsx,ts,tsx}'",
     "eslint:fix": "../../node_modules/.bin/eslint --fix './**/*.{js,jsx,ts,tsx}'"
