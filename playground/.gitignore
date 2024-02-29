@@ -123,6 +123,7 @@ license.txt
 exports
 *.cache
 dist
+!src/plugins/**/dist
 build
 .strapi-updater.json
 
