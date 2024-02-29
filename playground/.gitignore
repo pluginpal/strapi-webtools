@@ -130,5 +130,4 @@ build
 # Webtools
 ############################
 
-src/plugins/**
 config/env/development

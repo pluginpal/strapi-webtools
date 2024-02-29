@@ -1,0 +1,1 @@
+../../../../packages/addons/sitemap/strapi-admin.js
