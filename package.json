@@ -7,8 +7,7 @@
   ],
   "scripts": {
     "build": "turbo run build",
-    "develop": "turbo run develop & yarn playground:develop",
-    "develop:watch-admin": "turbo run develop & yarn playground:develop --watch-admin",
+    "develop": "turbo run develop",
     "eslint": "turbo run eslint",
     "eslint:fix": "turbo run eslint:fix",
     "release:publish": "turbo run build && changeset publish",

@@ -32,19 +32,25 @@ Run the following command
 yarn playground:install
 ```
 
-#### 5. Start the development server
+#### 5. Run the compiler of the plugin 
 
-Run the following command
+As the plugin is written using Typescript you will have to run the typescript compiler during development. Run the following command:
 
 ```bash
 yarn develop
-// Use the :watch-admin command if you're looking to make changes to the frontend of the plugin.
-yarn develop:watch-admin
 ```
 
-This will start a playground instance that will have the plugin installed by default. Browse to http://localhost:1337 and create a test admin user to log in to the playground.
+#### 6. Start the playground instance
 
-#### 6. Start your contribution!
+Leave the typescript compiler running, open up a new terminal window and browse back to the root of the plugin repo. Run the following command:
+
+```bash
+yarn playground:develop
+```
+
+This will start the playground instance that will have the plugin installed by default. Browse to http://localhost:1337 and create a test admin user to log in to the playground.
+
+#### 7. Start your contribution!
 
 You can now start working on your contribution. If you had trouble setting up this testing environment please feel free to report an issue on Github.
 
