@@ -1,6 +1,6 @@
 'use strict';
 
-const { getService } = require('../utils');
+import { getService } from '../utils';
 
 /**
  * Sitemap.js controller
@@ -8,7 +8,7 @@ const { getService } = require('../utils');
  * @description: A set of functions called "actions" of the `sitemap` plugin.
  */
 
-module.exports = {
+export default {
   allowedFields: async (ctx) => {
     const formattedFields = {};
 

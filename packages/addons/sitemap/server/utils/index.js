@@ -1,16 +1,16 @@
 'use strict';
 
-const getCoreStore = () => {
+export const getCoreStore = () => {
   return strapi.store({ type: 'plugin', name: 'webtools-addon-sitemap' });
 };
 
-const getService = (name) => {
+export const getService = (name) => {
   return strapi.plugin('webtools-addon-sitemap').service(name);
 };
 
-const logMessage = (msg = '') => `[webtools-addon-sitemap]: ${msg}`;
+export const logMessage = (msg = '') => `[webtools-addon-sitemap]: ${msg}`;
 
-const noLimit = async (strapi, queryString, parameters, limit = 5000) => {
+export const noLimit = async (strapi, queryString, parameters, limit = 5000) => {
   let entries = [];
   const amountOfEntries = await strapi.entityService.count(queryString, parameters);
 
@@ -29,12 +29,4 @@ const noLimit = async (strapi, queryString, parameters, limit = 5000) => {
   }
 
   return entries;
-};
-
-
-module.exports = {
-  getService,
-  getCoreStore,
-  logMessage,
-  noLimit,
 };

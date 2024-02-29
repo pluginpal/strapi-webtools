@@ -1,10 +1,10 @@
 'use strict';
 
-const fs = require('fs');
-const _ = require('lodash');
-const path = require('path');
+import fs from 'fs';
+import _ from 'lodash';
+import path from 'path';
 
-const { getService } = require('../utils');
+import { getService } from '../utils';
 
 /**
  * Sitemap.js controller
@@ -12,7 +12,7 @@ const { getService } = require('../utils');
  * @description: A set of functions called "actions" of the `sitemap` plugin.
  */
 
-module.exports = {
+export default {
   buildSitemap: async (ctx) => {
     try {
       await getService('core').createSitemap();

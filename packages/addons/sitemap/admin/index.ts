@@ -1,6 +1,6 @@
 import { prefixPluginTranslations } from '@strapi/helper-plugin';
 import { AdminApp } from '@pluginpal/webtools-helper-plugin';
-import pluginPkg from '../../package.json';
+import pluginPkg from '../package.json';
 import pluginId from './helpers/pluginId';
 import getTrad from './helpers/getTrad';
 import EditView from './components/EditView';

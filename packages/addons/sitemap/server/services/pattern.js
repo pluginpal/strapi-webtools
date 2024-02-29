@@ -1,6 +1,6 @@
 'use strict';
 
-const { logMessage } = require('../utils');
+import { logMessage } from '../utils';
 
 /**
  * Pattern service.
@@ -196,7 +196,7 @@ const validatePattern = async (pattern, allowedFieldNames) => {
   };
 };
 
-module.exports = () => ({
+export default () => ({
   getAllowedFields,
   getFieldsFromPattern,
   getRelationsFromPattern,

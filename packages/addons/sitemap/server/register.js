@@ -1,7 +1,7 @@
 
 'use strict';
 
-const _ = require('lodash');
+import _ from 'lodash';
 
 /**
  * Adds sitemap_exclude field to all the eligable content types.
@@ -26,6 +26,6 @@ const extendContentTypesWithExcludeField = async (strapi) => {
   });
 };
 
-module.exports = ({ strapi }) => {
+export default ({ strapi }) => {
   extendContentTypesWithExcludeField(strapi);
 };

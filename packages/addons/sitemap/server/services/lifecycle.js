@@ -1,6 +1,6 @@
 'use strict';
 
-const { getService, logMessage } = require('../utils');
+import { getService, logMessage } from '../utils';
 
 /**
  * Gets lifecycle service
@@ -42,7 +42,7 @@ const subscribeLifecycleMethods = async (modelName) => {
   }
 };
 
-module.exports = () => ({
+export default () => ({
   async loadAllLifecycleMethods() {
     const settings = await getService('settings').getConfig();
 
