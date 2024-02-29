@@ -5,9 +5,6 @@
     "build": {
       "dependsOn": ["^build"]
     },
-    "build:release": {
-      "dependsOn": ["^build:release"]
-    },
     "eslint": {
       "outputs": []
     },

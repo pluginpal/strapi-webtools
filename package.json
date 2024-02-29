@@ -11,7 +11,7 @@
     "develop:watch-admin": "turbo run develop & yarn playground:develop --watch-admin",
     "eslint": "turbo run eslint",
     "eslint:fix": "turbo run eslint:fix",
-    "release:publish": "turbo run build:release && changeset publish",
+    "release:publish": "turbo run build && changeset publish",
     "release:prepare": "changeset version && YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install",
     "playground:install": "cd playground && yarn install",
     "playground:build": "cd playground && yarn build",
