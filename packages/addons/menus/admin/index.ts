@@ -1,6 +1,7 @@
 import { prefixPluginTranslations } from '@strapi/helper-plugin';
 import { AdminApp } from '@pluginpal/webtools-helper-plugin';
-import pluginPkg from '../../package.json';
+
+import pluginPkg from '../package.json';
 import pluginId from './helpers/pluginId';
 import getTrad from './helpers/getTrad';
 import EditView from './components/EditView';
@@ -20,17 +21,17 @@ export default {
   },
   bootstrap(app: AdminApp) {
     app.injectContentManagerComponent('editView', 'right-links', {
-      name: 'redirects-edit-view',
+      name: 'menu-link-edit-view',
       Component: EditView,
     });
 
     app.addSettingsLink('webtools', {
-      id: 'redirects',
+      id: 'menus',
       intlLabel: {
         id: getTrad('plugin.name'),
-        defaultMessage: 'Redirects',
+        defaultMessage: 'Menus',
       },
-      to: '/settings/webtools/redirects',
+      to: '/settings/webtools/menus',
       async Component() {
         const component = await import(
           /* webpackChunkName: "upload-settings" */ './pages/Settings'

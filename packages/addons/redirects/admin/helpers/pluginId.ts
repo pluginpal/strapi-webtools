@@ -1,4 +1,4 @@
-import pluginPkg from '../../../package.json';
+import pluginPkg from '../../package.json';
 
 /**
  * A helper function to obtain the plugin id.
