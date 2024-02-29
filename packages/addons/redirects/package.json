@@ -1,6 +1,6 @@
 {
   "name": "@pluginpal/webtools-addon-redirects",
-  "version": "0.0.1-beta.0",
+  "version": "1.0.0-beta.2",
   "private": true,
   "description": "This is the description of the plugin.",
   "strapi": {
@@ -44,7 +44,7 @@
     "@strapi/strapi": "^4"
   },
   "peerDependencies": {
-    "@pluginpal/webtools-core": "1.0.0-beta.5"
+    "@pluginpal/webtools-core": "1.0.0-beta.7"
   },
   "author": {
     "name": "TODO"

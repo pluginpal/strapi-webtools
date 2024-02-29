@@ -155,6 +155,26 @@ describe('Query layer decorator', () => {
     expect(updatedPage).toHaveProperty('url_alias.generated', false);
   });
 
+  it('Update - Should not duplicate check the same entry when updated', async () => {
+    const page = await strapi.entityService.create("api::test.test", {
+      data: {
+        title: 'Unpublished page',
+      },
+      populate: ['url_alias']
+    });
+    const url = page.url_alias.url_path;
+
+    const updatedPage = await strapi.entityService.update("api::test.test", page.id, {
+      data: {
+        // @ts-ignore
+        published_at: new Date(),
+      },
+      populate: ['url_alias']
+    });
+
+    expect(updatedPage).toHaveProperty('url_alias.url_path', url);
+  });
+
   it('Delete - Should delete the corresponding URL alias as wel', async () => {
     const page = await strapi.entityService.create("api::test.test", {
       data: {

@@ -46,9 +46,10 @@ async function setupStrapi() {
       appDir: './playground',
       distDir: './playground/dist'
     }).load();
-    await waitForServer();
 
     instance = strapi; // strapi is global now
+
+    await instance.server.mount();
   }
   return instance;
 }
@@ -58,9 +59,9 @@ async function setupStrapi() {
  */
 async function stopStrapi() {
   if (instance) {
-
+    await instance.server.httpServer.close();
+    await instance.db.connection.destroy();
     instance.destroy();
-
     const tmpDbFile = strapi.config.get(
       "database.connection.connection.filename"
     );
@@ -68,6 +69,7 @@ async function stopStrapi() {
     if (fs.existsSync(tmpDbFile)) {
       fs.unlinkSync(tmpDbFile);
     }
+
   }
   return instance;
 }

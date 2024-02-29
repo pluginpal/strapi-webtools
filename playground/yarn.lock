@@ -4079,14 +4079,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"better-sqlite3@npm:8.6.0":
-  version: 8.6.0
-  resolution: "better-sqlite3@npm:8.6.0"
+"better-sqlite3@npm:^9.4.0":
+  version: 9.4.0
+  resolution: "better-sqlite3@npm:9.4.0"
   dependencies:
     bindings: "npm:^1.5.0"
     node-gyp: "npm:latest"
     prebuild-install: "npm:^7.1.1"
-  checksum: 4d5481bd173331c163add61c2fd12577e235d62abb1f72500b3856fd2af70a448a5515a3f12dd48f34bb97cfdf13d200ca81cd2ae16fc55627b96c5b9bd47bb0
+  checksum: 42b2edfa46d62763514b87122245a3513a5ff20f05fef4fb49fec33f3de0a51a29025596178f57c634b8013f16bbdf8169a308fb3e3b8d126d715788d72d1e74
   languageName: node
   linkType: hard
 
@@ -7773,9 +7773,9 @@ __metadata:
   linkType: hard
 
 "ip@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "ip@npm:2.0.0"
-  checksum: 8d186cc5585f57372847ae29b6eba258c68862055e18a75cc4933327232cb5c107f89800ce29715d542eef2c254fbb68b382e780a7414f9ee7caf60b7a473958
+  version: 2.0.1
+  resolution: "ip@npm:2.0.1"
+  checksum: cab8eb3e88d0abe23e4724829621ec4c4c5cb41a7f936a2e626c947128c1be16ed543448d42af7cca95379f9892bfcacc1ccd8d09bc7e8bea0e86d492ce33616
   languageName: node
   linkType: hard
 
@@ -10544,7 +10544,7 @@ __metadata:
     "@strapi/plugin-i18n": "npm:^4.19.0"
     "@strapi/plugin-users-permissions": "npm:^4.19.0"
     "@strapi/strapi": "npm:^4.19.0"
-    better-sqlite3: "npm:8.6.0"
+    better-sqlite3: "npm:^9.4.0"
     pg: "npm:^8.10.0"
     react: "npm:^18.0.0"
     react-dom: "npm:^18.0.0"
