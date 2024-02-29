@@ -40,8 +40,10 @@
     "eslint": "../../../node_modules/.bin/eslint --max-warnings=0 './**/*.{js,jsx,ts,tsx}'",
     "eslint:fix": "../../../node_modules/.bin/eslint --fix './**/*.{js,jsx,ts,tsx}'"
   },
+  "devDependencies": {
+    "@strapi/strapi": "^4"
+  },
   "peerDependencies": {
-    "@strapi/strapi": "^4",
     "@pluginpal/webtools-core": "1.0.0-beta.5"
   },
   "author": {
