@@ -3449,6 +3449,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@pluginpal/webtools-addon-menus@workspace:packages/addons/menus"
   dependencies:
+    "@pluginpal/webtools-helper-plugin": "npm:1.0.0-beta.3"
     "@strapi/strapi": "npm:^4"
     react: "npm:^18.0.0"
     react-dom: "npm:^18.0.0"
@@ -3467,6 +3468,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@pluginpal/webtools-addon-redirects@workspace:packages/addons/redirects"
   dependencies:
+    "@pluginpal/webtools-helper-plugin": "npm:1.0.0-beta.3"
     "@strapi/strapi": "npm:^4"
     react: "npm:^18.0.0"
     react-dom: "npm:^18.0.0"
@@ -3485,6 +3487,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@pluginpal/webtools-addon-sitemap@workspace:packages/addons/sitemap"
   dependencies:
+    "@pluginpal/webtools-helper-plugin": "npm:1.0.0-beta.3"
     "@strapi/strapi": "npm:^4"
     chalk: "npm:^4.1.2"
     commander: "npm:^8.3.0"
