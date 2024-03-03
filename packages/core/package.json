@@ -38,15 +38,22 @@
     "eslint": "../../node_modules/.bin/eslint --max-warnings=0 './**/*.{js,jsx,ts,tsx}'",
     "eslint:fix": "../../node_modules/.bin/eslint --fix './**/*.{js,jsx,ts,tsx}'"
   },
-  "devDependencies": {
-    "@strapi/strapi": "^4"
-  },
   "peerDependencies": {
-    "@strapi/strapi": "^4",
-    "react": "^17 || ^18"
+    "react": "^17.0.0 || ^18.0.0",
+    "react-dom": "^17.0.0 || ^18.0.0",
+    "react-router-dom": "^5.2.0",
+    "styled-components": "^5.2.1"
+  },
+  "devDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-router-dom": "^5.2.0",
+    "styled-components": "5.3.3"
   },
   "dependencies": {
     "@pluginpal/webtools-helper-plugin": "1.0.0-beta.3",
+    "@strapi/helper-plugin": "4.20.3",
+    "@strapi/strapi": "4.20.3",
     "react-copy-to-clipboard": "^5.1.0"
   },
   "author": {

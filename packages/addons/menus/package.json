@@ -40,11 +40,21 @@
     "eslint": "../../../node_modules/.bin/eslint --max-warnings=0 './**/*.{js,jsx,ts,tsx}'",
     "eslint:fix": "../../../node_modules/.bin/eslint --fix './**/*.{js,jsx,ts,tsx}'"
   },
-  "devDependencies": {
+  "dependencies": {
     "@strapi/strapi": "^4"
   },
+  "devDependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-router-dom": "^5.2.0",
+    "styled-components": "5.3.3"
+  },
   "peerDependencies": {
-    "@pluginpal/webtools-core": "1.0.0-beta.7"
+    "@pluginpal/webtools-core": "1.0.0-beta.7",
+    "react": "^17.0.0 || ^18.0.0",
+    "react-dom": "^17.0.0 || ^18.0.0",
+    "react-router-dom": "^5.2.0",
+    "styled-components": "^5.2.1"
   },
   "author": {
     "name": "TODO"
