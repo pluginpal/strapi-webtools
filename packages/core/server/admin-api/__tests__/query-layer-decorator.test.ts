@@ -4,9 +4,9 @@ import request from 'supertest';
 // eslint-disable-next-line import/no-relative-packages
 import { setupStrapi, stopStrapi } from '../../../../../playground/tests/helpers';
 
-jest.useFakeTimers();
-
 beforeAll(async () => {
+  jest.useFakeTimers();
+
   await setupStrapi();
 });
 
