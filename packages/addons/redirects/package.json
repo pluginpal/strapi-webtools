@@ -41,6 +41,7 @@
     "eslint:fix": "../../../node_modules/.bin/eslint --fix './**/*.{js,jsx,ts,tsx}'"
   },
   "dependencies": {
+    "@pluginpal/webtools-helper-plugin": "*",
     "@strapi/strapi": "^4"
   },
   "devDependencies": {
