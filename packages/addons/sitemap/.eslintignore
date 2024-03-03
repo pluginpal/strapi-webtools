@@ -2,8 +2,11 @@
 **/playground
 **/public
 **/build
+**/dist
 **/config
 **/scripts
 **/docs
-**/xsl
+**/server/types/generated
 **/__tests__
+strapi-admin.js
+strapi-server.js
