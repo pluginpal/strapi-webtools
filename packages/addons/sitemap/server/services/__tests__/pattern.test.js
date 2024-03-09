@@ -1,7 +1,7 @@
 
 'use strict';
 
-const patternService = require('../pattern');
+import patternService from '../pattern';
 
 global.strapi = {
   contentTypes: {

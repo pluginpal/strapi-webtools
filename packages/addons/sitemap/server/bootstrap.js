@@ -1,8 +1,6 @@
-'use strict';
+import { logMessage, getService } from './utils';
 
-const { logMessage, getService } = require('./utils');
-
-module.exports = async () => {
+export default async () => {
   const sitemap = strapi.plugin('webtools-addon-sitemap');
   const cron = strapi.config.get('plugin.webtools-addon-sitemap.cron');
 

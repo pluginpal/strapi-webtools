@@ -1,9 +1,9 @@
 'use strict';
 
-const adminRoutes = require('./admin');
-const contentApi = require('./content-api');
+import adminRoutes from './admin';
+import contentApi from './content-api';
 
-module.exports = {
+export default {
   admin: adminRoutes,
   'content-api': contentApi,
 };

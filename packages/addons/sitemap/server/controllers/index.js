@@ -1,10 +1,10 @@
 'use strict';
 
-const core = require('./core');
-const pattern = require('./pattern');
-const settings = require('./settings');
+import core from './core';
+import pattern from './pattern';
+import settings from './settings';
 
-module.exports = {
+export default {
   core,
   pattern,
   settings,

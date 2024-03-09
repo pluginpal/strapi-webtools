@@ -4,11 +4,11 @@
  * Sitemap service.
  */
 
-const { getConfigUrls } = require('@strapi/utils');
-const { SitemapStream, streamToPromise, SitemapAndIndexStream } = require('sitemap');
-const { isEmpty } = require('lodash');
+import { getConfigUrls } from '@strapi/utils';
+import { SitemapStream, streamToPromise, SitemapAndIndexStream } from 'sitemap';
+import { isEmpty } from 'lodash';
 
-const { logMessage, getService } = require('../utils');
+import { logMessage, getService } from '../utils';
 
 /**
  * Get a formatted array of different language URLs of a single page.
@@ -266,7 +266,7 @@ const createSitemap = async () => {
   }
 };
 
-module.exports = () => ({
+export default () => ({
   getLanguageLinks,
   getSitemapPageData,
   createSitemapEntries,

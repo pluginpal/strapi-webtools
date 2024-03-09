@@ -1,13 +1,11 @@
 /* eslint-disable camelcase */
 
-'use strict';
-
-const { get } = require('lodash');
-const xml2js = require('xml2js');
+import { get } from 'lodash';
+import xml2js from 'xml2js';
 
 const parser = new xml2js.Parser({ attrkey: 'ATTR' });
 
-const { noLimit, getService, logMessage } = require('../utils');
+import { noLimit, getService, logMessage } from '../utils';
 
 /**
  * Query service.
@@ -229,7 +227,7 @@ const createSitemap = async (data) => {
   return sitemap.id;
 };
 
-module.exports = () => ({
+export default () => ({
   getFieldsFromConfig,
   getRelationsFromConfig,
   getPages,

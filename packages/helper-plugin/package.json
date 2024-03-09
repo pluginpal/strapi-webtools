@@ -12,14 +12,15 @@
     "webtoolsAddon": true,
     "addonName": "Sitemap"
   },
-  "main": "src/index.js",
+  "main": "./dist/index.js",
   "scripts": {
-    "build": "tsc --outDir build",
-    "build:release": "tsc --outDir build",
-    "prepublishOnly": "cp -r ./build/* . && rm -rf ./build",
+    "build": "tsc",
     "develop": "tsc -w",
     "eslint": "../../node_modules/.bin/eslint --max-warnings=0 './**/*.{js,jsx,ts,tsx}'",
     "eslint:fix": "../../node_modules/.bin/eslint --fix './**/*.{js,jsx,ts,tsx}'"
+  },
+  "devDependencies": {
+    "typescript": "5.2.2"
   },
   "author": {
     "name": "TODO"

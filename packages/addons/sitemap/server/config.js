@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = {
+export default {
   default: {
     cron: '0 0 0 * * *',
     limit: 45000,
