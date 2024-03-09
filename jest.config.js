@@ -8,4 +8,13 @@ module.exports = {
   // globalTeardown: './playground/__tests__/teardown-strapi.ts',
   coverageDirectory: './coverage/',
   collectCoverage: true,
+  collectCoverageFrom: [
+    '**/*.{js,jsx,ts,tsx}',
+    '!**/node_modules/**',
+    '!**/build/**',
+    '!**/dist/**',
+  ],
+  transform: {
+    '^.+\\.(ts|tsx|js|jsx)$': 'ts-jest',
+  },
 };

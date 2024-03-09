@@ -5,8 +5,6 @@ import request from 'supertest';
 import { setupStrapi, stopStrapi } from '../../../../../playground/tests/helpers';
 
 beforeAll(async () => {
-  jest.useFakeTimers();
-
   await setupStrapi();
 });
 
