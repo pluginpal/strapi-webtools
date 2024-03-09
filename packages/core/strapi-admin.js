@@ -1,3 +1,3 @@
-import admin from './dist/admin';
+import admin from './bundle/admin';
 
 export default admin;

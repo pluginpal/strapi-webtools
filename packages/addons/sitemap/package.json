@@ -14,28 +14,29 @@
     "addonName": "Sitemap"
   },
   "files": [
-    "./dist",
-    "./xsl",
+    "bundle",
+    "xsl",
+    "strapi-admin.js",
     "strapi-server.js"
   ],
   "exports": {
     "./strapi-admin": {
       "source": "./admin/index.ts",
-      "import": "./dist/admin/index.mjs",
-      "require": "./dist/admin/index.js",
-      "default": "./dist/admin/index.js"
+      "import": "./bundle/admin/index.mjs",
+      "require": "./bundle/admin/index.js",
+      "default": "./bundle/admin/index.js"
     },
     "./strapi-server": {
       "source": "./server/index.js",
-      "import": "./dist/server/index.mjs",
-      "require": "./dist/server/index.js",
-      "default": "./dist/server/index.js"
+      "import": "./bundle/server/index.mjs",
+      "require": "./bundle/server/index.js",
+      "default": "./bundle/server/index.js"
     },
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "../../../node_modules/.bin/strapi plugin:build --force",
-    "develop": "yarn develop:copy-files && ../../../node_modules/.bin/strapi plugin:watch",
+    "build": "../../../node_modules/.bin/pack-up build",
+    "develop": "yarn develop:copy-files && ../../../node_modules/.bin/pack-up watch",
     "develop:copy-files": "copyfiles -u 1 xsl/**/* ../../../playground/src/plugins/webtools-addon-sitemap/xsl/",
     "eslint": "../../../node_modules/.bin/eslint --max-warnings=0 './**/*.{js,jsx,ts,tsx}'",
     "eslint:fix": "../../../node_modules/.bin/eslint --fix './**/*.{js,jsx,ts,tsx}'"
