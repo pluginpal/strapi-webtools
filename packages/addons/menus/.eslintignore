@@ -3,6 +3,7 @@
 **/public
 **/build
 **/dist
+**/bundle
 **/config
 **/scripts
 **/docs
