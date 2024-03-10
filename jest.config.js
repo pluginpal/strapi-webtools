@@ -13,6 +13,7 @@ module.exports = {
     '!**/node_modules/**',
     '!**/build/**',
     '!**/dist/**',
+    '!**/bundle/**',
   ],
   transform: {
     '^.+\\.(ts|tsx|js|jsx)$': 'ts-jest',
