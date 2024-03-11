@@ -1,0 +1,1 @@
+../../../../packages/addons/redirects/strapi-server.js

@@ -1,6 +1,6 @@
-const sitemapSchema = require('./sitemap/schema.json');
+import sitemapSchema from './sitemap/schema.json';
 
-module.exports = {
+export default {
   sitemap: {
     schema: sitemapSchema,
   },

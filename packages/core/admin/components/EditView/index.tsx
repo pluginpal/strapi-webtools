@@ -22,6 +22,8 @@ const EditView = () => {
     slug,
   } = useCMEditViewDataManager();
 
+  if (!allLayoutData.contentType) return null;
+
   if (!isContentTypeEnabled(allLayoutData.contentType)) return null;
   const modifiedUrlAlias = modifiedData.url_alias as UrlAliasEntity;
   const initialUrlAlias = initialData.url_alias as UrlAliasEntity;

@@ -10,21 +10,56 @@
     "required": false,
     "kind": "plugin"
   },
+  "files": [
+    "bundle",
+    "strapi-admin.js",
+    "strapi-server.js"
+  ],
+  "main": "./bundle/src/index.js",
+  "exports": {
+    "./strapi-admin": {
+      "types": "./bundle/admin/index.d.ts",
+      "source": "./admin/index.ts",
+      "import": "./bundle/admin/index.mjs",
+      "require": "./bundle/admin/index.js",
+      "default": "./bundle/admin/index.js"
+    },
+    "./strapi-server": {
+      "types": "./bundle/server/index.d.ts",
+      "source": "./server/index.ts",
+      "import": "./bundle/server/index.mjs",
+      "require": "./bundle/server/index.js",
+      "default": "./bundle/server/index.js"
+    },
+    "./package.json": "./package.json"
+  },
   "scripts": {
-    "build": "tsc",
-    "build:release": "tsc --outDir build",
-    "prepublishOnly": "cp -r ./build/* . && rm -rf ./build .eslintignore ./.turbo CHANGELOG.md tsconfig.json tsconfig.buildinfo",
-    "develop": "tsc -w",
+    "build": "../../node_modules/.bin/pack-up build",
+    "develop": "../../node_modules/.bin/pack-up watch",
     "eslint": "../../node_modules/.bin/eslint --max-warnings=0 './**/*.{js,jsx,ts,tsx}'",
     "eslint:fix": "../../node_modules/.bin/eslint --fix './**/*.{js,jsx,ts,tsx}'"
   },
   "peerDependencies": {
-    "@strapi/strapi": "^4",
-    "react": "^17 || ^18"
+    "react": "^17.0.0 || ^18.0.0",
+    "react-dom": "^17.0.0 || ^18.0.0",
+    "react-router-dom": "^5.2.0",
+    "styled-components": "^5.2.1"
+  },
+  "devDependencies": {
+    "@types/koa": "^2.15.0",
+    "@types/react-router-dom": "^5.3.3",
+    "@types/styled-components": "^5.1.34",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-router-dom": "^5.2.0",
+    "styled-components": "5.3.3"
   },
   "dependencies": {
     "@pluginpal/webtools-helper-plugin": "1.0.0-beta.3",
-    "react-copy-to-clipboard": "^5.1.0"
+    "@strapi/helper-plugin": "4.20.3",
+    "@strapi/strapi": "4.20.3",
+    "react-copy-to-clipboard": "^5.1.0",
+    "react-query": "3.39.3"
   },
   "author": {
     "name": "TODO"

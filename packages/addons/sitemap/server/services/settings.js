@@ -1,6 +1,6 @@
 'use strict';
 
-const { Map } = require('immutable');
+import { Map } from 'immutable';
 
 /**
  * Sitemap.js service
@@ -35,7 +35,7 @@ const createDefaultConfig = async () => {
     .get({ key: 'settings' });
 };
 
-module.exports = () => ({
+export default () => ({
   getConfig: async () => {
     let config = await strapi
       .store({

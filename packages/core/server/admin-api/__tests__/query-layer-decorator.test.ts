@@ -1,4 +1,5 @@
 import request from 'supertest';
+
 // @ts-ignore
 // eslint-disable-next-line import/no-relative-packages
 import { setupStrapi, stopStrapi } from '../../../../../playground/tests/helpers';

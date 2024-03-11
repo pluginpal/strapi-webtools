@@ -1,12 +1,12 @@
 'use strict';
 
-const query = require('./query');
-const core = require('./core');
-const settings = require('./settings');
-const pattern = require('./pattern');
-const lifecycle = require('./lifecycle');
+import query from './query';
+import core from './core';
+import settings from './settings';
+import pattern from './pattern';
+import lifecycle from './lifecycle';
 
-module.exports = {
+export default {
   query,
   core,
   settings,
