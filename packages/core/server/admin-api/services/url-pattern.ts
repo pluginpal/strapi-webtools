@@ -122,6 +122,7 @@ export default () => ({
           && fieldName !== 'updatedBy'
         ) {
           // @ts-ignore
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
           const relation = strapi.contentTypes[field.target];
 
           if (

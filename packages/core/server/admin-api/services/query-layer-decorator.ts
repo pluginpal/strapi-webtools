@@ -83,6 +83,7 @@ const decorator = (service: IDecoratedService) => ({
       // @ts-ignore
     } else if (entity.url_alias) {
       // @ts-ignore
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       urlAliasEntity = entity.url_alias;
     }
 
