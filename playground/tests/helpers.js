@@ -46,9 +46,10 @@ async function setupStrapi() {
       appDir: './playground',
       distDir: './playground/dist'
     }).load();
-    await waitForServer();
 
     instance = strapi; // strapi is global now
+
+    await instance.server.mount();
   }
   return instance;
 }

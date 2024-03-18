@@ -6,10 +6,13 @@ import { Schema } from '@strapi/strapi';
 import { IStrapi } from '../types/strapi';
 import { isContentTypeEnabled } from '../util/enabledContentTypes';
 import migratePluginOptionsRename from './migrations/plugin-options-rename';
+import { disableContentType } from './hooks/disable';
 
 export default (strapi: IStrapi) => {
   // Migrate the pluginOptions to reflect the plugin rename.
   migratePluginOptionsRename(strapi);
+
+  strapi.hook('strapi::content-types.beforeSync').register(disableContentType);
 
   // Register the url_alias field.
   Object.values(strapi.contentTypes).forEach((contentType: Schema.ContentType) => {
