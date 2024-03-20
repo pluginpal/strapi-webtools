@@ -43,6 +43,27 @@ export default () => ({
   },
 
   /**
+   * FindByUid.
+   *
+   * @param {string} uid the uid.
+   * @returns {void}
+   */
+  findByUid: async (uid: string) => {
+    const patterns = await getPluginService('urlPatternService').findMany({
+      filters: {
+        contenttype: uid,
+      },
+      limit: 1,
+    });
+
+    if (!patterns[0]) {
+      return null;
+    }
+
+    return patterns[0];
+  },
+
+  /**
    * FindMany.
    *
    * @param {object} params the params.
@@ -100,21 +121,41 @@ export default () => ({
           && fieldName !== 'createdBy'
           && fieldName !== 'updatedBy'
         ) {
-          // TODO: Relation fields.
-          // const relation = strapi.contentTypes[field.target];
+          // @ts-ignore
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+          const relation = strapi.contentTypes[field.target];
 
-          // if (
-          //   allowedFields.includes('id')
-          //   && !fields.includes(`${fieldName}.id`)
-          // ) {
-          //   fields.push(`${fieldName}.id`);
-          // }
+          if (
+            allowedFields.includes('id')
+            && !fields.includes(`${fieldName}.id`)
+          ) {
+            fields.push(`${fieldName}.id`);
+          }
 
-          // Object.entries(relation.attributes).map(([subFieldName, subField]) => {
-          //   if (subField.type === fieldType || subFieldName === fieldType) {
-          //     fields.push(`${fieldName}.${subFieldName}`);
-          //   }
-          // });
+          Object.entries(relation.attributes).forEach(([subFieldName, subField]) => {
+            if (subField.type === fieldType || subFieldName === fieldType) {
+              fields.push(`${fieldName}.${subFieldName}`);
+            }
+          });
+        } else if (
+          field.type === 'component'
+          && field.component
+          && field.repeatable !== true // TODO: implement repeatable components.
+        ) {
+          const relation = strapi.components[field.component];
+
+          if (
+            allowedFields.includes('id')
+            && !fields.includes(`${fieldName}.id`)
+          ) {
+            fields.push(`${fieldName}.id`);
+          }
+
+          Object.entries(relation.attributes).forEach(([subFieldName, subField]) => {
+            if (subField.type === fieldType || subFieldName === fieldType) {
+              fields.push(`${fieldName}.${subFieldName}`);
+            }
+          });
         }
       });
     });
@@ -147,18 +188,35 @@ export default () => ({
   },
 
   /**
+   * Get all relations from a pattern.
+   *
+   * @param {string} pattern - The pattern.
+   *
+   * @returns {array} The relations.
+   */
+  getRelationsFromPattern: (pattern: string) => {
+    let fields = getPluginService('urlPatternService').getFieldsFromPattern(pattern);
+    fields = fields.filter((field) => field.split('.').length > 1); // Filter on fields containing a dot (.)
+    fields = fields.map((field) => field.split('.')[0]); // Extract the first part of the fields
+    return fields;
+  },
+
+
+  /**
    * Resolve a pattern string from pattern to path for a single entity.
    *
    * @param {string} uid - The UID.
    * @param {object} entity - The entity.
+   * @param {string} urlPattern - The URL pattern.
    *
    * @returns {string} The path.
    */
 
-  resolvePattern: async (
+  resolvePattern: (
     uid: Common.UID.ContentType,
     entity: { [key: string]: string | number },
-  ): Promise<string> => {
+    urlPattern?: string,
+  ) => {
     const resolve = (pattern: string) => {
       let resolvedPattern: string = pattern;
       const fields = getPluginService('urlPatternService').getFieldsFromPattern(pattern);
@@ -166,7 +224,6 @@ export default () => ({
       fields.forEach((field) => {
         const relationalField = field.split('.').length > 1 ? field.split('.') : null;
 
-        // TODO: Relation fields.
         if (field === 'pluralName') {
           const fieldValue = strapi.contentTypes[uid].info.pluralName;
 
@@ -191,18 +248,11 @@ export default () => ({
       return resolvedPattern;
     };
 
-    const patterns = await getPluginService('urlPatternService').findMany({
-      filters: {
-        contenttype: uid,
-      },
-      limit: 1,
-    });
-
-    if (!patterns[0]) {
+    if (!urlPattern) {
       return resolve(strapi.config.get('plugin.webtools.default_pattern'));
     }
 
-    const path = resolve(patterns[0].pattern);
+    const path = resolve(urlPattern);
     return path;
   },
 
