@@ -1,5 +1,15 @@
 # core
 
+## 1.0.0-beta.8
+
+### Minor Changes
+
+- [#131](https://github.com/pluginpal/strapi-webtools/pull/131) [`1f01462`](https://github.com/pluginpal/strapi-webtools/commit/1f01462d4bcabd65772eb9733d76746834d9e508) Thanks [@boazpoolman](https://github.com/boazpoolman)! - Relational URL patterns
+
+### Patch Changes
+
+- [#126](https://github.com/pluginpal/strapi-webtools/pull/126) [`905ff2e`](https://github.com/pluginpal/strapi-webtools/commit/905ff2ea322aa1a21b836e76fb6f095de660c430) Thanks [@Alexnortung](https://github.com/Alexnortung)! - Url paths created for a collection type, that is then disabled, will now be deleted
+
 ## 1.0.0-beta.7
 
 ### Patch Changes
