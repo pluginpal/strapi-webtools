@@ -1,5 +1,12 @@
 # addon-redirects
 
+## 1.0.0-beta.4
+
+### Patch Changes
+
+- Updated dependencies [[`9b81da2`](https://github.com/pluginpal/strapi-webtools/commit/9b81da214ec8a1aa3f42d2d4eadaa30688ff4fe7), [`cb59eb7`](https://github.com/pluginpal/strapi-webtools/commit/cb59eb78ef7d45d7c3c07ec7350747b6bc611b27)]:
+  - @pluginpal/webtools-core@1.0.0-beta.9
+
 ## 1.0.0-beta.3
 
 ### Patch Changes
