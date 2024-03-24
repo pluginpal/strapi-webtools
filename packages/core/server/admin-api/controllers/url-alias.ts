@@ -17,7 +17,7 @@ export default {
     ctx.body = pathEntity;
   },
   findMany: async (ctx: Context) => {
-    const pathEntities = await getPluginService('urlAliasService').findMany(true);
+    const pathEntities = await getPluginService('urlAliasService').findMany(true, ctx.query);
     ctx.body = pathEntities;
   },
   delete: async (ctx: Context & { params: { id: number } }) => {
