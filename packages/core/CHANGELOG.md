@@ -1,5 +1,15 @@
 # core
 
+## 1.0.0-beta.9
+
+### Minor Changes
+
+- [#133](https://github.com/pluginpal/strapi-webtools/pull/133) [`cb59eb7`](https://github.com/pluginpal/strapi-webtools/commit/cb59eb78ef7d45d7c3c07ec7350747b6bc611b27) Thanks [@TMSchipper](https://github.com/TMSchipper)! - The "Populate Creator Fields" plugin enhances the functionality of your Strapi project by allowing you to populate
+
+### Patch Changes
+
+- [#133](https://github.com/pluginpal/strapi-webtools/pull/133) [`9b81da2`](https://github.com/pluginpal/strapi-webtools/commit/9b81da214ec8a1aa3f42d2d4eadaa30688ff4fe7) Thanks [@TMSchipper](https://github.com/TMSchipper)! - Fix an error that occurs when there is no pattern and the default should've been used
+
 ## 1.0.0-beta.8
 
 ### Minor Changes
