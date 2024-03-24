@@ -105,20 +105,28 @@ See below a screenshot of the URL pattern creation form in Strapi.
 
 ## 🎨 Populate Creator fields
 
-The "Populate Creator Fields" plugin enhances the functionality of your Strapi project by allowing you to populate
-creator fields in your content types. This feature enables you to specify creator fields when creating or updating
-content items, providing valuable context about the authors or creators of the content.
+The plugin allows you to populate the creator fields in the `/router` endpoint.
+To enable this feature; go to your content-types schema.json and enable the `populateCreatorFields`.
+
+```
+{
+  // ...
+  "options": {
+    "populateCreatorFields": true,
+  },
+  // ...
+}
+```
+
+Then you'll have to include the fields manually in the populate parameter
+
+```js
+await fetch(`${API_URL}/api/webtools/router?path=/blog&populate=updatedBy`);
+// GET /api/webtools/router?path=/blog&populate=updatedBy
+```
 
 The official Strapi documentation provides more information on how to use this feature:
 https://docs.strapi.io/dev-docs/api/rest/guides/populate-creator-fields
-
-Go to your content-types schema.json and enable ``` "populateCreatorFields": true, ```
-
-Usage:
-```js
-await fetch(`${API_URL}/api/webtools/router?path=/blog&populate=updatedBy`);
-// GET /api/webtools/router?path=/about-page
-```
 
 ## 📺  Frontend router
 
