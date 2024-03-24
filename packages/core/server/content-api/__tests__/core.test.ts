@@ -111,5 +111,25 @@ describe('Core controller - Router', () => {
     expect(page).toHaveProperty("data.attributes.title");
   });
 
+  it('Should allow creator field population if the populateCreatorFields is true', async () => {
+    const page = await request(strapi.server.httpServer)
+      .get('/api/webtools/router?path=/page/published-test-page')
+      .expect(200)
+      .then((data) => data.body);
+
+    expect(page).toHaveProperty("data.attributes.createdBy");
+    expect(page).toHaveProperty("data.attributes.updatedBy");
+  });
+
+  it('Should not allow creator field population if the populateCreatorFields is false', async () => {
+    const page = await request(strapi.server.httpServer)
+      .get('/api/webtools/router?path=/category/published-category')
+      .expect(200)
+      .then((data) => data.body);
+
+    expect(page).not.toHaveProperty("data.attributes.createdBy");
+    expect(page).not.toHaveProperty("data.attributes.updatedBy");
+  });
+
   // it('Should allow query parameters for localization', async () => {});
 });

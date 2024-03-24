@@ -46,7 +46,6 @@ export default () => ({
    * FindByUid.
    *
    * @param {string} uid the uid.
-   * @returns {void}
    */
   findByUid: async (uid: string) => {
     const patterns = await getPluginService('urlPatternService').findMany({
@@ -60,7 +59,7 @@ export default () => ({
       return null;
     }
 
-    return patterns[0];
+    return patterns[0].pattern;
   },
 
   /**
