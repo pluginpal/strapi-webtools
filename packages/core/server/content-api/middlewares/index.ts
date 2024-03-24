@@ -6,8 +6,8 @@
  * exported by the middlewares index.
  */
 
-import defaultPopulate from './defaultPopulate';
+import creatorFieldsPopulation from './creatorFieldsPopulation';
 
 export default {
-  defaultPopulate,
+  creatorFieldsPopulation,
 };

@@ -14,7 +14,7 @@ export default (strapi: IStrapi) => {
   migratePluginOptionsRename(strapi);
 
   strapi.hook('strapi::content-types.beforeSync').register(disableContentType);
-  strapi.server.use(middlewares.defaultPopulate);
+  strapi.server.use(middlewares.creatorFieldsPopulation);
 
   // Register the url_alias field.
   Object.values(strapi.contentTypes).forEach((contentType: Schema.ContentType) => {
