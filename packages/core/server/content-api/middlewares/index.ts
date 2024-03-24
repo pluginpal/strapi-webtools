@@ -1,4 +1,4 @@
-'use strict';
+
 
 /**
  * The middleware function previously created
@@ -9,5 +9,5 @@
 import defaultPopulate from './defaultPopulate';
 
 export default {
-  defaultPopulate
+  defaultPopulate,
 };

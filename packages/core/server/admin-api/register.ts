@@ -7,7 +7,7 @@ import { IStrapi } from '../types/strapi';
 import { isContentTypeEnabled } from '../util/enabledContentTypes';
 import migratePluginOptionsRename from './migrations/plugin-options-rename';
 import { disableContentType } from './hooks/disable';
-import middlewares from '../../server/content-api/middlewares';
+import middlewares from '../content-api/middlewares';
 
 export default (strapi: IStrapi) => {
   // Migrate the pluginOptions to reflect the plugin rename.
