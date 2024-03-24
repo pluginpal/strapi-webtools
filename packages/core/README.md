@@ -103,6 +103,23 @@ See below a screenshot of the URL pattern creation form in Strapi.
 
 <img src="https://raw.githubusercontent.com/pluginpal/strapi-webtools/master/.github/url-pattern.png" alt="URL pattern" />
 
+## 🎨 Populate Creator fields
+
+The "Populate Creator Fields" plugin enhances the functionality of your Strapi project by allowing you to populate
+creator fields in your content types. This feature enables you to specify creator fields when creating or updating
+content items, providing valuable context about the authors or creators of the content.
+
+The official Strapi documentation provides more information on how to use this feature:
+https://docs.strapi.io/dev-docs/api/rest/guides/populate-creator-fields
+
+Go to your content-types schema.json and enable ``` "populateCreatorFields": true, ```
+
+Usage:
+```js
+await fetch(`${API_URL}/api/webtools/router?path=/blog&populate=updatedBy`);
+// GET /api/webtools/router?path=/about-page
+```
+
 ## 📺  Frontend router
 
 To make it all work you'll have to make use of the frontend router to setup dynamic routing based on the URL aliases in Strapi.
