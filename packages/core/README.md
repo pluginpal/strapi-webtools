@@ -118,13 +118,6 @@ To enable this feature; go to your content-types schema.json and enable the `pop
 }
 ```
 
-Then you'll have to include the fields manually in the populate parameter
-
-```js
-await fetch(`${API_URL}/api/webtools/router?path=/blog&populate=updatedBy`);
-// GET /api/webtools/router?path=/blog&populate=updatedBy
-```
-
 The official Strapi documentation provides more information on how to use this feature:
 https://docs.strapi.io/dev-docs/api/rest/guides/populate-creator-fields
 
