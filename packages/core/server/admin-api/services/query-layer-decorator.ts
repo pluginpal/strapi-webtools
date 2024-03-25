@@ -72,10 +72,19 @@ const decorator = (service: IDecoratedService) => ({
 
     // Fetch the URL pattern for this content type.
     const urlPattern = await getPluginService('urlPatternService').findByUid(uid);
+    const relations = getPluginService('urlPatternService').getRelationsFromPattern(urlPattern);
 
     // Manually fetch the entity that's being updated.
     // We do this becuase not all it's data is present in opts.data.
-    const entity = await service.update.call(this, uid, entityId, opts);
+    const entity = await service.update.call(this, uid, entityId, {
+      ...opts,
+      populate: {
+        ...relations.reduce((obj, key) => ({ ...obj, [key]: {} }), {}),
+        url_alias: {
+          fields: ['id', 'generated'],
+        },
+      },
+    });
 
     // If a URL alias is allready present, fetch it.
     if (opts.data.url_alias) {
