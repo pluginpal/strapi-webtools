@@ -1,5 +1,11 @@
 # core
 
+## 1.0.0-beta.10
+
+### Patch Changes
+
+- [`a48cc8c`](https://github.com/pluginpal/strapi-webtools/commit/a48cc8cc2fb4a02e74418c0ad326c44ad5c97a65) Thanks [@boazpoolman](https://github.com/boazpoolman)! - Fix an issue with the update decorator service
+
 ## 1.0.0-beta.9
 
 ### Minor Changes
