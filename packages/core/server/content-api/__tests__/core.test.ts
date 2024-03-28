@@ -113,7 +113,7 @@ describe('Core controller - Router', () => {
 
   it('Should allow creator field population if the populateCreatorFields is true', async () => {
     const page = await request(strapi.server.httpServer)
-      .get('/api/webtools/router?path=/page/published-test-page')
+      .get('/api/webtools/router?path=/page/published-test-page&populate=createdBy,updatedBy')
       .expect(200)
       .then((data) => data.body);
 
