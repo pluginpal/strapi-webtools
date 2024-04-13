@@ -1,6 +1,6 @@
 {
   "name": "@pluginpal/webtools-addon-sitemap",
-  "version": "1.0.0-beta.2",
+  "version": "1.0.0-beta.5",
   "private": true,
   "description": "This is the description of the plugin.",
   "strapi": {
@@ -42,7 +42,7 @@
     "eslint:fix": "../../../node_modules/.bin/eslint --fix './**/*.{js,jsx,ts,tsx}'"
   },
   "peerDependencies": {
-    "@pluginpal/webtools-core": "1.0.0-beta.7",
+    "@pluginpal/webtools-core": "1.0.0-beta.10",
     "react": "^17.0.0 || ^18.0.0",
     "react-dom": "^17.0.0 || ^18.0.0",
     "react-router-dom": "^5.2.0",

@@ -1,6 +1,6 @@
 {
   "name": "@pluginpal/webtools-core",
-  "version": "1.0.0-beta.7",
+  "version": "1.0.0-beta.10",
   "description": "This is the description of the plugin.",
   "strapi": {
     "name": "webtools",
@@ -62,9 +62,21 @@
     "react-query": "3.39.3"
   },
   "author": {
-    "name": "TODO"
+    "name": "Boaz Poolman",
+    "email": "boaz@pluginpal.io",
+    "url": "https://github.com/boazpoolman"
   },
-  "maintainers": [],
+  "maintainers": [
+    {
+      "name": "Boaz Poolman",
+      "email": "boaz@pluginpal.io",
+      "url": "https://github.com/boazpoolman"
+    }
+  ],
+  "bugs": {
+    "url": "https://github.com/pluginpal/strapi-webtools/issues"
+  },
+  "homepage": "https://www.pluginpal.io/plugin/webtools",
   "engines": {
     "node": ">=18.x.x <=20.x.x",
     "npm": ">=6.0.0"

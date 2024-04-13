@@ -1,5 +1,31 @@
 # core
 
+## 1.0.0-beta.10
+
+### Patch Changes
+
+- [`a48cc8c`](https://github.com/pluginpal/strapi-webtools/commit/a48cc8cc2fb4a02e74418c0ad326c44ad5c97a65) Thanks [@boazpoolman](https://github.com/boazpoolman)! - Fix an issue with the update decorator service
+
+## 1.0.0-beta.9
+
+### Minor Changes
+
+- [#133](https://github.com/pluginpal/strapi-webtools/pull/133) [`cb59eb7`](https://github.com/pluginpal/strapi-webtools/commit/cb59eb78ef7d45d7c3c07ec7350747b6bc611b27) Thanks [@TMSchipper](https://github.com/TMSchipper)! - The "Populate Creator Fields" plugin enhances the functionality of your Strapi project by allowing you to populate
+
+### Patch Changes
+
+- [#133](https://github.com/pluginpal/strapi-webtools/pull/133) [`9b81da2`](https://github.com/pluginpal/strapi-webtools/commit/9b81da214ec8a1aa3f42d2d4eadaa30688ff4fe7) Thanks [@TMSchipper](https://github.com/TMSchipper)! - Fix an error that occurs when there is no pattern and the default should've been used
+
+## 1.0.0-beta.8
+
+### Minor Changes
+
+- [#131](https://github.com/pluginpal/strapi-webtools/pull/131) [`1f01462`](https://github.com/pluginpal/strapi-webtools/commit/1f01462d4bcabd65772eb9733d76746834d9e508) Thanks [@boazpoolman](https://github.com/boazpoolman)! - Relational URL patterns
+
+### Patch Changes
+
+- [#126](https://github.com/pluginpal/strapi-webtools/pull/126) [`905ff2e`](https://github.com/pluginpal/strapi-webtools/commit/905ff2ea322aa1a21b836e76fb6f095de660c430) Thanks [@Alexnortung](https://github.com/Alexnortung)! - Url paths created for a collection type, that is then disabled, will now be deleted
+
 ## 1.0.0-beta.7
 
 ### Patch Changes

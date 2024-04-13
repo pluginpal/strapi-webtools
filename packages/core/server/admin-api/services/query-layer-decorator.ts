@@ -17,6 +17,9 @@ const decorator = (service: IDecoratedService) => ({
       return service.create.call(this, uid, opts);
     }
 
+    // Fetch the URL pattern for this content type.
+    const urlPattern = await getPluginService('urlPatternService').findByUid(uid);
+
     // If a URL alias was created, fetch it.
     if (opts.data.url_alias) {
       urlAliasEntity = await getPluginService('urlAliasService').findOne(opts.data.url_alias);
@@ -34,7 +37,7 @@ const decorator = (service: IDecoratedService) => ({
     // the id, can we create the URL alias entity and can we update
     // the previously created entity.
     const newEntity = await service.create.call(this, uid, { ...opts, data: opts.data });
-    const generatedPath = await getPluginService('urlPatternService').resolvePattern(uid, { ...newEntity, ...opts.data });
+    const generatedPath = getPluginService('urlPatternService').resolvePattern(uid, { ...newEntity, ...opts.data }, urlPattern);
 
     // If a URL alias was created and 'generated' is set to true, update the alias.
     if (urlAliasEntity?.generated === true) {
@@ -67,10 +70,16 @@ const decorator = (service: IDecoratedService) => ({
       return service.update.call(this, uid, entityId, opts);
     }
 
+    // Fetch the URL pattern for this content type.
+    const urlPattern = await getPluginService('urlPatternService').findByUid(uid);
+    const relations = getPluginService('urlPatternService').getRelationsFromPattern(urlPattern);
+
     // Manually fetch the entity that's being updated.
     // We do this becuase not all it's data is present in opts.data.
-    const entity = await service.findOne.call(this, uid, entityId, {
+    const entity = await service.update.call(this, uid, entityId, {
+      ...opts,
       populate: {
+        ...relations.reduce((obj, key) => ({ ...obj, [key]: {} }), {}),
         url_alias: {
           fields: ['id', 'generated'],
         },
@@ -80,7 +89,10 @@ const decorator = (service: IDecoratedService) => ({
     // If a URL alias is allready present, fetch it.
     if (opts.data.url_alias) {
       urlAliasEntity = await getPluginService('urlAliasService').findOne(opts.data.url_alias);
+      // @ts-ignore
     } else if (entity.url_alias) {
+      // @ts-ignore
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       urlAliasEntity = entity.url_alias;
     }
 
@@ -90,7 +102,7 @@ const decorator = (service: IDecoratedService) => ({
     }
 
     // Generate the path.
-    const generatedPath = await getPluginService('urlPatternService').resolvePattern(uid, { ...entity, ...opts.data });
+    const generatedPath = getPluginService('urlPatternService').resolvePattern(uid, entity, urlPattern);
 
     // If a URL alias is present and 'generated' is set to true, update the alias.
     if (urlAliasEntity?.generated === true) {
