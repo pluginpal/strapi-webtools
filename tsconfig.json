@@ -30,6 +30,10 @@
     // "incremental": true,
     // "skipLibCheck": true,
   },
+  "include": [
+    "**/*.ts",
+    "**/*.tsx"
+  ],
   "exclude": [
     "**/node_modules/**/*",
     "**/build/**/*",
