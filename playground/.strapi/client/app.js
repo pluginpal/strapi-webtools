@@ -10,7 +10,11 @@ import webtoolsAddonRedirects from "../../src/plugins/webtools-addon-redirects/s
 import webtoolsAddonMenus from "../../src/plugins/webtools-addon-menus/strapi-admin";
 import { renderAdmin } from "@strapi/strapi/admin";
 
+import customisations from "../../src/admin/app.js";
+
 renderAdmin(document.getElementById("strapi"), {
+  customisations,
+
   plugins: {
     i18n: i18N,
     "users-permissions": usersPermissions,
