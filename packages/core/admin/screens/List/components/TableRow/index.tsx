@@ -10,6 +10,7 @@ import {
 import {
   request,
 } from '@strapi/helper-plugin';
+import { Attribute, Entity } from '@strapi/strapi';
 import { useIntl } from 'react-intl';
 import { Trash, ExternalLink, Pencil } from '@strapi/icons';
 import { useHistory } from 'react-router-dom';
@@ -17,11 +18,7 @@ import DeleteConfirmModal from '../DeleteConfirmModal';
 import { Config } from '../../../../../server/admin-api/config';
 
 type Props = {
-  row: {
-    url_path: string;
-    id: number;
-    [key: string]: any;
-  };
+  row: Attribute.GetValues<'plugin::webtools.url-alias'>;
   checked?: boolean;
   onDelete?: () => void;
   updateValue: () => any;
@@ -49,7 +46,7 @@ const TableRow: FC<Props> = ({
       .catch(() => { });
   };
 
-  const handleDelete = (id: number) => {
+  const handleDelete = (id: Entity.ID) => {
     onDelete();
 
     request(`/webtools/url-alias/delete/${id}`, { method: 'POST' })

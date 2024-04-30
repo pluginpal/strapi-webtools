@@ -1,7 +1,6 @@
 import React, { FC } from 'react';
 import { Select, Option } from '@strapi/design-system';
 import { FormikErrors } from 'formik';
-import { PatternFormValues } from '../../types/url-patterns';
 
 type ListItem = {
   uid: string,
@@ -16,7 +15,7 @@ type Props = {
   hint?: string;
   value?: string;
   error?: string | null;
-  setFieldValue: (field: string, value: any) => void;
+  setFieldValue: (field: string, value: any) => Promise<void | FormikErrors<any>>;
 };
 
 const SelectComponent: FC<Props> = ({

@@ -28,7 +28,7 @@ import Filters from '../Filters';
 import { Config } from '../../../../../server/admin-api/config';
 
 type Props = {
-  paths: Attribute.GetValues<'plugin::url-alias'>[],
+  paths: Attribute.GetValues<'plugin::webtools.url-alias'>[],
   onDelete: () => void,
   pagination: Pagination,
   contentTypes: any[],
