@@ -1,0 +1,67 @@
+{
+  "settings.title": "Webtools",
+  "settings.loading": "Inhoud geladen...",
+
+  "settings.success.create": "Het patroon is aangemaakt",
+  "settings.success.edit": "Het patroon is bijgewerkt.",
+  "settings.success.delete": "Het patroon is verwijderd.",
+
+  "settings.button.add_pattern": "Nieuw patroon toevoegen",
+  "settings.button.generate_paths": "Genereer paden",
+  "settings.button.delete": "Verwijder",
+  "settings.button.cancel": "Annuleer",
+  "settings.button.filters": "Filters",
+  "settings.button.copy_permalink": "Kopieer permalink",
+
+  "settings.form.label.label": "Label",
+  "settings.form.pattern.label": "Patroon",
+  "settings.form.pattern.description_1": "Maak een URL-aliaspatroon",
+  "settings.form.pattern.description_2": "gebruikt",
+  "settings.form.pattern.description_3": "of",
+  "settings.form.contenttype.label": "Inhoudstype",
+
+  "settings.page.list.title": "Alle URL's",
+  "settings.page.list.description": "Een lijst met alle bekende URL-aliassen.",
+  "settings.page.list.body": "Laat alle URL-aliassen zien",
+
+  "settings.page.list.delete_confirm_modal.title": "Item verwijderen",
+  "settings.page.list.delete_confirm_modal.body": "Weet je zeker dat je dit item wilt verwijderen?",
+
+  "settings.page.list.generate_paths_modal.title": "URL-aliassen genereren",
+  "settings.page.list.generate_paths_modal.types.title": "Inhoudstypen",
+  "settings.page.list.generate_paths_modal.types.body": "Selecteer de inhoudstypen waarvoor u de URL's wilt genereren.",
+  "settings.page.list.generate_paths_modal.generation_type.title": "Generatietype",
+  "settings.page.list.generate_paths_modal.generation_type.body": "Selecteer hoe u de URL's wilt genereren.",
+  "settings.page.list.generate_paths_modal.generation_type.only_without_alias": "Genereer alleen voor pagina's zonder een URL-alias",
+  "settings.page.list.generate_paths_modal.generation_type.only_generated": "Genereer alleen URL-alias opnieuw die automatisch zijn gegenereerd",
+  "settings.page.list.generate_paths_modal.generation_type.all": "Genereer alle URL-aliassen opnieuw",
+
+  "settings.page.list.filters.label": "Zoeken",
+  "settings.page.list.filters.placeholder": "Zoeken...",
+
+  "settings.page.list.table.empty": "Je hebt nog geen URL-paden.",
+
+  "settings.page.list.table.actions.delete": "Verwijder {target}",
+  "settings.page.list.table.action.goTo": "Ga naar de corresponderende entiteit van {target}",
+
+  "settings.page.patterns.title": "URL-patronen",
+  "settings.page.patterns.description": "Een lijst met alle bekende URL-aliaspatronen.",
+
+  "settings.page.patterns.table.head.label": "Label",
+  "settings.page.patterns.table.head.pattern": "Patroon",
+  "settings.page.patterns.table.head.actions": "Acties",
+
+  "settings.page.patterns.table.empty": "Je hebt nog geen patronen.",
+  "settings.page.patterns.table.action.edit": "Bewerk {target}",
+  "settings.page.patterns.table.actions.delete": "Verwijder {target}",
+
+  "settings.page.patterns.edit.title": "Patroon bewerken",
+  "settings.page.patterns.edit.subtitle": "Patroondetails",
+  "settings.page.patterns.edit.description": "Bewerk dit patroon voor het automatisch genereren van URL-alias.",
+
+  "settings.page.patterns.create.title": "Nieuw patroon toevoegen",
+  "settings.page.patterns.create.subtitle": "Patroondetails",
+  "settings.page.patterns.create.description": "Voeg een patroon toe voor het automatisch genereren van URL-aliassen.",
+
+  "notification.success.permalink_copied": "Permalink gekopieerd naar het klembord"
+}
