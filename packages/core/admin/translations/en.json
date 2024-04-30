@@ -8,6 +8,10 @@
 
   "settings.button.add_pattern": "Add new pattern",
   "settings.button.generate_paths": "Generate paths",
+  "settings.button.delete": "Delete",
+  "settings.button.cancel": "Cancel",
+  "settings.button.filters": "Filters",
+  "settings.button.copy_permalink": "Copy permalink",
 
   "settings.form.label.label": "Label",
   "settings.form.pattern.label": "Pattern",
@@ -20,7 +24,25 @@
   "settings.page.list.description": "A list of all the known URL aliases.",
   "settings.page.list.body": "List all URL aliases",
 
+  "settings.page.list.delete_confirm_modal.title": "Delete item",
+  "settings.page.list.delete_confirm_modal.body": "Are you sure you want to delete this item?",
+
+  "settings.page.list.generate_paths_modal.title": "Generate URL aliases",
+  "settings.page.list.generate_paths_modal.types.title": "Content types",
+  "settings.page.list.generate_paths_modal.types.body": "Select the content types you want to generate the URLs for.",
+  "settings.page.list.generate_paths_modal.generation_type.title": "Generation type",
+  "settings.page.list.generate_paths_modal.generation_type.body": "Select how you would like to generate the URLs.",
+  "settings.page.list.generate_paths_modal.generation_type.only_without_alias": "Generate only for pages without an URL alias",
+  "settings.page.list.generate_paths_modal.generation_type.only_generated": "Re-generate only URL alias that were auto-generated",
+  "settings.page.list.generate_paths_modal.generation_type.all": "Re-generate all URL aliases",
+
+  "settings.page.list.filters.label": "Search",
+  "settings.page.list.filters.placeholder": "Search...",
+
   "settings.page.list.table.empty": "You don't have any URL paths yet.",
+
+  "settings.page.list.table.actions.delete": "Delete {target}",
+  "settings.page.list.table.actions.goTo": "Go to corresponding entity of {target}",
 
   "settings.page.patterns.title": "URL patterns",
   "settings.page.patterns.description": "A list of all the known URL alias patterns.",
@@ -39,5 +61,7 @@
 
   "settings.page.patterns.create.title": "Add new pattern",
   "settings.page.patterns.create.subtitle": "Pattern details",
-  "settings.page.patterns.create.description": "Add a pattern for automatic URL alias generation."
+  "settings.page.patterns.create.description": "Add a pattern for automatic URL alias generation.",
+
+  "notification.success.permalink_copied": "Permalinkk copied to the clipboard"
 }

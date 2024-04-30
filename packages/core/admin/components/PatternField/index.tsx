@@ -54,13 +54,13 @@ const PatternField: FC<Props> = ({
 
   const patternHint = () => {
     const base = formatMessage({
-      id: 'settings.form.pattern.description_1',
+      id: 'webtools.settings.form.pattern.description_1',
       defaultMessage: 'Create a URL alias pattern',
     });
     let suffix = '';
     if (allowedFields?.[uid]) {
       suffix = ` ${formatMessage({
-        id: 'settings.form.pattern.description_2',
+        id: 'webtools.settings.form.pattern.description_2',
         defaultMessage: 'using',
       })} `;
       allowedFields[uid].forEach((fieldName, i) => {
@@ -70,7 +70,7 @@ const PatternField: FC<Props> = ({
           suffix = `${suffix}, [${fieldName}]`;
         } else {
           suffix = `${suffix} ${formatMessage({
-            id: 'settings.form.pattern.description_3',
+            id: 'webtools.settings.form.pattern.description_3',
             defaultMessage: 'or',
           })} [${fieldName}]`;
         }
@@ -94,7 +94,7 @@ const PatternField: FC<Props> = ({
       <div ref={patternRef}>
         <TextInput
           label={formatMessage({
-            id: 'settings.form.pattern.label',
+            id: 'webtools.settings.form.pattern.label',
             defaultMessage: 'Pattern',
           })}
           name="pattern"

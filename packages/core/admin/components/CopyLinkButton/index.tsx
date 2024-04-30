@@ -22,7 +22,7 @@ const CopyLinkButton: React.FC<Props> = ({ url }) => {
         toggleNotification({
           type: 'success',
           message: {
-            id: getTrad('notification.success.permalink-copied'),
+            id: getTrad('notification.success.permalink_copied'),
             defaultMessage: 'Permalink copied to the clipboard',
           },
         });
@@ -36,7 +36,7 @@ const CopyLinkButton: React.FC<Props> = ({ url }) => {
         to={null}
       >
         { formatMessage({
-          id: getTrad('form.button.copy-permalink'),
+          id: getTrad('settings.button.copy_permalink'),
           defaultMessage: 'Copy permalink',
         }) }
       </LinkButton>

@@ -16,7 +16,7 @@ type Props = {
   hint?: string;
   value?: string;
   error?: string | null;
-  setFieldValue: (field: string, value: any) => Promise<void | FormikErrors<PatternFormValues>>;
+  setFieldValue: (field: string, value: any) => void;
 };
 
 const SelectComponent: FC<Props> = ({

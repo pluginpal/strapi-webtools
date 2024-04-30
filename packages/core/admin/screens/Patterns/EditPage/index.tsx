@@ -207,7 +207,7 @@ const EditPatternPage = () => {
                 <Stack spacing={4}>
                   <Typography variant="delta" as="h2">
                     {formatMessage({
-                      id: 'settings.page.patterns.edit.subtitle',
+                      id: 'webtools.settings.page.patterns.edit.subtitle',
                       defaultMessage: 'Pattern details',
                     })}
                   </Typography>
@@ -219,7 +219,7 @@ const EditPatternPage = () => {
                         value={values.contenttype || ''}
                         setFieldValue={setFieldValue}
                         label={formatMessage({
-                          id: 'settings.form.contenttype.label',
+                          id: 'webtools.settings.form.contenttype.label',
                           defaultMessage: 'Content type',
                         })}
                         error={
