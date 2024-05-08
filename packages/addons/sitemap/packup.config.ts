@@ -9,7 +9,7 @@ const config: Config = defineConfig({
       runtime: 'web',
     },
     {
-      source: './server/index.ts',
+      source: './server/index.js',
       import: './dist/server/index.mjs',
       require: './dist/server/index.js',
       runtime: 'node',
