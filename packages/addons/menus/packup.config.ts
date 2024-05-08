@@ -4,18 +4,18 @@ const config: Config = defineConfig({
   bundles: [
     {
       source: './admin/index.ts',
-      import: './bundle/admin/index.mjs',
-      require: './bundle/admin/index.js',
+      import: './dist/admin/index.mjs',
+      require: './dist/admin/index.js',
       runtime: 'web',
     },
     {
       source: './server/index.ts',
-      import: './bundle/server/index.mjs',
-      require: './bundle/server/index.js',
+      import: './dist/server/index.mjs',
+      require: './dist/server/index.js',
       runtime: 'node',
     },
   ],
-  dist: './bundle',
+  dist: './dist',
   /**
    * Because we're exporting a server & client package
    * which have different runtimes we want to ignore
