@@ -9,7 +9,7 @@
   "settings.success.url_alias.delete": "The URL alias has been deleted.",
 
   "settings.button.add_pattern": "Add new pattern",
-  "settings.button.generate_paths": "Generate paths",
+  "settings.button.generate_paths": "Bulk generate",
   "settings.button.delete": "Delete",
   "settings.button.cancel": "Cancel",
   "settings.button.filters": "Filters",

@@ -7,7 +7,7 @@
   "settings.success.delete": "Het patroon is verwijderd.",
 
   "settings.button.add_pattern": "Nieuw patroon toevoegen",
-  "settings.button.generate_paths": "Genereer paden",
+  "settings.button.generate_paths": "Bulk genereren",
   "settings.button.delete": "Verwijder",
   "settings.button.cancel": "Annuleer",
   "settings.button.filters": "Filters",

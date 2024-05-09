@@ -4,7 +4,12 @@ import { useIntl } from 'react-intl';
 import { useHistory } from 'react-router-dom';
 
 import { ContentLayout, HeaderLayout, Button } from '@strapi/design-system';
-import { CheckPagePermissions, request, useFetchClient, useNotification } from '@strapi/helper-plugin';
+import {
+  CheckPagePermissions,
+  request,
+  useFetchClient,
+  useNotification,
+} from '@strapi/helper-plugin';
 
 import pluginPermissions from '../../permissions';
 import Table from './components/Table';
@@ -13,6 +18,7 @@ import { Config } from '../../../server/admin-api/config';
 import GeneratePathsModal from './components/GeneratePathsModal';
 import { EnabledContentType, EnabledContentTypes } from '../../types/enabled-contenttypes';
 import { GenerationType } from '../../../server/types';
+import Loader from '../../components/Loader';
 
 export type Pagination = {
   page: number;
@@ -23,6 +29,7 @@ export type Pagination = {
 
 const List = () => {
   const [queryCount, setQueryCount] = useState<number>(0);
+  const [loading, setLoading] = useState<boolean>(false);
   const [paths, setPaths] = useState<Attribute.GetValues<'plugin::webtools.url-alias'>[]>(null);
   const [config, setConfig] = useState<Config>(null);
   const [pagination, setPagination] = useState<Pagination>(null);
@@ -39,11 +46,10 @@ const List = () => {
       .then((res: { data: EnabledContentTypes }) => {
         setContentTypes(res.data);
       })
-      .catch((error) => {
-        throw new Error(error);
+      .catch(() => {
         toggleNotification({ type: 'warning', message: { id: 'notification.error' } });
       });
-  }, [get]);
+  }, [get, toggleNotification]);
 
   useEffect(() => {
     request(`/webtools/url-alias/findMany${history.location.search}`, { method: 'GET' })
@@ -51,47 +57,45 @@ const List = () => {
         setPaths(res.results);
         setPagination(res.pagination);
       })
-      .catch((error) => {
-        throw new Error(error);
+      .catch(() => {
         toggleNotification({ type: 'warning', message: { id: 'notification.error' } });
       });
-  }, [history.location.search, queryCount]);
+  }, [history.location.search, queryCount, toggleNotification]);
 
   useEffect(() => {
     request('/webtools/info/config', { method: 'GET' })
       .then((res: Config) => {
         setConfig(res);
       })
-      .catch((error) => {
-        throw new Error(error);
+      .catch(() => {
         toggleNotification({ type: 'warning', message: { id: 'notification.error' } });
       });
-  }, []);
+  }, [toggleNotification]);
 
   const handleGeneratePaths = async (types: EnabledContentType['uid'][], generationType: GenerationType) => {
+    setLoading(true);
     await post('/webtools/url-alias/generate', { types, generationType })
-      .then((response) => {
+      .then((response: { data: { message: string } }) => {
         toggleNotification({ type: 'success', message: { id: 'webtools.success.url-alias.generate', defaultMessage: response.data.message } });
+        setLoading(false);
       })
-      .catch((error) => {
-        throw new Error(error);
+      .catch(() => {
         toggleNotification({ type: 'warning', message: { id: 'notification.error' } });
+        setLoading(false);
       });
 
-    setQueryCount(queryCount + 1)
+    setQueryCount(queryCount + 1);
   };
 
-  // TODO: fix loading state
   if (!paths || !config || !pagination) {
     return (
-      <Center>
-        Loading
-      </Center>
+      <Loader />
     );
   }
 
   return (
     <CheckPagePermissions permissions={pluginPermissions['settings.patterns']}>
+      {loading && <Loader />}
       <HeaderLayout
         title={formatMessage({ id: 'webtools.settings.page.list.title', defaultMessage: 'URLs' })}
         subtitle={formatMessage({ id: 'webtools.settings.page.list.description', defaultMessage: 'A list of all the known URL aliases.' })}
@@ -117,6 +121,7 @@ const List = () => {
       </ContentLayout>
       <GeneratePathsModal
         isOpen={openModal}
+        // eslint-disable-next-line @typescript-eslint/no-misused-promises
         onSubmit={handleGeneratePaths}
         onClose={() => setOpenModal(false)}
         contentTypes={contentTypes}

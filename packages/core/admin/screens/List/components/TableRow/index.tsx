@@ -50,12 +50,11 @@ const TableRow: FC<Props> = ({
 
   const handleDelete = (id: Entity.ID) => {
     request(`/webtools/url-alias/delete/${id}`, { method: 'POST' })
-      .then((res) => {
+      .then(() => {
         onDelete();
         toggleNotification({ type: 'success', message: { id: 'webtools.settings.success.url_alias.delete' } });
       })
-      .catch((error) => {
-        throw new Error(error);
+      .catch(() => {
         onDelete();
         toggleNotification({ type: 'warning', message: { id: 'notification.error' } });
       });
