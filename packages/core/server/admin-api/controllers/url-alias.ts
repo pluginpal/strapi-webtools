@@ -62,7 +62,7 @@ export default {
       link: `/content-manager/${contentTypeUrlPartial}/${contentType}/${entity.id}`,
     };
   },
-  generate: (
+  generate: async (
     ctx: KoaContext<GenerateParams>,
   ) => {
     const { types, generationType } = ctx.request.body;
@@ -79,7 +79,7 @@ export default {
     }
 
     // Map over all the types sent in the request.
-    types.map(async (type) => {
+    await Promise.all(types.map(async (type) => {
       if (generationType === 'all') {
         // Delete all the URL aliases for the given type.
         await getPluginService('url-alias').deleteMany({
@@ -113,7 +113,7 @@ export default {
       });
 
       // For all those entities we will create a URL alias and connect it to the entity.
-      entities.map(async (entity) => {
+      await Promise.all(entities.map(async (entity) => {
         const generatedPath = getPluginService('urlPatternService').resolvePattern(type, entity, urlPattern);
         const newUrlAlias = await getPluginService('urlAliasService').create({
           url_path: generatedPath,
@@ -129,8 +129,8 @@ export default {
         });
 
         generatedCount += 1;
-      });
-    });
+      }));
+    }));
 
     // Return the amount of generated URL aliases.
     ctx.body = {
