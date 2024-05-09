@@ -15,7 +15,7 @@
     "playground:install": "cd playground && yarn install",
     "playground:build": "cd playground && yarn build",
     "playground:start": "cd playground && yarn start",
-    "playground:develop": "cd playground && yarn develop",
+    "playground:develop": "cd playground && yarn develop --watch-admin --bundler=vite",
     "test:unit": "ENV_PATH=./playground/.env jest --verbose --runInBand --detectOpenHandles --forceExit",
     "test:integration": "ENV_PATH=./playground/.env jest --verbose --runInBand --detectOpenHandles --forceExit --testMatch '**/healthcheck.test.js'"
   },
