@@ -11,7 +11,7 @@
     "eslint:fix": {
       "outputs": []
     },
-    "develop": {
+    "watch:link": {
       "cache": false
     }
   }

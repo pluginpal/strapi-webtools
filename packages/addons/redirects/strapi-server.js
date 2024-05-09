@@ -1,3 +1,3 @@
 'use strict';
 
-module.exports = require('./bundle/server');
+module.exports = require('./dist/server');

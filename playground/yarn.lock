@@ -1355,6 +1355,12 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@pluginpal/webtools-core@link:.yalc/@pluginpal/webtools-core::locator=playground%40workspace%3A.":
+  version: 0.0.0-use.local
+  resolution: "@pluginpal/webtools-core@link:.yalc/@pluginpal/webtools-core::locator=playground%40workspace%3A."
+  languageName: node
+  linkType: soft
+
 "@pmmmwh/react-refresh-webpack-plugin@npm:0.5.11":
   version: 0.5.11
   resolution: "@pmmmwh/react-refresh-webpack-plugin@npm:0.5.11"
@@ -10541,6 +10547,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "playground@workspace:."
   dependencies:
+    "@pluginpal/webtools-core": "link:.yalc/@pluginpal/webtools-core"
     "@strapi/plugin-i18n": "npm:^4.19.0"
     "@strapi/plugin-users-permissions": "npm:^4.19.0"
     "@strapi/strapi": "npm:^4.19.0"
