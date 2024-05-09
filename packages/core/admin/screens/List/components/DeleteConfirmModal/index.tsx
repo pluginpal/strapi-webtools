@@ -59,8 +59,8 @@ const DeleteConfirmModal = (props: Props) => {
             variant="tertiary"
           >
             {formatMessage({
-              id: 'webtools.settings.button.delete',
-              defaultMessage: 'Delete',
+              id: 'webtools.settings.button.cancel',
+              defaultMessage: 'Cancel',
             })}
           </Button>
         )}
@@ -73,8 +73,8 @@ const DeleteConfirmModal = (props: Props) => {
             }}
           >
             {formatMessage({
-              id: 'webtools.settings.button.cancel',
-              defaultMessage: 'Cancel',
+              id: 'webtools.settings.button.delete',
+              defaultMessage: 'Delete',
             })}
           </Button>
         )}
