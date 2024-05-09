@@ -61,10 +61,12 @@ const List = () => {
       });
   }, []);
 
-  const handleGeneratePaths = (types: EnabledContentType['uid'][], generationType: GenerationType) => {
-    post('/webtools/url-alias/generate', { types, generationType })
+  const handleGeneratePaths = async (types: EnabledContentType['uid'][], generationType: GenerationType) => {
+    await post('/webtools/url-alias/generate', { types, generationType })
       .then(() => {})
       .catch(() => {});
+
+    setQueryCount(queryCount + 1)
   };
 
   // TODO: fix loading state
