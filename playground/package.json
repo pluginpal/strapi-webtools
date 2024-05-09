@@ -10,6 +10,7 @@
     "strapi": "strapi"
   },
   "dependencies": {
+    "@pluginpal/webtools-core": "link:.yalc/@pluginpal/webtools-core",
     "@strapi/plugin-i18n": "^4.19.0",
     "@strapi/plugin-users-permissions": "^4.19.0",
     "@strapi/strapi": "^4.19.0",
