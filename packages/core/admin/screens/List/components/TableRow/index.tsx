@@ -9,6 +9,7 @@ import {
 } from '@strapi/design-system';
 import {
   request,
+  useNotification,
 } from '@strapi/helper-plugin';
 import { Attribute, Entity } from '@strapi/strapi';
 import { useIntl } from 'react-intl';
@@ -34,6 +35,7 @@ const TableRow: FC<Props> = ({
   config,
   onDelete,
 }) => {
+  const toggleNotification = useNotification();
   const { formatMessage } = useIntl();
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const { push } = useHistory();
@@ -49,12 +51,13 @@ const TableRow: FC<Props> = ({
   const handleDelete = (id: Entity.ID) => {
     request(`/webtools/url-alias/delete/${id}`, { method: 'POST' })
       .then((res) => {
-        setPaths(res.results);
-        setPagination(res.pagination);
         onDelete();
+        toggleNotification({ type: 'success', message: { id: 'webtools.settings.success.url_alias.delete' } });
       })
-      .catch(() => {
+      .catch((error) => {
+        throw new Error(error);
         onDelete();
+        toggleNotification({ type: 'warning', message: { id: 'notification.error' } });
       });
   };
 

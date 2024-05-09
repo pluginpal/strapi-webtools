@@ -5,6 +5,8 @@
   "settings.success.create": "The pattern has been created.",
   "settings.success.edit": "The pattern has been updated.",
   "settings.success.delete": "The pattern has been deleted.",
+  "settings.success.url_alias.generate": "{{ count }} URL aliases have been generated.",
+  "settings.success.url_alias.delete": "The URL alias has been deleted.",
 
   "settings.button.add_pattern": "Add new pattern",
   "settings.button.generate_paths": "Generate paths",

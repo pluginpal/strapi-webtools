@@ -4,7 +4,7 @@ import { useIntl } from 'react-intl';
 import { useHistory } from 'react-router-dom';
 
 import { ContentLayout, HeaderLayout, Button } from '@strapi/design-system';
-import { CheckPagePermissions, request, useFetchClient } from '@strapi/helper-plugin';
+import { CheckPagePermissions, request, useFetchClient, useNotification } from '@strapi/helper-plugin';
 
 import pluginPermissions from '../../permissions';
 import Table from './components/Table';
@@ -32,13 +32,16 @@ const List = () => {
   const { formatMessage } = useIntl();
   const { get } = useFetchClient();
   const [contentTypes, setContentTypes] = useState<EnabledContentTypes>([]);
+  const toggleNotification = useNotification();
 
   useEffect(() => {
     get('/webtools/info/getContentTypes')
       .then((res: { data: EnabledContentTypes }) => {
         setContentTypes(res.data);
       })
-      .catch(() => {
+      .catch((error) => {
+        throw new Error(error);
+        toggleNotification({ type: 'warning', message: { id: 'notification.error' } });
       });
   }, [get]);
 
@@ -48,7 +51,9 @@ const List = () => {
         setPaths(res.results);
         setPagination(res.pagination);
       })
-      .catch(() => {
+      .catch((error) => {
+        throw new Error(error);
+        toggleNotification({ type: 'warning', message: { id: 'notification.error' } });
       });
   }, [history.location.search, queryCount]);
 
@@ -57,14 +62,21 @@ const List = () => {
       .then((res: Config) => {
         setConfig(res);
       })
-      .catch(() => {
+      .catch((error) => {
+        throw new Error(error);
+        toggleNotification({ type: 'warning', message: { id: 'notification.error' } });
       });
   }, []);
 
   const handleGeneratePaths = async (types: EnabledContentType['uid'][], generationType: GenerationType) => {
     await post('/webtools/url-alias/generate', { types, generationType })
-      .then(() => {})
-      .catch(() => {});
+      .then((response) => {
+        toggleNotification({ type: 'success', message: { id: 'webtools.success.url-alias.generate', defaultMessage: response.data.message } });
+      })
+      .catch((error) => {
+        throw new Error(error);
+        toggleNotification({ type: 'warning', message: { id: 'notification.error' } });
+      });
 
     setQueryCount(queryCount + 1)
   };
