@@ -13,7 +13,6 @@ import {
 
 import pluginPermissions from '../../permissions';
 import Table from './components/Table';
-import Center from '../../components/Center';
 import { Config } from '../../../server/admin-api/config';
 import GeneratePathsModal from './components/GeneratePathsModal';
 import { EnabledContentType, EnabledContentTypes } from '../../types/enabled-contenttypes';
