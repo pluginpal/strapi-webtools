@@ -47,12 +47,15 @@ const TableRow: FC<Props> = ({
   };
 
   const handleDelete = (id: Entity.ID) => {
-    onDelete();
-
     request(`/webtools/url-alias/delete/${id}`, { method: 'POST' })
-      .then(() => {
+      .then((res) => {
+        setPaths(res.results);
+        setPagination(res.pagination);
+        onDelete();
       })
-      .catch(() => { });
+      .catch(() => {
+        onDelete();
+      });
   };
 
   return (
