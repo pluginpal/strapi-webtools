@@ -138,7 +138,10 @@ const GeneratePathsModal = ({
         )}
         endActions={(
           <Button
-            onClick={() => onSubmit(selectedContentTypes, selectedGenerationType)}
+            onClick={() => {
+              onSubmit(selectedContentTypes, selectedGenerationType);
+              onClose();
+            }}
           >
             {formatMessage({
               id: 'webtools.settings.button.generate_paths',
