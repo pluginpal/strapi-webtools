@@ -17,6 +17,7 @@ node_modules
 
 # yalc
 .yalc
+yalc.lock
 
 # testing
 coverage

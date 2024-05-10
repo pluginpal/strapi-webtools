@@ -1,9 +1,0 @@
-{
-  "version": "v1",
-  "packages": {
-    "@pluginpal/webtools-core": {
-      "signature": "66d1edd2565b161280e76ca7c58d092c",
-      "link": true
-    }
-  }
-}
