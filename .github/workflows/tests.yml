@@ -74,6 +74,6 @@ jobs:
           token: ${{ secrets.CODECOV }}
           flags: unit
           verbose: true
-          fail_ci_if_error: false
+          fail_ci_if_error: true
 
 
