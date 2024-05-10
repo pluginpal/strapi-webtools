@@ -56,8 +56,6 @@ jobs:
         run: yarn run build
       - name: Install playground dependencies
         run: yarn playground:install
-      - name: Install webtools-core from the yalc registery
-        run: yarn dlx yalc add --link @pluginpal/webtools-core && yarn install
       - name: Build the playground
         run: yarn playground:build
         # We allow the unit tests to fail the first time around.

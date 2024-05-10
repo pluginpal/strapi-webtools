@@ -12,7 +12,7 @@
     "eslint:fix": "turbo run eslint:fix",
     "release:publish": "turbo run build && changeset publish",
     "release:prepare": "changeset version && YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install",
-    "playground:install": "cd playground && yarn install",
+    "playground:install": "cd playground && yarn dlx yalc add --link @pluginpal/webtools-core && yarn install",
     "playground:build": "cd playground && yarn build",
     "playground:start": "cd playground && yarn start",
     "playground:develop": "cd playground && yarn develop --watch-admin --bundler=vite",
