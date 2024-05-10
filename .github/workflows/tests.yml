@@ -55,9 +55,9 @@ jobs:
       - name: Build the packages
         run: yarn run build
       - name: Install playground dependencies
-        run: cd playground && yarn install
+        run: yarn playground:install
       - name: Build the playground
-        run: cd playground && yarn build
+        run: yarn playground:build
         # We allow the unit tests to fail the first time around.
         # For some reason they always fail the first time.
       - name: Run unit tests (allow failures)
