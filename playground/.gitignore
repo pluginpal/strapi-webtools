@@ -135,4 +135,3 @@ config/env/development
 
 # yalc
 .yalc
-yalc.lock
