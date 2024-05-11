@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useIntl } from 'react-intl';
 import { SidebarModal } from '@pluginpal/webtools-helper-plugin';
 
@@ -21,6 +21,21 @@ const EditView = () => {
     onChange,
     slug,
   } = useCMEditViewDataManager();
+
+  const modifiedDataUrlAlias = modifiedData.url_alias as UrlAliasEntity;
+  const i18nLang = new URLSearchParams(window.location.search).get('plugins[i18n][locale]');
+
+  useEffect(() => {
+    // Early return for when the i18n plugin is not enabled.
+    if (!i18nLang) return;
+
+    // If the URL alias is not the same language as the entity,
+    // we should clear it. This happens when you're copying content
+    // from a different locale.
+    if (modifiedDataUrlAlias?.locale !== i18nLang) {
+      onChange({ target: { name: 'url_alias', value: null, type: 'text' } });
+    }
+  }, [modifiedDataUrlAlias, onChange, i18nLang]);
 
   if (!allLayoutData.contentType) return null;
 

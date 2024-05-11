@@ -3,4 +3,5 @@ export interface UrlAliasEntity {
   url_path: string
   contenttype: string
   generated: boolean
+  locale?: string
 }
