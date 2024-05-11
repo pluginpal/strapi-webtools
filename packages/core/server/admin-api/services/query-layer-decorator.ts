@@ -36,17 +36,58 @@ const decorator = (service: IDecoratedService) => ({
     // In that case we have to create the entity first. Then when we know
     // the id, can we create the URL alias entity and can we update
     // the previously created entity.
-    const newEntity = await service.create.call(this, uid, { ...opts, data: opts.data });
-    const generatedPath = getPluginService('urlPatternService').resolvePattern(uid, { ...newEntity, ...opts.data }, urlPattern);
+    const newEntity = await service.create.call(this, uid, {
+      ...opts,
+      data: opts.data,
+      populate: {
+        ...opts.populate,
+        localizations: {
+          populate: {
+            url_alias: {
+              fields: ['id'],
+            },
+          },
+        },
+      },
+    });
+
+    // Fetch the URL alias localizations.
+    const urlAliasLocalizations = newEntity.localizations
+      ?.map((loc) => loc.url_alias.id)
+      ?.filter((loc) => loc) || [];
+
+    const newEntityWithoutLocalizations = {
+      ...newEntity,
+      localizations: undefined,
+    };
+
+    const combinedEntity = { ...newEntityWithoutLocalizations, ...opts.data };
+    const generatedPath = getPluginService('urlPatternService').resolvePattern(uid, combinedEntity, urlPattern);
 
     // If a URL alias was created and 'generated' is set to true, update the alias.
     if (urlAliasEntity?.generated === true) {
-      urlAliasEntity = await getPluginService('urlAliasService').update(urlAliasEntity.id, { url_path: generatedPath, generated: true, contenttype: uid });
+      urlAliasEntity = await getPluginService('urlAliasService').update(urlAliasEntity.id, {
+        url_path: generatedPath,
+        generated: true,
+        contenttype: uid,
+        // @ts-ignore
+        locale: combinedEntity.locale,
+        // @ts-ignore
+        localizations: urlAliasLocalizations,
+      });
     }
 
     // If no URL alias was created, create one.
     if (!urlAliasEntity) {
-      urlAliasEntity = await getPluginService('urlAliasService').create({ url_path: generatedPath, generated: true, contenttype: uid });
+      urlAliasEntity = await getPluginService('urlAliasService').create({
+        url_path: generatedPath,
+        generated: true,
+        contenttype: uid,
+        // @ts-ignore
+        locale: combinedEntity.locale,
+        // @ts-ignore
+        localizations: urlAliasLocalizations,
+      });
     }
 
     // Eventually update the entity to include the URL alias.
@@ -83,8 +124,25 @@ const decorator = (service: IDecoratedService) => ({
         url_alias: {
           fields: ['id', 'generated'],
         },
+        localizations: {
+          populate: {
+            url_alias: {
+              fields: ['id'],
+            },
+          },
+        },
       },
     });
+
+    // Fetch the URL alias localizations.
+    const urlAliasLocalizations = entity.localizations
+      ?.map((loc) => loc.url_alias.id)
+      ?.filter((loc) => loc) || [];
+
+    const entityWithoutLocalizations = {
+      ...entity,
+      localizations: undefined,
+    };
 
     // If a URL alias is allready present, fetch it.
     if (opts.data.url_alias) {
@@ -102,16 +160,32 @@ const decorator = (service: IDecoratedService) => ({
     }
 
     // Generate the path.
-    const generatedPath = getPluginService('urlPatternService').resolvePattern(uid, entity, urlPattern);
+    const generatedPath = getPluginService('urlPatternService').resolvePattern(uid, entityWithoutLocalizations, urlPattern);
 
     // If a URL alias is present and 'generated' is set to true, update the alias.
     if (urlAliasEntity?.generated === true) {
-      urlAliasEntity = await getPluginService('urlAliasService').update(urlAliasEntity.id, { url_path: generatedPath, generated: true, contenttype: uid });
+      urlAliasEntity = await getPluginService('urlAliasService').update(urlAliasEntity.id, {
+        url_path: generatedPath,
+        generated: true,
+        contenttype: uid,
+        // @ts-ignore
+        locale: entity.locale,
+        // @ts-ignore
+        localizations: urlAliasLocalizations,
+      });
     }
 
     // If no URL alias is present, create one.
     if (!urlAliasEntity) {
-      urlAliasEntity = await getPluginService('urlAliasService').create({ url_path: generatedPath, generated: true, contenttype: uid });
+      urlAliasEntity = await getPluginService('urlAliasService').create({
+        url_path: generatedPath,
+        generated: true,
+        contenttype: uid,
+        // @ts-ignore
+        locale: entity.locale,
+        // @ts-ignore
+        localizations: urlAliasLocalizations,
+      });
     }
 
     // Eventually update the entity.
