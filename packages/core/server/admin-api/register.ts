@@ -31,11 +31,6 @@ export default (strapi: IStrapi) => {
         relation: 'oneToOne',
         target: 'plugin::webtools.url-alias',
         unique: true,
-        pluginOptions: {
-          i18n: {
-            localized: true,
-          },
-        },
       });
     }
   });
