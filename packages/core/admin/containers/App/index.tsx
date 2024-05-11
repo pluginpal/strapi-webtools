@@ -57,7 +57,6 @@ const App = () => {
           <Route
             path={`/plugins/${pluginId}/patterns`}
             component={Patterns}
-            exact
           />
           {/* <Route path="" component={NotFound} /> */}
         </Switch>
