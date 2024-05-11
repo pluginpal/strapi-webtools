@@ -72,6 +72,7 @@ const findMany = async (showDrafts: boolean = false, query: EntityService.Params
 
   const { results, pagination } = await strapi.entityService.findPage('plugin::webtools.url-alias', {
     ...query,
+    locale: 'all',
     filters: {
       ...query?.filters,
       published_at: excludeDrafts ? {
