@@ -37,15 +37,6 @@ const List = () => {
         title={formatMessage({ id: 'webtools.settings.page.overview.title', defaultMessage: 'Overview' })}
         subtitle={formatMessage({ id: 'webtools.settings.page.overview.description', defaultMessage: 'Webtools global information' })}
         as="h2"
-        // TODO: Generate all button.
-        // primaryAction={(
-        //   <Button onClick={() => console.log('generate')} size="L">
-        //     {formatMessage({
-        //       id: 'webtools.settings.button.generate_paths',
-        //       defaultMessage: 'Generate paths',
-        //     })}
-        //   </Button>
-        // )}
       />
       <ContentLayout>
         <Flex direction="column" alignItems="stretch" gap={6}>
@@ -127,7 +118,7 @@ const List = () => {
             </Grid>
           </Flex>
         </Flex>
-        <Box
+        {/* <Box
           hasRadius
           background="neutral0"
           shadow="tableShadow"
@@ -155,7 +146,7 @@ const List = () => {
               <div>{addon.info.addonName}</div>
             ))}
           </Flex>
-        </Box>
+        </Box> */}
       </ContentLayout>
     </CheckPagePermissions>
   );
