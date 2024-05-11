@@ -37,7 +37,7 @@ const TableBody: React.FC<Props> = ({ patterns }) => {
   };
 
   const handleClickEdit = (id: number) => {
-    push(`/settings/${pluginId}/patterns/${id}`);
+    push(`/plugins/${pluginId}/patterns/${id}`);
   };
 
   return (

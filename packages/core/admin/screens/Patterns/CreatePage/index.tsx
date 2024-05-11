@@ -64,7 +64,7 @@ const CreatePattternPage = () => {
       },
     })
       .then(() => {
-        push(`/settings/${pluginId}/patterns`);
+        push(`/plugins/${pluginId}/patterns`);
         toggleNotification({ type: 'success', message: { id: 'webtools.settings.success.create' } });
         setSubmitting(false);
       })
@@ -129,7 +129,7 @@ const CreatePattternPage = () => {
             subtitle={formatMessage({ id: 'webtools.settings.page.patterns.create.description', defaultMessage: 'Add a pattern for automatic URL alias generation.' })}
             as="h2"
             navigationAction={(
-              <Link startIcon={<ArrowLeft />} to={`/settings/${pluginId}/patterns`}>
+              <Link startIcon={<ArrowLeft />} to={`/plugins/${pluginId}/patterns`}>
                 {formatMessage({
                   id: 'global.back',
                   defaultMessage: 'Back',

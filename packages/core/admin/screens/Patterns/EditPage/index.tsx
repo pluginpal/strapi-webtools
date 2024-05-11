@@ -38,7 +38,7 @@ const EditPatternPage = () => {
 
   const {
     params: { id },
-  } = useRouteMatch<{ id: string }>(`/settings/${pluginId}/patterns/:id`)!;
+  } = useRouteMatch<{ id: string }>(`/plugins/${pluginId}/patterns/:id`)!;
 
   useEffect(() => {
     setLoading(true);
@@ -77,7 +77,7 @@ const EditPatternPage = () => {
       },
     })
       .then(() => {
-        push(`/settings/${pluginId}/patterns`);
+        push(`/plugins/${pluginId}/patterns`);
         toggleNotification({
           type: 'success',
           message: { id: 'webtools.settings.success.edit' },
@@ -172,7 +172,7 @@ const EditPatternPage = () => {
             navigationAction={(
               <Link
                 startIcon={<ArrowLeft />}
-                to={`/settings/${pluginId}/patterns`}
+                to={`/plugins/${pluginId}/patterns`}
               >
                 {formatMessage({
                   id: 'global.back',
