@@ -6,8 +6,9 @@
     "packages/addons/*"
   ],
   "scripts": {
+    "postinstall": "yarn playground:install",
     "build": "turbo run build",
-    "develop": "turbo run watch:link",
+    "develop": "FORCE_COLOR=1 turbo run watch:link",
     "eslint": "turbo run eslint",
     "eslint:fix": "turbo run eslint:fix",
     "release:publish": "turbo run build && changeset publish",
@@ -15,7 +16,7 @@
     "playground:install": "cd playground && yarn dlx yalc add --link @pluginpal/webtools-core && yarn install",
     "playground:build": "cd playground && yarn build",
     "playground:start": "cd playground && yarn start",
-    "playground:develop": "cd playground && yarn develop --watch-admin --bundler=vite",
+    "playground:develop": "rm -rf playground/node_modules/.strapi/ && cd playground && yarn develop --watch-admin --bundler=vite",
     "test:unit": "ENV_PATH=./playground/.env jest --verbose --runInBand --detectOpenHandles --forceExit",
     "test:integration": "ENV_PATH=./playground/.env jest --verbose --runInBand --detectOpenHandles --forceExit --testMatch '**/healthcheck.test.js'"
   },
