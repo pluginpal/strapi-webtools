@@ -136,7 +136,7 @@ const decorator = (service: IDecoratedService) => ({
 
     // Fetch the URL alias localizations.
     const urlAliasLocalizations = entity.localizations
-      ?.map((loc) => loc.url_alias.id)
+      ?.map((loc) => loc.url_alias?.id)
       ?.filter((loc) => loc) || [];
 
     const entityWithoutLocalizations = {
