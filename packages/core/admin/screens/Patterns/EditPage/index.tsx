@@ -27,13 +27,15 @@ import LabelField from '../../../components/LabelField';
 import PatternField from '../../../components/PatternField';
 import { PatternEntity, PatternFormValues, ValidatePatternResponse } from '../../../types/url-patterns';
 import { EnabledContentTypes } from '../../../types/enabled-contenttypes';
+import HiddenLocalizedField from '../../../components/HiddenLocalizedField';
+import LanguageCheckboxes from '../../../components/LanguageCheckboxes';
 
 const EditPatternPage = () => {
   const { push } = useHistory();
   const toggleNotification = useNotification();
   const [loading, setLoading] = useState(false);
   const [patternEntity, setPatternEntity] = useState<null | PatternEntity>(null);
-  const [contentTypes, setContentTypes] = useState([]);
+  const [contentTypes, setContentTypes] = useState<EnabledContentTypes>([]);
   const { formatMessage } = useIntl();
 
   const {
@@ -135,6 +137,14 @@ const EditPatternPage = () => {
     );
   }
 
+  const getSelectedContentType = (uid: string) => {
+    const selectedContentType = contentTypes.filter(
+      (type) => type.uid === uid,
+    )[0];
+
+    return selectedContentType;
+  };
+
   return (
     <Formik<PatternFormValues>
       enableReinitialize
@@ -144,6 +154,7 @@ const EditPatternPage = () => {
         contenttype: patternEntity.contenttype,
         languages: patternEntity.languages,
         code: patternEntity.code,
+        localized: false,
       }}
       onSubmit={handleEditSubmit}
       validationSchema={schema}
@@ -260,6 +271,25 @@ const EditPatternPage = () => {
                               : null
                           }
                         />
+                      </GridItem>
+                    )}
+                    <HiddenLocalizedField
+                      localized={getSelectedContentType(values.contenttype)?.localized}
+                      setFieldValue={setFieldValue}
+                    />
+                    {values.localized && (
+                      <GridItem col={12}>
+                        <GridItem col={6}>
+                          <LanguageCheckboxes
+                            onChange={(newLanguages) => setFieldValue('languages', newLanguages)}
+                            selectedLanguages={values.languages}
+                            error={
+                              errors.languages && touched.languages
+                                ? errors.languages
+                                : null
+                            }
+                          />
+                        </GridItem>
                       </GridItem>
                     )}
                   </Grid>
