@@ -68,6 +68,10 @@ jobs:
         run: yarn test:unit
       - name: Run integration tests
         run: yarn test:integration
+      - name: Run end-to-end tests
+        uses: cypress-io/github-action@v6
+        with:
+          start: yarn playground:start
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2
         with:
