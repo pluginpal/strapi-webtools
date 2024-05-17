@@ -100,8 +100,19 @@ const generateUrlAliases = async (parms: GenerateParams) => {
       });
     }
 
-    const urlPattern = await getPluginService('urlPatternService').findByUid(type);
-    const relations = getPluginService('urlPatternService').getRelationsFromPattern(urlPattern);
+    let relations: string[] = [];
+    let languages: string[] = [undefined];
+
+    if (strapi.plugin('i18n')) {
+      languages = [];
+      const locales = await strapi.entityService.findMany('plugin::i18n.locale', {});
+      languages = locales.map((locale) => locale.code);
+    }
+    await Promise.all(languages.map(async (lang) => {
+      const urlPattern = await getPluginService('urlPatternService').findByUid(type, lang);
+      const languageRelations = getPluginService('urlPatternService').getRelationsFromPattern(urlPattern);
+      relations = [...relations, ...languageRelations];
+    }));
 
     // Query all the entities of the type that do not have a corresponding URL alias.
     const entities = await strapi.entityService.findMany(type, {
@@ -125,6 +136,9 @@ const generateUrlAliases = async (parms: GenerateParams) => {
     // For all those entities we will create a URL alias and connect it to the entity.
     // eslint-disable-next-line no-restricted-syntax
     for (const entity of entities) {
+      // @ts-ignore
+      // eslint-disable-next-line no-await-in-loop, @typescript-eslint/no-unsafe-argument
+      const urlPattern = await getPluginService('urlPatternService').findByUid(type, entity.locale);
       const generatedPath = getPluginService('urlPatternService').resolvePattern(type, entity, urlPattern);
 
       // eslint-disable-next-line no-await-in-loop

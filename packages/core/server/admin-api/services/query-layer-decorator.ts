@@ -18,7 +18,20 @@ const decorator = (service: IDecoratedService) => ({
     }
 
     // Fetch the URL pattern for this content type.
-    const urlPattern = await getPluginService('urlPatternService').findByUid(uid);
+    let relations: string[] = [];
+    let languages: string[] = [undefined];
+
+    if (strapi.plugin('i18n')) {
+      languages = [];
+      const locales = await strapi.entityService.findMany('plugin::i18n.locale', {});
+      languages = locales.map((locale) => locale.code);
+    }
+
+    await Promise.all(languages.map(async (lang) => {
+      const urlPattern = await getPluginService('urlPatternService').findByUid(uid, lang);
+      const languageRelations = getPluginService('urlPatternService').getRelationsFromPattern(urlPattern);
+      relations = [...relations, ...languageRelations];
+    }));
 
     // If a URL alias was created, fetch it.
     if (opts.data.url_alias) {
@@ -41,6 +54,7 @@ const decorator = (service: IDecoratedService) => ({
       data: opts.data,
       populate: {
         ...opts.populate,
+        ...relations.reduce((obj, key) => ({ ...obj, [key]: {} }), {}),
         localizations: {
           populate: {
             url_alias: {
@@ -61,7 +75,8 @@ const decorator = (service: IDecoratedService) => ({
       localizations: undefined,
     };
 
-    const combinedEntity = { ...newEntityWithoutLocalizations, ...opts.data };
+    const combinedEntity = { ...newEntityWithoutLocalizations };
+    const urlPattern = await getPluginService('urlPatternService').findByUid(uid, combinedEntity.locale);
     const generatedPath = getPluginService('urlPatternService').resolvePattern(uid, combinedEntity, urlPattern);
 
     // If a URL alias was created and 'generated' is set to true, update the alias.
@@ -112,8 +127,20 @@ const decorator = (service: IDecoratedService) => ({
     }
 
     // Fetch the URL pattern for this content type.
-    const urlPattern = await getPluginService('urlPatternService').findByUid(uid);
-    const relations = getPluginService('urlPatternService').getRelationsFromPattern(urlPattern);
+    let relations: string[] = [];
+    let languages: string[] = [undefined];
+
+    if (strapi.plugin('i18n')) {
+      languages = [];
+      const locales = await strapi.entityService.findMany('plugin::i18n.locale', {});
+      languages = locales.map((locale) => locale.code);
+    }
+
+    await Promise.all(languages.map(async (lang) => {
+      const urlPattern = await getPluginService('urlPatternService').findByUid(uid, lang);
+      const languageRelations = getPluginService('urlPatternService').getRelationsFromPattern(urlPattern);
+      relations = [...relations, ...languageRelations];
+    }));
 
     // Manually fetch the entity that's being updated.
     // We do this becuase not all it's data is present in opts.data.
@@ -160,6 +187,7 @@ const decorator = (service: IDecoratedService) => ({
     }
 
     // Generate the path.
+    const urlPattern = await getPluginService('urlPatternService').findByUid(uid, entity.locale);
     const generatedPath = getPluginService('urlPatternService').resolvePattern(uid, entityWithoutLocalizations, urlPattern);
 
     // If a URL alias is present and 'generated' is set to true, update the alias.
