@@ -2,12 +2,10 @@
 
 import { Context } from 'koa';
 import { EntityService } from '@strapi/strapi';
-import { Common } from '@strapi/types';
 import { errors } from '@strapi/utils';
 
 import { getPluginService } from '../../util/getPluginService';
 import { KoaContext } from '../../types/koa';
-import { GenerationType } from '../../types';
 import { GenerateParams } from '../services/bulk-generate';
 
 

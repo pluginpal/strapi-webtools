@@ -8,7 +8,6 @@ import * as yup from 'yup';
 import pluginPkg from '../package.json';
 import EditView from './components/EditView';
 import pluginId from './helpers/pluginId';
-import pluginPermissions from './permissions';
 import getTrad from './helpers/getTrad';
 import CheckboxConfirmation from './components/ContentManagerHooks/ConfirmationCheckbox';
 

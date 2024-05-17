@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 
 import {
-  ContentLayout, HeaderLayout, Typography, Grid, GridItem, Flex, Link, Box,
+  ContentLayout, HeaderLayout, Typography, Grid, GridItem, Flex, Link,
 } from '@strapi/design-system';
 import { ExternalLink } from '@strapi/icons';
 import { CheckPagePermissions, request } from '@strapi/helper-plugin';
