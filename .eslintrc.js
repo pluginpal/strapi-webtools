@@ -1,3 +1,5 @@
+const path = require('path');
+
 module.exports = {
   "extends": ["@uncinc/eslint-config"],
   "globals": {
