@@ -3,6 +3,39 @@
   "globals": {
     "strapi": true
   },
+  "overrides": [
+    {
+      "files": [
+        "**/*.cy.*",
+        "./cypress/**/*.*"
+      ],
+      "extends": [
+        "plugin:cypress/recommended"
+      ],
+      "parserOptions": {
+        "project": "./tsconfig.cypress.json"
+      },
+    },
+    {
+      "files": [
+        "**/*.test.*"
+      ],
+      "plugins": ["jest-dom"],
+      "extends": [
+        "plugin:jest/recommended",
+        "plugin:jest-dom/recommended"
+      ],
+      "env": {
+        "jest": true
+      },
+      "parserOptions": {
+        "project": "./tsconfig.jest.json"
+      },
+      "rules": {
+        "@typescript-eslint/await-thenable": "off"
+      }
+    }
+  ],
   "rules": {
     "import/prefer-default-export": "off",
     "arrow-body-style": "off",
