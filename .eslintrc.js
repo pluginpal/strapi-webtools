@@ -1,4 +1,4 @@
-{
+module.exports = {
   "extends": ["@uncinc/eslint-config"],
   "globals": {
     "strapi": true
@@ -13,8 +13,8 @@
         "plugin:cypress/recommended"
       ],
       "parserOptions": {
-        "project": "./tsconfig.cypress.json"
-      },
+        "project": [path.join(__dirname, './tsconfig.cypress.json')],
+      }
     },
     {
       "files": [
@@ -29,7 +29,7 @@
         "jest": true
       },
       "parserOptions": {
-        "project": "./tsconfig.jest.json"
+        "project": [path.join(__dirname, './tsconfig.jest.json')],
       },
       "rules": {
         "@typescript-eslint/await-thenable": "off"
