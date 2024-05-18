@@ -3483,6 +3483,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@pluginpal/webtools-addon-sitemap@link:.yalc/@pluginpal/webtools-addon-sitemap::locator=strapi-webtools%40workspace%3A.":
+  version: 0.0.0-use.local
+  resolution: "@pluginpal/webtools-addon-sitemap@link:.yalc/@pluginpal/webtools-addon-sitemap::locator=strapi-webtools%40workspace%3A."
+  languageName: node
+  linkType: soft
+
 "@pluginpal/webtools-addon-sitemap@workspace:packages/addons/sitemap":
   version: 0.0.0-use.local
   resolution: "@pluginpal/webtools-addon-sitemap@workspace:packages/addons/sitemap"
@@ -3495,6 +3501,7 @@ __metadata:
     immutable: "npm:^3.8.2"
     react: "npm:^18.0.0"
     react-dom: "npm:^18.0.0"
+    react-query: "npm:3.39.3"
     react-router-dom: "npm:^5.2.0"
     redux-immutable: "npm:^4.0.0"
     redux-thunk: "npm:^2.3.0"
@@ -18174,6 +18181,7 @@ __metadata:
   dependencies:
     "@changesets/changelog-github": "npm:^0.5.0"
     "@changesets/cli": "npm:^2.27.1"
+    "@pluginpal/webtools-addon-sitemap": "link:.yalc/@pluginpal/webtools-addon-sitemap"
     "@pluginpal/webtools-core": "link:.yalc/@pluginpal/webtools-core"
     "@types/jest": "npm:^29.4.0"
     "@uncinc/eslint-config": "npm:1.1.2"
