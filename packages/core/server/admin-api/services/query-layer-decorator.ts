@@ -64,18 +64,17 @@ const decorator = (service: IDecoratedService) => ({
   ) {
     const hasWT = isContentTypeEnabled(uid);
     let urlAliasEntity: Attribute.GetValues<'plugin::webtools.url-alias', Attribute.GetNonPopulatableKeys<'plugin::webtools.url-alias'>>;
-
+  
     // If Webtools isn't enabled, do nothing.
     if (!hasWT) {
       return service.update.call(this, uid, entityId, opts);
     }
-
+  
     // Fetch the URL pattern for this content type.
     const urlPattern = await getPluginService('urlPatternService').findByUid(uid);
     const relations = getPluginService('urlPatternService').getRelationsFromPattern(urlPattern);
-
+  
     // Manually fetch the entity that's being updated.
-    // We do this becuase not all it's data is present in opts.data.
     const entity = await service.findOne.call(this, uid, entityId, {
       populate: {
         ...relations.reduce((obj, key) => ({ ...obj, [key]: {} }), {}),
@@ -84,32 +83,27 @@ const decorator = (service: IDecoratedService) => ({
         },
       },
     });
-
+  
     // If a URL alias is already present, fetch it.
     if (opts.data.url_alias) {
       urlAliasEntity = await getPluginService('urlAliasService').findOne(opts.data.url_alias);
     } else if (entity.url_alias) {
       urlAliasEntity = entity.url_alias;
     }
-
-    // If a URL alias is present and 'generated' is set to false, do nothing.
-    if (urlAliasEntity?.generated === false) {
-      return service.update.call(this, uid, entityId, opts);
-    }
-
+  
     // Generate the path.
-    const generatedPath = getPluginService('urlPatternService').resolvePattern(uid, entity, urlPattern);
-
+    const generatedPath = getPluginService('urlPatternService').resolvePattern(uid, { ...entity, ...opts.data }, urlPattern);
+  
     // If a URL alias is present and 'generated' is set to true, update the alias.
     if (urlAliasEntity?.generated === true) {
       urlAliasEntity = await getPluginService('urlAliasService').update(urlAliasEntity.id, { url_path: generatedPath, generated: true, contenttype: uid });
     }
-
+  
     // If no URL alias is present, create one.
     if (!urlAliasEntity) {
       urlAliasEntity = await getPluginService('urlAliasService').create({ url_path: generatedPath, generated: true, contenttype: uid });
     }
-
+  
     // Eventually update the entity.
     return service.update.call(this, uid, entityId, {
       ...opts,
@@ -117,8 +111,6 @@ const decorator = (service: IDecoratedService) => ({
         ...opts.data,
         url_alias: urlAliasEntity.id,
       },
-    });
-  },
   async delete(uid: Common.UID.ContentType, entityId: number) {
     const hasWT = isContentTypeEnabled(uid);
 
@@ -151,10 +143,10 @@ const decorator = (service: IDecoratedService) => ({
     if (!hasWT) {
       return service.clone.call(this, uid, cloneId, params);
     }
-
+  
     // Clone the entity
     const clonedEntity = await service.clone.call(this, uid, cloneId, { ...params, populate: ['url_alias'] });
-
+  
     // Handle URL alias for the cloned entity
     if (clonedEntity && clonedEntity.url_alias) {
       const newUrlAlias = await getPluginService('urlAliasService').create({
@@ -162,13 +154,13 @@ const decorator = (service: IDecoratedService) => ({
         generated: true,
         contenttype: uid
       });
-
+  
       // Update the cloned entity with the new URL alias id
       await service.update.call(this, uid, clonedEntity.id, { data: { url_alias: newUrlAlias.id } });
     }
-
+  
     return clonedEntity;
-  },
+  },  
 
   async deleteMany(uid: Common.UID.ContentType, params: any) {
     const hasWT = isContentTypeEnabled(uid);
