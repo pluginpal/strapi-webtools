@@ -10,6 +10,6 @@ const NavLink = () => {
       Sitemap
     </SubNavLink>
   );
-}
+};
 
 export default NavLink;

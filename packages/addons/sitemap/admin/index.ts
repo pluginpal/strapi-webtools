@@ -5,8 +5,7 @@ import pluginId from './helpers/pluginId';
 import EditView from './components/EditView';
 import AdminRoute from './components/AdminRoute';
 import NavLink from './components/NavLink';
-import App from './containers/App';
-import { Route } from 'react-router-dom';
+
 const pluginDescription = pluginPkg.strapi.description || pluginPkg.description;
 const { name } = pluginPkg.strapi;
 

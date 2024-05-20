@@ -5,7 +5,7 @@ import App from '../../containers/App';
 const AdminRoute = () => {
   return (
     <Route
-      path={`/plugins/webtools/sitemap`}
+      path="/plugins/webtools/sitemap"
       component={App}
     />
   );
