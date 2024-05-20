@@ -23,17 +23,13 @@ const CustomRow = ({ openModal, entry }) => {
         <Typography variant="omega" textColor="neutral800">{contentTypes[entry.name] && contentTypes[entry.name].displayName}</Typography>
       </Td>
       <Td>
-        <Typography variant="omega" textColor="neutral800">{entry.langcode === 'und' ? 'N/A' : entry.langcode}</Typography>
-      </Td>
-      <Td>
-        <Typography variant="omega" textColor="neutral800">{entry.pattern}</Typography>
-      </Td>
-      <Td>
         <Flex>
-          <IconButton onClick={handleEditClick} label="Edit" noBorder icon={<Pencil />} />
-          <Box paddingLeft={1}>
-            <IconButton onClick={handleDeleteClick} label="Delete" noBorder icon={<Trash />} />
-          </Box>
+          <Flex marginLeft="auto">
+            <IconButton onClick={handleEditClick} label="Edit" noBorder icon={<Pencil />} />
+            <Box paddingLeft={1}>
+              <IconButton onClick={handleDeleteClick} label="Delete" noBorder icon={<Trash />} />
+            </Box>
+          </Flex>
         </Flex>
       </Td>
     </Tr>

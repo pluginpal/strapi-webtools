@@ -14,7 +14,6 @@ import {
 import SelectContentTypes from '../../SelectContentTypes';
 
 import form from '../mapper';
-import SelectLanguage from '../../SelectLanguage';
 
 const CollectionForm = (props) => {
   const { formatMessage } = useIntl();
@@ -50,13 +49,6 @@ const CollectionForm = (props) => {
                 value={uid}
                 disabled={!isEmpty(id)}
                 modifiedContentTypes={modifiedState}
-              />
-            </GridItem>
-            <GridItem col={12}>
-              <SelectLanguage
-                contentType={contentTypes[uid]}
-                onChange={(value) => handleSelectChange(uid, value)}
-                value={langcode}
               />
             </GridItem>
           </Grid>
