@@ -1367,6 +1367,12 @@ __metadata:
   languageName: node
   linkType: soft
 
+"@pluginpal/webtools-helper-plugin@link:.yalc/@pluginpal/webtools-helper-plugin::locator=playground%40workspace%3A.":
+  version: 0.0.0-use.local
+  resolution: "@pluginpal/webtools-helper-plugin@link:.yalc/@pluginpal/webtools-helper-plugin::locator=playground%40workspace%3A."
+  languageName: node
+  linkType: soft
+
 "@pmmmwh/react-refresh-webpack-plugin@npm:0.5.11":
   version: 0.5.11
   resolution: "@pmmmwh/react-refresh-webpack-plugin@npm:0.5.11"
@@ -10555,6 +10561,7 @@ __metadata:
   dependencies:
     "@pluginpal/webtools-addon-sitemap": "link:.yalc/@pluginpal/webtools-addon-sitemap"
     "@pluginpal/webtools-core": "link:.yalc/@pluginpal/webtools-core"
+    "@pluginpal/webtools-helper-plugin": "link:.yalc/@pluginpal/webtools-helper-plugin"
     "@strapi/plugin-i18n": "npm:^4.19.0"
     "@strapi/plugin-users-permissions": "npm:^4.19.0"
     "@strapi/strapi": "npm:^4.19.0"

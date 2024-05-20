@@ -12,6 +12,7 @@
   "dependencies": {
     "@pluginpal/webtools-addon-sitemap": "link:.yalc/@pluginpal/webtools-addon-sitemap",
     "@pluginpal/webtools-core": "link:.yalc/@pluginpal/webtools-core",
+    "@pluginpal/webtools-helper-plugin": "link:.yalc/@pluginpal/webtools-helper-plugin",
     "@strapi/plugin-i18n": "^4.19.0",
     "@strapi/plugin-users-permissions": "^4.19.0",
     "@strapi/strapi": "^4.19.0",

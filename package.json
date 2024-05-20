@@ -13,7 +13,7 @@
     "eslint:fix": "turbo run eslint:fix",
     "release:publish": "turbo run build && changeset publish",
     "release:prepare": "changeset version && YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install",
-    "playground:install": "cd playground && yarn dlx yalc add --link @pluginpal/webtools-core @pluginpal/webtools-addon-sitemap && yarn install",
+    "playground:install": "cd playground && yarn dlx yalc add --link @pluginpal/webtools-helper-plugin @pluginpal/webtools-core @pluginpal/webtools-addon-sitemap && yarn install",
     "playground:build": "cd playground && yarn build",
     "playground:start": "cd playground && yarn start",
     "playground:develop": "rm -rf playground/node_modules/.strapi/ && cd playground && yarn develop --watch-admin --bundler=vite",
@@ -37,6 +37,7 @@
   "packageManager": "yarn@4.0.2",
   "dependencies": {
     "@pluginpal/webtools-addon-sitemap": "link:.yalc/@pluginpal/webtools-addon-sitemap",
-    "@pluginpal/webtools-core": "link:.yalc/@pluginpal/webtools-core"
+    "@pluginpal/webtools-core": "link:.yalc/@pluginpal/webtools-core",
+    "@pluginpal/webtools-helper-plugin": "link:.yalc/@pluginpal/webtools-helper-plugin"
   }
 }
