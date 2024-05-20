@@ -11,14 +11,6 @@ export default [
   },
   {
     method: 'GET',
-    path: '/info/getLanguages',
-    handler: 'info.getLanguages',
-    config: {
-      policies: [],
-    },
-  },
-  {
-    method: 'GET',
     path: '/info/addons',
     handler: 'info.getAddons',
     config: {
