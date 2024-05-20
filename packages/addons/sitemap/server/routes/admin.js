@@ -21,14 +21,6 @@ export default {
     },
     {
       method: 'GET',
-      path: '/content-types',
-      handler: 'core.getContentTypes',
-      config: {
-        policies: [],
-      },
-    },
-    {
-      method: 'GET',
       path: '/languages',
       handler: 'core.getLanguages',
       config: {

@@ -13,8 +13,6 @@ const CollectionURLs = () => {
   const [uid, setUid] = useState(null);
   const [langcode, setLangcode] = useState('und');
 
-  console.log(state.toJS());
-
   const handleModalSubmit = (e) => {
     e.preventDefault();
     dispatch(submitModal());

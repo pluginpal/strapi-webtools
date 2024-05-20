@@ -14,6 +14,7 @@ import {
 import SelectContentTypes from '../../SelectContentTypes';
 
 import form from '../mapper';
+import getSelectedContentType from '../../../helpers/getSelectedContentType';
 
 const CollectionForm = (props) => {
   const { formatMessage } = useIntl();
@@ -61,7 +62,7 @@ const CollectionForm = (props) => {
                   name={input}
                   label={formatMessage({ id: `sitemap.Settings.Field.${input.replace(/^\w/, (c) => c.toUpperCase())}.Label`, defaultMessage: input.replace(/^\w/, (c) => c.toUpperCase()) })}
                   hint={formatMessage({ id: `sitemap.Settings.Field.${input.replace(/^\w/, (c) => c.toUpperCase())}.Description`, defaultMessage: '' })}
-                  disabled={!uid || (contentTypes[uid].locales && !langcode)}
+                  disabled={!uid || (getSelectedContentType(contentTypes, uid).locales && !langcode)}
                   onChange={(value) => onChange(uid, langcode, input, value)}
                   value={modifiedState.getIn([uid, 'languages', langcode, input], form[input].value)}
                 >
@@ -77,7 +78,7 @@ const CollectionForm = (props) => {
                   onChange(uid, langcode, 'includeLastmod', cbValue);
                 }}
                 value={modifiedState.getIn([uid, 'languages', langcode, 'includeLastmod'], true)}
-                disabled={!uid || (contentTypes[uid].locales && !langcode)}
+                disabled={!uid || (getSelectedContentType(contentTypes, uid).locales && !langcode)}
                 hint={formatMessage({ id: 'sitemap.Settings.Field.IncludeLastmod.Description', defaultMessage: 'Adds a <lastmod> tag to all the URLs of this type.' })}
               >
                 {formatMessage({ id: 'sitemap.Settings.Field.IncludeLastmod.Label', defaultMessage: 'Lastmod' })}

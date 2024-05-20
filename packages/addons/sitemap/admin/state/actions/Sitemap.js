@@ -111,7 +111,7 @@ export function generateSitemap(toggleNotification) {
 export function getContentTypes(toggleNotification) {
   return async function(dispatch) {
     try {
-      const contentTypes = await request('/webtools-addon-sitemap/content-types/', { method: 'GET' });
+      const contentTypes = await request('/webtools/info/getContentTypes', { method: 'GET' });
       dispatch(getContentTypesSucceeded(contentTypes));
     } catch (err) {
       toggleNotification({ type: 'warning', message: { id: 'notification.error' } });
