@@ -47,7 +47,7 @@ export default () => ({
    *
    * @param {string} uid the uid.
    */
-  findByUid: async (uid: string) => {
+  findByUid: async (uid: string): Promise<string> => {
     const patterns = await getPluginService('urlPatternService').findMany({
       filters: {
         contenttype: uid,
@@ -56,7 +56,7 @@ export default () => ({
     });
 
     if (!patterns[0]) {
-      return null;
+      return strapi.config.get('plugin.webtools.default_pattern');
     }
 
     return patterns[0].pattern;
@@ -213,7 +213,7 @@ export default () => ({
 
   resolvePattern: (
     uid: Common.UID.ContentType,
-    entity: { [key: string]: string | number },
+    entity: { [key: string]: string | number | Date },
     urlPattern?: string,
   ) => {
     const resolve = (pattern: string) => {

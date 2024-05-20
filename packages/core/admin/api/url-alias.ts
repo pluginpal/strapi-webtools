@@ -23,3 +23,9 @@ export const updateUrlAlias = async (body: { id: number }, slug: string) => {
     },
   });
 };
+
+export const deleteUrlAlias = async (body: { id: number }) => {
+  return request(`/webtools/url-alias/delete/${body.id}`, {
+    method: 'POST',
+  });
+};

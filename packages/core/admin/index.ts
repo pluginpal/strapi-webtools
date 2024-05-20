@@ -2,8 +2,8 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { prefixPluginTranslations } from '@strapi/helper-plugin';
 import { AdminApp } from '@pluginpal/webtools-helper-plugin';
+import { prefixPluginTranslations } from '@strapi/helper-plugin';
 import * as yup from 'yup';
 import pluginPkg from '../package.json';
 import EditView from './components/EditView';
@@ -11,6 +11,9 @@ import pluginId from './helpers/pluginId';
 import pluginPermissions from './permissions';
 import getTrad from './helpers/getTrad';
 import CheckboxConfirmation from './components/ContentManagerHooks/ConfirmationCheckbox';
+
+import dutchTranslations from './translations/nl.json';
+import englishTranslations from './translations/en.json';
 
 const pluginDescription = pluginPkg.strapi.description || pluginPkg.description;
 const { name } = pluginPkg.strapi;
@@ -124,25 +127,16 @@ export default {
       });
     }
   },
-  async registerTrads({ locales }: { locales: string[] }) {
-    const importedTrads = await Promise.all(
-      locales.map((locale) => {
-        try {
-          // eslint-disable-next-line import/no-dynamic-require, global-require
-          const data = require(`./translations/${locale}.json`);
-          return {
-            data: prefixPluginTranslations(data, pluginId),
-            locale,
-          };
-        } catch {
-          return {
-            data: {},
-            locale,
-          };
-        }
-      }),
-    );
-
-    return Promise.resolve(importedTrads);
+  async registerTrads() {
+    return Promise.resolve([
+      {
+        data: prefixPluginTranslations(englishTranslations, pluginId),
+        locale: 'en',
+      },
+      {
+        data: prefixPluginTranslations(dutchTranslations, pluginId),
+        locale: 'nl',
+      },
+    ]);
   },
 };

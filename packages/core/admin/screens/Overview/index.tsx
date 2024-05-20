@@ -72,7 +72,7 @@ const List = () => {
               <GridItem col={6} s={12}>
                 <Typography variant="sigma" textColor="neutral600" as="dt">
                   {formatMessage({
-                    id: 'Settings.application.strapiVersion',
+                    id: 'webtools.settings.application.strapiVersion',
                     defaultMessage: 'strapi version',
                   })}
                 </Typography>

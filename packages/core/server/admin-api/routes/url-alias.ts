@@ -18,7 +18,7 @@ export default [
     },
   },
   {
-    method: 'GET',
+    method: 'POST',
     path: '/url-alias/delete/:id',
     handler: 'url-alias-admin.delete',
     config: {
@@ -45,6 +45,14 @@ export default [
     method: 'GET',
     path: '/url-alias/editLink',
     handler: 'url-alias-admin.editLink',
+    config: {
+      policies: [],
+    },
+  },
+  {
+    method: 'POST',
+    path: '/url-alias/generate',
+    handler: 'url-alias-admin.generate',
     config: {
       policies: [],
     },

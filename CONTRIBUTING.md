@@ -45,7 +45,7 @@ yarn develop
 Leave the typescript compiler running, open up a new terminal window and browse back to the root of the plugin repo. Run the following command:
 
 ```bash
-yarn playground:develop --watch-admin --bundler=vite
+yarn playground:develop
 ```
 
 This will start the playground instance that will have the plugin installed by default. Browse to http://localhost:1337 and create a test admin user to log in to the playground.
