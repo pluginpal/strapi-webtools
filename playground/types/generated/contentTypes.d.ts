@@ -601,6 +601,9 @@ export interface PluginWebtoolsUrlAlias extends Schema.CollectionType {
     'content-type-builder': {
       visible: false;
     };
+    i18n: {
+      localized: true;
+    };
   };
   attributes: {
     url_path: Attribute.String & Attribute.Required & Attribute.Unique;
@@ -620,6 +623,12 @@ export interface PluginWebtoolsUrlAlias extends Schema.CollectionType {
       'admin::user'
     > &
       Attribute.Private;
+    localizations: Attribute.Relation<
+      'plugin::webtools.url-alias',
+      'oneToMany',
+      'plugin::webtools.url-alias'
+    >;
+    locale: Attribute.String;
   };
 }
 
@@ -906,12 +915,7 @@ export interface ApiCategoryCategory extends Schema.CollectionType {
       'oneToOne',
       'plugin::webtools.url-alias'
     > &
-      Attribute.Unique &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
+      Attribute.Unique;
   };
 }
 
@@ -959,12 +963,7 @@ export interface ApiPrivateCategoryPrivateCategory
       'oneToOne',
       'plugin::webtools.url-alias'
     > &
-      Attribute.Unique &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
+      Attribute.Unique;
   };
 }
 
@@ -1015,12 +1014,7 @@ export interface ApiTestTest extends Schema.CollectionType {
       'oneToOne',
       'plugin::webtools.url-alias'
     > &
-      Attribute.Unique &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
+      Attribute.Unique;
     localizations: Attribute.Relation<
       'api::test.test',
       'oneToMany',

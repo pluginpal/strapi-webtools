@@ -14,6 +14,7 @@ export interface PatternFormValues {
   pattern: string,
   contenttype: string,
   languages: any[],
+  localized: boolean,
   code?: string,
 }
 

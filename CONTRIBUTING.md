@@ -24,9 +24,9 @@ Go to the folder and install the dependencies
 cd strapi-webtools && yarn install
 ```
 
-#### 4. Install the dependencies of the playground instance
+#### 4. Install the playground dependencies
 
-Run the following command
+Run this in the root of the repository
 
 ```bash
 yarn playground:install
