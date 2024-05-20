@@ -51,21 +51,5 @@ export default {
         policies: [],
       },
     },
-    {
-      method: 'GET',
-      path: '/pattern/allowed-fields',
-      handler: 'pattern.allowedFields',
-      config: {
-        policies: [],
-      },
-    },
-    {
-      method: 'POST',
-      path: '/pattern/validate-pattern',
-      handler: 'pattern.validatePattern',
-      config: {
-        policies: [],
-      },
-    },
   ],
 };

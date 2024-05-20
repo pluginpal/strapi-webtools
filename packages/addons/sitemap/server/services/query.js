@@ -5,70 +5,11 @@ import xml2js from 'xml2js';
 
 const parser = new xml2js.Parser({ attrkey: 'ATTR' });
 
-import { noLimit, getService, logMessage } from '../utils';
+import { noLimit, logMessage } from '../utils';
 
 /**
  * Query service.
  */
-
-/**
- * Get an array of fields extracted from all the patterns across
- * the different languages.
- *
- * @param {obj} contentType - The content type
- * @param {bool} topLevel - Should include only top level fields
- * @param {bool} isLocalized - Should include the locale field
- * @param {string} relation - Specify a relation. If you do; the function will only return fields of that relation.
- *
- * @returns {array} The fields.
- */
-const getFieldsFromConfig = (contentType, topLevel = false, isLocalized = false, relation = null) => {
-  let fields = [];
-
-  if (contentType) {
-    Object.entries(contentType['languages']).map(([langcode, { pattern }]) => {
-      fields.push(...getService('pattern').getFieldsFromPattern(pattern, topLevel, relation));
-    });
-  }
-
-  if (topLevel) {
-    if (isLocalized) {
-      fields.push('locale');
-    }
-
-    fields.push('updatedAt');
-  }
-
-  // Remove duplicates
-  fields = [...new Set(fields)];
-
-  return fields;
-};
-
-/**
- * Get an object of relations extracted from all the patterns across
- * the different languages.
- *
- * @param {obj} contentType - The content type
- *
- * @returns {object} The relations.
- */
-const getRelationsFromConfig = (contentType) => {
-  const relationsObject = {};
-
-  if (contentType) {
-    Object.entries(contentType['languages']).map(([langcode, { pattern }]) => {
-      const relations = getService('pattern').getRelationsFromPattern(pattern);
-      relations.map((relation) => {
-        relationsObject[relation] = {
-          fields: getFieldsFromConfig(contentType, false, false, relation),
-        };
-      });
-    });
-  }
-
-  return relationsObject;
-};
 
 /**
  * Query the nessecary pages from Strapi to build the sitemap with.
@@ -231,8 +172,6 @@ const createSitemap = async (data) => {
 };
 
 export default () => ({
-  getFieldsFromConfig,
-  getRelationsFromConfig,
   getPages,
   getLocalizationIds,
   createSitemap,
