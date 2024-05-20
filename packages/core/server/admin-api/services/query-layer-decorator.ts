@@ -79,7 +79,7 @@ const decorator = (service: IDecoratedService) => ({
       populate: {
         ...relations.reduce((obj, key) => ({ ...obj, [key]: {} }), {}),
         url_alias: {
-          fields: ['id', 'generated'],
+          fields: ['id', 'generated', 'url_path'],
         },
       },
     });
@@ -89,6 +89,11 @@ const decorator = (service: IDecoratedService) => ({
       urlAliasEntity = await getPluginService('urlAliasService').findOne(opts.data.url_alias);
     } else if (entity.url_alias) {
       urlAliasEntity = entity.url_alias;
+    }
+  
+    // If a URL alias is present and 'generated' is set to false, do nothing.
+    if (urlAliasEntity?.generated === false) {
+      return service.update.call(this, uid, entityId, opts);
     }
   
     // Generate the path.
@@ -111,6 +116,8 @@ const decorator = (service: IDecoratedService) => ({
         ...opts.data,
         url_alias: urlAliasEntity.id,
       },
+    });
+  },
   async delete(uid: Common.UID.ContentType, entityId: number) {
     const hasWT = isContentTypeEnabled(uid);
 
