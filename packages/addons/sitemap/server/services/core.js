@@ -42,6 +42,10 @@ const getLanguageLinks = (config, page, contentType, defaultURL) => {
       return null;
     }
 
+    if (!translation.url_alias) {
+      return null;
+    }
+
     const translationUrl = translation.url_alias.url_path;
 
     let hostnameOverride = config.hostname_overrides[translation.locale] || '';
@@ -78,6 +82,10 @@ const getSitemapPageData = async (config, page, contentType) => {
     !config.contentTypes[contentType]['languages'][locale]
     && !config.contentTypes[contentType]['languages']['und']
   ) {
+    return null;
+  }
+
+  if (!page.url_alias) {
     return null;
   }
 
