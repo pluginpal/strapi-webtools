@@ -27,15 +27,6 @@ export default {
     }
   },
 
-  getLanguages: async (ctx) => {
-    if (strapi.plugin('i18n')) {
-      const locales = await strapi.query('plugin::i18n.locale').findMany();
-      ctx.send(locales);
-    } else {
-      ctx.send([]);
-    }
-  },
-
   info: async (ctx) => {
     const sitemap = await getService('query').getSitemap('default', 0, ['link_count', 'updated_at', 'type']);
     const sitemapInfo = {};

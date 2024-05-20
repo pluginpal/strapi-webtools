@@ -42,6 +42,25 @@ export default {
     ctx.body = contentTypes;
   },
 
+  getLanguages: async (ctx: Context) => {
+    const formattedLocales: {
+      name: string;
+      uid: string;
+    }[] = [];
+    if (strapi.plugin('i18n')) {
+      const locales = await strapi.entityService.findMany('plugin::i18n.locale');
+      locales.forEach((locale) => {
+        formattedLocales.push({
+          name: locale.name,
+          uid: locale.code,
+        });
+      });
+      ctx.body = formattedLocales;
+    } else {
+      ctx.body = [];
+    }
+  },
+
   getAddons: (ctx: Context) => {
     const addons = getAddons(strapi);
     ctx.body = addons;
