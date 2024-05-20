@@ -30,7 +30,7 @@ const decorator = (service: IDecoratedService) => ({
       return service.create.call(this, uid, opts);
     }
 
-    // Ideally here we would create the URL alias an directly fire
+    // Ideally here we would create the URL alias and directly fire
     // the `service.create.call` function with the new URL alias id.
     // Though it is possible that the `id` field is used in the URL.
     // In that case we have to create the entity first. Then when we know
@@ -153,7 +153,7 @@ const decorator = (service: IDecoratedService) => ({
     }
 
     // Clone the entity
-    const clonedEntity = await service.clone.call(this, uid, cloneId, params);
+    const clonedEntity = await service.clone.call(this, uid, cloneId, { ...params, populate: ['url_alias'] });
 
     // Handle URL alias for the cloned entity
     if (clonedEntity && clonedEntity.url_alias) {
@@ -185,7 +185,7 @@ const decorator = (service: IDecoratedService) => ({
     }
 
     // Delete the entities after URL aliases
-    return strapi.entityService.deleteMany(uid, params);
+    return service.deleteMany.call(this, uid, params);
   },
 });
 
