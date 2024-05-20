@@ -152,7 +152,7 @@ const decorator = (service: IDecoratedService) => ({
     }
 
     // Manually fetch the entity to clone
-    const entityToClone = await service.findOne.call(this, uid, cloneId, { populate: ["url_alias"] });
+    const entityToClone = await service.findOne.call(this, uid, cloneId, { populate: ['url_alias'] });
 
     if (!entityToClone) {
       throw new Error('Entity to clone not found');
@@ -178,7 +178,7 @@ const decorator = (service: IDecoratedService) => ({
       });
 
       // Update the cloned entity with the new URL alias id
-      const updatedClonedEntity = await service.update.call(this, uid, clonedEntity.id, { data: { url_alias: newUrlAlias.id }, populate: ['url_alias'] });
+      await service.update.call(this, uid, clonedEntity.id, { data: { url_alias: newUrlAlias.id }, populate: ['url_alias'] });
 
       // Fetch the updated cloned entity to include the populated url_alias
       const fetchedUpdatedClonedEntity = await service.findOne.call(this, uid, clonedEntity.id, { populate: ['url_alias'] });
