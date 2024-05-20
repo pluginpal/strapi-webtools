@@ -1,5 +1,4 @@
 import request from 'supertest';
-
 // @ts-ignore
 // eslint-disable-next-line import/no-relative-packages
 import { setupStrapi, stopStrapi } from '../../../../../playground/tests/helpers';
@@ -176,7 +175,7 @@ describe('Query layer decorator', () => {
     expect(updatedPage).toHaveProperty('url_alias.url_path', url);
   });
 
-  it('Delete - Should delete the corresponding URL alias as wel', async () => {
+  it('Delete - Should delete the corresponding URL alias as well', async () => {
     const page = await strapi.entityService.create("api::test.test", {
       data: {
         title: 'Some about to be deleted new page',
@@ -192,5 +191,67 @@ describe('Query layer decorator', () => {
     const alias = await strapi.entityService.findOne("plugin::webtools.url-alias", page.url_alias.id);
 
     expect(alias).toBe(null);
+  });
+
+  it('Clone - Should create a new entity with a cloned URL alias', async () => {
+    const page = await strapi.entityService.create("api::test.test", {
+      data: {
+        title: 'Some page to clone',
+      },
+      populate: ['url_alias']
+    });
+
+    // Manually clone the URL alias to ensure unique path
+    const clonedAlias = await strapi.entityService.create("plugin::webtools.url-alias", {
+      data: {
+        url_path: `${page.url_alias.url_path}-clone`,
+        generated: page.url_alias.generated,
+        contenttype: page.url_alias.contenttype,
+      },
+    });
+
+    const clonedPage = await strapi.entityService.create("api::test.test", {
+      data: {
+        title: `Cloned ${page.title}`,
+        url_alias: clonedAlias.id,
+      },
+      populate: ['url_alias']
+    });
+
+    expect(clonedPage).not.toBeNull();
+
+    if (clonedPage) {
+      expect(clonedPage).toHaveProperty('url_alias.url_path', `${page.url_alias.url_path}-clone`);
+      expect(clonedPage).toHaveProperty('url_alias.generated', true);
+      expect(clonedPage).toHaveProperty('url_alias.contenttype', 'api::test.test');
+      expect(clonedPage.id).not.toBe(page.id);
+      expect(clonedPage.url_alias.id).not.toBe(page.url_alias.id);
+    }
+  });
+
+  it('DeleteMany - Should delete multiple entities and their corresponding URL aliases', async () => {
+    const page1 = await strapi.entityService.create("api::test.test", {
+      data: {
+        title: 'Page 1 to delete',
+      },
+      populate: ['url_alias']
+    });
+
+    const page2 = await strapi.entityService.create("api::test.test", {
+      data: {
+        title: 'Page 2 to delete',
+      },
+      populate: ['url_alias']
+    });
+
+    await strapi.entityService.deleteMany("api::test.test", {
+      filters: { id: { $in: [page1.id, page2.id] } }
+    });
+
+    const alias1 = await strapi.entityService.findOne("plugin::webtools.url-alias", page1.url_alias.id);
+    const alias2 = await strapi.entityService.findOne("plugin::webtools.url-alias", page2.url_alias.id);
+
+    expect(alias1).toBeNull();
+    expect(alias2).toBeNull();
   });
 });
