@@ -24,7 +24,15 @@ Go to the folder and install the dependencies
 cd strapi-webtools && yarn install
 ```
 
-#### 4. Run the compiler of the plugin 
+#### 4. Install the playground dependencies
+
+Run this in the root of the repository
+
+```bash
+yarn playground:install
+```
+
+#### 5. Run the compiler of the plugin 
 
 As the plugin is written using Typescript you will have to run the typescript compiler during development. Run the following command:
 
@@ -32,7 +40,7 @@ As the plugin is written using Typescript you will have to run the typescript co
 yarn develop
 ```
 
-#### 5. Start the playground instance
+#### 6. Start the playground instance
 
 Leave the typescript compiler running, open up a new terminal window and browse back to the root of the plugin repo. Run the following command:
 
@@ -42,7 +50,7 @@ yarn playground:develop
 
 This will start the playground instance that will have the plugin installed by default. Browse to http://localhost:1337 and create a test admin user to log in to the playground.
 
-#### 6. Start your contribution!
+#### 7. Start your contribution!
 
 You can now start working on your contribution. If you had trouble setting up this testing environment please feel free to report an issue on Github.
 
