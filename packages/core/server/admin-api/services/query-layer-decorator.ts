@@ -148,6 +148,51 @@ const decorator = (service: IDecoratedService) => ({
     // Eventually delete the entity.
     return service.delete.call(this, uid, entityId);
   },
+
+  async clone(
+    uid: Common.UID.ContentType, cloneId: number, params?: IDecoratedServiceOptions<{ url_alias: number }>) {
+    const hasWT = isContentTypeEnabled(uid);
+    if (!hasWT) {
+      return service.clone.call(this, uid, cloneId);
+    }
+
+    // Clone the entity
+    const clonedEntity = await service.clone.call(uid, cloneId, { ...params, populate: ['url_alias'] });
+
+    // Handle URL alias for the cloned entity
+    if (clonedEntity && clonedEntity.url_alias) {
+      const newUrlAlias = await getPluginService('urlAliasService').create({
+        url_path: clonedEntity.url_alias.url_path + '-clone',
+        generated: true,
+        contenttype: uid
+      });
+
+      // Update the cloned entity with the new URL alias id
+      await service.update.call(this, uid, clonedEntity.id, { data: { url_alias: newUrlAlias.id } });
+    }
+
+    return clonedEntity;
+  },
+
+  async deleteMany(uid: Common.UID.ContentType, params: any) {
+    const hasWT = isContentTypeEnabled(uid);
+    if (!hasWT) {
+      return service.deleteMany.call(this, uid, params);
+    }
+
+    // Find entities matching the criteria to delete their URL aliases
+    const entitiesToDelete = await strapi.entityService.findMany(uid, { ...params, fields: ['id'], populate: ['url_alias'] });
+    for (const entity of entitiesToDelete) {
+      // @ts-ignore
+      if (entity.url_alias) {
+        // @ts-ignore
+        await getPluginService('urlAliasService').delete(entity.url_alias.id);
+      }
+    }
+
+    // Delete the entities after URL aliases
+    return strapi.entityService.deleteMany(uid, params);
+  },
 });
 
 export default () => ({

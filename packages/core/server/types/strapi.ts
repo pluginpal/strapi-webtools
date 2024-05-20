@@ -33,6 +33,13 @@ export interface IDecoratedService {
       id: number, url_alias?: Attribute.GetValues<'plugin::webtools.url-alias', Attribute.GetNonPopulatableKeys<'plugin::webtools.url-alias'>>
     }>
   }
+  clone: {
+    call: (context: any, uid: any, options: any) => Promise<{id: number, url_alias?: Attribute.GetValues<'plugin::webtools.url-alias', Attribute.GetNonPopulatableKeys<'plugin::webtools.url-alias'>>
+  }>
+  },
+  deleteMany: {
+    call: (context: any, uid: any, options: any) => Promise<{ id: number }>
+  }
 }
 
 export interface IDecoratedServiceOptions<Fields> {
