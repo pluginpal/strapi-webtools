@@ -32,8 +32,8 @@ const decorator = (service: IDecoratedService) => ({
 
     // Ideally here we would create the URL alias and directly fire
     // the `service.create.call` function with the new URL alias id.
-    // Though it is possible that the `id` field is used in the URL.
-    // In that case we have to create the entity first. Then when we know
+    // Though it is possible dat de `id` field is used in the URL.
+    // In dat case we have to create the entity first. Then when we know
     // the id, can we create the URL alias entity and can we update
     // the previously created entity.
     const newEntity = await service.create.call(this, uid, { ...opts, data: opts.data });
@@ -154,8 +154,20 @@ const decorator = (service: IDecoratedService) => ({
 
     console.log('Cloning entity with id:', cloneId);
 
-    // Clone the entity
-    const clonedEntity = await service.clone.call(this, uid, cloneId, { ...params, populate: ["url_alias"] });
+    // Manually fetch the entity to clone
+    const entityToClone = await service.findOne.call(this, uid, cloneId, { populate: ["url_alias"] });
+
+    if (!entityToClone) {
+      throw new Error('Entity to clone not found');
+    }
+
+    console.log('Entity to clone:', entityToClone);
+
+    // Remove the id and url_alias from the entity to clone
+    const { id, url_alias, ...clonedData } = entityToClone;
+
+    // Create the cloned entity
+    const clonedEntity = await service.create.call(this, uid, { data: clonedData });
 
     if (!clonedEntity) {
       throw new Error('Cloning failed, cloned entity is null or undefined');
@@ -164,9 +176,9 @@ const decorator = (service: IDecoratedService) => ({
     console.log('Cloned entity:', clonedEntity);
 
     // Handle URL alias for the cloned entity
-    if (clonedEntity.url_alias) {
+    if (url_alias) {
       const newUrlAlias = await getPluginService('urlAliasService').create({
-        url_path: `${clonedEntity.url_alias.url_path}-clone`,
+        url_path: `${url_alias.url_path}-clone`,
         generated: true,
         contenttype: uid
       });
@@ -174,15 +186,19 @@ const decorator = (service: IDecoratedService) => ({
       console.log('Created new URL alias:', newUrlAlias);
 
       // Update the cloned entity with the new URL alias id
-      const updatedClonedEntity = await service.update.call(this, uid, clonedEntity.id, { data: { url_alias: newUrlAlias.id } });
+      const updatedClonedEntity = await service.update.call(this, uid, clonedEntity.id, { data: { url_alias: newUrlAlias.id }, populate: ['url_alias'] });
 
       console.log('Updated cloned entity:', updatedClonedEntity);
 
-      return updatedClonedEntity;
-    } else {
-      console.log('Cloned entity does not have a URL alias:', clonedEntity);
-      throw new Error('Cloned entity does not have a URL alias');
+      // Fetch the updated cloned entity to include the populated url_alias
+      const fetchedUpdatedClonedEntity = await service.findOne.call(this, uid, clonedEntity.id, { populate: ['url_alias'] });
+
+      console.log('Fetched updated cloned entity:', fetchedUpdatedClonedEntity);
+
+      return fetchedUpdatedClonedEntity;
     }
+
+    return clonedEntity;
   },
 
   async deleteMany(uid: Common.UID.ContentType, params: any) {
