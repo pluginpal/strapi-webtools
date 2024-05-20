@@ -201,27 +201,15 @@ describe('Query layer decorator', () => {
       populate: ['url_alias']
     });
 
-    // Manually clone the URL alias to ensure unique path
-    const clonedAlias = await strapi.entityService.create("plugin::webtools.url-alias", {
-      data: {
-        url_path: `${page.url_alias.url_path}-clone`,
-        generated: page.url_alias.generated,
-        contenttype: page.url_alias.contenttype,
-      },
-    });
-
-    const clonedPage = await strapi.entityService.create("api::test.test", {
-      data: {
-        title: `Cloned ${page.title}`,
-        url_alias: clonedAlias.id,
-      },
+    const clonedPage = await strapi.entityService.clone("api::test.test", page.id, {
       populate: ['url_alias']
     });
 
     expect(clonedPage).not.toBeNull();
 
     if (clonedPage) {
-      expect(clonedPage).toHaveProperty('url_alias.url_path', `${page.url_alias.url_path}-clone`);
+      const newUrlAliasPath = `${page.url_alias.url_path}-clone`;
+      expect(clonedPage).toHaveProperty('url_alias.url_path', newUrlAliasPath);
       expect(clonedPage).toHaveProperty('url_alias.generated', true);
       expect(clonedPage).toHaveProperty('url_alias.contenttype', 'api::test.test');
       expect(clonedPage.id).not.toBe(page.id);

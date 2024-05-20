@@ -64,6 +64,8 @@ module.exports = {
           .updateRole(publicRole.id, publicRole);
       }
 
+      await strapi.entityService.deleteMany('plugin::webtools.url-pattern', {});
+
       await strapi.entityService.create('plugin::webtools.url-pattern', {
         data: {
           pattern: '/page/[title]',

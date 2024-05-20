@@ -76,8 +76,7 @@ const decorator = (service: IDecoratedService) => ({
 
     // Manually fetch the entity that's being updated.
     // We do this becuase not all it's data is present in opts.data.
-    const entity = await service.update.call(this, uid, entityId, {
-      ...opts,
+    const entity = await service.findOne.call(this, uid, entityId, {
       populate: {
         ...relations.reduce((obj, key) => ({ ...obj, [key]: {} }), {}),
         url_alias: {
@@ -86,13 +85,10 @@ const decorator = (service: IDecoratedService) => ({
       },
     });
 
-    // If a URL alias is allready present, fetch it.
+    // If a URL alias is already present, fetch it.
     if (opts.data.url_alias) {
       urlAliasEntity = await getPluginService('urlAliasService').findOne(opts.data.url_alias);
-      // @ts-ignore
     } else if (entity.url_alias) {
-      // @ts-ignore
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       urlAliasEntity = entity.url_alias;
     }
 
@@ -153,16 +149,16 @@ const decorator = (service: IDecoratedService) => ({
     uid: Common.UID.ContentType, cloneId: number, params?: IDecoratedServiceOptions<{ url_alias: number }>) {
     const hasWT = isContentTypeEnabled(uid);
     if (!hasWT) {
-      return service.clone.call(this, uid, cloneId);
+      return service.clone.call(this, uid, cloneId, params);
     }
 
     // Clone the entity
-    const clonedEntity = await service.clone.call(uid, cloneId, { ...params, populate: ['url_alias'] });
+    const clonedEntity = await service.clone.call(this, uid, cloneId, params);
 
     // Handle URL alias for the cloned entity
     if (clonedEntity && clonedEntity.url_alias) {
       const newUrlAlias = await getPluginService('urlAliasService').create({
-        url_path: clonedEntity.url_alias.url_path + '-clone',
+        url_path: `${clonedEntity.url_alias.url_path}-clone`,
         generated: true,
         contenttype: uid
       });
@@ -183,9 +179,7 @@ const decorator = (service: IDecoratedService) => ({
     // Find entities matching the criteria to delete their URL aliases
     const entitiesToDelete = await strapi.entityService.findMany(uid, { ...params, fields: ['id'], populate: ['url_alias'] });
     for (const entity of entitiesToDelete) {
-      // @ts-ignore
       if (entity.url_alias) {
-        // @ts-ignore
         await getPluginService('urlAliasService').delete(entity.url_alias.id);
       }
     }
