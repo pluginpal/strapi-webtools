@@ -3411,6 +3411,7 @@ __metadata:
   resolution: "@pluginpal/webtools-addon-sitemap@workspace:packages/addons/sitemap"
   dependencies:
     "@pluginpal/webtools-helper-plugin": "npm:1.0.0-beta.3"
+    "@strapi/helper-plugin": "npm:4.20.3"
     "@strapi/strapi": "npm:^4"
     chalk: "npm:^4.1.2"
     commander: "npm:^8.3.0"
@@ -3418,7 +3419,6 @@ __metadata:
     immutable: "npm:^3.8.2"
     react: "npm:^18.0.0"
     react-dom: "npm:^18.0.0"
-    react-query: "npm:3.39.3"
     react-router-dom: "npm:^5.2.0"
     redux-immutable: "npm:^4.0.0"
     redux-thunk: "npm:^2.3.0"
