@@ -18182,6 +18182,7 @@ __metadata:
     supertest: "npm:^6.3.3"
     ts-jest: "npm:^29.0.3"
     turbo: "npm:latest"
+    yalc: "npm:^1.0.0-pre.53"
   languageName: unknown
   linkType: soft
 
@@ -20294,7 +20295,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yalc@npm:1.0.0-pre.53":
+"yalc@npm:1.0.0-pre.53, yalc@npm:^1.0.0-pre.53":
   version: 1.0.0-pre.53
   resolution: "yalc@npm:1.0.0-pre.53"
   dependencies:
