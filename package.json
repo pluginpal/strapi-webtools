@@ -29,7 +29,8 @@
     "jest-cli": "^29.2.2",
     "supertest": "^6.3.3",
     "ts-jest": "^29.0.3",
-    "turbo": "latest"
+    "turbo": "latest",
+    "yalc": "^1.0.0-pre.53"
   },
   "engines": {
     "node": ">=14.0.0"
