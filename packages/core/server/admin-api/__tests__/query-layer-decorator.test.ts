@@ -190,7 +190,7 @@ describe('Query layer decorator', () => {
 
     const alias = await strapi.entityService.findOne("plugin::webtools.url-alias", page.url_alias.id);
 
-    expect(alias).toBe(null);
+    expect(alias).toBeNull();
   });
 
   it('Clone - Should create a new entity with a cloned URL alias', async () => {

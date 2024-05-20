@@ -145,14 +145,23 @@ const decorator = (service: IDecoratedService) => ({
   },
 
   async clone(
-    uid: Common.UID.ContentType, cloneId: number, params?: IDecoratedServiceOptions<{ url_alias: number }>) {
+    uid: Common.UID.ContentType, cloneId: number, params?: IDecoratedServiceOptions<{ url_alias: number }>
+  ) {
     const hasWT = isContentTypeEnabled(uid);
     if (!hasWT) {
       return service.clone.call(this, uid, cloneId, params);
     }
   
+    console.log('Cloning entity with id:', cloneId);
+  
     // Clone the entity
     const clonedEntity = await service.clone.call(this, uid, cloneId, { ...params, populate: ['url_alias'] });
+  
+    if (!clonedEntity) {
+      throw new Error('Cloning failed, cloned entity is null or undefined');
+    }
+  
+    console.log('Cloned entity:', clonedEntity);
   
     // Handle URL alias for the cloned entity
     if (clonedEntity && clonedEntity.url_alias) {
@@ -162,12 +171,18 @@ const decorator = (service: IDecoratedService) => ({
         contenttype: uid
       });
   
+      console.log('Created new URL alias:', newUrlAlias);
+  
       // Update the cloned entity with the new URL alias id
-      await service.update.call(this, uid, clonedEntity.id, { data: { url_alias: newUrlAlias.id } });
+      const updatedClonedEntity = await service.update.call(this, uid, clonedEntity.id, { data: { url_alias: newUrlAlias.id } });
+  
+      console.log('Updated cloned entity:', updatedClonedEntity);
+  
+      return updatedClonedEntity;
     }
   
     return clonedEntity;
-  },  
+  },
 
   async deleteMany(uid: Common.UID.ContentType, params: any) {
     const hasWT = isContentTypeEnabled(uid);
