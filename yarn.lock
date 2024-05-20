@@ -3547,6 +3547,12 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@pluginpal/webtools-core@link:.yalc/@pluginpal/webtools-core::locator=strapi-webtools%40workspace%3A.":
+  version: 0.0.0-use.local
+  resolution: "@pluginpal/webtools-core@link:.yalc/@pluginpal/webtools-core::locator=strapi-webtools%40workspace%3A."
+  languageName: node
+  linkType: soft
+
 "@pluginpal/webtools-core@workspace:packages/core":
   version: 0.0.0-use.local
   resolution: "@pluginpal/webtools-core@workspace:packages/core"
@@ -18976,6 +18982,7 @@ __metadata:
   dependencies:
     "@changesets/changelog-github": "npm:^0.5.0"
     "@changesets/cli": "npm:^2.27.1"
+    "@pluginpal/webtools-core": "link:.yalc/@pluginpal/webtools-core"
     "@types/jest": "npm:^29.4.0"
     "@uncinc/eslint-config": "npm:1.1.2"
     cypress: "npm:^13.9.0"
@@ -18988,6 +18995,7 @@ __metadata:
     supertest: "npm:^6.3.3"
     ts-jest: "npm:^29.0.3"
     turbo: "npm:latest"
+    yalc: "npm:^1.0.0-pre.53"
   languageName: unknown
   linkType: soft
 
@@ -21177,7 +21185,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yalc@npm:1.0.0-pre.53":
+"yalc@npm:1.0.0-pre.53, yalc@npm:^1.0.0-pre.53":
   version: 1.0.0-pre.53
   resolution: "yalc@npm:1.0.0-pre.53"
   dependencies:

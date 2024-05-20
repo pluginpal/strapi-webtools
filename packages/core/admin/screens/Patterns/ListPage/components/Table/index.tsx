@@ -27,13 +27,13 @@ const TableComponent: React.FC<Props> = ({ patterns }) => {
             <Tr>
               <Th>
                 <Typography variant="sigma" textColor="neutral600">
-                  {formatMessage({ id: 'settings.page.patterns.table.head.label', defaultMessage: 'Label' })}
+                  {formatMessage({ id: 'webtools.settings.page.patterns.table.head.label', defaultMessage: 'Label' })}
                 </Typography>
               </Th>
               <Th>
                 <Typography variant="sigma" textColor="neutral600">
                   {formatMessage({
-                    id: 'settings.page.patterns.table.head.pattern',
+                    id: 'webtools.settings.page.patterns.table.head.pattern',
                     defaultMessage: 'Pattern',
                   })}
                 </Typography>
@@ -41,7 +41,7 @@ const TableComponent: React.FC<Props> = ({ patterns }) => {
               <Th>
                 <VisuallyHidden>
                   {formatMessage({
-                    id: 'settings.page.patterns.table.head.actions',
+                    id: 'webtools.settings.page.patterns.table.head.actions',
                     defaultMessage: 'Actions',
                   })}
                 </VisuallyHidden>
@@ -56,7 +56,7 @@ const TableComponent: React.FC<Props> = ({ patterns }) => {
       ) : (
         <EmptyStateLayout
           content={{
-            id: 'settings.page.patterns.table.empty',
+            id: 'webtools.settings.page.patterns.table.empty',
             defaultMessage: 'You don\'t have any patterns yet.',
           }}
           action={() => {}}

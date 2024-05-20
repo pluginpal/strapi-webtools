@@ -46,17 +46,22 @@ export default () => ({
    * FindByUid.
    *
    * @param {string} uid the uid.
+   * @param {string} langcode the langcode.
    */
-  findByUid: async (uid: string) => {
-    const patterns = await getPluginService('urlPatternService').findMany({
+  findByUid: async (uid: string, langcode?: string): Promise<string> => {
+    let patterns = await getPluginService('urlPatternService').findMany({
       filters: {
         contenttype: uid,
       },
-      limit: 1,
     });
 
+    if (langcode) {
+      patterns = patterns
+        .filter((pattern) => (pattern.languages as string).includes(langcode));
+    }
+
     if (!patterns[0]) {
-      return null;
+      return strapi.config.get('plugin.webtools.default_pattern');
     }
 
     return patterns[0].pattern;
@@ -213,7 +218,7 @@ export default () => ({
 
   resolvePattern: (
     uid: Common.UID.ContentType,
-    entity: { [key: string]: string | number },
+    entity: { [key: string]: string | number | Date },
     urlPattern?: string,
   ) => {
     const resolve = (pattern: string) => {

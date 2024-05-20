@@ -15,6 +15,7 @@ export default {
     const contentTypes: {
       name: string;
       uid: string;
+      localized: boolean;
     }[] = [];
 
     Object.values(strapi.contentTypes).forEach((contentType: Schema.ContentType) => {
@@ -25,10 +26,15 @@ export default {
         'webtools',
         'enabled',
       ]) as boolean;
+      const isLocalized = _.get(pluginOptions, [
+        'i18n',
+        'localized',
+      ]) as boolean;
       if (isInContentManager === true) {
         contentTypes.push({
           name: contentType.globalId,
           uid: contentType.uid,
+          localized: isLocalized || false,
         });
       }
     });

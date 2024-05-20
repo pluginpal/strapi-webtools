@@ -11,12 +11,12 @@ const Patterns = () => (
   <CheckPagePermissions permissions={pluginPermissions['settings.patterns']}>
     <Switch>
       <Route
-        path={`/settings/${pluginId}/patterns/new`}
+        path={`/plugins/${pluginId}/patterns/new`}
         component={PatternsCreatePage}
         exact
       />
-      <Route path={`/settings/${pluginId}/patterns/:id`} component={PatternsEditPage} exact />
-      <Route path={`/settings/${pluginId}/patterns`} component={PatternsListPage} exact />
+      <Route path={`/plugins/${pluginId}/patterns/:id`} component={PatternsEditPage} exact />
+      <Route path={`/plugins/${pluginId}/patterns`} component={PatternsListPage} exact />
       {/* <Route path="" component={NotFound} /> */}
     </Switch>
   </CheckPagePermissions>

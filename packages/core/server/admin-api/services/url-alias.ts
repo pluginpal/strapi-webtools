@@ -1,6 +1,6 @@
 
 
-import { EntityService, Entity } from '@strapi/types';
+import { EntityService, Entity, Common } from '@strapi/types';
 import { getPluginService } from '../../util/getPluginService';
 
 /**
@@ -42,6 +42,29 @@ const create = async (data: EntityService.Params.Pick<'plugin::webtools.url-alia
 };
 
 /**
+ * Find related entity.
+ *
+ * @param {object} data the data.
+ * @returns {void}
+ */
+const findRelatedEntity = async (urlAlias: EntityService.GetValues<'plugin::webtools.url-alias'>, query: EntityService.Params.Pick<Common.UID.ContentType, 'fields' | 'populate' | 'sort' | 'filters' | '_q' | 'publicationState' | 'plugin'> = {}) => {
+  const type = urlAlias.contenttype as Common.UID.ContentType;
+  const entity = await strapi.entityService.findMany(type, {
+    locale: 'all',
+    ...query,
+    filters: {
+      ...query?.filters,
+      // @ts-ignore
+      url_alias: urlAlias.id,
+    },
+  });
+
+  if (!entity[0]) return null;
+
+  return entity[0];
+};
+
+/**
  * findOne.
  *
  * @param {number} id the id.
@@ -72,6 +95,7 @@ const findMany = async (showDrafts: boolean = false, query: EntityService.Params
 
   const { results, pagination } = await strapi.entityService.findPage('plugin::webtools.url-alias', {
     ...query,
+    locale: 'all',
     filters: {
       ...query?.filters,
       published_at: excludeDrafts ? {
@@ -139,5 +163,6 @@ export default () => ({
   findOne,
   findMany,
   findByPath,
+  findRelatedEntity,
   delete: deleteUrlAlias,
 });

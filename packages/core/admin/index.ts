@@ -2,15 +2,18 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { prefixPluginTranslations } from '@strapi/helper-plugin';
 import { AdminApp } from '@pluginpal/webtools-helper-plugin';
+import { prefixPluginTranslations } from '@strapi/helper-plugin';
 import * as yup from 'yup';
 import pluginPkg from '../package.json';
 import EditView from './components/EditView';
 import pluginId from './helpers/pluginId';
-import pluginPermissions from './permissions';
 import getTrad from './helpers/getTrad';
 import CheckboxConfirmation from './components/ContentManagerHooks/ConfirmationCheckbox';
+
+import dutchTranslations from './translations/nl.json';
+import englishTranslations from './translations/en.json';
+import { PluginIcon } from './components/PluginIcon';
 
 const pluginDescription = pluginPkg.strapi.description || pluginPkg.description;
 const { name } = pluginPkg.strapi;
@@ -25,65 +28,22 @@ export default {
       name,
     });
 
-    app.createSettingSection(
-      {
-        id: pluginId,
-        intlLabel: {
-          id: `${pluginId}.settings.title`,
-          defaultMessage: 'Webtools',
-        },
+    app.addMenuLink({
+      to: '/plugins/webtools',
+      icon: PluginIcon,
+      intlLabel: {
+        id: `${pluginId}.settings.title`,
+        defaultMessage: 'Webtools',
       },
-      [
-        // {
-        //   intlLabel: {
-        //     id: `${pluginId}.settings.page.overview.title`,
-        //     defaultMessage: 'Overview',
-        //   },
-        //   id: 'overview',
-        //   to: `/settings/${pluginId}/overview`,
-        //   Component: async () => {
-        //     const component = await import(
-        //       /* webpackChunkName: "webtools-list" */ './screens/Overview'
-        //     );
+      Component: async () => {
+        const component = await import(
+          /* webpackChunkName: "webtools-list" */ './containers/App'
+        );
 
-        //     return component;
-        //   },
-        //   permissions: pluginPermissions['settings.overview'],
-        // },
-        {
-          intlLabel: {
-            id: `${pluginId}.settings.page.list.title`,
-            defaultMessage: 'All URLs',
-          },
-          id: 'webtools-list',
-          to: `/settings/${pluginId}/list`,
-          Component: async () => {
-            const component = await import(
-              /* webpackChunkName: "webtools-list" */ './screens/List'
-            );
-
-            return component;
-          },
-          permissions: pluginPermissions['settings.list'],
-        },
-        {
-          intlLabel: {
-            id: `${pluginId}.settings.page.patterns.title`,
-            defaultMessage: 'URL patterns',
-          },
-          id: 'webtools-patterns',
-          to: `/settings/${pluginId}/patterns`,
-          Component: async () => {
-            const component = await import(
-              /* webpackChunkName: "webtools-patterns" */ './screens/Patterns'
-            );
-
-            return component;
-          },
-          permissions: pluginPermissions['settings.patterns'],
-        },
-      ],
-    );
+        return component;
+      },
+      permissions: [], // permissions to apply to the link
+    });
   },
   bootstrap(app: AdminApp) {
     app.injectContentManagerComponent('editView', 'right-links', {
@@ -124,25 +84,16 @@ export default {
       });
     }
   },
-  async registerTrads({ locales }: { locales: string[] }) {
-    const importedTrads = await Promise.all(
-      locales.map((locale) => {
-        try {
-          // eslint-disable-next-line import/no-dynamic-require, global-require
-          const data = require(`./translations/${locale}.json`);
-          return {
-            data: prefixPluginTranslations(data, pluginId),
-            locale,
-          };
-        } catch {
-          return {
-            data: {},
-            locale,
-          };
-        }
-      }),
-    );
-
-    return Promise.resolve(importedTrads);
+  async registerTrads() {
+    return Promise.resolve([
+      {
+        data: prefixPluginTranslations(englishTranslations, pluginId),
+        locale: 'en',
+      },
+      {
+        data: prefixPluginTranslations(dutchTranslations, pluginId),
+        locale: 'nl',
+      },
+    ]);
   },
 };

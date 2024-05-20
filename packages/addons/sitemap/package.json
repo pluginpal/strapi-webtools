@@ -35,7 +35,7 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "../../../node_modules/.bin/pack-up build",
+    "build": "../../../node_modules/.bin/pack-up build && ../../../node_modules/.bin/yalc push --publish",
     "watch": "../../../node_modules/.bin/pack-up watch",
     "watch:link": "../../../node_modules/.bin/strapi plugin:watch:link",
     "develop:copy-files": "copyfiles -u 1 xsl/**/* ../../../playground/src/plugins/webtools-addon-sitemap/xsl/",

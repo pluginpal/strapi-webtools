@@ -1,46 +1,126 @@
-import React, { FC } from 'react';
+import React, {
+  FC,
+  useEffect,
+  useState,
+} from 'react';
 import { useIntl } from 'react-intl';
 import { Attribute } from '@strapi/strapi';
 
 import {
-  Table, Tr, Thead, Th, Typography,
+  Table,
+  Tr,
+  Thead,
+  Th,
+  Typography,
+  Tbody,
+  Button,
+  Flex,
 } from '@strapi/design-system';
-import { EmptyStateLayout } from '@strapi/helper-plugin';
 
-import TableBody from '../TableBody';
+import {
+  EmptyStateLayout,
+} from '@strapi/helper-plugin';
+
+import TableRow from '../TableRow';
+import PaginationFooter from '../PaginationFooter';
+import type { Pagination } from '../..';
+import Filters from '../Filters';
+import { Config } from '../../../../../server/admin-api/config';
 
 type Props = {
   paths: Attribute.GetValues<'plugin::webtools.url-alias'>[],
+  onDelete: () => void,
+  pagination: Pagination,
+  contentTypes: any[],
+  config: Config,
 };
 
-const TableComponent: FC<Props> = ({ paths }) => {
-  const { formatMessage } = useIntl();
+const TableComponent: FC<Props> = (props) => {
+  const {
+    paths,
+    pagination,
+    onDelete,
+    config,
+    contentTypes,
+  } = props;
 
-  const colCount = 1;
-  const rowCount = (paths?.length || 0) + 1;
+  const { formatMessage } = useIntl();
+  const [checkedItems, setCheckedItems] = useState<boolean[]>([]);
+
+  // Initiate the checked items.
+  useEffect(() => {
+    const newCheckedItems = [];
+    for (let i = 0; i < pagination.pageSize; i++) {
+      newCheckedItems.push(false);
+    }
+    setCheckedItems(newCheckedItems);
+  }, [pagination.pageSize]);
+
+  const allChecked = checkedItems && checkedItems.every(Boolean);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const isIndeterminate = checkedItems.some(Boolean) && !allChecked;
+  const amountChecked = checkedItems.filter((item) => item).length;
 
   return (
     <div>
+      <Filters contentTypes={contentTypes} />
+      {amountChecked > 0 && (
+        <Flex marginBottom="6" gap="3">
+          <Typography variant="omega" textColor="neutral600">
+            {amountChecked} {formatMessage({
+              id: 'webtools.settings.page.list.table.delete.entries_selected',
+              defaultMessage: 'Entries selected',
+            })}
+          </Typography>
+          <Button variant="danger-light">
+            {formatMessage({
+              id: 'webtools.settings.button.delete',
+              defaultMessage: 'Delete',
+            })}
+          </Button>
+        </Flex>
+      )}
       {paths && paths.length > 0 ? (
-        <Table colCount={colCount} rowCount={rowCount}>
+        <Table colCount={1} rowCount={pagination.pageSize}>
           <Thead>
             <Tr>
+              {/* <Th>
+                <BaseCheckbox
+                  aria-label={formatMessage({ id: 'config-sync.ConfigList.SelectAll' })}
+                  indeterminate={isIndeterminate}
+                  onValueChange={
+                    (value: boolean) => setCheckedItems(checkedItems.map(() => value))
+                  }
+                  value={allChecked}
+                />
+              </Th> */}
               <Th>
                 <Typography variant="sigma" textColor="neutral600">
-                  {formatMessage({ id: 'settings.page.patterns.table.head.label', defaultMessage: 'Path' })}
+                  {formatMessage({ id: 'webtools.settings.page.patterns.table.head.label', defaultMessage: 'Path' })}
                 </Typography>
               </Th>
             </Tr>
           </Thead>
-          <TableBody
-            paths={paths}
-          />
-          {/* TODO: Pagination */}
+          <Tbody>
+            {paths.map((path, index) => (
+              <TableRow
+                key={path.url_path}
+                row={path}
+                checked={checkedItems[index]}
+                onDelete={onDelete}
+                config={config}
+                updateValue={() => {
+                  checkedItems[index] = !checkedItems[index];
+                  setCheckedItems([...checkedItems]);
+                }}
+              />
+            ))}
+          </Tbody>
         </Table>
       ) : (
         <EmptyStateLayout
           content={{
-            id: 'settings.page.list.table.empty',
+            id: 'webtools.settings.page.list.table.empty',
             defaultMessage: 'You don\'t have any URL paths yet.',
           }}
           action={() => {}}
@@ -48,6 +128,7 @@ const TableComponent: FC<Props> = ({ paths }) => {
           hasRadius
         />
       )}
+      <PaginationFooter pagination={pagination} />
     </div>
   );
 };

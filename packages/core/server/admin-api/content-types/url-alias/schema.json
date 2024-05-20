@@ -16,6 +16,9 @@
     },
     "content-type-builder": {
       "visible": false
+    },
+    "i18n": {
+      "localized": true
     }
   },
   "attributes": {

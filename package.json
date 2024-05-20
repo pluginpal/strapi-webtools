@@ -6,16 +6,17 @@
     "packages/addons/*"
   ],
   "scripts": {
+    "postinstall": "yarn playground:install",
     "build": "turbo run build",
-    "develop": "turbo run watch:link",
+    "develop": "FORCE_COLOR=1 turbo run watch:link",
     "eslint": "turbo run eslint",
     "eslint:fix": "turbo run eslint:fix",
     "release:publish": "turbo run build && changeset publish",
     "release:prepare": "changeset version && YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install",
-    "playground:install": "cd playground && yarn install",
+    "playground:install": "cd playground && yarn dlx yalc add --link @pluginpal/webtools-core && yarn install",
     "playground:build": "cd playground && yarn build",
     "playground:start": "cd playground && yarn start",
-    "playground:develop": "cd playground && yarn develop",
+    "playground:develop": "rm -rf playground/node_modules/.strapi/ && cd playground && yarn develop --watch-admin --bundler=vite",
     "test:e2e": "cypress open",
     "test:unit": "ENV_PATH=./playground/.env jest --verbose --runInBand --detectOpenHandles --forceExit",
     "test:integration": "ENV_PATH=./playground/.env jest --verbose --runInBand --detectOpenHandles --forceExit --testMatch '**/healthcheck.test.js'"
@@ -34,10 +35,14 @@
     "jest-cli": "^29.2.2",
     "supertest": "^6.3.3",
     "ts-jest": "^29.0.3",
-    "turbo": "latest"
+    "turbo": "latest",
+    "yalc": "^1.0.0-pre.53"
   },
   "engines": {
     "node": ">=14.0.0"
   },
-  "packageManager": "yarn@4.0.2"
+  "packageManager": "yarn@4.0.2",
+  "dependencies": {
+    "@pluginpal/webtools-core": "link:.yalc/@pluginpal/webtools-core"
+  }
 }

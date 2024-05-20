@@ -43,7 +43,7 @@ const LabelField: FC<Props> = ({
         value={values.label || ''}
         onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFieldValue('label', e.target.value)}
         label={formatMessage({
-          id: 'settings.form.label.label',
+          id: 'webtools.settings.form.label.label',
           defaultMessage: 'Label',
         })}
         error={

@@ -13,6 +13,7 @@ import adminApiUrlPatternController from './admin-api/controllers/url-pattern';
 import adminApiInfoController from './admin-api/controllers/info';
 import adminApiUrlAliasService from './admin-api/services/url-alias';
 import adminApiUrlPatternService from './admin-api/services/url-pattern';
+import adminApiBulkGenerateService from './admin-api/services/bulk-generate';
 import adminApiUrlAliasRoutes from './admin-api/routes/url-alias';
 import adminApiUrlPatternRoutes from './admin-api/routes/url-pattern';
 import adminApiInfoRoutes from './admin-api/routes/info';
@@ -75,5 +76,6 @@ export default {
     urlPatternService: adminApiUrlPatternService,
     byPathService: contentApiByPathService,
     queryLayerDecorator: queryLayerDecoratorService,
+    bulkGenerate: adminApiBulkGenerateService,
   },
 };

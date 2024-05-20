@@ -2,9 +2,12 @@
 
 import { Context } from 'koa';
 import { EntityService } from '@strapi/strapi';
+import { errors } from '@strapi/utils';
 
 import { getPluginService } from '../../util/getPluginService';
 import { KoaContext } from '../../types/koa';
+import { GenerateParams } from '../services/bulk-generate';
+
 
 /**
  * Path controller
@@ -17,7 +20,7 @@ export default {
     ctx.body = pathEntity;
   },
   findMany: async (ctx: Context) => {
-    const pathEntities = await getPluginService('urlAliasService').findMany(true);
+    const pathEntities = await getPluginService('urlAliasService').findMany(true, ctx.query);
     ctx.body = pathEntities;
   },
   delete: async (ctx: Context & { params: { id: number } }) => {
@@ -51,9 +54,37 @@ export default {
     }
 
     const contentTypeObj = strapi.contentTypes[contentType];
+    const contentTypeUrlPartial = contentTypeObj.kind === 'singleType' ? 'single-types' : 'collection-types';
 
     ctx.body = {
-      link: `/content-manager/${contentTypeObj.kind}/${contentType}/${entity.id}`,
+      link: `/content-manager/${contentTypeUrlPartial}/${contentType}/${entity.id}`,
+    };
+  },
+  generate: async (
+    ctx: KoaContext<GenerateParams>,
+  ) => {
+    const { types, generationType } = ctx.request.body;
+
+    // Validation
+    if (!types || !generationType) {
+      const details: { [key in keyof GenerateParams]?: string } = {};
+
+      if (!generationType) details.types = 'required';
+      if (!generationType) details.generationType = 'required';
+
+      throw new errors.ValidationError('Missing required POST parameter(s)', details);
+    }
+
+    const generatedCount = await getPluginService('bulkGenerate').generateUrlAliases({ types, generationType });
+
+    if (strapi.plugin('i18n')) {
+      await getPluginService('bulkGenerate').createLanguageLinksForUrlAliases();
+    }
+
+    // Return the amount of generated URL aliases.
+    ctx.body = {
+      success: true,
+      message: `Successfully generated ${generatedCount} URL alias${generatedCount > 1 ? 'es' : ''}.`,
     };
   },
 };
