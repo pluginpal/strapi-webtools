@@ -20,13 +20,13 @@ import { logMessage, getService } from '../utils';
  *
  * @returns {array} The language links.
  */
-const getLanguageLinks = async (config, page, contentType, defaultURL) => {
-  if (!page.localizations) return null;
+const getLanguageLinks = (config, page, contentType, defaultURL) => {
+  if (!page.localizations || page.localizations.length === 0) return null;
 
   const links = [];
   links.push({ lang: page.locale, url: defaultURL });
 
-  await Promise.all(page.localizations.map(async (translation) => {
+  page.localizations.map((translation) => {
     let { locale } = translation;
 
     // Return when there is no pattern for the page.
@@ -42,15 +42,15 @@ const getLanguageLinks = async (config, page, contentType, defaultURL) => {
       return null;
     }
 
-    const { pattern } = config.contentTypes[contentType]['languages'][locale];
-    const translationUrl = await strapi.plugins.sitemap.services.pattern.resolvePattern(pattern, translation);
+    const translationUrl = translation.url_alias.url_path;
+
     let hostnameOverride = config.hostname_overrides[translation.locale] || '';
     hostnameOverride = hostnameOverride.replace(/\/+$/, '');
     links.push({
       lang: translation.locale,
       url: `${hostnameOverride}${translationUrl}`,
     });
-  }));
+  });
 
   return links;
 };
@@ -81,16 +81,15 @@ const getSitemapPageData = async (config, page, contentType) => {
     return null;
   }
 
-  const { pattern } = config.contentTypes[contentType]['languages'][locale];
-  const path = await strapi.plugins.sitemap.services.pattern.resolvePattern(pattern, page);
+  const path = page.url_alias.url_path;
   let hostnameOverride = config.hostname_overrides[page.locale] || '';
   hostnameOverride = hostnameOverride.replace(/\/+$/, '');
   const url = `${hostnameOverride}${path}`;
 
   const pageData = {
     lastmod: page.updatedAt,
-    url: url,
-    links: await getLanguageLinks(config, page, contentType, url),
+    url: path,
+    links: getLanguageLinks(config, page, contentType, url),
     changefreq: config.contentTypes[contentType]['languages'][locale].changefreq || 'monthly',
     priority: parseFloat(config.contentTypes[contentType]['languages'][locale].priority) || 0.5,
   };
@@ -243,27 +242,22 @@ const getSitemapStream = async (urlCount) => {
  * @returns {void}
  */
 const createSitemap = async () => {
-  try {
-    const sitemapEntries = await createSitemapEntries();
+  const sitemapEntries = await createSitemapEntries();
 
-    if (isEmpty(sitemapEntries)) {
-      strapi.log.info(logMessage('No sitemap XML was generated because there were 0 URLs configured.'));
-      return;
-    }
-
-    await getService('query').deleteSitemap('default');
-    const [sitemap, isIndex] = await getSitemapStream(sitemapEntries.length);
-
-    sitemapEntries.map((sitemapEntry) => sitemap.write(sitemapEntry));
-    sitemap.end();
-
-    await saveSitemap('default', sitemap, isIndex);
-
-    strapi.log.info(logMessage('The sitemap XML has been generated. It can be accessed on /api/sitemap/index.xml.'));
-  } catch (err) {
-    strapi.log.error(logMessage(`Something went wrong while trying to build the SitemapStream. ${err}`));
-    throw new Error();
+  if (isEmpty(sitemapEntries)) {
+    strapi.log.info(logMessage('No sitemap XML was generated because there were 0 URLs configured.'));
+    return;
   }
+
+  await getService('query').deleteSitemap('default');
+  const [sitemap, isIndex] = await getSitemapStream(sitemapEntries.length);
+
+  sitemapEntries.map((sitemapEntry) => sitemap.write(sitemapEntry));
+  sitemap.end();
+
+  await saveSitemap('default', sitemap, isIndex);
+
+  strapi.log.info(logMessage('The sitemap XML has been generated. It can be accessed on /api/sitemap/index.xml.'));
 };
 
 export default () => ({

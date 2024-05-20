@@ -83,9 +83,6 @@ const getPages = async (config, contentType, ids) => {
   const excludeDrafts = config.excludeDrafts && strapi.contentTypes[contentType].options.draftAndPublish;
   const isLocalized = strapi.contentTypes[contentType].pluginOptions?.i18n?.localized;
 
-  const relations = getRelationsFromConfig(config.contentTypes[contentType]);
-  const fields = getFieldsFromConfig(config.contentTypes[contentType], true, isLocalized);
-
   const pages = await noLimit(strapi, contentType, {
     filters: {
       $or: [
@@ -105,13 +102,19 @@ const getPages = async (config, contentType, ids) => {
       } : {},
     },
     locale: 'all',
-    fields,
+    fields: isLocalized ? 'locale' : undefined,
     populate: {
-      localizations: {
-        fields,
-        populate: relations,
+      url_alias: {
+        populate: 'url_path',
       },
-      ...relations,
+      localizations: {
+        fields: 'locale',
+        populate: {
+          url_alias: {
+            populate: 'url_path',
+          },
+        },
+      },
     },
     orderBy: 'id',
     publicationState: excludeDrafts ? 'live' : 'preview',
