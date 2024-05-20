@@ -37,6 +37,10 @@
   "exclude": [
     "**/node_modules/**/*",
     "**/build/**/*",
-    "**/__tests__/**/*"
+    "**/__tests__/**/*",
+    "**/*.cy.*",
+    "**/*.test.*",
+    "./cypress/**/*",
+    "./*.config.*"
   ]
 }

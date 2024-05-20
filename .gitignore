@@ -45,3 +45,7 @@ yarn-error.log*
 
 # turbo
 .turbo
+
+# Cypress
+cypress/screenshots/
+cypress/videos/
