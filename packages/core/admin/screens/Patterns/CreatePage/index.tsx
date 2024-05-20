@@ -21,7 +21,7 @@ import {
   Loader,
 } from '@strapi/design-system';
 import { ArrowLeft, Check } from '@strapi/icons';
-import { request, useNotification } from '@strapi/helper-plugin';
+import { useNotification, useFetchClient } from '@strapi/helper-plugin';
 
 import schema from './utils/schema';
 
@@ -41,29 +41,28 @@ const CreatePattternPage = () => {
   const [loading, setLoading] = useState(false);
   const [contentTypes, setContentTypes] = useState<EnabledContentTypes>([]);
   const { formatMessage } = useIntl();
+  const { get, post } = useFetchClient();
 
   useEffect(() => {
     setLoading(true);
-    request('/webtools/info/getContentTypes', { method: 'GET' })
-      .then((res: EnabledContentTypes) => {
-        setContentTypes(res);
+    get('/webtools/info/getContentTypes')
+      .then((res) => {
+        const data = res.data as EnabledContentTypes;
+        setContentTypes(data);
         setLoading(false);
       })
       .catch(() => {
         setLoading(false);
       });
-  }, []);
+  }, [get]);
+
 
   const handleCreateSubmit = (
     values: PatternFormValues,
     { setSubmitting, setErrors }: FormikProps<PatternFormValues>,
   ) => {
-    request('/webtools/url-pattern/create', {
-      method: 'POST',
-      body: {
-        // @ts-ignore
-        data: values,
-      },
+    post('/webtools/url-pattern/create', {
+      data: values,
     })
       .then(() => {
         push(`/plugins/${pluginId}/patterns`);
@@ -71,9 +70,7 @@ const CreatePattternPage = () => {
         setSubmitting(false);
       })
       .catch((err) => {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         if (err.response.payload[0].message === 'This attribute must be unique') {
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
           setErrors({ code: err.response.payload[0].message as string });
         } else {
           toggleNotification({ type: 'warning', message: { id: 'notification.error' } });
@@ -85,15 +82,13 @@ const CreatePattternPage = () => {
   const validatePattern = async (values: PatternFormValues) => {
     const errors: FormikErrors<PatternFormValues> = {};
 
-    await request('/webtools/url-pattern/validate', {
-      method: 'POST',
-      body: {
-        // @ts-ignore
+    await post('/webtools/url-pattern/validate', {
+      data: {
         pattern: values.pattern,
         modelName: values.contenttype,
       },
     })
-      .then((res: ValidatePatternResponse) => {
+      .then((res: ValidatePatternResponse | any) => {
         if (res.valid === false) {
           errors.pattern = res.message;
         }
@@ -208,10 +203,10 @@ const CreatePattternPage = () => {
                           uid={values.contenttype}
                           setFieldValue={setFieldValue}
                           error={
-                              errors.pattern && touched.pattern
-                                ? errors.pattern
-                                : null
-                            }
+                            errors.pattern && touched.pattern
+                              ? errors.pattern
+                              : null
+                          }
                         />
                       </GridItem>
                     )}

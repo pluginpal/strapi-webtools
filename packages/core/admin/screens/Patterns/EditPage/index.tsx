@@ -15,7 +15,6 @@ import {
   Grid,
   Loader,
 } from '@strapi/design-system';
-import { request, useNotification } from '@strapi/helper-plugin';
 import { ArrowLeft, Check } from '@strapi/icons';
 
 import schema from './utils/schema';
@@ -29,6 +28,7 @@ import { PatternEntity, PatternFormValues, ValidatePatternResponse } from '../..
 import { EnabledContentTypes } from '../../../types/enabled-contenttypes';
 import HiddenLocalizedField from '../../../components/HiddenLocalizedField';
 import LanguageCheckboxes from '../../../components/LanguageCheckboxes';
+import { request, useNotification } from '@strapi/helper-plugin'
 
 const EditPatternPage = () => {
   const { push } = useHistory();

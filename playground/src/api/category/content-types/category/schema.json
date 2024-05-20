@@ -13,6 +13,9 @@
   "pluginOptions": {
     "webtools": {
       "enabled": true
+    },
+    "i18n": {
+      "localized": true
     }
   },
   "attributes": {
@@ -23,7 +26,12 @@
       "inversedBy": "category"
     },
     "title": {
-      "type": "string"
+      "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
     }
   }
 }
