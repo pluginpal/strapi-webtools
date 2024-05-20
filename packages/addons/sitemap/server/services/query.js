@@ -50,6 +50,20 @@ const getPages = async (config, contentType, ids) => {
       },
       localizations: {
         fields: 'locale',
+        filters: {
+          $or: [
+            {
+              sitemap_exclude: {
+                $null: true,
+              },
+            },
+            {
+              sitemap_exclude: {
+                $eq: false,
+              },
+            },
+          ],
+        },
         populate: {
           url_alias: {
             populate: 'url_path',
