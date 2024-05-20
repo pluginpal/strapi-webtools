@@ -72,7 +72,7 @@ module.exports = {
           label: 'Test API pattern',
           code: 'test_api_pattern',
           contenttype: 'api::test.test',
-          languages: [],
+          languages: ['en'],
         }
       });
 

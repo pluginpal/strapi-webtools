@@ -44,7 +44,7 @@ const EditForm = () => {
               defaultMessage: ' Generate automatic URL alias',
             })}
           </Checkbox>
-          <Link to="/settings/webtools/patterns">
+          <Link to="/plugins/webtools/patterns">
             Configure URL alias patterns.
           </Link>
         </Box>

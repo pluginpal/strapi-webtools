@@ -50,7 +50,7 @@ const ListPatternPage = () => {
         subtitle={formatMessage({ id: 'webtools.settings.page.patterns.description', defaultMessage: 'A list of all the known URL alias patterns.' })}
         as="h2"
         primaryAction={(
-          <Button onClick={() => push(`/settings/${pluginId}/patterns/new`)} startIcon={<Plus />} size="L">
+          <Button onClick={() => push(`/plugins/${pluginId}/patterns/new`)} startIcon={<Plus />} size="L">
             {formatMessage({
               id: 'webtools.settings.button.add_pattern',
               defaultMessage: 'Add new pattern',

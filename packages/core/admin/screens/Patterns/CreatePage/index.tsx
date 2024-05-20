@@ -32,12 +32,14 @@ import LabelField from '../../../components/LabelField';
 import PatternField from '../../../components/PatternField';
 import { PatternFormValues, ValidatePatternResponse } from '../../../types/url-patterns';
 import { EnabledContentTypes } from '../../../types/enabled-contenttypes';
+import LanguageCheckboxes from '../../../components/LanguageCheckboxes';
+import HiddenLocalizedField from '../../../components/HiddenLocalizedField';
 
 const CreatePattternPage = () => {
   const { push } = useHistory();
   const toggleNotification = useNotification();
   const [loading, setLoading] = useState(false);
-  const [contentTypes, setContentTypes] = useState([]);
+  const [contentTypes, setContentTypes] = useState<EnabledContentTypes>([]);
   const { formatMessage } = useIntl();
 
   useEffect(() => {
@@ -64,7 +66,7 @@ const CreatePattternPage = () => {
       },
     })
       .then(() => {
-        push(`/settings/${pluginId}/patterns`);
+        push(`/plugins/${pluginId}/patterns`);
         toggleNotification({ type: 'success', message: { id: 'webtools.settings.success.create' } });
         setSubmitting(false);
       })
@@ -110,11 +112,19 @@ const CreatePattternPage = () => {
     );
   }
 
+  const getSelectedContentType = (uid: string) => {
+    const selectedContentType = contentTypes.filter(
+      (type) => type.uid === uid,
+    )[0];
+
+    return selectedContentType;
+  };
+
   return (
     <Formik<PatternFormValues>
       enableReinitialize
       initialValues={{
-        label: '', pattern: '', contenttype: '', languages: [],
+        label: '', pattern: '', contenttype: '', languages: [], localized: false,
       }}
       onSubmit={handleCreateSubmit}
       validationSchema={schema}
@@ -129,7 +139,7 @@ const CreatePattternPage = () => {
             subtitle={formatMessage({ id: 'webtools.settings.page.patterns.create.description', defaultMessage: 'Add a pattern for automatic URL alias generation.' })}
             as="h2"
             navigationAction={(
-              <Link startIcon={<ArrowLeft />} to={`/settings/${pluginId}/patterns`}>
+              <Link startIcon={<ArrowLeft />} to={`/plugins/${pluginId}/patterns`}>
                 {formatMessage({
                   id: 'global.back',
                   defaultMessage: 'Back',
@@ -192,18 +202,37 @@ const CreatePattternPage = () => {
                     </GridItem>
                     <GridItem col={12} />
                     {(values.contenttype !== '') && (
-                    <GridItem col={6}>
-                      <PatternField
-                        values={values}
-                        uid={values.contenttype}
-                        setFieldValue={setFieldValue}
-                        error={
-                            errors.pattern && touched.pattern
-                              ? errors.pattern
-                              : null
-                          }
-                      />
-                    </GridItem>
+                      <GridItem col={6}>
+                        <PatternField
+                          values={values}
+                          uid={values.contenttype}
+                          setFieldValue={setFieldValue}
+                          error={
+                              errors.pattern && touched.pattern
+                                ? errors.pattern
+                                : null
+                            }
+                        />
+                      </GridItem>
+                    )}
+                    <HiddenLocalizedField
+                      localized={getSelectedContentType(values.contenttype)?.localized}
+                      setFieldValue={setFieldValue}
+                    />
+                    {values.localized && (
+                      <GridItem col={12}>
+                        <GridItem col={6}>
+                          <LanguageCheckboxes
+                            onChange={(newLanguages) => setFieldValue('languages', newLanguages)}
+                            selectedLanguages={values.languages}
+                            error={
+                              errors.languages && touched.languages
+                                ? errors.languages
+                                : null
+                            }
+                          />
+                        </GridItem>
+                      </GridItem>
                     )}
                   </Grid>
                 </Stack>

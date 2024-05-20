@@ -1,5 +1,6 @@
 import React, {
   useState, useRef, FC,
+  useEffect,
 } from 'react';
 import { useIntl } from 'react-intl';
 import styled from 'styled-components';
@@ -9,7 +10,6 @@ import {
   TextInput, Popover, Stack, Box, Loader, Typography,
 } from '@strapi/design-system';
 import { request } from '@strapi/helper-plugin';
-import { useQuery } from 'react-query';
 import { PatternFormValues } from '../../types/url-patterns';
 import { Theme } from '../../types/theme';
 
@@ -27,23 +27,29 @@ const PatternField: FC<Props> = ({
   setFieldValue,
 }) => {
   const patternRef = useRef<HTMLDivElement>(null);
+  const [loading, setLoading] = useState(false);
+  const [loadingError, setLoadingError] = useState(false);
+  const [allowedFields, setAllowedFields] = useState<Record<string, string[]>>(null);
   const { formatMessage } = useIntl();
 
   const [popoverDismissed, setPopoverDismissed] = useState(false);
-  const {
-    data: allowedFields,
-    isLoading: allowedFieldsLoading,
-    isError,
-  } = useQuery<Record<string, string[]>>(
 
-    ['webtools', 'pattern', 'allowed-fields'],
-    () => request('/webtools/url-pattern/allowed-fields', { method: 'GET' }),
-    {
-      refetchOnWindowFocus: false,
-      refetchOnMount: false,
-      retry: false,
-    },
-  );
+  useEffect(() => {
+    const fetchAllowedFields = async () => {
+      try {
+        setLoading(true);
+        const data = await request<Record<string, string[]>>('/webtools/url-pattern/allowed-fields', { method: 'GET' });
+        setAllowedFields(data);
+        setLoading(false);
+      } catch (err) {
+        setLoading(false);
+        setLoadingError(true);
+      }
+    };
+
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    fetchAllowedFields();
+  }, []);
 
   const HoverBox = styled(Box)`
     cursor: pointer;
@@ -81,11 +87,11 @@ const PatternField: FC<Props> = ({
   };
 
 
-  if (allowedFieldsLoading) {
+  if (loading) {
     return <Loader>{formatMessage({ id: 'webtools.settings.loading', defaultMessage: 'Loading content...' })}</Loader>;
   }
 
-  if (isError || !allowedFields) {
+  if (loadingError || !allowedFields) {
     return <div>{formatMessage({ id: 'webtools.pattern.allowedFields.fetchError', defaultMessage: 'An error occurred while fetching allowed fields' })}</div>;
   }
 

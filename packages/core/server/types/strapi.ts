@@ -20,10 +20,30 @@ export interface IStrapi extends Omit<Strapi, 'entityService' | 'admin'> {
 
 export interface IDecoratedService {
   create: {
-    call: (context: any, uid: any, options: any) => Promise<{ id: number }>
+    call: (context: any, uid: any, options: any) => Promise<{
+      id: number,
+      locale?: string,
+      localizations?: [
+        {
+          url_alias: {
+            id: number
+          },
+        },
+      ],
+    }>
   },
   update: {
-    call: (context: any, uid: any, id: any, options: any) => Promise<{ id: number }>
+    call: (context: any, uid: any, id: any, options: any) => Promise<{
+      id: number
+      locale?: string,
+      localizations?: [
+        {
+          url_alias: {
+            id: number
+          },
+        },
+      ],
+    }>
   },
   delete: {
     call: (context: any, uid: any, options: any) => Promise<{ id: number }>
@@ -44,4 +64,13 @@ export interface IDecoratedService {
 
 export interface IDecoratedServiceOptions<Fields> {
   data: Fields
+  populate: {
+    localizations: {
+      populate: {
+        url_alias: {
+          fields: ['id']
+        }
+      }
+    }
+  }
 }
