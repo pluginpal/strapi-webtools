@@ -70,7 +70,9 @@ const CreatePattternPage = () => {
         setSubmitting(false);
       })
       .catch((err) => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         if (err.response.payload[0].message === 'This attribute must be unique') {
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
           setErrors({ code: err.response.payload[0].message as string });
         } else {
           toggleNotification({ type: 'warning', message: { id: 'notification.error' } });

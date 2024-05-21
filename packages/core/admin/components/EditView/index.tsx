@@ -45,7 +45,7 @@ const EditView = () => {
 
   const onSubmit = async () => {
     if (!initialUrlAlias) {
-      const urlAlias = await createUrlAlias(modifiedUrlAlias, slug);
+      const urlAlias = await createUrlAlias(modifiedUrlAlias, slug, get);
       onChange({ target: { name: 'url_alias', value: urlAlias, type: 'text' } });
     } else {
       await updateUrlAlias(modifiedUrlAlias, slug);

@@ -15,6 +15,7 @@ import {
   Grid,
   Loader,
 } from '@strapi/design-system';
+import { useFetchClient, useNotification } from '@strapi/helper-plugin';
 import { ArrowLeft, Check } from '@strapi/icons';
 
 import schema from './utils/schema';
@@ -28,7 +29,6 @@ import { PatternEntity, PatternFormValues, ValidatePatternResponse } from '../..
 import { EnabledContentTypes } from '../../../types/enabled-contenttypes';
 import HiddenLocalizedField from '../../../components/HiddenLocalizedField';
 import LanguageCheckboxes from '../../../components/LanguageCheckboxes';
-import { request, useNotification } from '@strapi/helper-plugin'
 
 const EditPatternPage = () => {
   const { push } = useHistory();
@@ -37,6 +37,7 @@ const EditPatternPage = () => {
   const [patternEntity, setPatternEntity] = useState<null | PatternEntity>(null);
   const [contentTypes, setContentTypes] = useState<EnabledContentTypes>([]);
   const { formatMessage } = useIntl();
+  const { get, put, post } = useFetchClient();
 
   const {
     params: { id },
@@ -44,9 +45,10 @@ const EditPatternPage = () => {
 
   useEffect(() => {
     setLoading(true);
-    request('/webtools/info/getContentTypes', { method: 'GET' })
-      .then((res: EnabledContentTypes) => {
-        setContentTypes(res);
+    get('/webtools/info/getContentTypes', { method: 'GET' })
+      .then((res) => {
+        const data = res.data as EnabledContentTypes;
+        setContentTypes(data);
         setLoading(false);
       })
       .catch(() => {
@@ -56,9 +58,10 @@ const EditPatternPage = () => {
 
   useEffect(() => {
     setLoading(true);
-    request(`/webtools/url-pattern/findOne/${id}`, { method: 'GET' })
-      .then((res: PatternEntity) => {
-        setPatternEntity(res);
+    get(`/webtools/url-pattern/findOne/${id}`, { method: 'GET' })
+      .then((res) => {
+        const data = res.data as PatternEntity;
+        setPatternEntity(data);
         setLoading(false);
       })
       .catch(() => {
@@ -71,12 +74,8 @@ const EditPatternPage = () => {
     values: PatternFormValues,
     { setSubmitting, setErrors }: FormikProps<PatternFormValues>,
   ) => {
-    request(`/webtools/url-pattern/update/${patternEntity.id}`, {
-      method: 'PUT',
-      body: {
-        // @ts-ignore
-        data: values,
-      },
+    put(`/webtools/url-pattern/update/${patternEntity.id}`, {
+      data: values,
     })
       .then(() => {
         push(`/plugins/${pluginId}/patterns`);
@@ -89,10 +88,10 @@ const EditPatternPage = () => {
       .catch((err) => {
         if (
           // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-          err.response.payload[0].message === 'This attribute must be unique'
+          err.response.data[0].message === 'This attribute must be unique'
         ) {
           // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-          setErrors({ code: err.response.payload[0].message as string });
+          setErrors({ code: err.response.data[0].message as string });
         } else {
           toggleNotification({
             type: 'warning',
@@ -106,17 +105,16 @@ const EditPatternPage = () => {
   const validatePattern = async (values: PatternFormValues) => {
     const errors: Record<string, any> = {};
 
-    await request('/webtools/url-pattern/validate', {
-      method: 'POST',
-      body: {
-        // @ts-ignore
+    await post('/webtools/url-pattern/validate', {
+      data: {
         pattern: values.pattern,
         modelName: values.contenttype,
       },
     })
-      .then((res: ValidatePatternResponse) => {
-        if (res.valid === false) {
-          errors.pattern = res.message;
+      .then((res) => {
+        const response = res as unknown as ValidatePatternResponse;
+        if (response.valid === false) {
+          errors.pattern = response.message;
         }
       })
       .catch(() => { });

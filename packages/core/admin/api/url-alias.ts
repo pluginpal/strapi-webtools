@@ -1,8 +1,8 @@
 import { useFetchClient } from '@strapi/helper-plugin';
 
-const { post, put } = useFetchClient();
-
 export const createUrlAlias = async (body: { id: number }, slug: string) => {
+  const { post } = useFetchClient();
+
   return post('/webtools/url-alias/create', {
     method: 'POST',
     body: {
@@ -16,6 +16,8 @@ export const createUrlAlias = async (body: { id: number }, slug: string) => {
 };
 
 export const updateUrlAlias = async (body: { id: number }, slug: string) => {
+  const { put } = useFetchClient();
+
   return put(`/webtools/url-alias/update/${body.id}`, {
     method: 'PUT',
     body: {
@@ -27,6 +29,8 @@ export const updateUrlAlias = async (body: { id: number }, slug: string) => {
 };
 
 export const deleteUrlAlias = async (body: { id: number }) => {
+  const { post } = useFetchClient();
+
   return post(`/webtools/url-alias/delete/${body.id}`, {
     method: 'POST',
   });

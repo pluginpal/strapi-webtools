@@ -5,8 +5,6 @@
  *
  */
 
-import { useFetchClient } from '@strapi/helper-plugin';
-
 import { Map } from 'immutable';
 
 import {
@@ -30,10 +28,8 @@ import {
 
 import getTrad from '../../helpers/getTrad';
 
-const { get, put } = useFetchClient();
-
 // Get initial settings
-export function getSettings(toggleNotification) {
+export function getSettings(toggleNotification, get) {
   return async function(dispatch) {
     try {
       const res = await get('/webtools-addon-sitemap/settings/');
@@ -98,7 +94,7 @@ export function discardModifiedContentTypes() {
   };
 }
 
-export function generateSitemap(toggleNotification) {
+export function generateSitemap(toggleNotification, get) {
   return async function(dispatch) {
     try {
       dispatch(setLoading(true));
@@ -113,7 +109,7 @@ export function generateSitemap(toggleNotification) {
   };
 }
 
-export function getContentTypes(toggleNotification) {
+export function getContentTypes(toggleNotification, get) {
   return async function(dispatch) {
     try {
       const res = await get('/webtools-addon-sitemap/content-types/');
@@ -132,7 +128,7 @@ export function getContentTypesSucceeded(contentTypes) {
   };
 }
 
-export function getLanguages(toggleNotification) {
+export function getLanguages(toggleNotification, get) {
   return async function(dispatch) {
     try {
       const res = await get('/webtools-addon-sitemap/languages/');
@@ -151,7 +147,7 @@ export function getLanguagesSucceeded(languages) {
   };
 }
 
-export function submit(settings, toggleNotification) {
+export function submit(settings, toggleNotification, put) {
   return async function(dispatch) {
     try {
       await put('/webtools-addon-sitemap/settings/', { data: settings });
@@ -190,7 +186,7 @@ export function deleteCustomEntry(key) {
   };
 }
 
-export function getSitemapInfo(toggleNotification) {
+export function getSitemapInfo(toggleNotification, get) {
   return async function(dispatch) {
     try {
       const res = await get('/webtools-addon-sitemap/info');
@@ -209,7 +205,7 @@ export function getSitemapInfoSucceeded(info) {
   };
 }
 
-export function getAllowedFields(toggleNotification) {
+export function getAllowedFields(toggleNotification, get) {
   return async function(dispatch) {
     try {
       const res = await get('/webtools-addon-sitemap/pattern/allowed-fields/');

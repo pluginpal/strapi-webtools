@@ -4,7 +4,7 @@ import { Map } from 'immutable';
 import { useIntl } from 'react-intl';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { useNotification } from '@strapi/helper-plugin';
+import { useFetchClient, useNotification } from '@strapi/helper-plugin';
 import { Typography, Box, Button, Link } from '@strapi/design-system';
 
 import { generateSitemap } from '../../state/actions/Sitemap';
@@ -15,6 +15,7 @@ const Info = () => {
   const sitemapInfo = useSelector((state) => state.getIn(['sitemap', 'info'], Map()));
   const dispatch = useDispatch();
   const toggleNotification = useNotification();
+  const { get } = useFetchClient();
   const { formatMessage } = useIntl();
 
   const updateDate = new Date(sitemapInfo.get('updateTime'));
@@ -60,7 +61,7 @@ const Info = () => {
               {formatMessage({ id: 'sitemap.Info.NoSitemap.Description', defaultMessage: 'Generate your first sitemap XML with the button below.' })}
             </Typography>
             <Button
-              onClick={() => dispatch(generateSitemap(toggleNotification))}
+              onClick={() => dispatch(generateSitemap(toggleNotification, get))}
               variant="secondary"
               style={{ marginTop: '15px' }}
             >
@@ -104,7 +105,7 @@ const Info = () => {
           )}
           <div style={{ display: 'flex', flexDirection: 'row' }}>
             <Button
-              onClick={() => dispatch(generateSitemap(toggleNotification))}
+              onClick={() => dispatch(generateSitemap(toggleNotification, get))}
               variant="secondary"
               style={{ marginRight: '10px' }}
             >

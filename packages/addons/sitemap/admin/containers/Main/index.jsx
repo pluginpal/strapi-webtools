@@ -8,7 +8,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { useNotification } from '@strapi/helper-plugin';
+import { useFetchClient, useNotification } from '@strapi/helper-plugin';
 
 import Tabs from '../../components/Tabs';
 import Header from '../../components/Header';
@@ -22,13 +22,14 @@ const App = () => {
 
   const dispatch = useDispatch();
   const toggleNotification = useNotification();
+  const { get } = useFetchClient();
 
   useEffect(() => {
-    dispatch(getSettings(toggleNotification));
-    dispatch(getLanguages(toggleNotification));
-    dispatch(getContentTypes(toggleNotification));
-    dispatch(getSitemapInfo(toggleNotification));
-    dispatch(getAllowedFields(toggleNotification));
+    dispatch(getSettings(toggleNotification, get));
+    dispatch(getLanguages(toggleNotification, get));
+    dispatch(getContentTypes(toggleNotification, get));
+    dispatch(getSitemapInfo(toggleNotification, get));
+    dispatch(getAllowedFields(toggleNotification, get));
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
 

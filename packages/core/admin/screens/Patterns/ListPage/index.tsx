@@ -10,7 +10,7 @@ import {
 } from '@strapi/design-system';
 
 import { Plus } from '@strapi/icons';
-import { useFetchClient } from "@strapi/helper-plugin";
+import { useFetchClient } from '@strapi/helper-plugin';
 
 import pluginId from '../../../helpers/pluginId';
 import Table from './components/Table';
@@ -36,6 +36,7 @@ const ListPatternPage = () => {
       }
     };
 
+    // eslint-disable-next-line
     fetchData();
   }, [fetchClient]);
 
