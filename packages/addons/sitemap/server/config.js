@@ -6,7 +6,6 @@ export default {
     limit: 45000,
     xsl: true,
     autoGenerate: false,
-    caching: true,
   },
   validator() {},
 };

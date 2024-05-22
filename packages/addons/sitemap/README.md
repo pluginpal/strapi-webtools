@@ -210,7 +210,6 @@ module.exports = ({ env }) => ({
       limit: 45000,
       xsl: true,
       autoGenerate: false,
-      caching: true,
     },
   },
 });
@@ -258,14 +257,6 @@ Also the search engines don't even crawl your sitemap that often, so generating 
 ###### Key: `autoGenerate `
 
 > `required:` NO | `type:` bool | `default:` false
-
-### Caching
-
-This setting works together with the `autoGenerate` setting. When enabled a JSON representation of the current sitemap will be stored in the database. Then, whenever the sitemap is being regenerated through lifecycles, the cache will be queried to build the sitemap instead of querying all individual (unchanged) pages.
-
-###### Key: `caching `
-
-> `required:` NO | `type:` bool | `default:` true
 
 ## 🤝 Contributing
 
