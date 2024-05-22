@@ -1,12 +1,12 @@
 {
   "name": "@pluginpal/webtools-addon-sitemap",
   "version": "1.0.0-beta.5",
-  "description": "This is the description of the plugin.",
+  "description": "Generate a highly customizable sitemap XML in Strapi CMS.",
   "strapi": {
     "name": "webtools-addon-sitemap",
-    "icon": "list",
+    "icon": "sitemap",
     "displayName": "Webtools Sitemap",
-    "description": "This is the description of the plugin.",
+    "description": "Generate a highly customizable sitemap XML in Strapi CMS.",
     "required": false,
     "kind": "plugin",
     "webtoolsAddon": true,
@@ -68,9 +68,21 @@
     "xml2js": "^0.5.0"
   },
   "author": {
-    "name": "TODO"
+    "name": "Boaz Poolman",
+    "email": "boaz@pluginpal.io",
+    "url": "https://github.com/boazpoolman"
   },
-  "maintainers": [],
+  "maintainers": [
+    {
+      "name": "Boaz Poolman",
+      "email": "boaz@pluginpal.io",
+      "url": "https://github.com/boazpoolman"
+    }
+  ],
+  "bugs": {
+    "url": "https://github.com/pluginpal/strapi-webtools/issues"
+  },
+  "homepage": "https://github.com/pluginpal/strapi-webtools",
   "engines": {
     "node": ">=18.x.x <=20.x.x",
     "npm": ">=6.0.0"

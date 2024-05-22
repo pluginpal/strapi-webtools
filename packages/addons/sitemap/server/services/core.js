@@ -11,6 +11,29 @@ import { isEmpty } from 'lodash';
 import { logMessage, getService } from '../utils';
 
 /**
+ * Add link x-default url to url bundles from strapi i18n plugin default locale.
+ *
+ * @param {object} config - The config object.
+ * @param {object} links - The language links.
+ *
+ * @returns {object | undefined} The default language link.
+ */
+const getDefaultLanguageLink = async (config, links) => {
+  if (config.defaultLanguageUrlType === 'default-locale') {
+    const { getDefaultLocale } = strapi.plugin('i18n').service('locales');
+    const defaultLocale = await getDefaultLocale();
+
+    // find url with default locale in generated bundle
+    const url = links.find((link) => link.lang === defaultLocale)?.url;
+    if (url) return { lang: 'x-default', url };
+  }
+
+  if (config.defaultLanguageUrlType === 'other' && config.defaultLanguageUrl) {
+    return { lang: 'x-default', url: config.defaultLanguageUrl };
+  }
+};
+
+/**
  * Get a formatted array of different language URLs of a single page.
  *
  * @param {object} config - The config object.
@@ -56,6 +79,12 @@ const getLanguageLinks = (config, page, contentType, defaultURL) => {
     });
   });
 
+  // add optional x-default link url
+  if (config.defaultLanguageUrlType) {
+    const defaultLink = getService('core').getDefaultLanguageLink(config, links);
+    if (defaultLink) links.push(defaultLink);
+  }
+
   return links;
 };
 
@@ -97,7 +126,7 @@ const getSitemapPageData = async (config, page, contentType) => {
   const pageData = {
     lastmod: page.updatedAt,
     url: path,
-    links: getLanguageLinks(config, page, contentType, url),
+    links: getService('core').getLanguageLinks(config, page, contentType, url),
     changefreq: config.contentTypes[contentType]['languages'][locale].changefreq || 'monthly',
     priority: parseFloat(config.contentTypes[contentType]['languages'][locale].priority) || 0.5,
   };
@@ -125,7 +154,7 @@ const createSitemapEntries = async () => {
 
     // Add formatted sitemap page data to the array.
     await Promise.all(pages.map(async (page, i) => {
-      const pageData = await getSitemapPageData(config, page, contentType);
+      const pageData = await getService('core').getSitemapPageData(config, page, contentType);
       if (pageData) {
         sitemapEntries.push(pageData);
       }
@@ -250,7 +279,7 @@ const getSitemapStream = async (urlCount) => {
  * @returns {void}
  */
 const createSitemap = async () => {
-  const sitemapEntries = await createSitemapEntries();
+  const sitemapEntries = await getService('core').createSitemapEntries();
 
   if (isEmpty(sitemapEntries)) {
     strapi.log.info(logMessage('No sitemap XML was generated because there were 0 URLs configured.'));
@@ -263,12 +292,13 @@ const createSitemap = async () => {
   sitemapEntries.map((sitemapEntry) => sitemap.write(sitemapEntry));
   sitemap.end();
 
-  await saveSitemap('default', sitemap, isIndex);
+  await getService('core').saveSitemap('default', sitemap, isIndex);
 
   strapi.log.info(logMessage('The sitemap XML has been generated. It can be accessed on /api/sitemap/index.xml.'));
 };
 
 export default () => ({
+  getDefaultLanguageLink,
   getLanguageLinks,
   getSitemapPageData,
   createSitemapEntries,

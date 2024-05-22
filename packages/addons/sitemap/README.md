@@ -208,6 +208,14 @@ This setting will add a default `/` entry to the sitemap XML when none is presen
 
 > `required:` NO | `type:` bool | `default:` true
 
+### Default language URL (x-default)
+
+This setting will add an additionnal `<link />` tag into each sitemap urls bundles with value `hreflang="x-default"` and the path of your choice. The hreflang x-default value is used to specify the language and region neutral URL for a piece of content when the site doesn't support the user's language and region. For example, if a page has hreflang annotations for English and Spanish versions of a page along with an x-default value pointing to the English version, French speaking users are sent to the English version of the page due to the x-default annotation. The x-default page can be a language and country selector page, the page where you redirect users when you have no content for their region, or just the version of the content that you consider default. 
+
+###### Key: `defaultLanguageUrlType`
+
+> `required:` NO | `type:` string | `default:` ''
+
 ## 🔧 Config
 Config can be changed in the `config/plugins.js` file in your Strapi project.
 You can overwrite the config like so:
@@ -294,6 +302,9 @@ When defining a URL pattern you can populate it with dynamic fields. The fields 
 This setting is just here for mere convenience. When adding a URL bundle to the sitemap you can specify the type for the bundle. This will show all types in Strapi, however some types should never be it's own page in a website and are therefor excluded in this setting.
 
 All types in this array will not be shown as an option when selecting the type of a URL bundle. 
+
+The format of the types should look something like `api::test.api`.
+To see all the types you can choose from, run `strapi content-types:list`.
 
 ###### Key: `excludedTypes `
 
