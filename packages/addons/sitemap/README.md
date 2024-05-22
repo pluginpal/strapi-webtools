@@ -1,5 +1,5 @@
 <div align="center">
-<h1>Strapi sitemap plugin</h1>
+<h1>Webtools Sitemap add-on</h1>
 	
 <p style="margin-top: 0;">Create a highly customizable sitemap XML in Strapi CMS.</p>
 	
@@ -23,7 +23,6 @@
 
 - **Multilingual** (Implements `rel="alternate"` with `@strapi/plugin-i18n`)
 - **URL bundles** (Bundle URLs by type and add them to the sitemap XML)
-- **Dynamic paths** (Implements URL patterns in which you can inject dynamic fields)
 - **Virtual sitemap** (Sitemaps served from the database)
 - **Cron regeneration** (Automatically scheduled cron job for regeneration)
 - **Sitemap indexes** (Paginated sitemap indexes for large URL sets)
@@ -77,7 +76,7 @@ Complete installation requirements are the exact same as for Strapi itself and c
 With this plugin you have full control over which URLs you add to your sitemap XML. Go to the admin section of the plugin and start adding URLs. Here you will find that there are two ways to add URLs to the sitemap. With **URL bundles** and **Custom URLs**.
 
 ### URL bundles
-A URL bundle is a set of URLs grouped by type. When adding a URL bundle to the sitemap you can define a **URL pattern** which will be used to generate all URLs in this bundle. (Read more about URL patterns below)
+A URL bundle is a set of URLs grouped by type. If you set up an URL bundle, all pages of that content type will end up in the sitemap.
 
 URLs coming from a URL bundle will get the following XML attributes:
 
@@ -94,24 +93,6 @@ Custom URLs will get the following XML attributes:
 - `<loc>`
 - `<priority>`
 - `<changefreq>`
-
-## 🔌 URL pattern
-To create dynamic URLs this plugin uses **URL patterns**. A URL pattern is used when adding URL bundles to the sitemap and has the following format:
-
-```
-/pages/[category.slug]/[my-uid-field]
-```
-
-Fields can be injected in the pattern by escaping them with `[]`.
-
-Also relations can be queried in the pattern like so: `[relation.fieldname]`.
-
-The following field types are by default allowed in a pattern:
-
-- `id`
-- `uid`
-
-*Allowed field types can be altered with the `allowedFields` config. Read more about it below.*
 
 ## 🌍 Multilingual
 
@@ -231,8 +212,6 @@ module.exports = ({ env }) => ({
       xsl: true,
       autoGenerate: false,
       caching: true,
-      allowedFields: ['id', 'uid'],
-      excludedTypes: [],
     },
   },
 });
@@ -288,27 +267,6 @@ This setting works together with the `autoGenerate` setting. When enabled a JSON
 ###### Key: `caching `
 
 > `required:` NO | `type:` bool | `default:` true
-
-### Allowed fields
-When defining a URL pattern you can populate it with dynamic fields. The fields allowed in the pattern can be manipulated with this setting. Fields can be specified either by type or by name. By default the plugin allows `id` and `uid`.
-
-*If you are missing a key field type of which you think it should be allowed by default please create an issue and explain why it is needed.*
-
-###### Key: `allowedFields `
-
-> `required:` NO | `type:` array | `default:` `['id', 'uid']`
-
-### Excluded types
-This setting is just here for mere convenience. When adding a URL bundle to the sitemap you can specify the type for the bundle. This will show all types in Strapi, however some types should never be it's own page in a website and are therefor excluded in this setting.
-
-All types in this array will not be shown as an option when selecting the type of a URL bundle. 
-
-The format of the types should look something like `api::test.api`.
-To see all the types you can choose from, run `strapi content-types:list`.
-
-###### Key: `excludedTypes `
-
-> `required:` NO | `type:` array
 
 ## 🤝 Contributing
 
