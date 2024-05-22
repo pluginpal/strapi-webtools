@@ -4,17 +4,17 @@
 <p style="margin-top: 0;">Create a highly customizable sitemap XML in Strapi CMS.</p>
 	
 <p>
-  <a href="https://www.npmjs.org/package/strapi-plugin-sitemap">
-    <img src="https://img.shields.io/npm/v/strapi-plugin-sitemap/latest.svg" alt="NPM Version" />
+  <a href="https://www.npmjs.org/package/@pluginpal/webtools-addon-sitemap">
+    <img src="https://img.shields.io/npm/v/@pluginpal/webtools-addon-sitemap/latest.svg" alt="NPM Version" />
   </a>
-  <a href="https://www.npmjs.org/package/strapi-plugin-sitemap">
-    <img src="https://img.shields.io/npm/dm/strapi-plugin-sitemap" alt="Monthly download on NPM" />
+  <a href="https://www.npmjs.org/package/@pluginpal/webtools-addon-sitemap">
+    <img src="https://img.shields.io/npm/dm/@pluginpal/webtools-addon-sitemap" alt="Monthly download on NPM" />
   </a>
-  <a href="https://codecov.io/gh/boazpoolman/strapi-plugin-sitemap">
-    <img src="https://img.shields.io/github/actions/workflow/status/boazpoolman/strapi-plugin-sitemap/tests.yml?branch=master" alt="CI build status" />
+  <a href="https://codecov.io/gh/boazpoolman/@pluginpal/webtools-addon-sitemap">
+    <img src="https://img.shields.io/github/actions/workflow/status/boazpoolman/@pluginpal/webtools-addon-sitemap/tests.yml?branch=master" alt="CI build status" />
   </a>
-  <a href="https://codecov.io/gh/boazpoolman/strapi-plugin-sitemap">
-    <img src="https://codecov.io/gh/boazpoolman/strapi-plugin-sitemap/coverage.svg?branch=master" alt="codecov.io" />
+  <a href="https://codecov.io/gh/boazpoolman/@pluginpal/webtools-addon-sitemap">
+    <img src="https://codecov.io/gh/boazpoolman/@pluginpal/webtools-addon-sitemap/coverage.svg?branch=master" alt="codecov.io" />
   </a>
 </p>
 </div>
@@ -38,10 +38,10 @@ Install the plugin in your Strapi project.
 
 ```bash
 # using yarn
-yarn add strapi-plugin-sitemap
+yarn add @pluginpal/webtools-addon-sitemap
 
 # using npm
-npm install strapi-plugin-sitemap --save
+npm install @pluginpal/webtools-addon-sitemap --save
 ```
 
 After successful installation you have to rebuild the admin UI so it'll include this plugin. To rebuild and restart Strapi run:
@@ -66,8 +66,8 @@ Complete installation requirements are the exact same as for Strapi itself and c
 
 **Supported Strapi versions**:
 
-- Strapi ^4.11.4 (use `strapi-plugin-sitemap@^3`)
-- Strapi ^4.5.x (use `strapi-plugin-sitemap@^2`)
+- Strapi ^4.11.4 (use `@pluginpal/webtools-addon-sitemap@^3`)
+- Strapi ^4.5.x (use `@pluginpal/webtools-addon-sitemap@^2`)
 
 (This plugin may work with older Strapi versions, but these are not tested nor officially supported.)
 
@@ -320,8 +320,8 @@ Give a star if this project helped you.
 
 ## 🔗 Links
 
-- [NPM package](https://www.npmjs.com/package/strapi-plugin-sitemap)
-- [GitHub repository](https://github.com/boazpoolman/strapi-plugin-sitemap)
+- [NPM package](https://www.npmjs.com/package/@pluginpal/webtools-addon-sitemap)
+- [GitHub repository](https://github.com/pluginpal/strapi-webtools)
 
 ## 🌎 Community support
 
