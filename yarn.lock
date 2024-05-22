@@ -2750,7 +2750,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@floating-ui/react-dom@npm:^2.0.0, @floating-ui/react-dom@npm:^2.0.5, @floating-ui/react-dom@npm:^2.0.8":
+"@floating-ui/react-dom@npm:^2.0.0, @floating-ui/react-dom@npm:^2.0.8":
   version: 2.0.9
   resolution: "@floating-ui/react-dom@npm:2.0.9"
   dependencies:
@@ -2759,6 +2759,18 @@ __metadata:
     react: ">=16.8.0"
     react-dom: ">=16.8.0"
   checksum: d8cd1fb2b8a5012ca692d6f677a0af923ef81131f69accea8ce8b5413202ab4c3c79e6eda1446f4dad06a2dfd596ece748c562ba28c289678a856755db4f528f
+  languageName: node
+  linkType: hard
+
+"@floating-ui/react-dom@npm:^2.0.5":
+  version: 2.1.0
+  resolution: "@floating-ui/react-dom@npm:2.1.0"
+  dependencies:
+    "@floating-ui/dom": "npm:^1.0.0"
+  peerDependencies:
+    react: ">=16.8.0"
+    react-dom: ">=16.8.0"
+  checksum: 9ee44dfeb27f585fb1e0114cbe37c72ff5d34149900f4f3013f6b0abf8c3365eab13286c360f97fbe0c44bb91a745e7a4c18b82d111990b45a7a7796dc55e461
   languageName: node
   linkType: hard
 
@@ -2885,7 +2897,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@internationalized/date@npm:^3.5.1, @internationalized/date@npm:^3.5.2":
+"@internationalized/date@npm:^3.5.1":
+  version: 3.5.4
+  resolution: "@internationalized/date@npm:3.5.4"
+  dependencies:
+    "@swc/helpers": "npm:^0.5.0"
+  checksum: 4e1fe3e2ad1719390e9b859ee23e8b7e9315ddfc2a0fcf446d8954a5b41147a4bed025f9d9718e0d4a6f097407af87ac0bdea3879d23d2a84757dd5aa5b9edf8
+  languageName: node
+  linkType: hard
+
+"@internationalized/date@npm:^3.5.2":
   version: 3.5.3
   resolution: "@internationalized/date@npm:3.5.3"
   dependencies:
@@ -2894,7 +2915,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@internationalized/number@npm:^3.5.0, @internationalized/number@npm:^3.5.1":
+"@internationalized/number@npm:^3.5.0":
+  version: 3.5.3
+  resolution: "@internationalized/number@npm:3.5.3"
+  dependencies:
+    "@swc/helpers": "npm:^0.5.0"
+  checksum: dd1bb4e89c6468b97e8357e1ba0a60234bd2c8226f3241c4c7499e5b1791ba0574127ea6de0fd6c4158e2ceef564bba6531a8f5589e58b820df669e312500f99
+  languageName: node
+  linkType: hard
+
+"@internationalized/number@npm:^3.5.1":
   version: 3.5.2
   resolution: "@internationalized/number@npm:3.5.2"
   dependencies:
@@ -3448,6 +3478,7 @@ __metadata:
   dependencies:
     "@pluginpal/webtools-helper-plugin": "npm:1.0.0-beta.3"
     "@strapi/helper-plugin": "npm:4.20.3"
+    "@strapi/strapi": "npm:4.20.3"
     chalk: "npm:^4.1.2"
     commander: "npm:^8.3.0"
     copyfiles: "npm:^2.4.1"

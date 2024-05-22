@@ -59,6 +59,7 @@
   "dependencies": {
     "@pluginpal/webtools-helper-plugin": "1.0.0-beta.3",
     "@strapi/helper-plugin": "4.20.3",
+    "@strapi/strapi": "4.20.3",
     "chalk": "^4.1.2",
     "commander": "^8.3.0",
     "immutable": "^3.8.2",
