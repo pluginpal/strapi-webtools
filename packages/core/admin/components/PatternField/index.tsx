@@ -9,7 +9,7 @@ import { FormikErrors } from 'formik';
 import {
   TextInput, Popover, Stack, Box, Loader, Typography,
 } from '@strapi/design-system';
-import { request } from '@strapi/helper-plugin';
+import { useFetchClient } from '@strapi/helper-plugin';
 import { PatternFormValues } from '../../types/url-patterns';
 import { Theme } from '../../types/theme';
 
@@ -31,6 +31,7 @@ const PatternField: FC<Props> = ({
   const [loadingError, setLoadingError] = useState(false);
   const [allowedFields, setAllowedFields] = useState<Record<string, string[]>>(null);
   const { formatMessage } = useIntl();
+  const { get } = useFetchClient();
 
   const [popoverDismissed, setPopoverDismissed] = useState(false);
 
@@ -38,8 +39,8 @@ const PatternField: FC<Props> = ({
     const fetchAllowedFields = async () => {
       try {
         setLoading(true);
-        const data = await request<Record<string, string[]>>('/webtools/url-pattern/allowed-fields', { method: 'GET' });
-        setAllowedFields(data);
+        const data = await get<Record<string, string[]>>('/webtools/url-pattern/allowed-fields', { method: 'GET' });
+        setAllowedFields(data.data);
         setLoading(false);
       } catch (err) {
         setLoading(false);
@@ -47,9 +48,12 @@ const PatternField: FC<Props> = ({
       }
     };
 
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
-    fetchAllowedFields();
-  }, []);
+    fetchAllowedFields().catch(() => {
+      console.error('Failed to fetch allowed fields:', error);
+      setLoadingError(true);
+      setLoading(false);
+    });
+  }, [error, get]);
 
   const HoverBox = styled(Box)`
     cursor: pointer;

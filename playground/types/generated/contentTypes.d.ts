@@ -923,12 +923,7 @@ export interface ApiCategoryCategory extends Schema.CollectionType {
       'oneToOne',
       'plugin::webtools.url-alias'
     > &
-      Attribute.Unique &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
+      Attribute.Unique;
     localizations: Attribute.Relation<
       'api::category.category',
       'oneToMany',

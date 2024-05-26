@@ -122,7 +122,7 @@ const CreatePatternPage = () => {
     <Formik<PatternFormValues>
       enableReinitialize
       initialValues={{
-          label: '', pattern: '', contenttype: '', languages: [], localized: false,
+        label: '', pattern: '', contenttype: '', languages: [], localized: false,
       }}
       onSubmit={handleCreateSubmit}
       validationSchema={schema}
@@ -222,7 +222,7 @@ const CreatePatternPage = () => {
                                     : null
                               }
                       />
-                      </GridItem>
+                    </GridItem>
                     )}
                     <HiddenLocalizedField
                       localized={getSelectedContentType(values.contenttype)?.localized}
@@ -241,7 +241,7 @@ const CreatePatternPage = () => {
                             }
                           />
                         </GridItem>
-                    </GridItem>
+                      </GridItem>
                     )}
                   </Grid>
                 </Stack>
