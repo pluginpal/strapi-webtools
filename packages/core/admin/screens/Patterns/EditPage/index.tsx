@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { Formik, Form, FormikProps } from 'formik';
 import { useRouteMatch, useHistory } from 'react-router-dom';
-
 import {
   ContentLayout,
   HeaderLayout,
@@ -17,9 +16,7 @@ import {
 } from '@strapi/design-system';
 import { useFetchClient, useNotification } from '@strapi/helper-plugin';
 import { ArrowLeft, Check } from '@strapi/icons';
-
 import schema from './utils/schema';
-
 import pluginId from '../../../helpers/pluginId';
 import Center from '../../../components/Center';
 import Select from '../../../components/Select';
@@ -54,7 +51,7 @@ const EditPatternPage = () => {
       .catch(() => {
         setLoading(false);
       });
-  }, []);
+  }, [get]);
 
   useEffect(() => {
     setLoading(true);
@@ -67,8 +64,8 @@ const EditPatternPage = () => {
       .catch(() => {
         setLoading(false);
       });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [get, id]);
 
   const handleEditSubmit = (
     values: PatternFormValues,
@@ -87,7 +84,7 @@ const EditPatternPage = () => {
       })
       .catch((err) => {
         if (
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
           err.response.data[0].message === 'This attribute must be unique'
         ) {
           // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
@@ -175,7 +172,7 @@ const EditPatternPage = () => {
             subtitle={formatMessage({
               id: 'webtools.settings.page.patterns.edit.description',
               defaultMessage:
-                'Edit this pattern for automatic URL alias generation.',
+                                'Edit this pattern for automatic URL alias generation.',
             })}
             as="h2"
             navigationAction={(
@@ -188,7 +185,7 @@ const EditPatternPage = () => {
                   defaultMessage: 'Back',
                 })}
               </Link>
-            )}
+                        )}
             primaryAction={(
               <Button
                 type="submit"
@@ -200,7 +197,7 @@ const EditPatternPage = () => {
                   defaultMessage: 'Save',
                 })}
               </Button>
-            )}
+                        )}
           />
           <ContentLayout>
             <Stack spacing={7}>
@@ -232,16 +229,16 @@ const EditPatternPage = () => {
                           defaultMessage: 'Content type',
                         })}
                         error={
-                          errors.contenttype && touched.contenttype
-                            ? formatMessage({
-                              id:
-                                typeof errors.contenttype === 'string'
-                                  ? errors.contenttype
-                                  : undefined,
-                              defaultMessage: 'Invalid value',
-                            })
-                            : null
-                        }
+                                                    errors.contenttype && touched.contenttype
+                                                      ? formatMessage({
+                                                        id:
+                                                                typeof errors.contenttype === 'string'
+                                                                  ? errors.contenttype
+                                                                  : undefined,
+                                                        defaultMessage: 'Invalid value',
+                                                      })
+                                                      : null
+                                                }
                       />
                     </GridItem>
                     <GridItem col={12} />
@@ -256,20 +253,20 @@ const EditPatternPage = () => {
                     </GridItem>
                     <GridItem col={12} />
                     {values.contenttype !== '' && (
-                      <GridItem col={6}>
-                        <PatternField
-                          values={values}
-                          uid={values.contenttype}
-                          setFieldValue={setFieldValue}
-                          error={
+                    <GridItem col={6}>
+                      <PatternField
+                        values={values}
+                        uid={values.contenttype}
+                        setFieldValue={setFieldValue}
+                        error={
                             errors.pattern
-                              && touched.pattern
-                              && typeof errors.pattern === 'string'
+                            && touched.pattern
+                            && typeof errors.pattern === 'string'
                               ? errors.pattern
                               : null
-                          }
-                        />
-                      </GridItem>
+                        }
+                      />
+                    </GridItem>
                     )}
                     <HiddenLocalizedField
                       localized={getSelectedContentType(values.contenttype)?.localized}

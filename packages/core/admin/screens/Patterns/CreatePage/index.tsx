@@ -22,9 +22,7 @@ import {
 } from '@strapi/design-system';
 import { ArrowLeft, Check } from '@strapi/icons';
 import { useNotification, useFetchClient } from '@strapi/helper-plugin';
-
 import schema from './utils/schema';
-
 import pluginId from '../../../helpers/pluginId';
 import Center from '../../../components/Center';
 import Select from '../../../components/Select';
@@ -35,7 +33,13 @@ import { EnabledContentTypes } from '../../../types/enabled-contenttypes';
 import LanguageCheckboxes from '../../../components/LanguageCheckboxes';
 import HiddenLocalizedField from '../../../components/HiddenLocalizedField';
 
-const CreatePattternPage = () => {
+interface ErrorResponse {
+  response: {
+    payload: Array<{ message: string }>;
+  };
+}
+
+const CreatePatternPage = () => {
   const { push } = useHistory();
   const toggleNotification = useNotification();
   const [loading, setLoading] = useState(false);
@@ -56,7 +60,6 @@ const CreatePattternPage = () => {
       });
   }, [get]);
 
-
   const handleCreateSubmit = (
     values: PatternFormValues,
     { setSubmitting, setErrors }: FormikProps<PatternFormValues>,
@@ -69,10 +72,8 @@ const CreatePattternPage = () => {
         toggleNotification({ type: 'success', message: { id: 'webtools.settings.success.create' } });
         setSubmitting(false);
       })
-      .catch((err) => {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-        if (err.response.payload[0].message === 'This attribute must be unique') {
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      .catch((err: ErrorResponse) => {
+        if (err.response?.payload?.[0]?.message === 'This attribute must be unique') {
           setErrors({ code: err.response.payload[0].message as string });
         } else {
           toggleNotification({ type: 'warning', message: { id: 'notification.error' } });
@@ -90,13 +91,13 @@ const CreatePattternPage = () => {
         modelName: values.contenttype,
       },
     })
-      .then((res: ValidatePatternResponse | any) => {
-        if (res.valid === false) {
-          errors.pattern = res.message;
+      .then((res) => {
+        const response = res.data as ValidatePatternResponse;
+        if (response.valid === false) {
+          errors.pattern = response.message;
         }
       })
-      .catch(() => {
-      });
+      .catch(() => {});
 
     return errors;
   };
@@ -121,19 +122,30 @@ const CreatePattternPage = () => {
     <Formik<PatternFormValues>
       enableReinitialize
       initialValues={{
-        label: '', pattern: '', contenttype: '', languages: [], localized: false,
+          label: '', pattern: '', contenttype: '', languages: [], localized: false,
       }}
       onSubmit={handleCreateSubmit}
       validationSchema={schema}
       validate={validatePattern}
     >
       {({
-        handleSubmit, values, errors, touched, isSubmitting, setFieldValue,
+        handleSubmit,
+        values,
+        errors,
+        touched,
+        isSubmitting,
+        setFieldValue,
       }) => (
         <Form noValidate onSubmit={handleSubmit} placeholder={null}>
           <HeaderLayout
-            title={formatMessage({ id: 'webtools.settings.page.patterns.create.title', defaultMessage: 'Add new pattern' })}
-            subtitle={formatMessage({ id: 'webtools.settings.page.patterns.create.description', defaultMessage: 'Add a pattern for automatic URL alias generation.' })}
+            title={formatMessage({
+              id: 'webtools.settings.page.patterns.create.title',
+              defaultMessage: 'Add new pattern',
+            })}
+            subtitle={formatMessage({
+              id: 'webtools.settings.page.patterns.create.description',
+              defaultMessage: 'Add a pattern for automatic URL alias generation.',
+            })}
             as="h2"
             navigationAction={(
               <Link startIcon={<ArrowLeft />} to={`/plugins/${pluginId}/patterns`}>
@@ -142,7 +154,7 @@ const CreatePattternPage = () => {
                   defaultMessage: 'Back',
                 })}
               </Link>
-            )}
+                          )}
             primaryAction={(
               <Button type="submit" loading={isSubmitting} startIcon={<Check />}>
                 {formatMessage({
@@ -150,7 +162,7 @@ const CreatePattternPage = () => {
                   defaultMessage: 'Save',
                 })}
               </Button>
-            )}
+                          )}
           />
           <ContentLayout>
             <Stack spacing={7}>
@@ -182,9 +194,9 @@ const CreatePattternPage = () => {
                           defaultMessage: 'Content type',
                         })}
                         error={
-                          errors.contenttype && touched.contenttype
-                            ? formatMessage({ id: String(errors.contenttype), defaultMessage: 'Invalid value' })
-                            : null
+                            errors.contenttype && touched.contenttype
+                              ? formatMessage({ id: String(errors.contenttype), defaultMessage: 'Invalid value' })
+                              : null
                         }
                       />
                     </GridItem>
@@ -199,17 +211,17 @@ const CreatePattternPage = () => {
                     </GridItem>
                     <GridItem col={12} />
                     {(values.contenttype !== '') && (
-                      <GridItem col={6}>
-                        <PatternField
-                          values={values}
-                          uid={values.contenttype}
-                          setFieldValue={setFieldValue}
-                          error={
-                            errors.pattern && touched.pattern
-                              ? errors.pattern
-                              : null
-                          }
-                        />
+                    <GridItem col={6}>
+                      <PatternField
+                        values={values}
+                        uid={values.contenttype}
+                        setFieldValue={setFieldValue}
+                        error={
+                                  errors.pattern && touched.pattern
+                                    ? errors.pattern
+                                    : null
+                              }
+                      />
                       </GridItem>
                     )}
                     <HiddenLocalizedField
@@ -229,7 +241,7 @@ const CreatePattternPage = () => {
                             }
                           />
                         </GridItem>
-                      </GridItem>
+                    </GridItem>
                     )}
                   </Grid>
                 </Stack>
@@ -242,4 +254,4 @@ const CreatePattternPage = () => {
   );
 };
 
-export default CreatePattternPage;
+export default CreatePatternPage;
