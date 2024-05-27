@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 
-import { useCMEditViewDataManager, request } from '@strapi/helper-plugin';
+import { useCMEditViewDataManager, useFetchClient } from '@strapi/helper-plugin';
 import { Box, Checkbox } from '@strapi/design-system';
 import { SidebarDropdown } from '@pluginpal/webtools-helper-plugin';
 
@@ -10,16 +10,17 @@ import getTrad from '../../helpers/getTrad';
 const CMEditViewExclude = () => {
   const [sitemapSettings, setSitemapSettings] = useState({});
   const { formatMessage } = useIntl();
+  const { get } = useFetchClient();
   const { modifiedData, onChange, ...props } = useCMEditViewDataManager();
 
-  const getSitemapSettings = async () => {
-    const settings = await request('/webtools-addon-sitemap/settings/', { method: 'GET' });
-    setSitemapSettings(settings);
-  };
-
   useEffect(() => {
+    const getSitemapSettings = async () => {
+      const settings = await get('/webtools-addon-sitemap/settings/');
+      setSitemapSettings(settings.data);
+    };
+
     getSitemapSettings();
-  }, []);
+  }, [get]);
 
   if (!sitemapSettings.contentTypes) return null;
   if (!sitemapSettings.contentTypes[props.slug]) return null;
