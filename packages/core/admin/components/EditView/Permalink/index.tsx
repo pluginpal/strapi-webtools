@@ -13,9 +13,9 @@ const EditViewRightLinks: React.FC<Props> = ({ path }) => {
   const fetchClient = useFetchClient();
 
   useEffect(() => {
-    fetchClient.get('/webtools/info/config')
+    fetchClient.get<Config>('/webtools/info/config')
       .then((response) => {
-        const configData = response.data as Config;
+        const configData = response.data;
         setUrl(configData.website_url);
       })
       .catch((error) => {

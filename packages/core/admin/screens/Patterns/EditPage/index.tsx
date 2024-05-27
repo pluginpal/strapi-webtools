@@ -16,6 +16,7 @@ import {
 } from '@strapi/design-system';
 import { useFetchClient, useNotification } from '@strapi/helper-plugin';
 import { ArrowLeft, Check } from '@strapi/icons';
+import { ErrorResponse } from '../../../types/error-response';
 import schema from './utils/schema';
 import pluginId from '../../../helpers/pluginId';
 import Center from '../../../components/Center';
@@ -42,9 +43,9 @@ const EditPatternPage = () => {
 
   useEffect(() => {
     setLoading(true);
-    get('/webtools/info/getContentTypes', { method: 'GET' })
+    get<EnabledContentTypes>('/webtools/info/getContentTypes', { method: 'GET' })
       .then((res) => {
-        const data = res.data as EnabledContentTypes;
+        const { data } = res;
         setContentTypes(data);
         setLoading(false);
       })
@@ -55,9 +56,9 @@ const EditPatternPage = () => {
 
   useEffect(() => {
     setLoading(true);
-    get(`/webtools/url-pattern/findOne/${id}`, { method: 'GET' })
+    get<PatternEntity>(`/webtools/url-pattern/findOne/${id}`, { method: 'GET' })
       .then((res) => {
-        const data = res.data as PatternEntity;
+        const { data } = res;
         setPatternEntity(data);
         setLoading(false);
       })
@@ -82,13 +83,9 @@ const EditPatternPage = () => {
         });
         setSubmitting(false);
       })
-      .catch((err) => {
-        if (
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-          err.response.data[0].message === 'This attribute must be unique'
-        ) {
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-          setErrors({ code: err.response.data[0].message as string });
+      .catch((err: ErrorResponse) => {
+        if (err.response.payload[0].message === 'This attribute must be unique') {
+          setErrors({ code: err.response.payload[0].message as string });
         } else {
           toggleNotification({
             type: 'warning',
@@ -229,16 +226,16 @@ const EditPatternPage = () => {
                           defaultMessage: 'Content type',
                         })}
                         error={
-                                                    errors.contenttype && touched.contenttype
-                                                      ? formatMessage({
-                                                        id:
-                                                                typeof errors.contenttype === 'string'
-                                                                  ? errors.contenttype
-                                                                  : undefined,
-                                                        defaultMessage: 'Invalid value',
-                                                      })
-                                                      : null
-                                                }
+                            errors.contenttype && touched.contenttype
+                              ? formatMessage({
+                                id:
+                                        typeof errors.contenttype === 'string'
+                                          ? errors.contenttype
+                                          : undefined,
+                                defaultMessage: 'Invalid value',
+                              })
+                              : null
+                        }
                       />
                     </GridItem>
                     <GridItem col={12} />

@@ -23,6 +23,7 @@ import {
 import { ArrowLeft, Check } from '@strapi/icons';
 import { useNotification, useFetchClient } from '@strapi/helper-plugin';
 import schema from './utils/schema';
+import { ErrorResponse } from '../../../types/error-response';
 import pluginId from '../../../helpers/pluginId';
 import Center from '../../../components/Center';
 import Select from '../../../components/Select';
@@ -32,12 +33,6 @@ import { PatternFormValues, ValidatePatternResponse } from '../../../types/url-p
 import { EnabledContentTypes } from '../../../types/enabled-contenttypes';
 import LanguageCheckboxes from '../../../components/LanguageCheckboxes';
 import HiddenLocalizedField from '../../../components/HiddenLocalizedField';
-
-interface ErrorResponse {
-  response: {
-    payload: Array<{ message: string }>;
-  };
-}
 
 const CreatePatternPage = () => {
   const { push } = useHistory();
@@ -49,9 +44,9 @@ const CreatePatternPage = () => {
 
   useEffect(() => {
     setLoading(true);
-    get('/webtools/info/getContentTypes')
+    get<EnabledContentTypes>('/webtools/info/getContentTypes')
       .then((res) => {
-        const data = res.data as EnabledContentTypes;
+        const { data } = res;
         setContentTypes(data);
         setLoading(false);
       })
@@ -85,14 +80,14 @@ const CreatePatternPage = () => {
   const validatePattern = async (values: PatternFormValues) => {
     const errors: FormikErrors<PatternFormValues> = {};
 
-    await post('/webtools/url-pattern/validate', {
+    await post<ValidatePatternResponse>('/webtools/url-pattern/validate', {
       data: {
         pattern: values.pattern,
         modelName: values.contenttype,
       },
     })
       .then((res) => {
-        const response = res.data as ValidatePatternResponse;
+        const response = res.data;
         if (response.valid === false) {
           errors.pattern = response.message;
         }
