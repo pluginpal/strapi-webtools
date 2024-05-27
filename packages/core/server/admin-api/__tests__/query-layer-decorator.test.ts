@@ -211,7 +211,7 @@ describe('Query layer decorator', () => {
     expect(clonedPage).not.toBeNull();
 
     if (clonedPage) {
-      const newUrlAliasPath = `${page.url_alias.url_path}-clone`;
+      const newUrlAliasPath = `${page.url_alias.url_path}-0`;
       expect(clonedPage).toHaveProperty('url_alias.url_path', newUrlAliasPath);
       expect(clonedPage).toHaveProperty('url_alias.generated', true);
       expect(clonedPage).toHaveProperty('url_alias.contenttype', 'api::test.test');

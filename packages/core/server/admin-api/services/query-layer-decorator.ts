@@ -276,10 +276,13 @@ const decorator = (service: IDecoratedService) => ({
       throw new Error('Cloning failed, cloned entity is null or undefined');
     }
 
+    const urlPattern = await getPluginService('urlPatternService').findByUid(uid, clonedEntity.locale);
+    const generatedPath = getPluginService('urlPatternService').resolvePattern(uid, clonedEntity, urlPattern);
+
     // Handle URL alias for the cloned entity
     if (url_alias) {
       const newUrlAlias = await getPluginService('urlAliasService').create({
-        url_path: `${url_alias.url_path}-clone`,
+        url_path: generatedPath,
         generated: true,
         contenttype: uid,
       });
