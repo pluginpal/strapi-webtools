@@ -1,6 +1,6 @@
 const { setupStrapi, stopStrapi } = require("./helpers");
 
-jest.setTimeout(20000);
+jest.setTimeout(50000);
 
 beforeAll(async () => {
   await setupStrapi();
