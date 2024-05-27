@@ -1,13 +1,11 @@
 import React, { useEffect } from 'react';
 import { useIntl } from 'react-intl';
 import { SidebarModal } from '@pluginpal/webtools-helper-plugin';
-
 import { useCMEditViewDataManager, CheckPermissions } from '@strapi/helper-plugin';
-
 import getTrad from '../../helpers/getTrad';
 import EditForm from '../EditForm';
 import Permalink from './Permalink';
-import { createUrlAlias, updateUrlAlias } from '../../api/url-alias';
+import { useCreateUrlAlias, useUpdateUrlAlias } from '../../api/url-alias';
 import { isContentTypeEnabled } from '../../../server/util/enabledContentTypes';
 import { UrlAliasEntity } from '../../types/url-aliases';
 import pluginPermissions from '../../permissions';
@@ -36,6 +34,9 @@ const EditView = () => {
       onChange({ target: { name: 'url_alias', value: null, type: 'text' } });
     }
   }, [modifiedDataUrlAlias, onChange, i18nLang]);
+
+  const { createUrlAlias } = useCreateUrlAlias();
+  const { updateUrlAlias } = useUpdateUrlAlias();
 
   if (!allLayoutData.contentType) return null;
 

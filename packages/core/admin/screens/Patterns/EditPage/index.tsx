@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { Formik, Form, FormikProps } from 'formik';
 import { useRouteMatch, useHistory } from 'react-router-dom';
-
 import {
   ContentLayout,
   HeaderLayout,
@@ -15,11 +14,10 @@ import {
   Grid,
   Loader,
 } from '@strapi/design-system';
-import { request, useNotification } from '@strapi/helper-plugin';
+import { useFetchClient, useNotification } from '@strapi/helper-plugin';
 import { ArrowLeft, Check } from '@strapi/icons';
-
+import { ErrorResponse } from '../../../types/error-response';
 import schema from './utils/schema';
-
 import pluginId from '../../../helpers/pluginId';
 import Center from '../../../components/Center';
 import Select from '../../../components/Select';
@@ -37,6 +35,7 @@ const EditPatternPage = () => {
   const [patternEntity, setPatternEntity] = useState<null | PatternEntity>(null);
   const [contentTypes, setContentTypes] = useState<EnabledContentTypes>([]);
   const { formatMessage } = useIntl();
+  const { get, put, post } = useFetchClient();
 
   const {
     params: { id },
@@ -44,39 +43,37 @@ const EditPatternPage = () => {
 
   useEffect(() => {
     setLoading(true);
-    request('/webtools/info/getContentTypes', { method: 'GET' })
-      .then((res: EnabledContentTypes) => {
-        setContentTypes(res);
+    get<EnabledContentTypes>('/webtools/info/getContentTypes', { method: 'GET' })
+      .then((res) => {
+        const { data } = res;
+        setContentTypes(data);
         setLoading(false);
       })
       .catch(() => {
         setLoading(false);
       });
-  }, []);
+  }, [get]);
 
   useEffect(() => {
     setLoading(true);
-    request(`/webtools/url-pattern/findOne/${id}`, { method: 'GET' })
-      .then((res: PatternEntity) => {
-        setPatternEntity(res);
+    get<PatternEntity>(`/webtools/url-pattern/findOne/${id}`, { method: 'GET' })
+      .then((res) => {
+        const { data } = res;
+        setPatternEntity(data);
         setLoading(false);
       })
       .catch(() => {
         setLoading(false);
       });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [get, id]);
 
   const handleEditSubmit = (
     values: PatternFormValues,
     { setSubmitting, setErrors }: FormikProps<PatternFormValues>,
   ) => {
-    request(`/webtools/url-pattern/update/${patternEntity.id}`, {
-      method: 'PUT',
-      body: {
-        // @ts-ignore
-        data: values,
-      },
+    put(`/webtools/url-pattern/update/${patternEntity.id}`, {
+      data: values,
     })
       .then(() => {
         push(`/plugins/${pluginId}/patterns`);
@@ -86,12 +83,8 @@ const EditPatternPage = () => {
         });
         setSubmitting(false);
       })
-      .catch((err) => {
-        if (
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-          err.response.payload[0].message === 'This attribute must be unique'
-        ) {
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      .catch((err: ErrorResponse) => {
+        if (err.response.payload[0].message === 'This attribute must be unique') {
           setErrors({ code: err.response.payload[0].message as string });
         } else {
           toggleNotification({
@@ -106,17 +99,16 @@ const EditPatternPage = () => {
   const validatePattern = async (values: PatternFormValues) => {
     const errors: Record<string, any> = {};
 
-    await request('/webtools/url-pattern/validate', {
-      method: 'POST',
-      body: {
-        // @ts-ignore
+    await post('/webtools/url-pattern/validate', {
+      data: {
         pattern: values.pattern,
         modelName: values.contenttype,
       },
     })
-      .then((res: ValidatePatternResponse) => {
-        if (res.valid === false) {
-          errors.pattern = res.message;
+      .then((res) => {
+        const response = res as unknown as ValidatePatternResponse;
+        if (response.valid === false) {
+          errors.pattern = response.message;
         }
       })
       .catch(() => { });
@@ -177,7 +169,7 @@ const EditPatternPage = () => {
             subtitle={formatMessage({
               id: 'webtools.settings.page.patterns.edit.description',
               defaultMessage:
-                'Edit this pattern for automatic URL alias generation.',
+                                'Edit this pattern for automatic URL alias generation.',
             })}
             as="h2"
             navigationAction={(
@@ -190,7 +182,7 @@ const EditPatternPage = () => {
                   defaultMessage: 'Back',
                 })}
               </Link>
-            )}
+                        )}
             primaryAction={(
               <Button
                 type="submit"
@@ -202,7 +194,7 @@ const EditPatternPage = () => {
                   defaultMessage: 'Save',
                 })}
               </Button>
-            )}
+                        )}
           />
           <ContentLayout>
             <Stack spacing={7}>
@@ -234,15 +226,15 @@ const EditPatternPage = () => {
                           defaultMessage: 'Content type',
                         })}
                         error={
-                          errors.contenttype && touched.contenttype
-                            ? formatMessage({
-                              id:
-                                typeof errors.contenttype === 'string'
-                                  ? errors.contenttype
-                                  : undefined,
-                              defaultMessage: 'Invalid value',
-                            })
-                            : null
+                            errors.contenttype && touched.contenttype
+                              ? formatMessage({
+                                id:
+                                        typeof errors.contenttype === 'string'
+                                          ? errors.contenttype
+                                          : undefined,
+                                defaultMessage: 'Invalid value',
+                              })
+                              : null
                         }
                       />
                     </GridItem>
@@ -258,20 +250,20 @@ const EditPatternPage = () => {
                     </GridItem>
                     <GridItem col={12} />
                     {values.contenttype !== '' && (
-                      <GridItem col={6}>
-                        <PatternField
-                          values={values}
-                          uid={values.contenttype}
-                          setFieldValue={setFieldValue}
-                          error={
+                    <GridItem col={6}>
+                      <PatternField
+                        values={values}
+                        uid={values.contenttype}
+                        setFieldValue={setFieldValue}
+                        error={
                             errors.pattern
-                              && touched.pattern
-                              && typeof errors.pattern === 'string'
+                            && touched.pattern
+                            && typeof errors.pattern === 'string'
                               ? errors.pattern
                               : null
-                          }
-                        />
-                      </GridItem>
+                        }
+                      />
+                    </GridItem>
                     )}
                     <HiddenLocalizedField
                       localized={getSelectedContentType(values.contenttype)?.localized}

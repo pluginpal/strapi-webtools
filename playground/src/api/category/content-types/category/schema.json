@@ -23,7 +23,8 @@
       "inversedBy": "category"
     },
     "title": {
-      "type": "string"
+      "type": "string",
+      "pluginOptions": {}
     }
   }
 }
