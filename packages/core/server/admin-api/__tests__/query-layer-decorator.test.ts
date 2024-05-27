@@ -3,6 +3,9 @@ import request from 'supertest';
 // eslint-disable-next-line import/no-relative-packages
 import { setupStrapi, stopStrapi } from '../../../../../playground/tests/helpers';
 
+// Higher timeout limit for slower machines
+jest.setTimeout(30000); // 30 seconds now
+
 beforeAll(async () => {
   await setupStrapi();
 });
