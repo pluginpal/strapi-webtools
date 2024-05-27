@@ -55,12 +55,6 @@ const ListComponent = (props) => {
             <Typography variant="sigma">Type</Typography>
           </Th>
           <Th>
-            <Typography variant="sigma">Langcode</Typography>
-          </Th>
-          <Th>
-            <Typography variant="sigma">Pattern</Typography>
-          </Th>
-          <Th>
             <VisuallyHidden>Actions</VisuallyHidden>
           </Th>
         </Tr>

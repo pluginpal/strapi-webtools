@@ -9,6 +9,7 @@ import { CheckPagePermissions, request } from '@strapi/helper-plugin';
 
 import pluginPermissions from '../../permissions';
 import { WebtoolsAddonInfo } from '../../types/addons';
+import packageJson from '../../../package.json';
 
 const List = () => {
   const [addons, setAddons] = useState<WebtoolsAddonInfo[]>(null);
@@ -29,8 +30,6 @@ const List = () => {
       <div>Loading...</div>
     );
   }
-  const strapiVersion = '1.0.0';
-
   return (
     <CheckPagePermissions permissions={pluginPermissions['settings.patterns']}>
       <HeaderLayout
@@ -68,7 +67,7 @@ const List = () => {
                   })}
                 </Typography>
                 <Flex gap={3} direction="column" alignItems="start" as="dd">
-                  <Typography>v{strapiVersion}</Typography>
+                  <Typography>v{packageJson.version}</Typography>
                 </Flex>
               </GridItem>
               <GridItem col={6} s={12}>
@@ -80,7 +79,7 @@ const List = () => {
                 </Typography>
                 <Flex>
                   <Link
-                    href="https://strapi.io/pricing-self-hosted"
+                    href="https://www.pluginpal.io/plugin/webtools"
                     isExternal
                     endIcon={<ExternalLink />}
                   >
@@ -92,19 +91,7 @@ const List = () => {
                 </Flex>
                 <Flex>
                   <Link
-                    href="https://strapi.io/pricing-self-hosted"
-                    isExternal
-                    endIcon={<ExternalLink />}
-                  >
-                    {formatMessage({
-                      id: 'TODO_REPLACE',
-                      defaultMessage: 'Documentation',
-                    })}
-                  </Link>
-                </Flex>
-                <Flex>
-                  <Link
-                    href="https://strapi.io/pricing-self-hosted"
+                    href="https://github.com/pluginpal/strapi-webtools"
                     isExternal
                     endIcon={<ExternalLink />}
                   >
