@@ -887,9 +887,6 @@ export interface ApiCategoryCategory extends Schema.CollectionType {
     webtools: {
       enabled: true;
     };
-    i18n: {
-      localized: true;
-    };
   };
   attributes: {
     test: Attribute.Relation<
@@ -897,12 +894,7 @@ export interface ApiCategoryCategory extends Schema.CollectionType {
       'oneToOne',
       'api::test.test'
     >;
-    title: Attribute.String &
-      Attribute.SetPluginOptions<{
-        i18n: {
-          localized: true;
-        };
-      }>;
+    title: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -924,12 +916,6 @@ export interface ApiCategoryCategory extends Schema.CollectionType {
       'plugin::webtools.url-alias'
     > &
       Attribute.Unique;
-    localizations: Attribute.Relation<
-      'api::category.category',
-      'oneToMany',
-      'api::category.category'
-    >;
-    locale: Attribute.String;
   };
 }
 

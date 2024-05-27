@@ -13,9 +13,6 @@
   "pluginOptions": {
     "webtools": {
       "enabled": true
-    },
-    "i18n": {
-      "localized": true
     }
   },
   "attributes": {
@@ -27,11 +24,7 @@
     },
     "title": {
       "type": "string",
-      "pluginOptions": {
-        "i18n": {
-          "localized": true
-        }
-      }
+      "pluginOptions": {}
     }
   }
 }
