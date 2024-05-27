@@ -26,6 +26,14 @@ export default {
       isReady: true,
       isRequired: pluginPkg.strapi.required || false,
       name,
+      injectionZones: {
+        webtoolsSidebar: {
+          link: [],
+        },
+        webtoolsRouter: {
+          route: [],
+        },
+      },
     });
 
     app.addMenuLink({

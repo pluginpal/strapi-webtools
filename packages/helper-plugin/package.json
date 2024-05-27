@@ -2,25 +2,20 @@
   "name": "@pluginpal/webtools-helper-plugin",
   "version": "1.0.0-beta.3",
   "description": "This is the description of the plugin.",
-  "strapi": {
-    "name": "webtools",
-    "icon": "list",
-    "displayName": "Webtools Sitemap",
-    "description": "This is the description of the plugin.",
-    "required": false,
-    "kind": "plugin",
-    "webtoolsAddon": true,
-    "addonName": "Sitemap"
-  },
   "main": "./dist/index.js",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && ../../node_modules/.bin/yalc push --publish",
     "develop": "tsc -w",
+    "watch:link": "nodemon -e js,jsx,ts,tsx --ignore dist --exec \"yarn build && yalc publish && yalc push\"",
     "eslint": "../../node_modules/.bin/eslint --max-warnings=0 './**/*.{js,jsx,ts,tsx}'",
     "eslint:fix": "../../node_modules/.bin/eslint --fix './**/*.{js,jsx,ts,tsx}'"
   },
   "devDependencies": {
+    "nodemon": "^3.1.0",
     "typescript": "5.2.2"
+  },
+  "dependencies": {
+    "@strapi/strapi": "^4"
   },
   "author": {
     "name": "TODO"

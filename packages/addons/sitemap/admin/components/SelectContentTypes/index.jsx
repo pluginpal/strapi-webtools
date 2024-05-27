@@ -22,8 +22,8 @@ const SelectContentTypes = (props) => {
       value={value}
       required
     >
-      {Object.entries(contentTypes).map(([uid, { displayName }]) => {
-        return <Option value={uid} key={uid}>{displayName}</Option>;
+      {contentTypes.map(({ uid, name }) => {
+        return <Option value={uid} key={uid}>{name}</Option>;
       })}
     </Select>
   );

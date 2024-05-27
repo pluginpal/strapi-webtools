@@ -112,7 +112,7 @@ export function generateSitemap(toggleNotification, get) {
 export function getContentTypes(toggleNotification, get) {
   return async function(dispatch) {
     try {
-      const res = await get('/webtools-addon-sitemap/content-types/');
+      const res = await get('/webtools/info/getContentTypes');
       const contentTypes = res.data;
       dispatch(getContentTypesSucceeded(contentTypes));
     } catch (err) {
@@ -131,7 +131,7 @@ export function getContentTypesSucceeded(contentTypes) {
 export function getLanguages(toggleNotification, get) {
   return async function(dispatch) {
     try {
-      const res = await get('/webtools-addon-sitemap/languages/');
+      const res = await get('/webtools/info/getLanguages');
       const languages = res.data;
       dispatch(getLanguagesSucceeded(languages));
     } catch (err) {

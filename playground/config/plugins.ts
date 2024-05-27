@@ -6,9 +6,9 @@ module.exports = {
     }
   },
 
-  // 'webtools-addon-sitemap': {
-  //   enabled: true,
-  // },
+  'webtools-addon-sitemap': {
+    enabled: true,
+  },
 
   // 'webtools-addon-redirects': {
   //   enabled: true,

@@ -10,6 +10,7 @@ export type AdminApp = {
 
   getPlugin: (name: string) => null | undefined | {
     [key: string]: any;
+    injectComponent: (name: string, zone: string, options: object) => any;
   };
 
   [key: string]: any;

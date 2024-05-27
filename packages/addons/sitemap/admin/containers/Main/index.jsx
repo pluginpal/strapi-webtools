@@ -14,7 +14,7 @@ import Tabs from '../../components/Tabs';
 import Header from '../../components/Header';
 import Info from '../../components/Info';
 
-import { getAllowedFields, getContentTypes, getSettings, getSitemapInfo, getLanguages } from '../../state/actions/Sitemap';
+import { getContentTypes, getSettings, getSitemapInfo, getLanguages } from '../../state/actions/Sitemap';
 import Loader from '../../components/Loader';
 
 const App = () => {
@@ -29,7 +29,6 @@ const App = () => {
     dispatch(getLanguages(toggleNotification, get));
     dispatch(getContentTypes(toggleNotification, get));
     dispatch(getSitemapInfo(toggleNotification, get));
-    dispatch(getAllowedFields(toggleNotification, get));
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
 

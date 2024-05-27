@@ -1,20 +1,20 @@
 <div align="center">
-<h1>Strapi sitemap plugin</h1>
+<h1>Webtools Sitemap add-on</h1>
 	
 <p style="margin-top: 0;">Create a highly customizable sitemap XML in Strapi CMS.</p>
 	
 <p>
-  <a href="https://www.npmjs.org/package/strapi-plugin-sitemap">
-    <img src="https://img.shields.io/npm/v/strapi-plugin-sitemap/latest.svg" alt="NPM Version" />
+  <a href="https://www.npmjs.org/package/@pluginpal/webtools-addon-sitemap">
+    <img src="https://img.shields.io/npm/v/@pluginpal/webtools-addon-sitemap/latest.svg" alt="NPM Version" />
   </a>
-  <a href="https://www.npmjs.org/package/strapi-plugin-sitemap">
-    <img src="https://img.shields.io/npm/dm/strapi-plugin-sitemap" alt="Monthly download on NPM" />
+  <a href="https://www.npmjs.org/package/@pluginpal/webtools-addon-sitemap">
+    <img src="https://img.shields.io/npm/dm/@pluginpal/webtools-addon-sitemap" alt="Monthly download on NPM" />
   </a>
-  <a href="https://codecov.io/gh/boazpoolman/strapi-plugin-sitemap">
-    <img src="https://img.shields.io/github/actions/workflow/status/boazpoolman/strapi-plugin-sitemap/tests.yml?branch=master" alt="CI build status" />
+  <a href="https://codecov.io/gh/boazpoolman/@pluginpal/webtools-addon-sitemap">
+    <img src="https://img.shields.io/github/actions/workflow/status/boazpoolman/@pluginpal/webtools-addon-sitemap/tests.yml?branch=master" alt="CI build status" />
   </a>
-  <a href="https://codecov.io/gh/boazpoolman/strapi-plugin-sitemap">
-    <img src="https://codecov.io/gh/boazpoolman/strapi-plugin-sitemap/coverage.svg?branch=master" alt="codecov.io" />
+  <a href="https://codecov.io/gh/boazpoolman/@pluginpal/webtools-addon-sitemap">
+    <img src="https://codecov.io/gh/boazpoolman/@pluginpal/webtools-addon-sitemap/coverage.svg?branch=master" alt="codecov.io" />
   </a>
 </p>
 </div>
@@ -23,7 +23,6 @@
 
 - **Multilingual** (Implements `rel="alternate"` with `@strapi/plugin-i18n`)
 - **URL bundles** (Bundle URLs by type and add them to the sitemap XML)
-- **Dynamic paths** (Implements URL patterns in which you can inject dynamic fields)
 - **Virtual sitemap** (Sitemaps served from the database)
 - **Cron regeneration** (Automatically scheduled cron job for regeneration)
 - **Sitemap indexes** (Paginated sitemap indexes for large URL sets)
@@ -38,10 +37,10 @@ Install the plugin in your Strapi project.
 
 ```bash
 # using yarn
-yarn add strapi-plugin-sitemap
+yarn add @pluginpal/webtools-addon-sitemap
 
 # using npm
-npm install strapi-plugin-sitemap --save
+npm install @pluginpal/webtools-addon-sitemap --save
 ```
 
 After successful installation you have to rebuild the admin UI so it'll include this plugin. To rebuild and restart Strapi run:
@@ -66,8 +65,7 @@ Complete installation requirements are the exact same as for Strapi itself and c
 
 **Supported Strapi versions**:
 
-- Strapi ^4.11.4 (use `strapi-plugin-sitemap@^3`)
-- Strapi ^4.5.x (use `strapi-plugin-sitemap@^2`)
+- Strapi 4
 
 (This plugin may work with older Strapi versions, but these are not tested nor officially supported.)
 
@@ -77,7 +75,7 @@ Complete installation requirements are the exact same as for Strapi itself and c
 With this plugin you have full control over which URLs you add to your sitemap XML. Go to the admin section of the plugin and start adding URLs. Here you will find that there are two ways to add URLs to the sitemap. With **URL bundles** and **Custom URLs**.
 
 ### URL bundles
-A URL bundle is a set of URLs grouped by type. When adding a URL bundle to the sitemap you can define a **URL pattern** which will be used to generate all URLs in this bundle. (Read more about URL patterns below)
+A URL bundle is a set of URLs grouped by type. If you set up an URL bundle, all pages of that content type will end up in the sitemap.
 
 URLs coming from a URL bundle will get the following XML attributes:
 
@@ -94,24 +92,6 @@ Custom URLs will get the following XML attributes:
 - `<loc>`
 - `<priority>`
 - `<changefreq>`
-
-## 🔌 URL pattern
-To create dynamic URLs this plugin uses **URL patterns**. A URL pattern is used when adding URL bundles to the sitemap and has the following format:
-
-```
-/pages/[category.slug]/[my-uid-field]
-```
-
-Fields can be injected in the pattern by escaping them with `[]`.
-
-Also relations can be queried in the pattern like so: `[relation.fieldname]`.
-
-The following field types are by default allowed in a pattern:
-
-- `id`
-- `uid`
-
-*Allowed field types can be altered with the `allowedFields` config. Read more about it below.*
 
 ## 🌍 Multilingual
 
@@ -208,6 +188,14 @@ This setting will add a default `/` entry to the sitemap XML when none is presen
 
 > `required:` NO | `type:` bool | `default:` true
 
+### Default language URL (x-default)
+
+This setting will add an additionnal `<link />` tag into each sitemap urls bundles with value `hreflang="x-default"` and the path of your choice. The hreflang x-default value is used to specify the language and region neutral URL for a piece of content when the site doesn't support the user's language and region. For example, if a page has hreflang annotations for English and Spanish versions of a page along with an x-default value pointing to the English version, French speaking users are sent to the English version of the page due to the x-default annotation. The x-default page can be a language and country selector page, the page where you redirect users when you have no content for their region, or just the version of the content that you consider default. 
+
+###### Key: `defaultLanguageUrlType`
+
+> `required:` NO | `type:` string | `default:` ''
+
 ## 🔧 Config
 Config can be changed in the `config/plugins.js` file in your Strapi project.
 You can overwrite the config like so:
@@ -222,9 +210,6 @@ module.exports = ({ env }) => ({
       limit: 45000,
       xsl: true,
       autoGenerate: false,
-      caching: true,
-      allowedFields: ['id', 'uid'],
-      excludedTypes: [],
     },
   },
 });
@@ -273,32 +258,6 @@ Also the search engines don't even crawl your sitemap that often, so generating 
 
 > `required:` NO | `type:` bool | `default:` false
 
-### Caching
-
-This setting works together with the `autoGenerate` setting. When enabled a JSON representation of the current sitemap will be stored in the database. Then, whenever the sitemap is being regenerated through lifecycles, the cache will be queried to build the sitemap instead of querying all individual (unchanged) pages.
-
-###### Key: `caching `
-
-> `required:` NO | `type:` bool | `default:` true
-
-### Allowed fields
-When defining a URL pattern you can populate it with dynamic fields. The fields allowed in the pattern can be manipulated with this setting. Fields can be specified either by type or by name. By default the plugin allows `id` and `uid`.
-
-*If you are missing a key field type of which you think it should be allowed by default please create an issue and explain why it is needed.*
-
-###### Key: `allowedFields `
-
-> `required:` NO | `type:` array | `default:` `['id', 'uid']`
-
-### Excluded types
-This setting is just here for mere convenience. When adding a URL bundle to the sitemap you can specify the type for the bundle. This will show all types in Strapi, however some types should never be it's own page in a website and are therefor excluded in this setting.
-
-All types in this array will not be shown as an option when selecting the type of a URL bundle. 
-
-###### Key: `excludedTypes `
-
-> `required:` NO | `type:` array
-
 ## 🤝 Contributing
 
 Feel free to fork and make a pull request of this plugin. All the input is welcome!
@@ -309,8 +268,8 @@ Give a star if this project helped you.
 
 ## 🔗 Links
 
-- [NPM package](https://www.npmjs.com/package/strapi-plugin-sitemap)
-- [GitHub repository](https://github.com/boazpoolman/strapi-plugin-sitemap)
+- [NPM package](https://www.npmjs.com/package/@pluginpal/webtools-addon-sitemap)
+- [GitHub repository](https://github.com/pluginpal/strapi-webtools)
 
 ## 🌎 Community support
 
