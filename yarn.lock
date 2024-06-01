@@ -3432,14 +3432,14 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@pluginpal/webtools-addon-menus@workspace:packages/addons/menus"
   dependencies:
-    "@pluginpal/webtools-helper-plugin": "npm:1.0.0-beta.3"
+    "@pluginpal/webtools-helper-plugin": "npm:1.0.0-beta.4"
     "@strapi/strapi": "npm:^4"
     react: "npm:^18.0.0"
     react-dom: "npm:^18.0.0"
     react-router-dom: "npm:^5.2.0"
     styled-components: "npm:5.3.3"
   peerDependencies:
-    "@pluginpal/webtools-core": 1.0.0-beta.10
+    "@pluginpal/webtools-core": 1.0.0-beta.11
     react: ^17.0.0 || ^18.0.0
     react-dom: ^17.0.0 || ^18.0.0
     react-router-dom: ^5.2.0
@@ -3451,14 +3451,14 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@pluginpal/webtools-addon-redirects@workspace:packages/addons/redirects"
   dependencies:
-    "@pluginpal/webtools-helper-plugin": "npm:1.0.0-beta.3"
+    "@pluginpal/webtools-helper-plugin": "npm:1.0.0-beta.4"
     "@strapi/strapi": "npm:^4"
     react: "npm:^18.0.0"
     react-dom: "npm:^18.0.0"
     react-router-dom: "npm:^5.2.0"
     styled-components: "npm:5.3.3"
   peerDependencies:
-    "@pluginpal/webtools-core": 1.0.0-beta.10
+    "@pluginpal/webtools-core": 1.0.0-beta.11
     react: ^17.0.0 || ^18.0.0
     react-dom: ^17.0.0 || ^18.0.0
     react-router-dom: ^5.2.0
@@ -3476,7 +3476,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@pluginpal/webtools-addon-sitemap@workspace:packages/addons/sitemap"
   dependencies:
-    "@pluginpal/webtools-helper-plugin": "npm:1.0.0-beta.3"
+    "@pluginpal/webtools-helper-plugin": "npm:1.0.0-beta.4"
     "@strapi/helper-plugin": "npm:4.20.3"
     "@strapi/strapi": "npm:4.20.3"
     chalk: "npm:^4.1.2"
@@ -3492,7 +3492,7 @@ __metadata:
     styled-components: "npm:5.3.3"
     xml2js: "npm:^0.5.0"
   peerDependencies:
-    "@pluginpal/webtools-core": 1.0.0-beta.10
+    "@pluginpal/webtools-core": 1.0.0-beta.11
     react: ^17.0.0 || ^18.0.0
     react-dom: ^17.0.0 || ^18.0.0
     react-router-dom: ^5.2.0
@@ -3511,7 +3511,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@pluginpal/webtools-core@workspace:packages/core"
   dependencies:
-    "@pluginpal/webtools-helper-plugin": "npm:1.0.0-beta.3"
+    "@pluginpal/webtools-helper-plugin": "npm:1.0.0-beta.4"
     "@strapi/helper-plugin": "npm:4.20.3"
     "@strapi/strapi": "npm:4.20.3"
     "@types/koa": "npm:^2.15.0"
@@ -3537,7 +3537,7 @@ __metadata:
   languageName: node
   linkType: soft
 
-"@pluginpal/webtools-helper-plugin@npm:1.0.0-beta.3, @pluginpal/webtools-helper-plugin@workspace:packages/helper-plugin":
+"@pluginpal/webtools-helper-plugin@npm:1.0.0-beta.4, @pluginpal/webtools-helper-plugin@workspace:packages/helper-plugin":
   version: 0.0.0-use.local
   resolution: "@pluginpal/webtools-helper-plugin@workspace:packages/helper-plugin"
   dependencies:

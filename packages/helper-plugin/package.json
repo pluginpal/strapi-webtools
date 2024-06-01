@@ -1,6 +1,6 @@
 {
   "name": "@pluginpal/webtools-helper-plugin",
-  "version": "1.0.0-beta.3",
+  "version": "1.0.0-beta.4",
   "description": "This is the description of the plugin.",
   "main": "./dist/index.js",
   "scripts": {
