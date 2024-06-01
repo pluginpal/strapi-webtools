@@ -100,13 +100,11 @@ const EditPatternPage = () => {
     const errors: Record<string, any> = {};
 
     await post('/webtools/url-pattern/validate', {
-      data: {
-        pattern: values.pattern,
-        modelName: values.contenttype,
-      },
+      pattern: values.pattern,
+      modelName: values.contenttype,
     })
       .then((res) => {
-        const response = res as unknown as ValidatePatternResponse;
+        const response = res.data as unknown as ValidatePatternResponse;
         if (response.valid === false) {
           errors.pattern = response.message;
         }

@@ -5,13 +5,9 @@ export const useCreateUrlAlias = () => {
 
   const createUrlAlias = async (body: { id: number }, slug: string) => {
     return post('/webtools/url-alias/create', {
-      method: 'POST',
-      body: {
-        // @ts-ignore
-        data: {
-          ...body,
-          contenttype: slug,
-        },
+      data: {
+        ...body,
+        contenttype: slug,
       },
     });
   };
@@ -24,10 +20,8 @@ export const useUpdateUrlAlias = () => {
 
   const updateUrlAlias = async (body: { id: number }, slug: string) => {
     return put(`/webtools/url-alias/update/${body.id}`, {
-      method: 'PUT',
-      body: {
-        // @ts-ignore
-        data: body,
+      data: {
+        ...body,
         contenttype: slug,
       },
     });
@@ -40,9 +34,7 @@ export const useDeleteUrlAlias = () => {
   const { post } = useFetchClient();
 
   const deleteUrlAlias = async (body: { id: number }) => {
-    return post(`/webtools/url-alias/delete/${body.id}`, {
-      method: 'POST',
-    });
+    return post(`/webtools/url-alias/delete/${body.id}`);
   };
 
   return { deleteUrlAlias };

@@ -38,19 +38,22 @@ export default {
   async registerTrads({ locales }: { locales: string[] }) {
     const importedTrads = await Promise.all(
       locales.map((locale) => {
-        try {
-          // eslint-disable-next-line import/no-dynamic-require, global-require
-          const data = require(`./translations/${locale}.json`) as Record<string, string>;
-          return {
-            data: prefixPluginTranslations(data, pluginId),
-            locale,
-          };
-        } catch {
-          return {
-            data: {},
-            locale,
-          };
-        }
+        return import(
+          /* webpackChunkName: "url-alias-translation-[request]" */ `./translations/${locale}.json`
+        )
+          .then(({ default: data }) => {
+            return {
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+              data: prefixPluginTranslations(data, pluginId),
+              locale,
+            };
+          })
+          .catch(() => {
+            return {
+              data: {},
+              locale,
+            };
+          });
       }),
     );
 
