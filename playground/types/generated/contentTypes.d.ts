@@ -423,9 +423,6 @@ export interface PluginUploadFile extends Schema.CollectionType {
       'admin::user'
     > &
       Attribute.Private;
-    sitemap_exclude: Attribute.Boolean &
-      Attribute.Private &
-      Attribute.DefaultTo<false>;
   };
 }
 
@@ -534,9 +531,6 @@ export interface PluginContentReleasesRelease extends Schema.CollectionType {
       'admin::user'
     > &
       Attribute.Private;
-    sitemap_exclude: Attribute.Boolean &
-      Attribute.Private &
-      Attribute.DefaultTo<false>;
   };
 }
 
@@ -586,9 +580,6 @@ export interface PluginContentReleasesReleaseAction
       'admin::user'
     > &
       Attribute.Private;
-    sitemap_exclude: Attribute.Boolean &
-      Attribute.Private &
-      Attribute.DefaultTo<false>;
   };
 }
 
@@ -632,9 +623,6 @@ export interface PluginWebtoolsUrlAlias extends Schema.CollectionType {
       'admin::user'
     > &
       Attribute.Private;
-    sitemap_exclude: Attribute.Boolean &
-      Attribute.Private &
-      Attribute.DefaultTo<false>;
     localizations: Attribute.Relation<
       'plugin::webtools.url-alias',
       'oneToMany',
@@ -683,9 +671,6 @@ export interface PluginWebtoolsUrlPattern extends Schema.CollectionType {
       'admin::user'
     > &
       Attribute.Private;
-    sitemap_exclude: Attribute.Boolean &
-      Attribute.Private &
-      Attribute.DefaultTo<false>;
   };
 }
 
@@ -929,9 +914,6 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'admin::user'
     > &
       Attribute.Private;
-    sitemap_exclude: Attribute.Boolean &
-      Attribute.Private &
-      Attribute.DefaultTo<false>;
   };
 }
 

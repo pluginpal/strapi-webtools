@@ -100,7 +100,7 @@ export function generateSitemap(toggleNotification, get) {
       dispatch(setLoading(true));
       const res = await get('/webtools-addon-sitemap');
       const message = res.data.message;
-      dispatch(getSitemapInfo());
+      dispatch(getSitemapInfo(toggleNotification, get));
       toggleNotification({ type: 'success', message });
       dispatch(setLoading(false));
     } catch (err) {
@@ -150,7 +150,7 @@ export function getLanguagesSucceeded(languages) {
 export function submit(settings, toggleNotification, put) {
   return async function(dispatch) {
     try {
-      await put('/webtools-addon-sitemap/settings/', { data: settings });
+      await put('/webtools-addon-sitemap/settings/', settings);
       dispatch(onSubmitSucceeded());
       toggleNotification({ type: 'success', message: { id: getTrad('notification.success.submit') } });
     } catch (err) {
