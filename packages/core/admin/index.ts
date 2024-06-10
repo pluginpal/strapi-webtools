@@ -13,6 +13,8 @@ import CheckboxConfirmation from './components/ContentManagerHooks/ConfirmationC
 
 import dutchTranslations from './translations/nl.json';
 import englishTranslations from './translations/en.json';
+import spanishTranslations from './translations/es.json';
+import turkishTranslations from './translations/tr.json';
 import { PluginIcon } from './components/PluginIcon';
 
 const pluginDescription = pluginPkg.strapi.description || pluginPkg.description;
@@ -99,8 +101,16 @@ export default {
         locale: 'en',
       },
       {
+        data: prefixPluginTranslations(spanishTranslations, pluginId),
+        locale: 'es',
+      },
+      {
         data: prefixPluginTranslations(dutchTranslations, pluginId),
         locale: 'nl',
+      },
+      {
+        data: prefixPluginTranslations(turkishTranslations, pluginId),
+        locale: 'tr',
       },
     ]);
   },
