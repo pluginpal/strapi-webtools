@@ -14,7 +14,7 @@
     "@pluginpal/webtools-core": "link:.yalc/@pluginpal/webtools-core",
     "@pluginpal/webtools-helper-plugin": "link:.yalc/@pluginpal/webtools-helper-plugin",
     "@strapi/plugin-i18n": "^4.19.0",
-    "@strapi/plugin-users-permissions": "^4.19.0",
+    "@strapi/plugin-users-permissions": "^4.24.2",
     "@strapi/strapi": "^4.19.0",
     "better-sqlite3": "^9.4.0",
     "pg": "^8.10.0",
