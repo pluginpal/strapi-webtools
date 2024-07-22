@@ -42,7 +42,7 @@ const ListPatternPage = () => {
     });
   }, [fetchClient]);
 
-  if (loading || !patterns.length) {
+  if (loading) {
     return (
       <Center>
         <Loader>{formatMessage({ id: 'webtools.settings.loading', defaultMessage: 'Loading content...' })}</Loader>
