@@ -1,5 +1,13 @@
 # core
 
+## 1.0.0-beta.12
+
+### Minor Changes
+
+- [#154](https://github.com/pluginpal/strapi-webtools/pull/154) [`60b5eff`](https://github.com/pluginpal/strapi-webtools/commit/60b5eff18795afd173a57380a87767fc29d06b3d) Thanks [@TMSchipper](https://github.com/TMSchipper)! - Fix issue with not loading url patterns when there is an empty array
+
+- [#151](https://github.com/pluginpal/strapi-webtools/pull/151) [`d620caa`](https://github.com/pluginpal/strapi-webtools/commit/d620caa4d42b409e87fd604d88e99d23ac6e985a) Thanks [@SalahAdDin](https://github.com/SalahAdDin)! - Adding spanish and turkish translations
+
 ## 1.0.0-beta.11
 
 ### Minor Changes
