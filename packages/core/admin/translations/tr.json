@@ -1,0 +1,69 @@
+{
+  "settings.title": "Web Araçları",
+  "settings.loading": "İçerik yükleniyor...",
+
+  "settings.success.create": "Şablon oluşturuldu.",
+  "settings.success.edit": "Şablon güncellendi.",
+  "settings.success.delete": "Şablon silindi.",
+  "settings.success.url_alias.generate": "{{ count }} URL takma adı oluşturuldu.",
+  "settings.success.url_alias.delete": "URL takma adı silindi.",
+
+  "settings.button.add_pattern": "Yeni şablon ekle",
+  "settings.button.generate_paths": "Toplu oluştur",
+  "settings.button.delete": "Sil",
+  "settings.button.cancel": "İptal",
+  "settings.button.filters": "Filtreler",
+  "settings.button.copy_permalink": "Kalıcı bağlantıyı kopyala",
+
+  "settings.form.label.label": "Etiket",
+  "settings.form.pattern.label": "Şablon",
+  "settings.form.pattern.description_1": "URL takma adı şablonu oluştur",
+  "settings.form.pattern.description_2": "kullanarak",
+  "settings.form.pattern.description_3": "veya",
+  "settings.form.contenttype.label": "İçerik türü",
+
+  "settings.page.list.title": "Tüm URL'ler",
+  "settings.page.list.description": "Bilinen tüm URL takma adlarının listesi.",
+  "settings.page.list.body": "Tüm URL takma adlarını listele",
+
+  "settings.page.list.delete_confirm_modal.title": "Öğeyi Sil",
+  "settings.page.list.delete_confirm_modal.body": "Bu öğeyi silmek istediğinizden emin misiniz?",
+
+  "settings.page.list.generate_paths_modal.title": "URL Takma Adları Oluştur",
+  "settings.page.list.generate_paths_modal.types.title": "İçerik Türleri",
+  "settings.page.list.generate_paths_modal.types.body": "URL'leri oluşturmak istediğiniz içerik türlerini seçin.",
+  "settings.page.list.generate_paths_modal.generation_type.title": "Oluşturma Türü",
+  "settings.page.list.generate_paths_modal.generation_type.body": "URL'leri nasıl oluşturmak istediğinizi seçin.",
+  "settings.page.list.generate_paths_modal.generation_type.only_without_alias": "Sadece takma adı olmayan sayfalar için oluştur",
+  "settings.page.list.generate_paths_modal.generation_type.only_generated": "Sadece otomatik olarak oluşturulan takma adları yeniden oluştur",
+  "settings.page.list.generate_paths_modal.generation_type.all": "Tüm URL takma adlarını yeniden oluştur",
+
+  "settings.page.list.filters.label": "Ara",
+  "settings.page.list.filters.placeholder": "Ara...",
+
+  "settings.page.list.table.empty": "Henüz herhangi bir URL yolu yok.",
+
+  "settings.page.list.table.actions.delete": "{target} sil",
+  "settings.page.list.table.actions.goTo": "{target} ile ilgili varlığa git",
+
+  "settings.page.patterns.title": "URL Şablonları",
+  "settings.page.patterns.description": "Bilinen tüm URL takma adı şablonlarının listesi.",
+
+  "settings.page.patterns.table.head.label": "Etiket",
+  "settings.page.patterns.table.head.pattern": "Şablon",
+  "settings.page.patterns.table.head.actions": "Eylemler",
+
+  "settings.page.patterns.table.empty": "Henüz hiçbir şablonunuz yok.",
+  "settings.page.patterns.table.actions.edit": "{target} düzenle",
+  "settings.page.patterns.table.actions.delete": "{target} sil",
+
+  "settings.page.patterns.edit.title": "Şablon Düzenle",
+  "settings.page.patterns.edit.subtitle": "Şablon Detayları",
+  "settings.page.patterns.edit.description": "Otomatik URL takma adı oluşturma için bu şablonu düzenleyin.",
+
+  "settings.page.patterns.create.title": "Yeni Şablon Ekle",
+  "settings.page.patterns.create.subtitle": "Şablon Detayları",
+  "settings.page.patterns.create.description": "Otomatik URL takma adı oluşturma için bir şablon ekleyin.",
+
+  "notification.success.permalink_copied": "Kalıcı bağlantı panoya kopyalandı"
+}

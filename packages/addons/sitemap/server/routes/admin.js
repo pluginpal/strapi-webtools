@@ -21,22 +21,6 @@ export default {
     },
     {
       method: 'GET',
-      path: '/content-types',
-      handler: 'core.getContentTypes',
-      config: {
-        policies: [],
-      },
-    },
-    {
-      method: 'GET',
-      path: '/languages',
-      handler: 'core.getLanguages',
-      config: {
-        policies: [],
-      },
-    },
-    {
-      method: 'GET',
       path: '/settings',
       handler: 'settings.getSettings',
       config: {
@@ -47,22 +31,6 @@ export default {
       method: 'PUT',
       path: '/settings',
       handler: 'settings.updateSettings',
-      config: {
-        policies: [],
-      },
-    },
-    {
-      method: 'GET',
-      path: '/pattern/allowed-fields',
-      handler: 'pattern.allowedFields',
-      config: {
-        policies: [],
-      },
-    },
-    {
-      method: 'POST',
-      path: '/pattern/validate-pattern',
-      handler: 'pattern.validatePattern',
       config: {
         policies: [],
       },

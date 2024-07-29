@@ -5,7 +5,6 @@
  *
  */
 
-import { request } from '@strapi/helper-plugin';
 import { Map } from 'immutable';
 
 import {
@@ -30,10 +29,11 @@ import {
 import getTrad from '../../helpers/getTrad';
 
 // Get initial settings
-export function getSettings(toggleNotification) {
+export function getSettings(toggleNotification, get) {
   return async function(dispatch) {
     try {
-      const settings = await request('/webtools-addon-sitemap/settings/', { method: 'GET' });
+      const res = await get('/webtools-addon-sitemap/settings/');
+      const settings = res.data;
       dispatch(getSettingsSucceeded(Map(settings)));
     } catch (err) {
       toggleNotification({ type: 'warning', message: { id: 'notification.error' } });
@@ -94,12 +94,13 @@ export function discardModifiedContentTypes() {
   };
 }
 
-export function generateSitemap(toggleNotification) {
+export function generateSitemap(toggleNotification, get) {
   return async function(dispatch) {
     try {
       dispatch(setLoading(true));
-      const { message } = await request('/webtools-addon-sitemap', { method: 'GET' });
-      dispatch(getSitemapInfo());
+      const res = await get('/webtools-addon-sitemap');
+      const message = res.data.message;
+      dispatch(getSitemapInfo(toggleNotification, get));
       toggleNotification({ type: 'success', message });
       dispatch(setLoading(false));
     } catch (err) {
@@ -108,10 +109,11 @@ export function generateSitemap(toggleNotification) {
   };
 }
 
-export function getContentTypes(toggleNotification) {
+export function getContentTypes(toggleNotification, get) {
   return async function(dispatch) {
     try {
-      const contentTypes = await request('/webtools-addon-sitemap/content-types/', { method: 'GET' });
+      const res = await get('/webtools/info/getContentTypes');
+      const contentTypes = res.data;
       dispatch(getContentTypesSucceeded(contentTypes));
     } catch (err) {
       toggleNotification({ type: 'warning', message: { id: 'notification.error' } });
@@ -126,10 +128,11 @@ export function getContentTypesSucceeded(contentTypes) {
   };
 }
 
-export function getLanguages(toggleNotification) {
+export function getLanguages(toggleNotification, get) {
   return async function(dispatch) {
     try {
-      const languages = await request('/webtools-addon-sitemap/languages/', { method: 'GET' });
+      const res = await get('/webtools/info/getLanguages');
+      const languages = res.data;
       dispatch(getLanguagesSucceeded(languages));
     } catch (err) {
       toggleNotification({ type: 'warning', message: { id: 'notification.error' } });
@@ -144,10 +147,10 @@ export function getLanguagesSucceeded(languages) {
   };
 }
 
-export function submit(settings, toggleNotification) {
+export function submit(settings, toggleNotification, put) {
   return async function(dispatch) {
     try {
-      await request('/webtools-addon-sitemap/settings/', { method: 'PUT', body: settings });
+      await put('/webtools-addon-sitemap/settings/', settings);
       dispatch(onSubmitSucceeded());
       toggleNotification({ type: 'success', message: { id: getTrad('notification.success.submit') } });
     } catch (err) {
@@ -183,10 +186,11 @@ export function deleteCustomEntry(key) {
   };
 }
 
-export function getSitemapInfo(toggleNotification) {
+export function getSitemapInfo(toggleNotification, get) {
   return async function(dispatch) {
     try {
-      const info = await request('/webtools-addon-sitemap/info', { method: 'GET' });
+      const res = await get('/webtools-addon-sitemap/info');
+      const info = res.data;
       dispatch(getSitemapInfoSucceeded(info));
     } catch (err) {
       toggleNotification({ type: 'warning', message: { id: 'notification.error' } });
@@ -201,10 +205,11 @@ export function getSitemapInfoSucceeded(info) {
   };
 }
 
-export function getAllowedFields(toggleNotification) {
+export function getAllowedFields(toggleNotification, get) {
   return async function(dispatch) {
     try {
-      const fields = await request('/webtools-addon-sitemap/pattern/allowed-fields/', { method: 'GET' });
+      const res = await get('/webtools-addon-sitemap/pattern/allowed-fields/');
+      const fields = res.data;
       dispatch(getAllowedFieldsSucceeded(fields));
     } catch (err) {
       toggleNotification({ type: 'warning', message: { id: 'notification.error' } });

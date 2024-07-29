@@ -12,5 +12,6 @@ module.exports = ({ env }) => ({
   },
   watchIgnoreFiles: [
     '!**/.yalc/**/server/**',
+    '!**/.yalc/@pluginpal/webtools-helper-plugin/**',
   ]
 });

@@ -1,5 +1,11 @@
 # helper-plugin
 
+## 1.0.0-beta.4
+
+### Patch Changes
+
+- [#145](https://github.com/pluginpal/strapi-webtools/pull/145) [`4fd5602`](https://github.com/pluginpal/strapi-webtools/commit/4fd56026d262e4f0a30cf5ab8274d916d29aadd6) Thanks [@boazpoolman](https://github.com/boazpoolman)! - Add proper spacing to the SidebarDropdown content
+
 ## 1.0.0-beta.3
 
 ### Patch Changes

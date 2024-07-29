@@ -1,7 +1,6 @@
 'use strict';
 
 import fs from 'fs';
-import _ from 'lodash';
 import path from 'path';
 
 import { getService } from '../utils';
@@ -24,37 +23,6 @@ export default {
       ctx.status = err.status || 500;
       ctx.body = err.message;
       ctx.app.emit('error', err, ctx);
-    }
-  },
-
-  getContentTypes: async (ctx) => {
-    const contentTypes = {};
-
-    await Promise.all(Object.values(strapi.contentTypes).reverse().map(async (contentType) => {
-      if (strapi.config.get('plugin.webtools-addon-sitemap.excludedTypes').includes(contentType.uid)) return;
-      contentTypes[contentType.uid] = {
-        displayName: contentType.globalId,
-      };
-
-      if (strapi.plugin('i18n') && _.get(contentType, 'pluginOptions.i18n.localized')) {
-        const locales = await strapi.query('plugin::i18n.locale').findMany();
-        contentTypes[contentType.uid].locales = {};
-
-        await locales.map((locale) => {
-          contentTypes[contentType.uid].locales[locale.code] = locale.name;
-        });
-      }
-    }));
-
-    ctx.send(contentTypes);
-  },
-
-  getLanguages: async (ctx) => {
-    if (strapi.plugin('i18n')) {
-      const locales = await strapi.query('plugin::i18n.locale').findMany();
-      ctx.send(locales);
-    } else {
-      ctx.send([]);
     }
   },
 

@@ -674,6 +674,51 @@ export interface PluginWebtoolsUrlPattern extends Schema.CollectionType {
   };
 }
 
+export interface PluginWebtoolsAddonSitemapSitemap
+  extends Schema.CollectionType {
+  collectionName: 'wt_sitemap';
+  info: {
+    singularName: 'sitemap';
+    pluralName: 'sitemaps';
+    displayName: 'sitemap';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  pluginOptions: {
+    'content-manager': {
+      visible: false;
+    };
+    'content-type-builder': {
+      visible: false;
+    };
+  };
+  attributes: {
+    sitemap_string: Attribute.Text & Attribute.Required;
+    name: Attribute.String &
+      Attribute.Required &
+      Attribute.DefaultTo<'default'>;
+    type: Attribute.Enumeration<['default_hreflang', 'index']> &
+      Attribute.DefaultTo<'default_hreflang'>;
+    delta: Attribute.Integer & Attribute.DefaultTo<1>;
+    link_count: Attribute.Integer;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'plugin::webtools-addon-sitemap.sitemap',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'plugin::webtools-addon-sitemap.sitemap',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface PluginI18NLocale extends Schema.CollectionType {
   collectionName: 'i18n_locale';
   info: {
@@ -916,6 +961,9 @@ export interface ApiCategoryCategory extends Schema.CollectionType {
       'plugin::webtools.url-alias'
     > &
       Attribute.Unique;
+    sitemap_exclude: Attribute.Boolean &
+      Attribute.Private &
+      Attribute.DefaultTo<false>;
   };
 }
 
@@ -964,6 +1012,9 @@ export interface ApiPrivateCategoryPrivateCategory
       'plugin::webtools.url-alias'
     > &
       Attribute.Unique;
+    sitemap_exclude: Attribute.Boolean &
+      Attribute.Private &
+      Attribute.DefaultTo<false>;
   };
 }
 
@@ -1015,6 +1066,9 @@ export interface ApiTestTest extends Schema.CollectionType {
       'plugin::webtools.url-alias'
     > &
       Attribute.Unique;
+    sitemap_exclude: Attribute.Boolean &
+      Attribute.Private &
+      Attribute.DefaultTo<false>;
     localizations: Attribute.Relation<
       'api::test.test',
       'oneToMany',
@@ -1040,6 +1094,7 @@ declare module '@strapi/types' {
       'plugin::content-releases.release-action': PluginContentReleasesReleaseAction;
       'plugin::webtools.url-alias': PluginWebtoolsUrlAlias;
       'plugin::webtools.url-pattern': PluginWebtoolsUrlPattern;
+      'plugin::webtools-addon-sitemap.sitemap': PluginWebtoolsAddonSitemapSitemap;
       'plugin::i18n.locale': PluginI18NLocale;
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;

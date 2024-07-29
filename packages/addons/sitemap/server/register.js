@@ -2,6 +2,7 @@
 'use strict';
 
 import _ from 'lodash';
+import { isContentTypeEnabled } from './utils/enabledContentTypes';
 
 /**
  * Adds sitemap_exclude field to all the eligable content types.
@@ -11,7 +12,9 @@ import _ from 'lodash';
  */
 const extendContentTypesWithExcludeField = async (strapi) => {
   Object.values(strapi.contentTypes).forEach((contentType) => {
-    if (strapi.config.get('plugin.webtools-addon-sitemap.excludedTypes').includes(contentType.uid)) return;
+    const hasWT = isContentTypeEnabled(contentType);
+
+    if (!hasWT) return;
 
     const { attributes } = contentType;
 

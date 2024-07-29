@@ -1,5 +1,32 @@
 # core
 
+## 1.0.0-beta.12
+
+### Minor Changes
+
+- [#154](https://github.com/pluginpal/strapi-webtools/pull/154) [`60b5eff`](https://github.com/pluginpal/strapi-webtools/commit/60b5eff18795afd173a57380a87767fc29d06b3d) Thanks [@TMSchipper](https://github.com/TMSchipper)! - Fix issue with not loading url patterns when there is an empty array
+
+- [#151](https://github.com/pluginpal/strapi-webtools/pull/151) [`d620caa`](https://github.com/pluginpal/strapi-webtools/commit/d620caa4d42b409e87fd604d88e99d23ac6e985a) Thanks [@SalahAdDin](https://github.com/SalahAdDin)! - Adding spanish and turkish translations
+
+## 1.0.0-beta.11
+
+### Minor Changes
+
+- [#142](https://github.com/pluginpal/strapi-webtools/pull/142) [`ff7cb45`](https://github.com/pluginpal/strapi-webtools/commit/ff7cb457cd292f6b1ff938adf655c678e1cb446d) Thanks [@boazpoolman](https://github.com/boazpoolman)! - Multilinguality for patterns and aliases using the @strapi/plugin-i18n package
+
+- [#139](https://github.com/pluginpal/strapi-webtools/pull/139) [`ff0851a`](https://github.com/pluginpal/strapi-webtools/commit/ff0851a7a335ff8c0d79428f7b209c5675546bea) Thanks [@boazpoolman](https://github.com/boazpoolman)! - URL alias content management enhancements. Possibility for searching, filtering, deleting and manual generation
+
+- [#142](https://github.com/pluginpal/strapi-webtools/pull/142) [`c99b57e`](https://github.com/pluginpal/strapi-webtools/commit/c99b57eee5910e9a49534980f678cdc4c0b14471) Thanks [@boazpoolman](https://github.com/boazpoolman)! - Add a main menu item for all the admin pages of Webtools
+
+- [#145](https://github.com/pluginpal/strapi-webtools/pull/145) [`05ae3ca`](https://github.com/pluginpal/strapi-webtools/commit/05ae3ca82ac1f2eb7c825852b0d24408daf1b501) Thanks [@boazpoolman](https://github.com/boazpoolman)! - Core injections zones for adding links to the sidebar menu and adding routes
+
+### Patch Changes
+
+- [`49fe9bc`](https://github.com/pluginpal/strapi-webtools/commit/49fe9bc05fc2799735e92a76dd8639982aa04680) Thanks [@boazpoolman](https://github.com/boazpoolman)! - Remove the creator fields middleware as we can do without
+
+- Updated dependencies [[`4fd5602`](https://github.com/pluginpal/strapi-webtools/commit/4fd56026d262e4f0a30cf5ab8274d916d29aadd6)]:
+  - @pluginpal/webtools-helper-plugin@1.0.0-beta.4
+
 ## 1.0.0-beta.10
 
 ### Patch Changes

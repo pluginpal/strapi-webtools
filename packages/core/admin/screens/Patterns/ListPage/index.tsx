@@ -10,7 +10,7 @@ import {
 } from '@strapi/design-system';
 
 import { Plus } from '@strapi/icons';
-import { request } from '@strapi/helper-plugin';
+import { useFetchClient } from '@strapi/helper-plugin';
 
 import pluginId from '../../../helpers/pluginId';
 import Table from './components/Table';
@@ -18,24 +18,31 @@ import Center from '../../../components/Center';
 import { PatternEntity } from '../../../types/url-patterns';
 
 const ListPatternPage = () => {
-  const [patterns, setPatterns] = useState([]);
+  const [patterns, setPatterns] = useState<PatternEntity[]>([]);
   const [loading, setLoading] = useState(false);
   const { formatMessage } = useIntl();
   const { push } = useHistory();
+  const fetchClient = useFetchClient();
 
   useEffect(() => {
-    setLoading(true);
-    request<PatternEntity[]>('/webtools/url-pattern/findMany', { method: 'GET' })
-      .then((res) => {
-        setPatterns(res);
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const response = await fetchClient.get<PatternEntity[]>('/webtools/url-pattern/findMany');
+        setPatterns(response.data);
+      } catch (error) {
+        console.error('Failed to fetch data:', error);
+      } finally {
         setLoading(false);
-      })
-      .catch(() => {
-        setLoading(false);
-      });
-  }, []);
+      }
+    };
 
-  if (loading || !patterns) {
+    fetchData().catch((error) => {
+      console.error('Failed to fetch data:', error);
+    });
+  }, [fetchClient]);
+
+  if (loading) {
     return (
       <Center>
         <Loader>{formatMessage({ id: 'webtools.settings.loading', defaultMessage: 'Loading content...' })}</Loader>
@@ -56,7 +63,7 @@ const ListPatternPage = () => {
               defaultMessage: 'Add new pattern',
             })}
           </Button>
-        )}
+                )}
       />
       <ContentLayout>
         <Table patterns={patterns} />

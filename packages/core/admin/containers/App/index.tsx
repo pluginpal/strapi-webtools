@@ -9,7 +9,7 @@ import {
   SubNavSection,
   SubNavLink,
 } from '@strapi/design-system';
-import { CheckPagePermissions } from '@strapi/helper-plugin';
+import { CheckPagePermissions, InjectionZone } from '@strapi/helper-plugin';
 
 import pluginPermissions from '../../permissions';
 import pluginId from '../../helpers/pluginId';
@@ -42,11 +42,14 @@ const App = () => {
                   Url Patterns
                 </SubNavLink>
               </SubNavSection>
-              {/* <SubNavSection label="Addons">
-                <SubNavLink to="/test" active key="test">
+              <SubNavSection label="Addons">
+                <InjectionZone
+                  area={`${pluginId}.webtoolsSidebar.link`}
+                />
+                {/* <SubNavLink to="/test" active key="test">
                   Sitemap
-                </SubNavLink>
-              </SubNavSection> */}
+                </SubNavLink> */}
+              </SubNavSection>
             </SubNavSections>
           </SubNav>
         )}
@@ -57,6 +60,9 @@ const App = () => {
           <Route
             path={`/plugins/${pluginId}/patterns`}
             component={Patterns}
+          />
+          <InjectionZone
+            area={`${pluginId}.webtoolsRouter.route`}
           />
           {/* <Route path="" component={NotFound} /> */}
         </Switch>

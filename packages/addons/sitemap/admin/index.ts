@@ -2,8 +2,9 @@ import { prefixPluginTranslations } from '@strapi/helper-plugin';
 import { AdminApp } from '@pluginpal/webtools-helper-plugin';
 import pluginPkg from '../package.json';
 import pluginId from './helpers/pluginId';
-import getTrad from './helpers/getTrad';
 import EditView from './components/EditView';
+import AdminRoute from './components/AdminRoute';
+import NavLink from './components/NavLink';
 
 const pluginDescription = pluginPkg.strapi.description || pluginPkg.description;
 const { name } = pluginPkg.strapi;
@@ -24,38 +25,35 @@ export default {
       Component: EditView,
     });
 
-    app.addSettingsLink('webtools', {
-      id: 'sitemap',
-      intlLabel: {
-        id: getTrad('plugin.name'),
-        defaultMessage: 'Sitemap',
-      },
-      to: '/settings/webtools/sitemap',
-      async Component() {
-        const component = await import(
-          /* webpackChunkName: "upload-settings" */ './containers/App'
-        );
+    app.getPlugin('webtools').injectComponent('webtoolsSidebar', 'link', {
+      name: 'navigation-link',
+      Component: NavLink,
+    });
 
-        return component;
-      },
+    app.getPlugin('webtools').injectComponent('webtoolsRouter', 'route', {
+      name: 'settings-route',
+      Component: AdminRoute,
     });
   },
   async registerTrads({ locales }: { locales: string[] }) {
     const importedTrads = await Promise.all(
       locales.map((locale) => {
-        try {
-          // eslint-disable-next-line import/no-dynamic-require, global-require
-          const data = require(`./translations/${locale}.json`) as Record<string, string>;
-          return {
-            data: prefixPluginTranslations(data, pluginId),
-            locale,
-          };
-        } catch {
-          return {
-            data: {},
-            locale,
-          };
-        }
+        return import(
+          /* webpackChunkName: "url-alias-translation-[request]" */ `./translations/${locale}.json`
+        )
+          .then(({ default: data }) => {
+            return {
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+              data: prefixPluginTranslations(data, pluginId),
+              locale,
+            };
+          })
+          .catch(() => {
+            return {
+              data: {},
+              locale,
+            };
+          });
       }),
     );
 

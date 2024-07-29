@@ -1,31 +1,41 @@
-import { request } from '@strapi/helper-plugin';
+import { useFetchClient } from '@strapi/helper-plugin';
 
-export const createUrlAlias = async (body: { id: number }, slug: string) => {
-  return request('/webtools/url-alias/create', {
-    method: 'POST',
-    body: {
-      // @ts-ignore
+export const useCreateUrlAlias = () => {
+  const { post } = useFetchClient();
+
+  const createUrlAlias = async (body: { id: number }, slug: string) => {
+    return post('/webtools/url-alias/create', {
       data: {
         ...body,
         contenttype: slug,
       },
-    },
-  });
+    });
+  };
+
+  return { createUrlAlias };
 };
 
-export const updateUrlAlias = async (body: { id: number }, slug: string) => {
-  return request(`/webtools/url-alias/update/${body.id}`, {
-    method: 'PUT',
-    body: {
-      // @ts-ignore
-      data: body,
-      contenttype: slug,
-    },
-  });
+export const useUpdateUrlAlias = () => {
+  const { put } = useFetchClient();
+
+  const updateUrlAlias = async (body: { id: number }, slug: string) => {
+    return put(`/webtools/url-alias/update/${body.id}`, {
+      data: {
+        ...body,
+        contenttype: slug,
+      },
+    });
+  };
+
+  return { updateUrlAlias };
 };
 
-export const deleteUrlAlias = async (body: { id: number }) => {
-  return request(`/webtools/url-alias/delete/${body.id}`, {
-    method: 'POST',
-  });
+export const useDeleteUrlAlias = () => {
+  const { post } = useFetchClient();
+
+  const deleteUrlAlias = async (body: { id: number }) => {
+    return post(`/webtools/url-alias/delete/${body.id}`);
+  };
+
+  return { deleteUrlAlias };
 };

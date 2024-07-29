@@ -53,18 +53,18 @@ const ModalForm = (props) => {
       <ModalBody>
         <Grid gap={4}>
           {languages.map((language) => (
-            <GridItem key={language.code} col={6} s={12}>
+            <GridItem key={language.uid} col={6} s={12}>
               <TextInput
-                placeholder={`https://${language.code}.strapi.io`}
+                placeholder={`https://${language.uid}.strapi.io`}
                 label={`${language.name} hostname`}
                 name="hostname"
-                value={hostnames[language.code]}
-                hint={formatMessage({ id: 'sitemap.HostnameOverrides.Description', defaultMessage: 'Specify hostname per language' }, { langcode: language.code })}
+                value={hostnames[language.uid]}
+                hint={formatMessage({ id: 'sitemap.HostnameOverrides.Description', defaultMessage: 'Specify hostname per language' }, { langcode: language.uid })}
                 onChange={(e) => {
                   if (!e.target.value) {
-                    delete hostnames[language.code];
+                    delete hostnames[language.uid];
                   } else {
-                    hostnames[language.code] = e.target.value;
+                    hostnames[language.uid] = e.target.value;
                   }
 
                   setHostnames({ ...hostnames });

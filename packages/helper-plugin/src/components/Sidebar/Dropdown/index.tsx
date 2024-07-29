@@ -3,7 +3,6 @@ import React from 'react';
 import {
   Box,
   Divider,
-  Stack,
 } from '@strapi/design-system';
 
 const Dropdown = ({
@@ -11,12 +10,12 @@ const Dropdown = ({
 }) => {
   return (
     <>
-      <Box paddingTop={2} paddingBottom={6}>
+      <Box paddingTop={2} paddingBottom={2}>
         <Divider />
       </Box>
-      <Stack size={2}>
+      <Box padding={4}>
         {children}
-      </Stack>
+      </Box>
     </>
   );
 };

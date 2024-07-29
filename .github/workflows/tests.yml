@@ -68,6 +68,16 @@ jobs:
         run: yarn test:unit
       - name: Run integration tests
         run: yarn test:integration
+      - name: Run end-to-end tests
+        uses: cypress-io/github-action@v6
+        with:
+          start: yarn playground:start
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
+          if-no-files-found: ignore # 'warn' or 'error' are also available, defaults to `warn`
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2
         with:

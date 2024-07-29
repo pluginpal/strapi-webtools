@@ -24,6 +24,7 @@ import {
 import CustomForm from './Custom';
 import CollectionForm from './Collection';
 import pluginId from '../../helpers/pluginId';
+import getSelectedContentType from '../../helpers/getSelectedContentType';
 
 const ModalForm = (props) => {
   const [uid, setUid] = useState('');
@@ -118,7 +119,7 @@ const ModalForm = (props) => {
         endActions={(
           <Button
             onClick={onSubmit}
-            disabled={!uid || (contentTypes && contentTypes[uid].locales && !langcode)}
+            disabled={!uid || (contentTypes && getSelectedContentType(contentTypes, uid).locales && !langcode)}
           >
             {formatMessage({ id: 'sitemap.Button.Save', defaultMessage: 'Save' })}
           </Button>
