@@ -254,49 +254,76 @@ const decorator = (service: IDecoratedService) => ({
   // eslint-disable-next-line max-len
   async clone(uid: Common.UID.ContentType, cloneId: number, params?: IDecoratedServiceOptions<{ url_alias: number }>) {
     const hasWT = isContentTypeEnabled(uid);
+
     if (!hasWT) {
       return service.clone.call(this, uid, cloneId, params);
     }
 
-    // Manually fetch the entity to clone
-    const entityToClone = await service.findOne.call(this, uid, cloneId, { populate: ['url_alias'] });
+    // Fetch the URL pattern for this content type.
+    let relations: string[] = [];
+    let languages: string[] = [undefined];
 
-    if (!entityToClone) {
-      throw new Error('Entity to clone not found');
+    if (strapi.plugin('i18n')) {
+      languages = [];
+      const locales = await strapi.entityService.findMany('plugin::i18n.locale', {});
+      languages = locales.map((locale) => locale.code);
     }
 
-    // Remove the id and url_alias from the entity to clone
-    // eslint-disable-next-line @typescript-eslint/naming-convention
-    const { id, url_alias, ...clonedData } = entityToClone;
+    await Promise.all(languages.map(async (lang) => {
+      const urlPattern = await getPluginService('urlPatternService').findByUid(uid, lang);
+      const languageRelations = getPluginService('urlPatternService').getRelationsFromPattern(urlPattern);
+      relations = [...relations, ...languageRelations];
+    }));
 
     // Create the cloned entity
-    const clonedEntity = await service.create.call(this, uid, { data: clonedData });
+    const clonedEntity = await service.clone.call(this, uid, cloneId, {
+      ...params,
+      populate: {
+        ...relations.reduce((obj, key) => ({ ...obj, [key]: {} }), {}),
+        url_alias: {
+          fields: ['id', 'generated'],
+        },
+        localizations: {
+          populate: {
+            url_alias: {
+              fields: ['id'],
+            },
+          },
+        },
+      },
+    });
 
     if (!clonedEntity) {
       throw new Error('Cloning failed, cloned entity is null or undefined');
     }
 
-    const urlPattern = await getPluginService('urlPatternService').findByUid(uid, clonedEntity.locale);
-    const generatedPath = getPluginService('urlPatternService').resolvePattern(uid, clonedEntity, urlPattern);
+    // Fetch the URL alias localizations.
+    const urlAliasLocalizations = clonedEntity.localizations
+      ?.map((loc) => loc.url_alias.id)
+      ?.filter((loc) => loc) || [];
 
-    // Handle URL alias for the cloned entity
-    if (url_alias) {
-      const newUrlAlias = await getPluginService('urlAliasService').create({
-        url_path: generatedPath,
-        generated: true,
-        contenttype: uid,
-      });
+    const clonedEntityWithoutLocalizations = {
+      ...clonedEntity,
+      localizations: undefined,
+    };
 
-      // Update the cloned entity with the new URL alias id
-      await service.update.call(this, uid, clonedEntity.id, { data: { url_alias: newUrlAlias.id }, populate: ['url_alias'] });
+    const combinedEntity = { ...clonedEntityWithoutLocalizations };
+    const urlPattern = await getPluginService('urlPatternService').findByUid(uid, combinedEntity.locale);
+    const generatedPath = getPluginService('urlPatternService').resolvePattern(uid, combinedEntity, urlPattern);
 
-      // Fetch the updated cloned entity to include the populated url_alias
-      const fetchedUpdatedClonedEntity = await service.findOne.call(this, uid, clonedEntity.id, { populate: ['url_alias'] });
+    // Create a new URL alias for the cloned entity
+    const newUrlAlias = await getPluginService('urlAliasService').create({
+      url_path: generatedPath,
+      generated: true,
+      contenttype: uid,
+      // @ts-ignore
+      locale: combinedEntity.locale,
+      // @ts-ignore
+      localizations: urlAliasLocalizations,
+    });
 
-      return fetchedUpdatedClonedEntity;
-    }
-
-    return clonedEntity;
+    // Update the cloned entity with the new URL alias id
+    return service.update.call(this, uid, clonedEntity.id, { data: { url_alias: newUrlAlias.id }, populate: ['url_alias'] });
   },
 
   async deleteMany(uid: Common.UID.ContentType, params: any) {
@@ -307,14 +334,16 @@ const decorator = (service: IDecoratedService) => ({
 
     // Find entities matching the criteria to delete their URL aliases
     const entitiesToDelete = await strapi.entityService.findMany(uid, { ...params, fields: ['id'], populate: ['url_alias'] });
-    // eslint-disable-next-line no-restricted-syntax
-    for (const entity of entitiesToDelete) {
+
+    entitiesToDelete.map(async (entity) => {
+      // @ts-ignore
       if (entity.url_alias) {
+        // @ts-ignore
         // eslint-disable-next-line max-len
-        // eslint-disable-next-line no-await-in-loop, @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
         await getPluginService('urlAliasService').delete(entity.url_alias.id);
       }
-    }
+    });
 
     // Delete the entities after URL aliases
     return service.deleteMany.call(this, uid, params);
