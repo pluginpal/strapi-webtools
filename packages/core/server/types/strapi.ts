@@ -53,6 +53,22 @@ export interface IDecoratedService {
       id: number, url_alias?: Attribute.GetValues<'plugin::webtools.url-alias', Attribute.GetNonPopulatableKeys<'plugin::webtools.url-alias'>>
     }>
   }
+  clone: {
+    call: (context: any, uid: any, cloneId: any, options: any) => Promise<{
+      id: number,
+      locale?: string,
+      localizations?: [
+        {
+          url_alias: {
+            id: number
+          },
+        },
+      ],
+    }>
+  },
+  deleteMany: {
+    call: (context: any, uid: any, options: any) => Promise<{ id: number }>
+  }
 }
 
 export interface IDecoratedServiceOptions<Fields> {
