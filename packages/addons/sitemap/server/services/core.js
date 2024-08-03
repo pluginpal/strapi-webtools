@@ -8,7 +8,7 @@ import { getConfigUrls } from '@strapi/utils';
 import { SitemapStream, streamToPromise, SitemapAndIndexStream } from 'sitemap';
 import { isEmpty } from 'lodash';
 
-import { logMessage, getService } from '../utils';
+import { logMessage, getService, isValidUrl } from '../utils';
 
 /**
  * Add link x-default url to url bundles from strapi i18n plugin default locale.
@@ -280,9 +280,20 @@ const getSitemapStream = async (urlCount) => {
  */
 const createSitemap = async () => {
   const sitemapEntries = await getService('core').createSitemapEntries();
+  const config = await getService('settings').getConfig();
 
   if (isEmpty(sitemapEntries)) {
-    strapi.log.info(logMessage('No sitemap XML was generated because there were 0 URLs configured.'));
+    strapi.log.warn(logMessage('No sitemap XML was generated because there were 0 URLs configured.'));
+    return;
+  }
+
+  if (!config.hostname) {
+    strapi.log.warn(logMessage('No sitemap XML was generated because there was no hostname configured.'));
+    return;
+  }
+
+  if (!isValidUrl(config.hostname)) {
+    strapi.log.warn(logMessage('No sitemap XML was generated because the hostname was invalid'));
     return;
   }
 
