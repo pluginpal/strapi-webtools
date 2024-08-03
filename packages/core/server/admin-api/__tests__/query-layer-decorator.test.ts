@@ -205,7 +205,8 @@ describe('Query layer decorator', () => {
     });
 
     const clonedPage = await strapi.entityService.clone("api::test.test", page.id, {
-      populate: ['url_alias']
+      populate: ['url_alias'],
+      data: {},
     });
 
     expect(clonedPage).not.toBeNull();
