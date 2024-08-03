@@ -1,5 +1,12 @@
 # addon-menus
 
+## 1.0.0-beta.8
+
+### Patch Changes
+
+- Updated dependencies [[`e5c0587`](https://github.com/pluginpal/strapi-webtools/commit/e5c058758087c9d878ab7f40466672b340731e99)]:
+  - @pluginpal/webtools-core@1.0.0-beta.13
+
 ## 1.0.0-beta.7
 
 ### Patch Changes
