@@ -3439,7 +3439,7 @@ __metadata:
     react-router-dom: "npm:^5.2.0"
     styled-components: "npm:5.3.3"
   peerDependencies:
-    "@pluginpal/webtools-core": 1.0.0-beta.12
+    "@pluginpal/webtools-core": 1.0.0-beta.13
     react: ^17.0.0 || ^18.0.0
     react-dom: ^17.0.0 || ^18.0.0
     react-router-dom: ^5.2.0
@@ -3458,7 +3458,7 @@ __metadata:
     react-router-dom: "npm:^5.2.0"
     styled-components: "npm:5.3.3"
   peerDependencies:
-    "@pluginpal/webtools-core": 1.0.0-beta.12
+    "@pluginpal/webtools-core": 1.0.0-beta.13
     react: ^17.0.0 || ^18.0.0
     react-dom: ^17.0.0 || ^18.0.0
     react-router-dom: ^5.2.0
@@ -3492,7 +3492,7 @@ __metadata:
     styled-components: "npm:5.3.3"
     xml2js: "npm:^0.5.0"
   peerDependencies:
-    "@pluginpal/webtools-core": 1.0.0-beta.12
+    "@pluginpal/webtools-core": 1.0.0-beta.13
     react: ^17.0.0 || ^18.0.0
     react-dom: ^17.0.0 || ^18.0.0
     react-router-dom: ^5.2.0

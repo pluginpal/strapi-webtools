@@ -1,5 +1,14 @@
 # addon-sitemap
 
+## 1.0.0-beta.8
+
+### Patch Changes
+
+- [#156](https://github.com/pluginpal/strapi-webtools/pull/156) [`9c6ab7d`](https://github.com/pluginpal/strapi-webtools/commit/9c6ab7d92247ce4e616679c49363e7f2275119f2) Thanks [@boazpoolman](https://github.com/boazpoolman)! - Check if a hostname is present before building the sitemap stream
+
+- Updated dependencies [[`e5c0587`](https://github.com/pluginpal/strapi-webtools/commit/e5c058758087c9d878ab7f40466672b340731e99)]:
+  - @pluginpal/webtools-core@1.0.0-beta.13
+
 ## 1.0.0-beta.7
 
 ### Minor Changes

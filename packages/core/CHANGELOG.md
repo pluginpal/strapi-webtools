@@ -1,5 +1,11 @@
 # core
 
+## 1.0.0-beta.13
+
+### Minor Changes
+
+- [#147](https://github.com/pluginpal/strapi-webtools/pull/147) [`e5c0587`](https://github.com/pluginpal/strapi-webtools/commit/e5c058758087c9d878ab7f40466672b340731e99) Thanks [@MSACC](https://github.com/MSACC)! - Extended query decorator functionality to handle deleteMany (#140) and clone (#138)
+
 ## 1.0.0-beta.12
 
 ### Minor Changes
