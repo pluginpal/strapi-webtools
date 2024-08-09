@@ -11,7 +11,6 @@ export default () => ({
    * @returns {void}
    */
   create: async (data: EntityService.Params.Pick<'plugin::webtools.url-pattern', 'data'>['data']) => {
-    console.log('Create function called with data:', data);
     const formattedData = data;
 
     if (data.code) {
@@ -34,7 +33,6 @@ export default () => ({
    * @returns {void}
    */
   findOne: async (id: number) => {
-    console.log('FindOne function called with id:', id);
     const patternEntity = await strapi.entityService.findOne('plugin::webtools.url-pattern', id);
     console.log('Pattern entity found:', patternEntity);
     return patternEntity;
@@ -46,7 +44,6 @@ export default () => ({
    * @param {string} langcode the langcode.
    */
   findByUid: async (uid: string, langcode?: string): Promise<string[]> => {
-    console.log('FindByUid function called with uid:', uid, 'langcode:', langcode);
     let patterns = await getPluginService('urlPatternService').findMany({
       filters: {
         contenttype: uid,
@@ -56,16 +53,13 @@ export default () => ({
 
     if (langcode) {
       patterns = patterns.filter((pattern) => (pattern.languages as string).includes(langcode));
-      console.log('Patterns filtered by langcode:', patterns);
     }
 
     if (! patterns.length) {
-      console.log('No patterns found, returning default pattern.');
       return [strapi.config.get('plugin.webtools.default_pattern')];
     }
 
     const patterns2 = patterns.map((pattern) => pattern.pattern);
-    console.log('Mapped patterns:', patterns2);
 
     return patterns2;
   },
@@ -76,9 +70,7 @@ export default () => ({
    * @returns {void}
    */
   findMany: async (params: any) => {
-    console.log('FindMany function called with params:', params);
     const patternEntities = await strapi.entityService.findMany('plugin::webtools.url-pattern', params);
-    console.log('Pattern entities found:', patternEntities);
     return patternEntities;
   },
   /**
@@ -89,7 +81,6 @@ export default () => ({
    * @returns {void}
    */
   update: async (id: number, data: EntityService.Params.Pick<'plugin::webtools.url-pattern', 'data'>['data']) => {
-    console.log('Update function called with id:', id, 'data:', data);
     const patternEntity = await strapi.entityService.update('plugin::webtools.url-pattern', id, { data });
     console.log('Pattern entity updated:', patternEntity);
     return patternEntity;
@@ -101,9 +92,7 @@ export default () => ({
    * @returns {void}
    */
   delete: async (id: number) => {
-    console.log('Delete function called with id:', id);
     await strapi.entityService.delete('plugin::webtools.url-pattern', id);
-    console.log('Pattern entity deleted with id:', id);
   },
   /**
    * Get all field names allowed in the URL of a given content type.
@@ -114,7 +103,6 @@ export default () => ({
    * @returns {string[]} The fields.
    */
   getAllowedFields: (contentType: Schema.ContentType, allowedFields: string[] = []) => {
-    console.log('GetAllowedFields function called with contentType:', contentType, 'allowedFields:', allowedFields);
     const fields: string[] = [];
     allowedFields.forEach((fieldType) => {
       Object.entries(contentType.attributes).forEach(([fieldName, field]) => {
@@ -167,7 +155,6 @@ export default () => ({
       fields.push('pluralName');
     }
 
-    console.log('Allowed fields:', fields);
     return fields;
   },
   /**
@@ -178,8 +165,6 @@ export default () => ({
    * @returns {array} The fields.\[([\w\d\[\]]+)\]
    */
   getFieldsFromPattern: (patterns: string | string[]) => {
-    console.log('GetFieldsFromPattern function called with patterns:', patterns);
-
     // Zorg ervoor dat patterns een array is
     if (typeof patterns === 'string') {
       // eslint-disable-next-line no-param-reassign
@@ -188,10 +173,8 @@ export default () => ({
 
     // Voeg alle patronen samen tot een enkele string om de reguliere expressie toe te passen
     const patternString = patterns.join(',');
-    console.log('Combined patterns into string:', patternString);
 
     const fields = patternString.match(/[[\w\d.]+]/g);
-    console.log('Fields found in pattern:', fields);
 
     if (! fields) {
       return [];
@@ -209,16 +192,12 @@ export default () => ({
    * @returns {array} The relations.
    */
   getRelationsFromPattern: (patterns: any) => {
-    console.log('GetRelationsFromPattern function called with patterns:', patterns);
-
     let fields = getPluginService('urlPatternService').getFieldsFromPattern(patterns);
-    console.log('Fields extracted for relations:', fields);
 
     // Filter on fields containing a dot (.)
     fields = fields.filter((field) => field.split('.').length > 1);
     // Extract the first part of the fields
     fields = fields.map((field) => field.split('.')[0]);
-    console.log('Relations extracted from fields:', fields);
 
     return fields;
   },
@@ -236,8 +215,6 @@ export default () => ({
     entity: { [key: string]: string | number | Date },
     urlPattern: string | string[],
   ) => {
-    console.log('ResolvePattern function called with uid:', uid, 'entity:', entity, 'urlPattern:', urlPattern);
-
     if (typeof urlPattern === 'string') {
       // eslint-disable-next-line no-param-reassign
       urlPattern = [urlPattern];
@@ -270,7 +247,7 @@ export default () => ({
 
       resolvedPattern = resolvedPattern.replace(/([^:]\/)\/+/g, '$1');
       resolvedPattern = resolvedPattern.startsWith('/') ? resolvedPattern : `/${resolvedPattern}`;
-      console.log('Resolved pattern:', resolvedPattern);
+
       return resolvedPattern;
     };
 
@@ -290,7 +267,6 @@ export default () => ({
    * @returns {string} object.message Validation string.
    */
   validatePattern: (pattern: string, allowedFieldNames: string[]) => {
-    console.log('ValidatePattern function called with pattern:', pattern, 'allowedFieldNames:', allowedFieldNames);
     if (! pattern) {
       return {
         valid: false,
