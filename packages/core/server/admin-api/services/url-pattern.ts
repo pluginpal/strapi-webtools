@@ -53,6 +53,7 @@ export default () => ({
       filters: {
         contenttype: uid,
       },
+      fields: ['pattern', 'languages'],
     });
 
     if (langcode) {
