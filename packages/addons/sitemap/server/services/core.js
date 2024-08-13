@@ -283,8 +283,6 @@ const getSitemapStream = async (urlCount) => {
 const createSitemap = async () => {
   const sitemapEntries = await getService('core').createSitemapEntries();
 
-  console.log(sitemapEntries);
-
   const config = await getService('settings').getConfig();
 
   if (isEmpty(sitemapEntries)) {
