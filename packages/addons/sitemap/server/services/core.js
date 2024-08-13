@@ -15,14 +15,12 @@ import { logMessage, getService, isValidUrl } from '../utils';
  *
  * @param {object} config - The config object.
  * @param {object} links - The language links.
+ * @param {object} defaultLocale - The language locale.
  *
  * @returns {object | undefined} The default language link.
  */
-const getDefaultLanguageLink = async (config, links) => {
+const getDefaultLanguageLink = (config, links, defaultLocale) => {
   if (config.defaultLanguageUrlType === 'default-locale') {
-    const { getDefaultLocale } = strapi.plugin('i18n').service('locales');
-    const defaultLocale = await getDefaultLocale();
-
     // find url with default locale in generated bundle
     const url = links.find((link) => link.lang === defaultLocale)?.url;
     if (url) return { lang: 'x-default', url };
@@ -40,10 +38,11 @@ const getDefaultLanguageLink = async (config, links) => {
  * @param {object} page - The entity.
  * @param {string} contentType - The model of the entity.
  * @param {string} defaultURL - The default URL of the different languages.
+ * @param {string} defaultLocale - The default locale.
  *
  * @returns {array} The language links.
  */
-const getLanguageLinks = (config, page, contentType, defaultURL) => {
+const getLanguageLinks = (config, page, contentType, defaultURL, defaultLocale) => {
   if (!page.localizations || page.localizations.length === 0) return null;
 
   const links = [];
@@ -81,7 +80,7 @@ const getLanguageLinks = (config, page, contentType, defaultURL) => {
 
   // add optional x-default link url
   if (config.defaultLanguageUrlType) {
-    const defaultLink = getService('core').getDefaultLanguageLink(config, links);
+    const defaultLink = getService('core').getDefaultLanguageLink(config, links, defaultLocale);
     if (defaultLink) links.push(defaultLink);
   }
 
@@ -94,11 +93,12 @@ const getLanguageLinks = (config, page, contentType, defaultURL) => {
  * @param {object} config - The config object.
  * @param {object} page - The entity.
  * @param {string} contentType - The model of the entity.
+ * @param {string} defaultLocale - The default locale.
  * @param {bool} excludeDrafts - Whether to exclude drafts.
  *
  * @returns {object} The sitemap entry data.
  */
-const getSitemapPageData = async (config, page, contentType) => {
+const getSitemapPageData = async (config, page, contentType, defaultLocale) => {
   let locale = page.locale || 'und';
 
   // Return when there is no pattern for the page.
@@ -126,7 +126,7 @@ const getSitemapPageData = async (config, page, contentType) => {
   const pageData = {
     lastmod: page.updatedAt,
     url: path,
-    links: getService('core').getLanguageLinks(config, page, contentType, url),
+    links: getService('core').getLanguageLinks(config, page, contentType, url, defaultLocale),
     changefreq: config.contentTypes[contentType]['languages'][locale].changefreq || 'monthly',
     priority: parseFloat(config.contentTypes[contentType]['languages'][locale].priority) || 0.5,
   };
@@ -145,6 +145,8 @@ const getSitemapPageData = async (config, page, contentType) => {
  */
 const createSitemapEntries = async () => {
   const config = await getService('settings').getConfig();
+  const { getDefaultLocale } = strapi.plugin('i18n').service('locales');
+  const defaultLocale = await getDefaultLocale();
   const sitemapEntries = [];
 
   // Collection entries.
@@ -154,7 +156,7 @@ const createSitemapEntries = async () => {
 
     // Add formatted sitemap page data to the array.
     await Promise.all(pages.map(async (page, i) => {
-      const pageData = await getService('core').getSitemapPageData(config, page, contentType);
+      const pageData = await getService('core').getSitemapPageData(config, page, contentType, defaultLocale);
       if (pageData) {
         sitemapEntries.push(pageData);
       }
@@ -280,6 +282,9 @@ const getSitemapStream = async (urlCount) => {
  */
 const createSitemap = async () => {
   const sitemapEntries = await getService('core').createSitemapEntries();
+
+  console.log(sitemapEntries);
+
   const config = await getService('settings').getConfig();
 
   if (isEmpty(sitemapEntries)) {
