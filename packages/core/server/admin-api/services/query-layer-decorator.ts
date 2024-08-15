@@ -10,7 +10,7 @@ import { getPluginService } from '../../util/getPluginService';
 const decorator = (service: IDecoratedService) => ({
   async create(uid: Common.UID.ContentType, opts: IDecoratedServiceOptions<{ url_alias: number }>) {
     const hasWT = isContentTypeEnabled(uid);
-    let urlAliasEntities: Array<Attribute.GetValues<'plugin::webtools.url-alias', Attribute.GetNonPopulatableKeys<'plugin::webtools.url-alias'>>> = [];
+    let urlAliasEntity: Attribute.GetValues<'plugin::webtools.url-alias', Attribute.GetNonPopulatableKeys<'plugin::webtools.url-alias'>> | null = null;
 
     // If Webtools isn't enabled, do nothing.
     if (!hasWT) {
@@ -34,12 +34,11 @@ const decorator = (service: IDecoratedService) => ({
     }));
 
     if (opts.data.url_alias) {
-      urlAliasEntities = [await getPluginService('urlAliasService').findOne(opts.data.url_alias)];
+      urlAliasEntity = await getPluginService('urlAliasService').findOne(opts.data.url_alias);
     }
 
     // If a URL alias was created and 'generated' is set to false, do nothing.
-    // eslint-disable-next-line max-len
-    if (urlAliasEntities.map((entities) => entities.generated).some((generated) => generated === false)) {
+    if (urlAliasEntity?.generated === false) {
       return service.create.call(this, uid, opts);
     }
 
@@ -74,24 +73,8 @@ const decorator = (service: IDecoratedService) => ({
     await Promise.all(urlPatterns.map(async (urlPattern) => {
       const generatedPath = getPluginService('urlPatternService').resolvePattern(uid, combinedEntity, urlPattern);
 
-      if (urlAliasEntities.some((alias) => alias?.generated === true)) {
-        urlAliasEntities = await Promise.all(urlAliasEntities.map(async (urlAliasEntity) => {
-          if (urlAliasEntity?.generated === true) {
-            const updatedAlias = await getPluginService('urlAliasService').update(urlAliasEntity.id, {
-              // @ts-ignore
-              url_path: generatedPath,
-              generated: true,
-              contenttype: uid,
-              // @ts-ignore
-              locale: combinedEntity.locale,
-              localizations: urlAliasLocalizations,
-            });
-            return updatedAlias;
-          }
-          return urlAliasEntity;
-        }));
-      } else {
-        const urlAliasEntity = await getPluginService('urlAliasService').create({
+      if (urlAliasEntity?.generated === true) {
+        urlAliasEntity = await getPluginService('urlAliasService').update(urlAliasEntity.id, {
           // @ts-ignore
           url_path: generatedPath,
           generated: true,
@@ -100,13 +83,21 @@ const decorator = (service: IDecoratedService) => ({
           locale: combinedEntity.locale,
           localizations: urlAliasLocalizations,
         });
-        urlAliasEntities.push(urlAliasEntity);
+      } else {
+        urlAliasEntity = await getPluginService('urlAliasService').create({
+          // @ts-ignore
+          url_path: generatedPath,
+          generated: true,
+          contenttype: uid,
+          // @ts-ignore
+          locale: combinedEntity.locale,
+          localizations: urlAliasLocalizations,
+        });
       }
     }));
 
     // Eventually update the entity to include the URL alias.
-    // eslint-disable-next-line max-len
-    const dataWithUrlAlias = { ...opts.data, url_alias: urlAliasEntities.map((entity) => entity.id) };
+    const dataWithUrlAlias = { ...opts.data, url_alias: urlAliasEntity.id };
     const updatedEntity = await service.update.call(this, uid, newEntity.id, {
       ...opts, data: dataWithUrlAlias,
     });
@@ -120,7 +111,7 @@ const decorator = (service: IDecoratedService) => ({
     opts: IDecoratedServiceOptions<{ url_alias: number }>,
   ) {
     const hasWT = isContentTypeEnabled(uid);
-    let urlAliasEntities: Array<Attribute.GetValues<'plugin::webtools.url-alias', Attribute.GetNonPopulatableKeys<'plugin::webtools.url-alias'>>> = [];
+    let urlAliasEntity: Attribute.GetValues<'plugin::webtools.url-alias', Attribute.GetNonPopulatableKeys<'plugin::webtools.url-alias'>> | null = null;
 
     // If Webtools isn't enabled, do nothing.
     if (!hasWT) {
@@ -144,7 +135,6 @@ const decorator = (service: IDecoratedService) => ({
     }));
 
     // Manually fetch the entity that's being updated.
-    // We do this because not all it's data is present in opts.data.
     const entity = await service.update.call(this, uid, entityId, {
       ...opts,
       populate: {
@@ -172,18 +162,15 @@ const decorator = (service: IDecoratedService) => ({
       localizations: undefined,
     };
 
-    // If a URL alias is allready present, fetch it.
+    // If a URL alias is already present, fetch it.
     if (opts.data.url_alias) {
-      urlAliasEntities = [await getPluginService('urlAliasService').findOne(opts.data.url_alias)];
-      // @ts-ignore
+      urlAliasEntity = await getPluginService('urlAliasService').findOne(opts.data.url_alias);
     } else if (entity?.url_alias) {
-      // @ts-ignore
-      urlAliasEntities = [entity?.url_alias];
+      urlAliasEntity = entity.url_alias;
     }
 
     // If a URL alias is present and 'generated' is set to false, do nothing.
-    // eslint-disable-next-line max-len
-    if (urlAliasEntities.map((entities) => entities.generated).some((generated) => generated === false)) {
+    if (urlAliasEntity?.generated === false) {
       return service.create.call(this, uid, opts);
     }
 
@@ -192,26 +179,20 @@ const decorator = (service: IDecoratedService) => ({
 
     await Promise.all(urlPatterns.map(async (urlPattern) => {
       const generatedPath = getPluginService('urlPatternService').resolvePattern(uid, entityWithoutLocalizations, urlPattern);
-      if (urlAliasEntities.some((alias) => alias?.generated === true)) {
+      if (urlAliasEntity?.generated === true) {
         // If a URL alias is present and 'generated' is set to true, update the alias.
-        urlAliasEntities = await Promise.all(urlAliasEntities.map(async (urlAliasEntity) => {
-          if (urlAliasEntity?.generated === true) {
-            const updatedAlias = await getPluginService('urlAliasService').update(urlAliasEntity.id, {
-              // @ts-ignore
-              url_path: generatedPath,
-              generated: true,
-              contenttype: uid,
-              // @ts-ignore
-              locale: entity.locale,
-              localizations: urlAliasLocalizations,
-            });
-            return updatedAlias;
-          }
-          return urlAliasEntity;
-        }));
+        urlAliasEntity = await getPluginService('urlAliasService').update(urlAliasEntity.id, {
+          // @ts-ignore
+          url_path: generatedPath,
+          generated: true,
+          contenttype: uid,
+          // @ts-ignore
+          locale: entity.locale,
+          localizations: urlAliasLocalizations,
+        });
       } else {
         // If no URL alias is present, create one.
-        const urlAliasEntity = await getPluginService('urlAliasService').create({
+        urlAliasEntity = await getPluginService('urlAliasService').create({
           // @ts-ignore
           url_path: generatedPath,
           generated: true,
@@ -219,7 +200,6 @@ const decorator = (service: IDecoratedService) => ({
           locale: entity.locale,
           localizations: urlAliasLocalizations,
         });
-        urlAliasEntities.push(urlAliasEntity);
       }
     }));
 
@@ -228,7 +208,7 @@ const decorator = (service: IDecoratedService) => ({
       ...opts,
       data: {
         ...opts.data,
-        url_alias: urlAliasEntities.map((entityItem) => entityItem.id),
+        url_alias: urlAliasEntity.id,
       },
     });
 
@@ -239,7 +219,7 @@ const decorator = (service: IDecoratedService) => ({
     const hasWT = isContentTypeEnabled(uid);
 
     // If Webtools isn't enabled, do nothing.
-    if (! hasWT) {
+    if (!hasWT) {
       return service.delete.call(this, uid, entityId);
     }
 

@@ -210,11 +210,6 @@ export default () => ({
     entity: { [key: string]: string | number | Date },
     urlPattern: string | string[],
   ) => {
-    if (typeof urlPattern === 'string') {
-      // eslint-disable-next-line no-param-reassign
-      urlPattern = [urlPattern];
-    }
-
     const resolve = (pattern: string) => {
       let resolvedPattern: string = pattern;
       const fields = getPluginService('urlPatternService').getFieldsFromPattern([pattern]);
@@ -224,19 +219,15 @@ export default () => ({
 
         if (field === 'pluralName') {
           const fieldValue = strapi.contentTypes[uid].info.pluralName;
-
-          if (! fieldValue) {
-            return;
-          }
-
           resolvedPattern = resolvedPattern.replace(`[${field}]`, fieldValue || '');
-        } else if (! relationalField) {
+        } else if (!relationalField) {
           const fieldValue = _.kebabCase(_.deburr(_.toLower(String(entity[field]))));
           resolvedPattern = resolvedPattern.replace(`[${field}]`, fieldValue || '');
-        } else if (Array.isArray(entity[relationalField[0]])) {
-          strapi.log.error('Something went wrong whilst resolving the pattern.');
-        } else if (typeof entity[relationalField[0]] === 'object') {
-          resolvedPattern = resolvedPattern.replace(`[${field}]`, entity[relationalField[0]] && String(entity[relationalField[0]][relationalField[1]]) ? String(entity[relationalField[0]][relationalField[1]]) : '');
+        } else if (entity[relationalField[0]] && typeof entity[relationalField[0]] === 'object') {
+          resolvedPattern = resolvedPattern.replace(
+            `[${field}]`,
+            String(entity[relationalField[0]][relationalField[1]]) || ''
+          );
         }
       });
 
@@ -246,10 +237,16 @@ export default () => ({
       return resolvedPattern;
     };
 
-    // Gebruik de map-functie om elk patroon in de array op te lossen
+    if (typeof urlPattern === 'string') {
+      // Als er slechts één patroon is, los het op en retourneer het als een string
+      return resolve(urlPattern);
+    }
+
+    // Als er meerdere patronen zijn, retourneer het eerste opgeloste patroon als string
     const resolvedPaths = urlPattern.map((pattern) => resolve(pattern));
-    return resolvedPaths;
+    return resolvedPaths.length === 1 ? resolvedPaths[0] : resolvedPaths;
   },
+
   /**
    * Validate if a pattern is correctly structured.
    *

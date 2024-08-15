@@ -77,8 +77,6 @@ const generateUrlAliases = async (params: GenerateParams) => {
   const { types, generationType } = params;
   let generatedCount = 0;
 
-  console.log('Starting URL alias generation with params:', params);
-
   // Map over all the types sent in the request.
   await Promise.all(types.map(async (type) => {
     if (generationType === 'all') {
@@ -111,12 +109,10 @@ const generateUrlAliases = async (params: GenerateParams) => {
       languages = [];
       const locales = await strapi.entityService.findMany('plugin::i18n.locale', {});
       languages = locales.map((locale) => locale.code);
-      console.log('Found locales for i18n:', languages);
     }
 
     await Promise.all(languages.map(async (lang) => {
       const urlPatterns = await getPluginService('urlPatternService').findByUid(type, lang);
-      console.log(`URL patterns for type ${type} and lang ${lang}:`, urlPatterns);
       const languageRelations = getPluginService('urlPatternService').getRelationsFromPattern(urlPatterns);
       relations = [...relations, ...languageRelations];
     }));
@@ -133,22 +129,22 @@ const generateUrlAliases = async (params: GenerateParams) => {
       },
     });
 
-    console.log('Entities found for type', type, entities);
 
     // Fetch the user-defined patterns from the database
     const urlPatterns = await getPluginService('urlPatternService').findByUid(type);
-    console.log('User-defined URL patterns for type:', urlPatterns);
 
     // Genereer URL-patronen voor alle entiteiten
-    const entitiesWithPaths = await Promise.all(entities.map(async (entity) => {
+    const entitiesWithPaths = await Promise.all(entities.map((entity) => {
       const generatedPaths = urlPatterns.map((urlPattern) => getPluginService('urlPatternService').resolvePattern(type, entity, urlPattern));
-      console.log(`Generated paths for entity ${entity.id}:`, generatedPaths);
+
       return { entity, generatedPaths };
     }));
 
     // Maak URL-aliasen en werk de entiteiten bij
     await Promise.all(entitiesWithPaths.map(async ({ entity, generatedPaths }) => {
       await Promise.all(generatedPaths.map(async (generatedPath) => {
+        console.log(generatedPath);
+
         const existingAlias = await strapi.entityService.findMany('plugin::webtools.url-alias', {
           filters: {
             url_path: generatedPath,
@@ -161,29 +157,23 @@ const generateUrlAliases = async (params: GenerateParams) => {
         }
 
         const newUrlAlias = await getPluginService('urlAliasService').create({
-          // @ts-ignore
           url_path: generatedPath,
           generated: true,
           contenttype: type,
-          // @ts-ignore
           locale: entity.locale,
         });
 
         await strapi.entityService.update(type, entity.id, {
           data: {
-            // @ts-ignore
             url_alias: newUrlAlias.id,
           },
         });
-
-        console.log(`Created URL alias for entity ${entity.id} with path ${generatedPath}:`, newUrlAlias);
 
         generatedCount += 1;
       }));
     }));
   }));
 
-  console.log('Finished URL alias generation. Total generated:', generatedCount);
   return generatedCount;
 };
 
