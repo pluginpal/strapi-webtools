@@ -144,7 +144,7 @@ const decorator = (service: IDecoratedService) => ({
     }));
 
     // Manually fetch the entity that's being updated.
-    // We do this becuase not all it's data is present in opts.data.
+    // We do this because not all it's data is present in opts.data.
     const entity = await service.update.call(this, uid, entityId, {
       ...opts,
       populate: {
@@ -190,11 +190,10 @@ const decorator = (service: IDecoratedService) => ({
     // Generate the path.
     const urlPatterns = await getPluginService('urlPatternService').findByUid(uid, entity.locale);
 
-    // If a URL alias is present and 'generated' is set to true, update the alias.
     await Promise.all(urlPatterns.map(async (urlPattern) => {
       const generatedPath = getPluginService('urlPatternService').resolvePattern(uid, entityWithoutLocalizations, urlPattern);
-
       if (urlAliasEntities.some((alias) => alias?.generated === true)) {
+        // If a URL alias is present and 'generated' is set to true, update the alias.
         urlAliasEntities = await Promise.all(urlAliasEntities.map(async (urlAliasEntity) => {
           if (urlAliasEntity?.generated === true) {
             const updatedAlias = await getPluginService('urlAliasService').update(urlAliasEntity.id, {
@@ -229,7 +228,7 @@ const decorator = (service: IDecoratedService) => ({
       ...opts,
       data: {
         ...opts.data,
-        url_alias: urlAliasEntities.map(entity => entity.id),
+        url_alias: urlAliasEntities.map((entityItem) => entityItem.id),
       },
     });
 

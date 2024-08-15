@@ -22,7 +22,6 @@ export default () => ({
     const patternEntity = await strapi.entityService.create('plugin::webtools.url-pattern', {
       data,
     });
-    console.log('Pattern entity created:', patternEntity);
 
     return patternEntity;
   },
@@ -34,7 +33,6 @@ export default () => ({
    */
   findOne: async (id: number) => {
     const patternEntity = await strapi.entityService.findOne('plugin::webtools.url-pattern', id);
-    console.log('Pattern entity found:', patternEntity);
     return patternEntity;
   },
   /**
@@ -49,7 +47,6 @@ export default () => ({
         contenttype: uid,
       },
     });
-    console.log('Patterns found:', patterns);
 
     if (langcode) {
       patterns = patterns.filter((pattern) => (pattern.languages as string).includes(langcode));
@@ -82,7 +79,6 @@ export default () => ({
    */
   update: async (id: number, data: EntityService.Params.Pick<'plugin::webtools.url-pattern', 'data'>['data']) => {
     const patternEntity = await strapi.entityService.update('plugin::webtools.url-pattern', id, { data });
-    console.log('Pattern entity updated:', patternEntity);
     return patternEntity;
   },
   /**
@@ -181,7 +177,6 @@ export default () => ({
     }
 
     const newFields = fields.map((field) => (/(?<=\[)(.*?)(?=\])/).exec(field)?.[0] ?? '');
-    console.log('New fields extracted from pattern:', newFields);
 
     return newFields;
   },
@@ -253,7 +248,6 @@ export default () => ({
 
     // Gebruik de map-functie om elk patroon in de array op te lossen
     const resolvedPaths = urlPattern.map((pattern) => resolve(pattern));
-    console.log('Resolved paths:', resolvedPaths);
     return resolvedPaths;
   },
   /**

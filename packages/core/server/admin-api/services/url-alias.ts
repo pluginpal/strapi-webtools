@@ -135,12 +135,11 @@ const findByPath = async (path: string, id: Entity.ID = 0) => {
  * @returns {void}
  */
 const update = async (id: Entity.ID, data: EntityService.Params.Pick<'plugin::webtools.url-alias', 'data'>['data']) => {
-  const urlPath = await duplicateCheck(data.url_path, id);
-
+  // const urlPath = await duplicateCheck(data.url_path, id);
   const pathEntity = await strapi.entityService.update('plugin::webtools.url-alias', id, {
     data: {
       ...data,
-      url_path: urlPath,
+      // url_path: data.url_path[0],
     },
   });
 
