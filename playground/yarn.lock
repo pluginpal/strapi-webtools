@@ -1355,6 +1355,12 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@pluginpal/webtools-addon-links@link:.yalc/@pluginpal/webtools-addon-links::locator=playground%40workspace%3A.":
+  version: 0.0.0-use.local
+  resolution: "@pluginpal/webtools-addon-links@link:.yalc/@pluginpal/webtools-addon-links::locator=playground%40workspace%3A."
+  languageName: node
+  linkType: soft
+
 "@pluginpal/webtools-addon-sitemap@link:.yalc/@pluginpal/webtools-addon-sitemap::locator=playground%40workspace%3A.":
   version: 0.0.0-use.local
   resolution: "@pluginpal/webtools-addon-sitemap@link:.yalc/@pluginpal/webtools-addon-sitemap::locator=playground%40workspace%3A."
@@ -10559,6 +10565,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "playground@workspace:."
   dependencies:
+    "@pluginpal/webtools-addon-links": "link:.yalc/@pluginpal/webtools-addon-links"
     "@pluginpal/webtools-addon-sitemap": "link:.yalc/@pluginpal/webtools-addon-sitemap"
     "@pluginpal/webtools-core": "link:.yalc/@pluginpal/webtools-core"
     "@pluginpal/webtools-helper-plugin": "link:.yalc/@pluginpal/webtools-helper-plugin"

@@ -3428,6 +3428,31 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@pluginpal/webtools-addon-links@link:.yalc/@pluginpal/webtools-addon-links::locator=strapi-webtools%40workspace%3A.":
+  version: 0.0.0-use.local
+  resolution: "@pluginpal/webtools-addon-links@link:.yalc/@pluginpal/webtools-addon-links::locator=strapi-webtools%40workspace%3A."
+  languageName: node
+  linkType: soft
+
+"@pluginpal/webtools-addon-links@workspace:packages/addons/links":
+  version: 0.0.0-use.local
+  resolution: "@pluginpal/webtools-addon-links@workspace:packages/addons/links"
+  dependencies:
+    "@pluginpal/webtools-helper-plugin": "npm:1.0.0-beta.4"
+    "@strapi/strapi": "npm:^4"
+    react: "npm:^18.0.0"
+    react-dom: "npm:^18.0.0"
+    react-router-dom: "npm:^5.2.0"
+    styled-components: "npm:5.3.3"
+  peerDependencies:
+    "@pluginpal/webtools-core": 1.0.0-beta.13
+    react: ^17.0.0 || ^18.0.0
+    react-dom: ^17.0.0 || ^18.0.0
+    react-router-dom: ^5.2.0
+    styled-components: ^5.2.1
+  languageName: unknown
+  linkType: soft
+
 "@pluginpal/webtools-addon-menus@workspace:packages/addons/menus":
   version: 0.0.0-use.local
   resolution: "@pluginpal/webtools-addon-menus@workspace:packages/addons/menus"
@@ -19796,6 +19821,7 @@ __metadata:
   dependencies:
     "@changesets/changelog-github": "npm:^0.5.0"
     "@changesets/cli": "npm:^2.27.1"
+    "@pluginpal/webtools-addon-links": "link:.yalc/@pluginpal/webtools-addon-links"
     "@pluginpal/webtools-addon-sitemap": "link:.yalc/@pluginpal/webtools-addon-sitemap"
     "@pluginpal/webtools-core": "link:.yalc/@pluginpal/webtools-core"
     "@pluginpal/webtools-helper-plugin": "link:.yalc/@pluginpal/webtools-helper-plugin"
