@@ -1,6 +1,6 @@
 
 
-import _ from 'lodash';
+import get from 'lodash/get';
 import { Schema } from '@strapi/strapi';
 import { Context } from 'koa';
 
@@ -22,11 +22,11 @@ export default {
       const { pluginOptions } = contentType;
 
       // Only return content types which have webtools enabled.
-      const isInContentManager = _.get(pluginOptions, [
+      const isInContentManager = get(pluginOptions, [
         'webtools',
         'enabled',
       ]) as boolean;
-      const isLocalized = _.get(pluginOptions, [
+      const isLocalized = get(pluginOptions, [
         'i18n',
         'localized',
       ]) as boolean;
