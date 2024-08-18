@@ -56,7 +56,7 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_CI_USERNAME }}
           password: ${{ secrets.SSH_CI_PASSWORD }}
-          source: strapi-latest.tar
+          source: playground/strapi-latest.tar
           target: /var/lib/dokku/data/storage/strapi/docker-images
 
       - name: Deploy the Dokku app based on the Docker image
