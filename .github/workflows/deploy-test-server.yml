@@ -67,7 +67,7 @@ jobs:
           password: ${{ secrets.SSH_CI_PASSWORD }}
           script_stop: true
           script: |
-            sudo docker load -i /var/lib/dokku/data/storage/strapi/docker-images/strapi-latest.tar
+            sudo docker load -i /var/lib/dokku/data/storage/strapi/docker-images/playground/strapi-latest.tar
             STRAPI_LATEST_IMAGE=$(sudo docker images --format "{{.ID}}" strapi:latest)
             sudo docker tag strapi:latest strapi:$STRAPI_LATEST_IMAGE
             dokku git:from-image strapi strapi:$STRAPI_LATEST_IMAGE
