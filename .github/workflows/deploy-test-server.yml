@@ -71,7 +71,7 @@ jobs:
           script: |
             sudo docker load -i /var/lib/dokku/data/storage/strapi/docker-images/strapi-playground-latest.tar
             STRAPI_LATEST_IMAGE=$(sudo docker images --format "{{.ID}}" strapi-playground:latest)
-            sudo docker tag strapi-playground:latest strapi:$STRAPI_LATEST_IMAGE
-            dokku git:from-image strapi strapi:$STRAPI_LATEST_IMAGE
+            sudo docker tag strapi-playground:latest strapi-playground:$STRAPI_LATEST_IMAGE
+            dokku git:from-image strapi strapi-playground:$STRAPI_LATEST_IMAGE
             sudo docker system prune --all --force
 
