@@ -5,6 +5,7 @@ RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev l
 WORKDIR /opt/
 COPY package.json yarn.lock ./
 RUN npm config set fetch-retry-maxtimeout 600000 -g && yarn install
+RUN SHARP_IGNORE_GLOBAL_LIBVIPS=1 npm_config_arch=x64 npm_config_platform=linuxmusl yarn add sharp@0.32.6
 
 WORKDIR /opt/app
 COPY . .
