@@ -3,7 +3,8 @@ FROM node:18-alpine3.18
 RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev nasm bash vips-dev
 
 WORKDIR /opt/
-COPY ./package.json ./yarn.lock ./.yalc ./
+COPY ./package.json ./yarn.lock ./
+COPY ./.yalc .
 RUN npm config set fetch-retry-maxtimeout 600000 -g && yarn install
 
 WORKDIR /opt/app
