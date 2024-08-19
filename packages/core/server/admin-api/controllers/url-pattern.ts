@@ -1,6 +1,6 @@
 
 
-import _ from 'lodash';
+import get from 'lodash/get';
 import { Context } from 'koa';
 import { Common, EntityService, Schema } from '@strapi/strapi';
 
@@ -53,7 +53,7 @@ const controller = () => ({
       const { pluginOptions } = contentType;
 
       // Not for CTs that are not visible in the content manager.
-      const isInContentManager = _.get(pluginOptions, [
+      const isInContentManager = get(pluginOptions, [
         'content-manager',
         'visible',
       ]) as boolean;

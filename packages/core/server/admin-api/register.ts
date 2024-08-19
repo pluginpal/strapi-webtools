@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 
-import _ from 'lodash';
+import set from 'lodash/set';
 import { Schema } from '@strapi/strapi';
 import { IStrapi } from '../types/strapi';
 import { isContentTypeEnabled } from '../util/enabledContentTypes';
@@ -21,7 +21,7 @@ export default (strapi: IStrapi) => {
     // Add a relation field to the url_alias content type, only
     // when webtools is explicitly enabled using pluginOptions.
     if (isContentTypeEnabled(contentType.uid)) {
-      _.set(attributes, 'url_alias', {
+      set(attributes, 'url_alias', {
         writable: true,
         private: false,
         configurable: false,

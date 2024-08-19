@@ -1,6 +1,7 @@
-
-
-import _ from 'lodash';
+import snakeCase from 'lodash/snakeCase';
+import deburr from 'lodash/deburr';
+import toLower from 'lodash/toLower';
+import kebabCase from 'lodash/kebabCase';
 import { EntityService, Schema } from '@strapi/strapi';
 import { Common } from '@strapi/types';
 
@@ -18,9 +19,9 @@ export default () => ({
     const formattedData = data;
 
     if (data.code) {
-      formattedData.code = _.snakeCase(_.deburr(_.toLower(data.code)));
+      formattedData.code = snakeCase(deburr(toLower(data.code)));
     } else {
-      formattedData.code = _.snakeCase(_.deburr(_.toLower(data.label)));
+      formattedData.code = snakeCase(deburr(toLower(data.label)));
     }
 
     const patternEntity = await strapi.entityService.create('plugin::webtools.url-pattern', {
@@ -238,7 +239,7 @@ export default () => ({
           resolvedPattern = resolvedPattern.replace(`[${field}]`, fieldValue || '');
         } else if (!relationalField) {
           // Slugify.
-          const fieldValue = _.kebabCase(_.deburr(_.toLower(String(entity[field]))));
+          const fieldValue = kebabCase(deburr(toLower(String(entity[field]))));
           resolvedPattern = resolvedPattern.replace(`[${field}]`, fieldValue || '');
         } else if (Array.isArray(entity[relationalField[0]])) {
           strapi.log.error('Something went wrong whilst resolving the pattern.');
