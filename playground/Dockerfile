@@ -3,11 +3,11 @@ FROM node:18-alpine3.18
 RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev libpng-dev nasm bash vips-dev
 
 WORKDIR /opt/
-COPY playground/package.json playground/yarn.lock ./
+COPY ./package.json ./yarn.lock ./
 RUN npm config set fetch-retry-maxtimeout 600000 -g && yarn install
 
 WORKDIR /opt/app
-COPY playground .
+COPY . .
 ENV PATH /opt/node_modules/.bin:$PATH
 
 # Register all the args passed through the build command
