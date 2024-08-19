@@ -42,11 +42,9 @@ jobs:
       - name: Build the packages
         run: yarn run build
 
-      - name: Remove the installed dependencies
-        run: rm -rf node_modules
-
       - name: Build a Docker image of the playground
         run: |
+          cd playground
           docker build \
             --build-arg PUBLIC_URL=${{ secrets.TEST_URL }} \
             -t strapi-playground:latest .
@@ -58,7 +56,7 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_CI_USERNAME }}
           password: ${{ secrets.SSH_CI_PASSWORD }}
-          source: strapi-playground-latest.tar
+          source: playground/strapi-playground-latest.tar
           target: /var/lib/dokku/data/storage/strapi/docker-images
 
       - name: Deploy the Dokku app based on the Docker image
@@ -69,7 +67,7 @@ jobs:
           password: ${{ secrets.SSH_CI_PASSWORD }}
           script_stop: true
           script: |
-            sudo docker load -i /var/lib/dokku/data/storage/strapi/docker-images/strapi-playground-latest.tar
+            sudo docker load -i /var/lib/dokku/data/storage/strapi/docker-images/playground/strapi-playground-latest.tar
             STRAPI_LATEST_IMAGE=$(sudo docker images --format "{{.ID}}" strapi-playground:latest)
             sudo docker tag strapi-playground:latest strapi-playground:$STRAPI_LATEST_IMAGE
             dokku git:from-image strapi strapi-playground:$STRAPI_LATEST_IMAGE
