@@ -4,7 +4,11 @@ RUN apk update && apk add --no-cache build-base gcc autoconf automake zlib-dev l
 
 WORKDIR /opt/
 COPY ./package.json ./yarn.lock ./
-COPY ./.yalc ./.yalc
+
+WORKDIR /opt/node_modules/
+COPY ./.yalc ./
+
+WORKDIR /opt/
 RUN npm config set fetch-retry-maxtimeout 600000 -g && yarn install
 
 WORKDIR /opt/app
