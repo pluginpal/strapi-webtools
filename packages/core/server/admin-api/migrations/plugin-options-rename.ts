@@ -1,10 +1,10 @@
-import _ from 'lodash';
+import get from 'lodash/get';
 import { Schema } from '@strapi/strapi';
 import { IStrapi } from '../../types/strapi';
 
 const migratePluginOptionsRename = (strapi: IStrapi) => {
   Object.values(strapi.contentTypes).forEach((contentType: Schema.ContentType) => {
-    const deprecatedPluginOptions = _.get(contentType.pluginOptions, ['url-alias'], null) as object;
+    const deprecatedPluginOptions = get(contentType.pluginOptions, ['url-alias'], null) as object;
 
     if (deprecatedPluginOptions === null) {
       return;
