@@ -2,9 +2,10 @@ name: Test deploy
 
 on:
   workflow_dispatch:
-  push:
+  pull_request:
     branches:
-    - master
+      - master
+      - develop
 
 jobs:
   # preflight-checks:
@@ -75,4 +76,5 @@ jobs:
             sudo docker tag strapi-playground:latest strapi-playground:$STRAPI_LATEST_IMAGE
             dokku git:from-image strapi strapi-playground:$STRAPI_LATEST_IMAGE
             sudo docker system prune --all --force
+            sudo rm -rf /var/lib/dokku/data/storage/strapi/docker-images/playground/strapi-playground-latest.tar
 
