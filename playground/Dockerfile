@@ -6,8 +6,7 @@ WORKDIR /opt/
 COPY ./package.json ./yarn.lock ./
 RUN npm config set fetch-retry-maxtimeout 600000 -g && yarn install
 
-WORKDIR /opt/.yalc
-COPY ./.yalc .
+COPY ./.yalc ./node_modules
 
 WORKDIR /opt/app
 COPY . .
