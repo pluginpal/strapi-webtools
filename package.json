@@ -41,11 +41,5 @@
   "engines": {
     "node": ">=14.0.0"
   },
-  "packageManager": "yarn@4.0.2",
-  "dependencies": {
-    "@pluginpal/webtools-addon-links": "link:.yalc/@pluginpal/webtools-addon-links",
-    "@pluginpal/webtools-addon-sitemap": "link:.yalc/@pluginpal/webtools-addon-sitemap",
-    "@pluginpal/webtools-core": "link:.yalc/@pluginpal/webtools-core",
-    "@pluginpal/webtools-helper-plugin": "link:.yalc/@pluginpal/webtools-helper-plugin"
-  }
+  "packageManager": "yarn@4.0.2"
 }
