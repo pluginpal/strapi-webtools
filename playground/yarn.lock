@@ -1457,7 +1457,7 @@ __metadata:
 
 "@pluginpal/webtools-helper-plugin@file:.yalc/@pluginpal/webtools-helper-plugin::locator=playground%40workspace%3A.":
   version: 1.0.0-beta.4
-  resolution: "@pluginpal/webtools-helper-plugin@file:.yalc/@pluginpal/webtools-helper-plugin#.yalc/@pluginpal/webtools-helper-plugin::hash=79eb5f&locator=playground%40workspace%3A.
+  resolution: "@pluginpal/webtools-helper-plugin@file:.yalc/@pluginpal/webtools-helper-plugin#.yalc/@pluginpal/webtools-helper-plugin::hash=51136a&locator=playground%40workspace%3A."
   dependencies:
     "@strapi/strapi": "npm:^4"
   checksum: 4e7e949e63701077b6f1af0e3606183c271225f9c7fa4ef478d9fa7cc9e541de787d6c396c99696585aa042d8c85fee681c37f32449dbdf99bba9232a56841c1
