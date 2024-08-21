@@ -4,7 +4,7 @@
   "description": "This is the description of the plugin.",
   "main": "./dist/index.js",
   "scripts": {
-    "build": "tsc && ../../node_modules/.bin/yalc push --publish",
+    "build": "tsc && ../../node_modules/.bin/yalc push --publish --store-folder=../../playground/.yalc",
     "develop": "tsc -w",
     "watch:link": "nodemon -e js,jsx,ts,tsx --ignore dist --exec \"yarn build && yalc publish && yalc push\"",
     "eslint": "../../node_modules/.bin/eslint --max-warnings=0 './**/*.{js,jsx,ts,tsx}'",

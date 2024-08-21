@@ -35,7 +35,7 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "../../../node_modules/.bin/pack-up build && ../../../node_modules/.bin/yalc push --publish",
+    "build": "../../../node_modules/.bin/pack-up build && ../../../node_modules/.bin/yalc push --publish --store-folder=../../../playground/.yalc",
     "watch": "../../../node_modules/.bin/pack-up watch",
     "watch:link": "../../../node_modules/.bin/strapi plugin:watch:link",
     "eslint": "../../../node_modules/.bin/eslint --max-warnings=0 './**/*.{js,jsx,ts,tsx}'",
