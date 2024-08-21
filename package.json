@@ -6,7 +6,6 @@
     "packages/addons/*"
   ],
   "scripts": {
-    "postinstall": "yarn playground:install",
     "build": "turbo run build",
     "develop": "FORCE_COLOR=1 turbo run watch:link",
     "eslint": "turbo run eslint",
