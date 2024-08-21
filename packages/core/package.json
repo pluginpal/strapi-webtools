@@ -33,7 +33,7 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "build": "pack-up build && yalc push --publish --store-folder=../../.yalc",
+    "build": "pack-up build && yalc push --publish",
     "watch": "pack-up watch",
     "watch:link": "../../node_modules/.bin/strapi plugin:watch:link",
     "eslint": "../../node_modules/.bin/eslint --max-warnings=0 './**/*.{js,jsx,ts,tsx}'",
