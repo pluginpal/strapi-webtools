@@ -10,10 +10,10 @@
     "strapi": "strapi"
   },
   "dependencies": {
-    "@pluginpal/webtools-addon-links": "link:.yalc/@pluginpal/webtools-addon-links",
-    "@pluginpal/webtools-addon-sitemap": "link:.yalc/@pluginpal/webtools-addon-sitemap",
-    "@pluginpal/webtools-core": "link:.yalc/@pluginpal/webtools-core",
-    "@pluginpal/webtools-helper-plugin": "link:.yalc/@pluginpal/webtools-helper-plugin",
+    "@pluginpal/webtools-addon-links": "file:.yalc/@pluginpal/webtools-addon-links",
+    "@pluginpal/webtools-addon-sitemap": "file:.yalc/@pluginpal/webtools-addon-sitemap",
+    "@pluginpal/webtools-core": "file:.yalc/@pluginpal/webtools-core",
+    "@pluginpal/webtools-helper-plugin": "file:.yalc/@pluginpal/webtools-helper-plugin",
     "@strapi/plugin-i18n": "^4.25.8",
     "@strapi/plugin-users-permissions": "^4.25.8",
     "@strapi/strapi": "^4.25.8",
