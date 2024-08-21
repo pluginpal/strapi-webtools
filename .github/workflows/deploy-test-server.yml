@@ -43,8 +43,8 @@ jobs:
       - name: Build the packages
         run: yarn run build
 
-      - name: Populate .yalc packages in playground
-        run: cp -r .yalc/packages/ playground/.yalc
+      - name: Add yalc packages to playground
+        run: yarn playground:yalc-add
 
       - name: Build a Docker image of the playground
         run: |

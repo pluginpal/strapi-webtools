@@ -1,17 +1,17 @@
 module.exports = {
   webtools: {
-    enabled: false,
+    enabled: true,
     config: {
       website_url: 'https://www.pluginpal.io'
     }
   },
 
   'webtools-addon-sitemap': {
-    enabled: false,
+    enabled: true,
   },
 
   'webtools-addon-links': {
-    enabled: false,
+    enabled: true,
   },
 
   // 'webtools-addon-redirects': {
