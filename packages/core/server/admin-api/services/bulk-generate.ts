@@ -103,12 +103,14 @@ const generateUrlAliases = async (params: GenerateParams) => {
       languages = locales.map((locale) => locale.code);
     }
 
+    // Get all relations for the type
     await Promise.all(languages.map(async (lang) => {
       const urlPatterns = await getPluginService('urlPatternService').findByUid(type, lang);
       const languageRelations = getPluginService('urlPatternService').getRelationsFromPattern(urlPatterns);
       relations = [...relations, ...languageRelations];
     }));
 
+    // Query all the entities of the type that do not have a corresponding URL alias
     const entities = await strapi.entityService.findMany(type, {
       filters: { url_alias: null },
       locale: 'all',
@@ -128,40 +130,31 @@ const generateUrlAliases = async (params: GenerateParams) => {
         }),
       );
 
+      // Flatten the array of arrays
       const allResolvedPaths = resolvedPathsArray.flat();
 
       // Ensure each path is saved as a URL alias separately
       await Promise.all(
         allResolvedPaths.map(async (path) => {
-          if (path && path !== '/') {
-            // Final duplicate check before creating the alias
-            const existingAlias = await strapi.entityService.findMany('plugin::webtools.url-alias', {
-              filters: { url_path: path },
+          try {
+            const newUrlAlias = await getPluginService('urlAliasService').create({
+              url_path: path,
+              generated: true,
+              contenttype: type,
+              // @ts-ignore
+              locale: entity.locale,
             });
 
-            // If no existing alias is found, create a new one
-            if (existingAlias.length === 0) {
-              try {
-                const newUrlAlias = await getPluginService('urlAliasService').create({
-                  url_path: path,
-                  generated: true,
-                  contenttype: type,
-                  // @ts-ignore
-                  locale: entity.locale,
-                });
+            await strapi.entityService.update(type, entity.id, {
+              data: {
+                // @ts-ignore
+                url_alias: newUrlAlias.id,
+              },
+            });
 
-                await strapi.entityService.update(type, entity.id, {
-                  data: {
-                    // @ts-ignore
-                    url_alias: newUrlAlias.id,
-                  },
-                });
-
-                generatedCount += 1;
-              } catch (error) {
-                // console.error(`Error creating URL alias for path: ${path}`, error);
-              }
-            }
+            generatedCount += 1;
+          } catch (error) {
+            // console.error(`Error creating URL alias for path: ${path}`, error);
           }
         }),
       );

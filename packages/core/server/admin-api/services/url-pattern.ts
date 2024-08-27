@@ -214,8 +214,6 @@ export default () => ({
       let resolvedPattern: string = pattern;
       const fields = getPluginService('urlPatternService').getFieldsFromPattern(pattern);
 
-      console.log('Resolved pattern:', resolvedPattern);
-
       fields.forEach((field) => {
         const relationalField = field.split('.').length > 1 ? field.split('.') : null;
 
