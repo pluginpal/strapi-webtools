@@ -165,13 +165,15 @@ const decorator = (service: IDecoratedService) => ({
     // If a URL alias is already present, fetch it.
     if (opts.data.url_alias) {
       urlAliasEntity = await getPluginService('urlAliasService').findOne(opts.data.url_alias);
+      // @ts-ignore
     } else if (entity?.url_alias) {
+      // @ts-ignore
       urlAliasEntity = entity.url_alias;
     }
 
     // If a URL alias is present and 'generated' is set to false, do nothing.
     if (urlAliasEntity?.generated === false) {
-      return service.create.call(this, uid, opts);
+      return service.update.call(this, uid, entityId, opts);
     }
 
     // Generate the path.
@@ -197,6 +199,7 @@ const decorator = (service: IDecoratedService) => ({
           url_path: generatedPath,
           generated: true,
           contenttype: uid,
+          // @ts-ignore
           locale: entity.locale,
           localizations: urlAliasLocalizations,
         });

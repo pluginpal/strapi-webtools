@@ -208,45 +208,48 @@ export default () => ({
   resolvePattern: (
     uid: Common.UID.ContentType,
     entity: { [key: string]: string | number | Date },
-    urlPattern: string | string[],
-  ) => {
+    urlPattern?: string,
+  ): string => {
     const resolve = (pattern: string) => {
       let resolvedPattern: string = pattern;
-      const fields = getPluginService('urlPatternService').getFieldsFromPattern([pattern]);
+      const fields = getPluginService('urlPatternService').getFieldsFromPattern(pattern);
+
+      console.log('Resolved pattern:', resolvedPattern);
 
       fields.forEach((field) => {
         const relationalField = field.split('.').length > 1 ? field.split('.') : null;
 
         if (field === 'pluralName') {
           const fieldValue = strapi.contentTypes[uid].info.pluralName;
+
+          if (!fieldValue) {
+            return;
+          }
+
           resolvedPattern = resolvedPattern.replace(`[${field}]`, fieldValue || '');
         } else if (!relationalField) {
+          // Slugify.
           const fieldValue = _.kebabCase(_.deburr(_.toLower(String(entity[field]))));
           resolvedPattern = resolvedPattern.replace(`[${field}]`, fieldValue || '');
-        } else if (entity[relationalField[0]] && typeof entity[relationalField[0]] === 'object') {
-          resolvedPattern = resolvedPattern.replace(
-            `[${field}]`,
-            String(entity[relationalField[0]][relationalField[1]]) || ''
-          );
+        } else if (Array.isArray(entity[relationalField[0]])) {
+          strapi.log.error('Something went wrong whilst resolving the pattern.');
+        } else if (typeof entity[relationalField[0]] === 'object') {
+          resolvedPattern = resolvedPattern.replace(`[${field}]`, entity[relationalField[0]] && String(entity[relationalField[0]][relationalField[1]]) ? String(entity[relationalField[0]][relationalField[1]]) : '');
         }
       });
 
-      resolvedPattern = resolvedPattern.replace(/([^:]\/)\/+/g, '$1');
-      resolvedPattern = resolvedPattern.startsWith('/') ? resolvedPattern : `/${resolvedPattern}`;
-
+      resolvedPattern = resolvedPattern.replace(/([^:]\/)\/+/g, '$1'); // Remove duplicate forward slashes.
+      resolvedPattern = resolvedPattern.startsWith('/') ? resolvedPattern : `/${resolvedPattern}`; // Add a starting slash.
       return resolvedPattern;
     };
 
-    if (typeof urlPattern === 'string') {
-      // Als er slechts één patroon is, los het op en retourneer het als een string
-      return resolve(urlPattern);
+    if (!urlPattern) {
+      return resolve(strapi.config.get('plugin.webtools.default_pattern'));
     }
 
-    // Als er meerdere patronen zijn, retourneer het eerste opgeloste patroon als string
-    const resolvedPaths = urlPattern.map((pattern) => resolve(pattern));
-    return resolvedPaths.length === 1 ? resolvedPaths[0] : resolvedPaths;
+    const path = resolve(urlPattern);
+    return path;
   },
-
   /**
    * Validate if a pattern is correctly structured.
    *
