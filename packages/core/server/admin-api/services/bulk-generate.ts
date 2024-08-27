@@ -34,7 +34,7 @@ const createLanguageLinksForUrlAliases = async () => {
       },
     });
 
-    if (!relatedEntity) {
+    if (! relatedEntity) {
       return;
     }
 
@@ -84,10 +84,9 @@ const generateUrlAliases = async (params: GenerateParams) => {
       await getPluginService('url-alias').deleteMany({
         // @ts-ignore
         locale: 'all',
-        filters: {
-          contenttype: type,
-        },
+        filters: { contenttype: type },
       });
+      console.log(`Deleted all URL aliases for type ${type}`);
     }
 
     if (generationType === 'only_generated') {
@@ -95,11 +94,9 @@ const generateUrlAliases = async (params: GenerateParams) => {
       await getPluginService('url-alias').deleteMany({
         // @ts-ignore
         locale: 'all',
-        filters: {
-          contenttype: type,
-          generated: true,
-        },
+        filters: { contenttype: type, generated: true },
       });
+      console.log(`Deleted only generated URL aliases for type ${type}`);
     }
 
     let relations: string[] = [];
@@ -119,63 +116,58 @@ const generateUrlAliases = async (params: GenerateParams) => {
 
     // Query all the entities of the type that do not have a corresponding URL alias.
     const entities = await strapi.entityService.findMany(type, {
-      filters: {
-        url_alias: null,
-      },
+      filters: { url_alias: null },
       locale: 'all',
-      // @ts-ignore
-      populate: {
-        ...relations.reduce((obj, key) => ({ ...obj, [key]: {} }), {}),
-      },
+      populate: { ...relations.reduce((obj, key) => ({ ...obj, [key]: {} }), {}) },
     });
+    console.log(`Found ${entities.length} entities without URL aliases for type ${type}`);
 
-
-    // Fetch the user-defined patterns from the database
     const urlPatterns = await getPluginService('urlPatternService').findByUid(type);
+    console.log(urlPatterns, `Found ${urlPatterns.length} URL patterns for type ${type}.`);
 
-    // Genereer URL-patronen voor alle entiteiten
-    const entitiesWithPaths = await Promise.all(entities.map((entity) => {
-      const generatedPaths = urlPatterns.map((urlPattern) => getPluginService('urlPatternService').resolvePattern(type, entity, urlPattern));
+    // @ts-ignore
+    // eslint-disable-next-line no-await-in-loop, @typescript-eslint/no-unsafe-argument
+    for (const entity of entities) {
+      // @ts-ignore
+      // eslint-disable-next-line no-await-in-loop, @typescript-eslint/no-unsafe-argument
+      for (const urlPattern of urlPatterns) {
+        const resolvedPaths = getPluginService('urlPatternService').resolvePattern(type, entity, urlPattern);
+        console.log(`Resolved paths for entity ID: ${entity.id}`, resolvedPaths);
 
-      return { entity, generatedPaths };
-    }));
+        // eslint-disable-next-line no-await-in-loop
+        for (const path of Array.isArray(resolvedPaths) ? resolvedPaths : [resolvedPaths]) {
+          if (path && path !== '/') {
+            console.log(`Processing path: ${path} for entity ID: ${entity.id}`);
 
-    // Maak URL-aliasen en werk de entiteiten bij
-    await Promise.all(entitiesWithPaths.map(async ({ entity, generatedPaths }) => {
-      await Promise.all(generatedPaths.map(async (generatedPath) => {
-        console.log(generatedPath);
+            const newUrlAlias = await getPluginService('urlAliasService').create({
+              url_path: path,
+              generated: true,
+              contenttype: type,
+              // @ts-ignore
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+              locale: entity.locale,
+            });
 
-        const existingAlias = await strapi.entityService.findMany('plugin::webtools.url-alias', {
-          filters: {
-            url_path: generatedPath,
-          },
-        });
+            // eslint-disable-next-line no-await-in-loop
+            await strapi.entityService.update(type, entity.id, {
+              data: {
+                // @ts-ignore
+                url_alias: newUrlAlias.id,
+              },
+            });
 
-        if (existingAlias.length > 0) {
-          console.log(`URL alias already exists for path ${generatedPath}. Skipping...`);
-          return;
+            console.log(`Updated entity ID: ${entity.id} with new URL alias ID: ${newUrlAlias.id}`);
+            generatedCount += 1;
+          }
         }
-
-        const newUrlAlias = await getPluginService('urlAliasService').create({
-          url_path: generatedPath,
-          generated: true,
-          contenttype: type,
-          locale: entity.locale,
-        });
-
-        await strapi.entityService.update(type, entity.id, {
-          data: {
-            url_alias: newUrlAlias.id,
-          },
-        });
-
-        generatedCount += 1;
-      }));
-    }));
+      }
+    }
   }));
 
+  console.log(`Finished URL alias generation. Total generated: ${generatedCount}`);
   return generatedCount;
 };
+
 
 export default () => ({
   generateUrlAliases,
