@@ -143,6 +143,7 @@ export default () => ({
       });
     });
 
+    // Add id field manually because it is not on the attributes object of a content type.
     if (allowedFields.includes('id')) {
       fields.push('id');
     }

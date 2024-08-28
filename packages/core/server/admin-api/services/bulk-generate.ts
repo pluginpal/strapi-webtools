@@ -77,8 +77,10 @@ const generateUrlAliases = async (params: GenerateParams) => {
   const { types, generationType } = params;
   let generatedCount = 0;
 
+  // Map over all the types sent in the request.
   await Promise.all(types.map(async (type) => {
     if (generationType === 'all') {
+      // Delete all the URL aliases for the given type.
       await getPluginService('url-alias').deleteMany({
         // @ts-ignore
         locale: 'all',
@@ -87,6 +89,7 @@ const generateUrlAliases = async (params: GenerateParams) => {
     }
 
     if (generationType === 'only_generated') {
+      // Delete all the auto generated URL aliases of the given type.
       await getPluginService('url-alias').deleteMany({
         // @ts-ignore
         locale: 'all',
