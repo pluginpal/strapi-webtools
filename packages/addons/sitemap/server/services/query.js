@@ -22,7 +22,9 @@ import { noLimit, logMessage } from '../utils';
  */
 const getPages = async (config, contentType, ids) => {
   const excludeDrafts = config.excludeDrafts && strapi.contentTypes[contentType].options.draftAndPublish;
-  const isLocalized = strapi.contentTypes[contentType].pluginOptions?.i18n?.localized;
+  const isLocalized =
+    strapi.contentTypes[contentType].pluginOptions?.i18n?.localized
+    && strapi.plugin('i18n');
 
   const pages = await noLimit(strapi, contentType, {
     filters: {
@@ -87,7 +89,10 @@ const getPages = async (config, contentType, ids) => {
  * @returns {object} The pages.
  */
 const getLocalizationIds = async (contentType, ids) => {
-  const isLocalized = strapi.contentTypes[contentType].pluginOptions?.i18n?.localized;
+  const isLocalized =
+    strapi.contentTypes[contentType].pluginOptions?.i18n?.localized
+    && strapi.plugin('i18n');
+
   const localizationIds = [];
 
   if (isLocalized) {
