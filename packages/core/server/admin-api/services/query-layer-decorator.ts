@@ -105,6 +105,21 @@ const decorator = (service: IDecoratedService) => ({
       });
     }
 
+    // Update all the URL alias localizations.
+    await Promise.all(urlAliasLocalizations.map(async (localization) => {
+      await strapi.db.query('plugin::webtools.url-alias').update({
+        where: {
+          id: localization,
+        },
+        data: {
+          localizations: [
+            ...(urlAliasLocalizations.filter((loc) => loc !== localization)),
+            urlAliasEntity.id,
+          ],
+        },
+      });
+    }));
+
     // Eventually update the entity to include the URL alias.
     const dataWithUrlAlias = { ...opts.data, url_alias: urlAliasEntity.id };
     const updatedEntity = await service.update.call(this, uid, newEntity.id, {
@@ -216,6 +231,21 @@ const decorator = (service: IDecoratedService) => ({
       });
     }
 
+    // Update all the URL alias localizations.
+    await Promise.all(urlAliasLocalizations.map(async (localization) => {
+      await strapi.db.query('plugin::webtools.url-alias').update({
+        where: {
+          id: localization,
+        },
+        data: {
+          localizations: [
+            ...(urlAliasLocalizations.filter((loc) => loc !== localization)),
+            urlAliasEntity.id,
+          ],
+        },
+      });
+    }));
+
     // Eventually update the entity.
     return service.update.call(this, uid, entityId, {
       ...opts,
@@ -321,6 +351,21 @@ const decorator = (service: IDecoratedService) => ({
       // @ts-ignore
       localizations: urlAliasLocalizations,
     });
+
+    // Update all the URL alias localizations.
+    await Promise.all(urlAliasLocalizations.map(async (localization) => {
+      await strapi.db.query('plugin::webtools.url-alias').update({
+        where: {
+          id: localization,
+        },
+        data: {
+          localizations: [
+            ...(urlAliasLocalizations.filter((loc) => loc !== localization)),
+            newUrlAlias.id,
+          ],
+        },
+      });
+    }));
 
     // Update the cloned entity with the new URL alias id
     return service.update.call(this, uid, clonedEntity.id, { data: { url_alias: newUrlAlias.id }, populate: ['url_alias'] });
