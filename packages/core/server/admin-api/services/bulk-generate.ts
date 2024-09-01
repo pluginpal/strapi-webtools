@@ -8,9 +8,8 @@ export interface GenerateParams {
 }
 
 /**
- * Find related entity.
+ * Find related entity and create language links for URL aliases.
  *
- * @param {object} data the data.
  * @returns {void}
  */
 const createLanguageLinksForUrlAliases = async () => {
@@ -53,7 +52,7 @@ const createLanguageLinksForUrlAliases = async () => {
      * @todo
      * Call the Strapi entity service, instead of the db query.
      * Currently we can't because saving the localizations is not working.
-     * Eventough the localizations are present at the moment of updating.
+     * Even though the localizations are present at the moment of updating.
      */
     // eslint-disable-next-line no-await-in-loop, @typescript-eslint/no-unsafe-assignment
     await strapi.db.query('plugin::webtools.url-alias').update({
@@ -68,12 +67,12 @@ const createLanguageLinksForUrlAliases = async () => {
 };
 
 /**
- * generateUrlAliases.
+ * Generate URL aliases based on given parameters.
  *
- * @param {number} id the id.
- * @returns {number} - the total amount generated URLs.
+ * @param {GenerateParams} params - The parameters including types and generation type.
+ * @returns {Promise<number>} - The total amount of generated URLs.
  */
-const generateUrlAliases = async (params: GenerateParams) => {
+const generateUrlAliases = async (params: GenerateParams): Promise<number> => {
   const { types, generationType } = params;
   let generatedCount = 0;
 
@@ -89,7 +88,7 @@ const generateUrlAliases = async (params: GenerateParams) => {
     }
 
     if (generationType === 'only_generated') {
-      // Delete all the auto generated URL aliases of the given type.
+      // Delete all the auto-generated URL aliases of the given type.
       await getPluginService('url-alias').deleteMany({
         // @ts-ignore
         locale: 'all',
@@ -117,28 +116,34 @@ const generateUrlAliases = async (params: GenerateParams) => {
     const entities = await strapi.entityService.findMany(type, {
       filters: { url_alias: null },
       locale: 'all',
+      // @ts-ignore
       populate: { ...relations.reduce((obj, key) => ({ ...obj, [key]: {} }), {}) },
     });
 
-    // Get URL patterns for the type
-    const urlPatterns = await getPluginService('urlPatternService').findByUid(type);
+    /**
+     * @todo
+     * We should do a Promise.all(entities.map()) here to speed up the process.
+     * Using that method we can create all the URL aliases in parallel.
+     * Currently this is not possible due to the duplicateCheck function.
+     * Race conditions can occur when two entities have the same URL path.
+     */
+    // For all those entities we will create a URL alias and connect it to the entity.
+    // eslint-disable-next-line no-restricted-syntax
+    for (const entity of entities) {
+      // @ts-ignore
+      // eslint-disable-next-line no-await-in-loop
+      const urlPatterns = await getPluginService('urlPatternService').findByUid(type, entity.locale);
+      const resolvedPathsArray = urlPatterns.map((urlPattern) => {
+        const resolvedPaths = getPluginService('urlPatternService').resolvePattern(type, entity, urlPattern);
 
-    // Loop through each entity and generate paths
-    await Promise.all(entities.map(async (entity) => {
-      const resolvedPathsArray = await Promise.all(
-        // eslint-disable-next-line @typescript-eslint/require-await
-        urlPatterns.map(async (urlPattern) => {
-          const resolvedPaths = getPluginService('urlPatternService').resolvePattern(type, entity, urlPattern);
-          return Array.isArray(resolvedPaths) ? resolvedPaths : [resolvedPaths];
-        }),
-      );
-
-      // Flatten the array of arrays
-      const allResolvedPaths = resolvedPathsArray.flat();
+        return resolvedPaths;
+      });
 
       // Ensure each path is saved as a URL alias separately
+      // eslint-disable-next-line no-await-in-loop
       await Promise.all(
-        allResolvedPaths.map(async (path) => {
+        // eslint-disable-next-line @typescript-eslint/no-loop-func
+        resolvedPathsArray.map(async (path) => {
           try {
             const newUrlAlias = await getPluginService('urlAliasService').create({
               url_path: path,
@@ -157,11 +162,15 @@ const generateUrlAliases = async (params: GenerateParams) => {
 
             generatedCount += 1;
           } catch (error) {
-            // console.error(`Error creating URL alias for path: ${path}`, error);
+            if (error.name === 'ValidationError' && error.message.includes('unique')) {
+              console.log(`Validation error caught: ${error.message}. It seems a duplicate was created by another process. Skipping creation.`);
+            } else {
+              throw error; // Re-throw if it's not the expected validation error
+            }
           }
         }),
       );
-    }));
+    }
   }));
 
   return generatedCount;
