@@ -145,8 +145,13 @@ const getSitemapPageData = async (config, page, contentType, defaultLocale) => {
  */
 const createSitemapEntries = async () => {
   const config = await getService('settings').getConfig();
-  const { getDefaultLocale } = strapi.plugin('i18n').service('locales');
-  const defaultLocale = await getDefaultLocale();
+  let defaultLocale;
+
+  if (strapi.plugin('i18n')) {
+    const { getDefaultLocale } = strapi.plugin('i18n').service('locales');
+    defaultLocale = await getDefaultLocale();
+  }
+
   const sitemapEntries = [];
 
   // Collection entries.
