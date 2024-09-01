@@ -1,5 +1,15 @@
 # core
 
+## 1.0.0-beta.14
+
+### Patch Changes
+
+- [#163](https://github.com/pluginpal/strapi-webtools/pull/163) [`77c41b1`](https://github.com/pluginpal/strapi-webtools/commit/77c41b1ff6bb5c4d49ca2240ae72082560b19bf0) Thanks [@boazpoolman](https://github.com/boazpoolman)! - Shrink the bundle size by a factor of 10 :rocket:
+
+- [#188](https://github.com/pluginpal/strapi-webtools/pull/188) [`801f859`](https://github.com/pluginpal/strapi-webtools/commit/801f859c16abb8c4000e744ee4d3cf68d59c2cab) Thanks [@boazpoolman](https://github.com/boazpoolman)! - Prevent deadlocks from happening by using the native deleteMany service
+
+- [#187](https://github.com/pluginpal/strapi-webtools/pull/187) [`bcbbc3e`](https://github.com/pluginpal/strapi-webtools/commit/bcbbc3e68ac3ee270172656f5c427c7ffe4a34ba) Thanks [@boazpoolman](https://github.com/boazpoolman)! - Update all the URL alias localizations on update/create/clone in the query layer decorator
+
 ## 1.0.0-beta.13
 
 ### Minor Changes
