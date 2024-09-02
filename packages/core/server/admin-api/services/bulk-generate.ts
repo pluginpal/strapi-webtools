@@ -162,6 +162,7 @@ const generateUrlAliases = async (params: GenerateParams): Promise<number> => {
 
             generatedCount += 1;
           } catch (error) {
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
             if (error.name === 'ValidationError' && error.message.includes('unique')) {
               console.log(`Validation error caught: ${error.message}. It seems a duplicate was created by another process. Skipping creation.`);
             } else {
