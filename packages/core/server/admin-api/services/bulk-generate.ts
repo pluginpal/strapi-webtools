@@ -79,7 +79,7 @@ const generateUrlAliases = async (parms: GenerateParams) => {
   await Promise.all(types.map(async (type) => {
     if (generationType === 'all') {
       // Delete all the URL aliases for the given type.
-      await getPluginService('url-alias').deleteMany({
+      await strapi.entityService.deleteMany('plugin::webtools.url-alias', {
         // @ts-ignore
         locale: 'all',
         filters: {
@@ -90,7 +90,7 @@ const generateUrlAliases = async (parms: GenerateParams) => {
 
     if (generationType === 'only_generated') {
       // Delete all the auto generated URL aliases of the given type.
-      await getPluginService('url-alias').deleteMany({
+      await strapi.entityService.deleteMany('plugin::webtools.url-alias', {
         // @ts-ignore
         locale: 'all',
         filters: {
