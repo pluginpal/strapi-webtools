@@ -10,6 +10,7 @@ import { useHistory } from 'react-router-dom';
 
 import {
   ContentLayout,
+  Checkbox,
   HeaderLayout,
   Box,
   Link,
@@ -29,7 +30,7 @@ import Center from '../../../components/Center';
 import Select from '../../../components/Select';
 import LabelField from '../../../components/LabelField';
 import PatternField from '../../../components/PatternField';
-import { PatternFormValues, ValidatePatternResponse } from '../../../types/url-patterns';
+import { PatternEntity, PatternFormValues, ValidatePatternResponse } from '../../../types/url-patterns';
 import { EnabledContentTypes } from '../../../types/enabled-contenttypes';
 import LanguageCheckboxes from '../../../components/LanguageCheckboxes';
 import HiddenLocalizedField from '../../../components/HiddenLocalizedField';
@@ -40,7 +41,7 @@ const CreatePatternPage = () => {
   const [loading, setLoading] = useState(false);
   const [contentTypes, setContentTypes] = useState<EnabledContentTypes>([]);
   const { formatMessage } = useIntl();
-  const { get, post } = useFetchClient();
+  const { get, post, put } = useFetchClient();
 
   useEffect(() => {
     setLoading(true);
@@ -55,26 +56,50 @@ const CreatePatternPage = () => {
       });
   }, [get]);
 
-  const handleCreateSubmit = (
+  const handleCreateSubmit = async (
     values: PatternFormValues,
     { setSubmitting, setErrors }: FormikProps<PatternFormValues>,
   ) => {
-    post('/webtools/url-pattern/create', {
-      data: values,
-    })
-      .then(() => {
-        push(`/plugins/${pluginId}/patterns`);
-        toggleNotification({ type: 'success', message: { id: 'webtools.settings.success.create' } });
-        setSubmitting(false);
-      })
-      .catch((err: ErrorResponse) => {
-        if (err.response?.payload?.[0]?.message === 'This attribute must be unique') {
-          setErrors({ code: err.response.payload[0].message as string });
-        } else {
-          toggleNotification({ type: 'warning', message: { id: 'notification.error' } });
+    try {
+      // Check if another primary pattern for the content type already exists
+      if (values.primary) {
+        const response = await get(`/webtools/url-pattern/findMany`, { method: 'GET' });
+
+        // Find the other pattern with the same contenttype that is marked as primary
+        const existingPrimary = response.data.find(
+          (pattern: PatternEntity) => pattern.contenttype === values.contenttype && pattern.primary === true,
+        );
+
+        if (existingPrimary) {
+          // Step 2: Unset the primary status of the existing primary pattern
+          await put(`/webtools/url-pattern/update/${existingPrimary.id}`, {
+            data: { ...existingPrimary, primary: false },
+          });
         }
-        setSubmitting(false);
+      }
+
+      // Proceed to create the new pattern (with primary if checked)
+      await post('/webtools/url-pattern/create', {
+        data: values,
       });
+
+      push(`/plugins/${pluginId}/patterns`);
+      toggleNotification({
+        type: 'success',
+        message: { id: 'webtools.settings.success.create' },
+      });
+      setSubmitting(false);
+    } catch (err: ErrorResponse) {
+      if (err.response?.payload?.[0]?.message === 'This attribute must be unique') {
+        setErrors({ code: err.response.payload[0].message as string });
+      } else {
+        toggleNotification({
+          type: 'warning',
+          message: { id: 'notification.error' },
+        });
+      }
+      setSubmitting(false);
+    }
   };
 
   const validatePattern = async (values: PatternFormValues) => {
@@ -92,12 +117,14 @@ const CreatePatternPage = () => {
           errors.pattern = response.message;
         }
       })
-      .catch(() => {});
+      .catch((err: ErrorResponse) => {
+        console.error(err, 'Error in create validate pattern');
+      });
 
     return errors;
   };
 
-  if (loading || !contentTypes) {
+  if (loading || ! contentTypes) {
     return (
       <Center>
         <Loader>{formatMessage({ id: 'webtools.settings.loading', defaultMessage: 'Loading content...' })}</Loader>
@@ -117,7 +144,7 @@ const CreatePatternPage = () => {
     <Formik<PatternFormValues>
       enableReinitialize
       initialValues={{
-        label: '', pattern: '', contenttype: '', languages: [], localized: false,
+        label: '', pattern: '', contenttype: '', languages: [], localized: false, primary: false,
       }}
       onSubmit={handleCreateSubmit}
       validationSchema={schema}
@@ -149,7 +176,7 @@ const CreatePatternPage = () => {
                   defaultMessage: 'Back',
                 })}
               </Link>
-                          )}
+            )}
             primaryAction={(
               <Button type="submit" loading={isSubmitting} startIcon={<Check />}>
                 {formatMessage({
@@ -157,7 +184,7 @@ const CreatePatternPage = () => {
                   defaultMessage: 'Save',
                 })}
               </Button>
-                          )}
+            )}
           />
           <ContentLayout>
             <Stack spacing={7}>
@@ -189,9 +216,9 @@ const CreatePatternPage = () => {
                           defaultMessage: 'Content type',
                         })}
                         error={
-                            errors.contenttype && touched.contenttype
-                              ? formatMessage({ id: String(errors.contenttype), defaultMessage: 'Invalid value' })
-                              : null
+                          errors.contenttype && touched.contenttype
+                            ? formatMessage({ id: String(errors.contenttype), defaultMessage: 'Invalid value' })
+                            : null
                         }
                       />
                     </GridItem>
@@ -205,19 +232,30 @@ const CreatePatternPage = () => {
                       />
                     </GridItem>
                     <GridItem col={12} />
-                    {(values.contenttype !== '') && (
-                    <GridItem col={6}>
-                      <PatternField
-                        values={values}
-                        uid={values.contenttype}
-                        setFieldValue={setFieldValue}
-                        error={
-                                  errors.pattern && touched.pattern
-                                    ? errors.pattern
-                                    : null
-                              }
-                      />
+
+                    <GridItem col={12}>
+                      <Checkbox
+                        name="isPrimary"
+                        checked={values.primary}
+                        onChange={(e) => setFieldValue('primary', e.target.checked)}
+                      >
+                        Set as primary
+                      </Checkbox>
                     </GridItem>
+
+                    {(values.contenttype !== '') && (
+                      <GridItem col={6}>
+                        <PatternField
+                          values={values}
+                          uid={values.contenttype}
+                          setFieldValue={setFieldValue}
+                          error={
+                            errors.pattern && touched.pattern
+                              ? errors.pattern
+                              : null
+                          }
+                        />
+                      </GridItem>
                     )}
                     <HiddenLocalizedField
                       localized={getSelectedContentType(values.contenttype)?.localized}

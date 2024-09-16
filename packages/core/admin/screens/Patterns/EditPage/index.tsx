@@ -6,6 +6,7 @@ import {
   ContentLayout,
   HeaderLayout,
   Box,
+  Checkbox,
   Link,
   Button,
   Stack,
@@ -68,32 +69,52 @@ const EditPatternPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [get, id]);
 
-  const handleEditSubmit = (
+  const handleEditSubmit = async (
     values: PatternFormValues,
     { setSubmitting, setErrors }: FormikProps<PatternFormValues>,
   ) => {
-    put(`/webtools/url-pattern/update/${patternEntity.id}`, {
-      data: values,
-    })
-      .then(() => {
-        push(`/plugins/${pluginId}/patterns`);
-        toggleNotification({
-          type: 'success',
-          message: { id: 'webtools.settings.success.edit' },
-        });
-        setSubmitting(false);
-      })
-      .catch((err: ErrorResponse) => {
-        if (err.response.payload[0].message === 'This attribute must be unique') {
-          setErrors({ code: err.response.payload[0].message as string });
-        } else {
-          toggleNotification({
-            type: 'warning',
-            message: { id: 'notification.error' },
+    try {
+      // Check if another primary pattern for the content type already exists
+      if (values.primary) {
+        const response = await get(`/webtools/url-pattern/findMany`, { method: 'GET' });
+
+        const existingPrimary = response.data.find(
+          (pattern: PatternEntity) =>
+            pattern.contenttype === values.contenttype &&
+            pattern.primary === true &&
+            pattern.id !== patternEntity.id,
+        );
+
+        if (existingPrimary) {
+          // Unset the primary status of the existing primary pattern
+          await put(`/webtools/url-pattern/update/${existingPrimary.id}`, {
+            data: { ...existingPrimary, primary: false },
           });
         }
-        setSubmitting(false);
+      }
+
+      // Proceed to update the current pattern (with primary if checked)
+      await put(`/webtools/url-pattern/update/${patternEntity.id}`, {
+        data: values,
       });
+
+      push(`/plugins/${pluginId}/patterns`);
+      toggleNotification({
+        type: 'success',
+        message: { id: 'webtools.settings.success.edit' },
+      });
+      setSubmitting(false);
+    } catch (err: ErrorResponse) {
+      if (err.response?.payload?.[0]?.message === 'This attribute must be unique') {
+        setErrors({ code: err.response.payload[0].message as string });
+      } else {
+        toggleNotification({
+          type: 'warning',
+          message: { id: 'notification.error' },
+        });
+      }
+      setSubmitting(false);
+    }
   };
 
   const validatePattern = async (values: PatternFormValues) => {
@@ -109,7 +130,9 @@ const EditPatternPage = () => {
           errors.pattern = response.message;
         }
       })
-      .catch(() => { });
+      .catch((err: ErrorResponse) => {
+        console.error(err, 'Error in edit validate pattern');
+      });
 
     return errors;
   };
@@ -145,6 +168,7 @@ const EditPatternPage = () => {
         languages: patternEntity.languages,
         code: patternEntity.code,
         localized: false,
+        primary: patternEntity.primary || false,
       }}
       onSubmit={handleEditSubmit}
       validationSchema={schema}
@@ -167,7 +191,7 @@ const EditPatternPage = () => {
             subtitle={formatMessage({
               id: 'webtools.settings.page.patterns.edit.description',
               defaultMessage:
-                                'Edit this pattern for automatic URL alias generation.',
+                'Edit this pattern for automatic URL alias generation.',
             })}
             as="h2"
             navigationAction={(
@@ -180,7 +204,7 @@ const EditPatternPage = () => {
                   defaultMessage: 'Back',
                 })}
               </Link>
-                        )}
+            )}
             primaryAction={(
               <Button
                 type="submit"
@@ -192,7 +216,7 @@ const EditPatternPage = () => {
                   defaultMessage: 'Save',
                 })}
               </Button>
-                        )}
+            )}
           />
           <ContentLayout>
             <Stack spacing={7}>
@@ -224,15 +248,15 @@ const EditPatternPage = () => {
                           defaultMessage: 'Content type',
                         })}
                         error={
-                            errors.contenttype && touched.contenttype
-                              ? formatMessage({
-                                id:
-                                        typeof errors.contenttype === 'string'
-                                          ? errors.contenttype
-                                          : undefined,
-                                defaultMessage: 'Invalid value',
-                              })
-                              : null
+                          errors.contenttype && touched.contenttype
+                            ? formatMessage({
+                              id:
+                                typeof errors.contenttype === 'string'
+                                  ? errors.contenttype
+                                  : undefined,
+                              defaultMessage: 'Invalid value',
+                            })
+                            : null
                         }
                       />
                     </GridItem>
@@ -247,21 +271,34 @@ const EditPatternPage = () => {
                       />
                     </GridItem>
                     <GridItem col={12} />
-                    {values.contenttype !== '' && (
-                    <GridItem col={6}>
-                      <PatternField
-                        values={values}
-                        uid={values.contenttype}
-                        setFieldValue={setFieldValue}
-                        error={
-                            errors.pattern
-                            && touched.pattern
-                            && typeof errors.pattern === 'string'
-                              ? errors.pattern
-                              : null
-                        }
-                      />
+
+                    <GridItem col={12}>
+                      <Checkbox
+                        name="primary"
+                        checked={values.primary}
+                        onChange={(e) => setFieldValue('primary', e.target.checked)}
+                      >
+                        Set as primary
+                      </Checkbox>
                     </GridItem>
+
+                    {values.contenttype !== '' && (
+                      <>
+                        <GridItem col={6}>
+                          <PatternField
+                            values={values}
+                            uid={values.contenttype}
+                            setFieldValue={setFieldValue}
+                            error={
+                              errors.pattern
+                              && touched.pattern
+                              && typeof errors.pattern === 'string'
+                                ? errors.pattern
+                                : null
+                            }
+                          />
+                        </GridItem>
+                      </>
                     )}
                     <HiddenLocalizedField
                       localized={getSelectedContentType(values.contenttype)?.localized}

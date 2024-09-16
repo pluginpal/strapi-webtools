@@ -657,6 +657,7 @@ export interface PluginWebtoolsUrlPattern extends Schema.CollectionType {
     code: Attribute.String & Attribute.Required & Attribute.Unique;
     contenttype: Attribute.String & Attribute.Required;
     languages: Attribute.JSON & Attribute.Required;
+    primary: Attribute.Boolean;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -957,7 +958,7 @@ export interface ApiCategoryCategory extends Schema.CollectionType {
       Attribute.Private;
     url_alias: Attribute.Relation<
       'api::category.category',
-      'oneToOne',
+      'oneToMany',
       'plugin::webtools.url-alias'
     > &
       Attribute.Unique;
@@ -1008,7 +1009,53 @@ export interface ApiPrivateCategoryPrivateCategory
       Attribute.Private;
     url_alias: Attribute.Relation<
       'api::private-category.private-category',
+      'oneToMany',
+      'plugin::webtools.url-alias'
+    > &
+      Attribute.Unique;
+    sitemap_exclude: Attribute.Boolean &
+      Attribute.Private &
+      Attribute.DefaultTo<false>;
+  };
+}
+
+export interface ApiProductProduct extends Schema.CollectionType {
+  collectionName: 'products';
+  info: {
+    singularName: 'product';
+    pluralName: 'products';
+    displayName: 'Products';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  pluginOptions: {
+    webtools: {
+      enabled: true;
+    };
+  };
+  attributes: {
+    title: Attribute.String;
+    addition: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::product.product',
       'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::product.product',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    url_alias: Attribute.Relation<
+      'api::product.product',
+      'oneToMany',
       'plugin::webtools.url-alias'
     > &
       Attribute.Unique;
@@ -1062,7 +1109,7 @@ export interface ApiTestTest extends Schema.CollectionType {
     updatedBy: Attribute.Relation<'api::test.test', 'oneToOne', 'admin::user'>;
     url_alias: Attribute.Relation<
       'api::test.test',
-      'oneToOne',
+      'oneToMany',
       'plugin::webtools.url-alias'
     > &
       Attribute.Unique;
@@ -1101,6 +1148,7 @@ declare module '@strapi/types' {
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'api::category.category': ApiCategoryCategory;
       'api::private-category.private-category': ApiPrivateCategoryPrivateCategory;
+      'api::product.product': ApiProductProduct;
       'api::test.test': ApiTestTest;
     }
   }
