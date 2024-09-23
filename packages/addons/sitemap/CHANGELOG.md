@@ -1,5 +1,27 @@
 # addon-sitemap
 
+## 1.0.0-beta.9
+
+### Patch Changes
+
+- [#159](https://github.com/pluginpal/strapi-webtools/pull/159) [`567d3d4`](https://github.com/pluginpal/strapi-webtools/commit/567d3d43bf45241c23621fbd3547e238652aca3e) Thanks [@boazpoolman](https://github.com/boazpoolman)! - Fix issue with sitemap generation when using the x-default setting
+
+- [#163](https://github.com/pluginpal/strapi-webtools/pull/163) [`01fb070`](https://github.com/pluginpal/strapi-webtools/commit/01fb070f5c47a40b108558af078a650a17fa4182) Thanks [@boazpoolman](https://github.com/boazpoolman)! - Shrink the bundle size by a factor of 13 :rocket:
+
+- [#189](https://github.com/pluginpal/strapi-webtools/pull/189) [`52417df`](https://github.com/pluginpal/strapi-webtools/commit/52417dffd0bf88401996afdfae2c76729112ac4b) Thanks [@boazpoolman](https://github.com/boazpoolman)! - Fix Sitemap generation issue when the i18n plugin is not installed
+
+- Updated dependencies [[`77c41b1`](https://github.com/pluginpal/strapi-webtools/commit/77c41b1ff6bb5c4d49ca2240ae72082560b19bf0), [`801f859`](https://github.com/pluginpal/strapi-webtools/commit/801f859c16abb8c4000e744ee4d3cf68d59c2cab), [`bcbbc3e`](https://github.com/pluginpal/strapi-webtools/commit/bcbbc3e68ac3ee270172656f5c427c7ffe4a34ba)]:
+  - @pluginpal/webtools-core@1.0.0-beta.14
+
+## 1.0.0-beta.8
+
+### Patch Changes
+
+- [#156](https://github.com/pluginpal/strapi-webtools/pull/156) [`9c6ab7d`](https://github.com/pluginpal/strapi-webtools/commit/9c6ab7d92247ce4e616679c49363e7f2275119f2) Thanks [@boazpoolman](https://github.com/boazpoolman)! - Check if a hostname is present before building the sitemap stream
+
+- Updated dependencies [[`e5c0587`](https://github.com/pluginpal/strapi-webtools/commit/e5c058758087c9d878ab7f40466672b340731e99)]:
+  - @pluginpal/webtools-core@1.0.0-beta.13
+
 ## 1.0.0-beta.7
 
 ### Minor Changes

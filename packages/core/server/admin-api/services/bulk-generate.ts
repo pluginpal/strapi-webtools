@@ -80,7 +80,7 @@ const generateUrlAliases = async (params: GenerateParams): Promise<number> => {
   await Promise.all(types.map(async (type) => {
     if (generationType === 'all') {
       // Delete all the URL aliases for the given type.
-      await getPluginService('url-alias').deleteMany({
+      await strapi.entityService.deleteMany('plugin::webtools.url-alias', {
         // @ts-ignore
         locale: 'all',
         filters: { contenttype: type },
@@ -88,8 +88,8 @@ const generateUrlAliases = async (params: GenerateParams): Promise<number> => {
     }
 
     if (generationType === 'only_generated') {
-      // Delete all the auto-generated URL aliases of the given type.
-      await getPluginService('url-alias').deleteMany({
+      // Delete all the auto generated URL aliases of the given type.
+      await strapi.entityService.deleteMany('plugin::webtools.url-alias', {
         // @ts-ignore
         locale: 'all',
         filters: { contenttype: type, generated: true },
@@ -112,7 +112,7 @@ const generateUrlAliases = async (params: GenerateParams): Promise<number> => {
       relations = [...relations, ...languageRelations];
     }));
 
-    // Query all the entities of the type that do not have a corresponding URL alias
+    // Query all the entities of the type that do not have a corresponding URL alias.
     const entities = await strapi.entityService.findMany(type, {
       filters: { url_alias: null },
       locale: 'all',
@@ -176,6 +176,7 @@ const generateUrlAliases = async (params: GenerateParams): Promise<number> => {
 
   return generatedCount;
 };
+
 
 export default () => ({
   generateUrlAliases,

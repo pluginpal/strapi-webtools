@@ -1,7 +1,9 @@
 import React, { useState, useEffect, FC } from 'react';
 import { useIntl } from 'react-intl';
 import { FormikErrors, FormikTouched } from 'formik';
-import _ from 'lodash';
+import snakeCase from 'lodash/snakeCase';
+import deburr from 'lodash/deburr';
+import toLower from 'lodash/toLower';
 
 import {
   TextInput,
@@ -28,7 +30,7 @@ const LabelField: FC<Props> = ({
 }) => {
   const [open, setOpen] = useState(false);
   const { formatMessage } = useIntl();
-  const generatedCode = code || _.snakeCase(_.deburr(_.toLower(values.label || '')));
+  const generatedCode = code || snakeCase(deburr(toLower(values.label || '')));
 
   useEffect(() => {
     if (errors.code) {

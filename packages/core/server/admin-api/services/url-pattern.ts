@@ -1,7 +1,12 @@
-import _ from 'lodash';
+import snakeCase from 'lodash/snakeCase';
+import deburr from 'lodash/deburr';
+import toLower from 'lodash/toLower';
+import kebabCase from 'lodash/kebabCase';
 import { EntityService, Schema } from '@strapi/strapi';
 import { Common } from '@strapi/types';
+
 import { getPluginService } from '../../util/getPluginService';
+
 
 export default () => ({
   /**
@@ -14,9 +19,9 @@ export default () => ({
     const formattedData = data;
 
     if (data.code) {
-      formattedData.code = _.snakeCase(_.deburr(_.toLower(data.code)));
+      formattedData.code = snakeCase(deburr(toLower(data.code)));
     } else {
-      formattedData.code = _.snakeCase(_.deburr(_.toLower(data.label)));
+      formattedData.code = snakeCase(deburr(toLower(data.label)));
     }
 
     const patternEntity = await strapi.entityService.create('plugin::webtools.url-pattern', {
@@ -34,6 +39,7 @@ export default () => ({
    */
   findOne: async (id: number) => {
     const patternEntity = await strapi.entityService.findOne('plugin::webtools.url-pattern', id);
+
     return patternEntity;
   },
 
@@ -72,6 +78,7 @@ export default () => ({
    */
   findMany: async (params: any) => {
     const patternEntities = await strapi.entityService.findMany('plugin::webtools.url-pattern', params);
+
     return patternEntities;
   },
 
@@ -84,6 +91,7 @@ export default () => ({
    */
   update: async (id: number, data: EntityService.Params.Pick<'plugin::webtools.url-pattern', 'data'>['data']) => {
     const patternEntity = await strapi.entityService.update('plugin::webtools.url-pattern', id, { data });
+
     return patternEntity;
   },
 
@@ -118,6 +126,7 @@ export default () => ({
           && fieldName !== 'updatedBy'
         ) {
           // @ts-ignore
+          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
           const relation = strapi.contentTypes[field.target];
 
           if (allowedFields.includes('id') && !fields.includes(`${fieldName}.id`)) {
@@ -234,7 +243,7 @@ export default () => ({
           resolvedPattern = resolvedPattern.replace(`[${field}]`, fieldValue || '');
         } else if (!relationalField) {
           // Slugify the field value
-          const fieldValue = _.kebabCase(_.deburr(_.toLower(String(entity[field]))));
+          const fieldValue = kebabCase(deburr(toLower(String(entity[field]))));
           resolvedPattern = resolvedPattern.replace(`[${field}]`, fieldValue || '');
         } else if (Array.isArray(entity[relationalField[0]])) {
           strapi.log.error('Something went wrong whilst resolving the pattern.');

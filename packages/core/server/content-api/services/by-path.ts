@@ -1,6 +1,6 @@
 
 
-import _ from 'lodash';
+import get from 'lodash/get';
 import { Common, EntityService } from '@strapi/strapi';
 import { getPluginService } from '../../util/getPluginService';
 
@@ -24,7 +24,7 @@ export default () => ({
 
     // Check drafAndPublish setting.
     const contentType = strapi.contentTypes[contentTypeUid];
-    if (_.get(contentType, ['options', 'draftAndPublish'], false)) {
+    if (get(contentType, ['options', 'draftAndPublish'], false)) {
       excludeDrafts = true;
     }
 

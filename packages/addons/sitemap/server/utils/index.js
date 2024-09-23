@@ -30,3 +30,13 @@ export const noLimit = async (strapi, queryString, parameters, limit = 5000) => 
 
   return entries;
 };
+
+export const isValidUrl = (url) => {
+  try {
+    // eslint-disable-next-line no-new
+    new URL(url);
+    return true;
+  } catch (err) {
+    return false;
+  }
+};
