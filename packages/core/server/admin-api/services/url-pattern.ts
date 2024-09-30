@@ -185,7 +185,7 @@ export default () => ({
 
     // Combine all patterns into a single string for regex application
     const patternString = patterns.map((pattern) => pattern).join(',');
-    const fields = patternString.match(/[[\w\d.]+]/g) // Get all substrings between [] as array.
+    const fields = patternString.match(/[[\w\d.]+]/g); // Get all substrings between [] as array.
 
     if (!fields) {
       return [];
@@ -203,15 +203,22 @@ export default () => ({
    * @returns {string[]} The extracted relations.
    */
   getRelationsFromPattern: (patterns: string[]) => {
+    // Get fields from the pattern (assuming they are inside square brackets)
     let fields = getPluginService('urlPatternService').getFieldsFromPattern(patterns);
 
-    // Filter on fields containing a dot (.)
-    fields = fields.filter((field) => field.split('.').length > 1);
-    // Extract the first part of the fields
-    fields = fields.map((field) => field.split('.')[0]);
+    // Filter out fields that are empty or malformed
+    fields = fields.filter((field) => field);
 
-    return fields;
+    // For fields containing dots, extract the first part (relation)
+    const relationsWithDots = fields.filter((field) => field.includes('.')).map((field) => field.split('.')[0]);
+
+    // For fields without dots, treat them as direct fields (e.g., 'title' in /en/[title])
+    const directRelations = fields.filter((field) => !field.includes('.'));
+
+    // Combine both types of relations
+    return [...relationsWithDots, ...directRelations];
   },
+
 
   /**
    * Resolve a pattern string from pattern to path for a single entity.
@@ -228,7 +235,11 @@ export default () => ({
   ): string => {
     const resolve = (pattern: string) => {
       let resolvedPattern: string = pattern;
-      const fields = getPluginService('urlPatternService').getFieldsFromPattern(pattern);
+
+      // Ensure pattern is an array before sending it to getFieldsFromPattern
+      const fields = getPluginService('urlPatternService').getFieldsFromPattern(
+        Array.isArray(pattern) ? pattern : [pattern],
+      );
 
       fields.forEach((field) => {
         const relationalField = field.split('.').length > 1 ? field.split('.') : null;
@@ -268,22 +279,25 @@ export default () => ({
   /**
    * Validate if a pattern is correctly structured.
    *
-   * @param {string} pattern - The pattern to validate.
+   * @param {string[]} pattern - The pattern to validate.
    * @param {string[]} allowedFieldNames - The allowed field names in the pattern.
    * @returns {object} The validation result.
    * @returns {boolean} object.valid - Validation boolean.
    * @returns {string} object.message - Validation message.
    */
-  validatePattern: (pattern: string, allowedFieldNames: string[]) => {
-    if (!pattern) {
+  validatePattern: (pattern: string[], allowedFieldNames: string[]) => {
+    if (!pattern.length) {
       return {
         valid: false,
         message: 'Pattern cannot be empty',
       };
     }
 
-    const preCharCount = pattern.split('[').length - 1;
-    const postCharCount = pattern.split(']').length - 1;
+    // Flatten the array into a string for pre- / post-character count
+    const patternString = pattern.join('');
+
+    const preCharCount = patternString.split('[').length - 1;
+    const postCharCount = patternString.split(']').length - 1;
 
     if (preCharCount < 1 || postCharCount < 1) {
       return {
@@ -301,6 +315,7 @@ export default () => ({
 
     let fieldsAreAllowed = true;
 
+    // Pass the original `pattern` array to getFieldsFromPattern
     getPluginService('urlPatternService').getFieldsFromPattern(pattern).forEach((field) => {
       if (!allowedFieldNames.includes(field)) fieldsAreAllowed = false;
     });

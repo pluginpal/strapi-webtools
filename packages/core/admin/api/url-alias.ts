@@ -19,7 +19,6 @@ export const useCreateUrlAlias = () => {
 export const useUpdateUrlAlias = () => {
   const { put } = useFetchClient();
   const updateUrlAliases = async (aliases: UrlAliasEntity[], slug: string) => {
-
     return Promise.all(
       aliases.map((alias) => put(`/webtools/url-alias/update/${alias.id}`, {
         data: {

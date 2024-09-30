@@ -10,7 +10,7 @@ import { getPluginService } from '../../util/getPluginService';
 const decorator = (service: IDecoratedService) => ({
   async create(uid: Common.UID.ContentType, opts: IDecoratedServiceOptions<{ url_alias: number }>) {
     const hasWT = isContentTypeEnabled(uid);
-    let urlAliasEntity: Attribute.GetValues<'plugin::webtools.url-alias', Attribute.GetNonPopulatableKeys<'plugin::webtools.url-alias'>> | null = null;
+    let urlAliasEntity: Attribute.GetValues<'plugin::webtools.url-alias', Attribute.GetNonPopulatableKeys<'plugin::webtools.url-alias'>>;
 
     // If Webtools isn't enabled, do nothing.
     if (!hasWT) {
@@ -28,8 +28,9 @@ const decorator = (service: IDecoratedService) => ({
     }
 
     await Promise.all(languages.map(async (lang) => {
-      const urlPatterns = await getPluginService('urlPatternService').findByUid(uid, lang);
-      const languageRelations = urlPatterns.flatMap((urlPattern) => getPluginService('urlPatternService').getRelationsFromPattern(urlPattern));
+      const urlPattern = await getPluginService('urlPatternService').findByUid(uid, lang);
+      const languageRelations = getPluginService('urlPatternService').getRelationsFromPattern(urlPattern);
+
       relations = [...relations, ...languageRelations];
     }));
 
@@ -138,7 +139,7 @@ const decorator = (service: IDecoratedService) => ({
     opts: IDecoratedServiceOptions<{ url_alias: number }>,
   ) {
     const hasWT = isContentTypeEnabled(uid);
-    let urlAliasEntity: Attribute.GetValues<'plugin::webtools.url-alias', Attribute.GetNonPopulatableKeys<'plugin::webtools.url-alias'>> | null = null;
+    let urlAliasEntity: Attribute.GetValues<'plugin::webtools.url-alias', Attribute.GetNonPopulatableKeys<'plugin::webtools.url-alias'>>;
 
     // If Webtools isn't enabled, do nothing.
     if (!hasWT) {
@@ -156,12 +157,14 @@ const decorator = (service: IDecoratedService) => ({
     }
 
     await Promise.all(languages.map(async (lang) => {
-      const urlPatterns = await getPluginService('urlPatternService').findByUid(uid, lang);
-      const languageRelations = urlPatterns.flatMap((urlPattern) => getPluginService('urlPatternService').getRelationsFromPattern([urlPattern]));
+      const urlPattern = await getPluginService('urlPatternService').findByUid(uid, lang);
+      const languageRelations = getPluginService('urlPatternService').getRelationsFromPattern(urlPattern);
+
       relations = [...relations, ...languageRelations];
     }));
 
     // Manually fetch the entity that's being updated.
+    // We do this because not all it's data is present in opts.data.
     const entity = await service.update.call(this, uid, entityId, {
       ...opts,
       populate: {
@@ -205,7 +208,6 @@ const decorator = (service: IDecoratedService) => ({
 
     // Generate the path.
     const urlPatterns = await getPluginService('urlPatternService').findByUid(uid, entity.locale);
-
     await Promise.all(urlPatterns.map(async (urlPattern) => {
       const generatedPath = getPluginService('urlPatternService').resolvePattern(uid, entityWithoutLocalizations, urlPattern);
 
@@ -218,6 +220,7 @@ const decorator = (service: IDecoratedService) => ({
           contenttype: uid,
           // @ts-ignore
           locale: entity.locale,
+          // @ts-ignore
           localizations: urlAliasLocalizations,
         });
       }
@@ -256,7 +259,7 @@ const decorator = (service: IDecoratedService) => ({
       ...opts,
       data: {
         ...opts.data,
-        url_alias: urlAliasEntity.id,
+        url_alias: [urlAliasEntity.id],
       },
     });
   },
@@ -287,7 +290,7 @@ const decorator = (service: IDecoratedService) => ({
     return service.delete.call(this, uid, entityId);
   },
 
-  // eslint-disable-next-line max-len
+  // eslint-disable-next-line max-len, consistent-return
   async clone(uid: Common.UID.ContentType, cloneId: number, params?: IDecoratedServiceOptions<{ url_alias: number }>) {
     const hasWT = isContentTypeEnabled(uid);
 
@@ -308,6 +311,7 @@ const decorator = (service: IDecoratedService) => ({
     await Promise.all(languages.map(async (lang) => {
       const urlPattern = await getPluginService('urlPatternService').findByUid(uid, lang);
       const languageRelations = getPluginService('urlPatternService').getRelationsFromPattern(urlPattern);
+
       relations = [...relations, ...languageRelations];
     }));
 
@@ -344,37 +348,39 @@ const decorator = (service: IDecoratedService) => ({
     };
 
     const combinedEntity = { ...clonedEntityWithoutLocalizations };
-    const urlPattern = await getPluginService('urlPatternService').findByUid(uid, combinedEntity.locale);
-    const generatedPath = getPluginService('urlPatternService').resolvePattern(uid, combinedEntity, urlPattern);
 
-    // Create a new URL alias for the cloned entity
-    const newUrlAlias = await getPluginService('urlAliasService').create({
-      url_path: generatedPath,
-      generated: true,
-      contenttype: uid,
-      // @ts-ignore
-      locale: combinedEntity.locale,
-      // @ts-ignore
-      localizations: urlAliasLocalizations,
-    });
-
-    // Update all the URL alias localizations.
-    await Promise.all(urlAliasLocalizations.map(async (localization) => {
-      await strapi.db.query('plugin::webtools.url-alias').update({
-        where: {
-          id: localization,
-        },
-        data: {
-          localizations: [
-            ...(urlAliasLocalizations.filter((loc) => loc !== localization)),
-            newUrlAlias.id,
-          ],
-        },
+    const urlPatterns = await getPluginService('urlPatternService').findByUid(uid, combinedEntity.locale);
+    await Promise.all(urlPatterns.map(async (urlPattern) => {
+      const generatedPath = getPluginService('urlPatternService').resolvePattern(uid, combinedEntity, urlPattern);
+      // Create a new URL alias for the cloned entity
+      const newUrlAlias = await getPluginService('urlAliasService').create({
+        url_path: generatedPath,
+        generated: true,
+        contenttype: uid,
+        // @ts-ignore
+        locale: combinedEntity.locale,
+        // @ts-ignore
+        localizations: urlAliasLocalizations,
       });
-    }));
 
-    // Update the cloned entity with the new URL alias id
-    return service.update.call(this, uid, clonedEntity.id, { data: { url_alias: newUrlAlias.id }, populate: ['url_alias'] });
+      // Update all the URL alias localizations.
+      await Promise.all(urlAliasLocalizations.map(async (localization) => {
+        await strapi.db.query('plugin::webtools.url-alias').update({
+          where: {
+            id: localization,
+          },
+          data: {
+            localizations: [
+              ...(urlAliasLocalizations.filter((loc) => loc !== localization)),
+              newUrlAlias.id,
+            ],
+          },
+        });
+      }));
+
+      // Update the cloned entity with the new URL alias id
+      return service.update.call(this, uid, clonedEntity.id, { data: { url_alias: newUrlAlias.id }, populate: ['url_alias'] });
+    }));
   },
 
   async deleteMany(uid: Common.UID.ContentType, params: any) {

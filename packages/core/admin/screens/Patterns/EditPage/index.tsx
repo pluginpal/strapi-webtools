@@ -76,11 +76,10 @@ const EditPatternPage = () => {
     try {
       // Check if another primary pattern for the content type already exists
       if (values.primary) {
-        const response = await get(`/webtools/url-pattern/findMany`, { method: 'GET' });
+        const response = await get('/webtools/url-pattern/findMany', { method: 'GET' });
 
         const existingPrimary = response.data.find(
-          (pattern: PatternEntity) =>
-            pattern.contenttype === values.contenttype &&
+          (pattern: PatternEntity) => pattern.contenttype === values.contenttype &&
             pattern.primary === true &&
             pattern.id !== patternEntity.id,
         );
@@ -283,22 +282,20 @@ const EditPatternPage = () => {
                     </GridItem>
 
                     {values.contenttype !== '' && (
-                      <>
-                        <GridItem col={6}>
-                          <PatternField
-                            values={values}
-                            uid={values.contenttype}
-                            setFieldValue={setFieldValue}
-                            error={
+                      <GridItem col={6}>
+                        <PatternField
+                          values={values}
+                          uid={values.contenttype}
+                          setFieldValue={setFieldValue}
+                          error={
                               errors.pattern
                               && touched.pattern
                               && typeof errors.pattern === 'string'
                                 ? errors.pattern
                                 : null
                             }
-                          />
-                        </GridItem>
-                      </>
+                        />
+                      </GridItem>
                     )}
                     <HiddenLocalizedField
                       localized={getSelectedContentType(values.contenttype)?.localized}

@@ -152,6 +152,8 @@ const update = async (id: Entity.ID, data: EntityService.Params.Pick<'plugin::we
  * @returns {void}
  */
 const deleteUrlAlias = async (id: number | string) => {
+  if (!id) return;
+
   await strapi.entityService.delete('plugin::webtools.url-alias', id);
 };
 

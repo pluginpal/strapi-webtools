@@ -35,7 +35,7 @@ const EditForm = () => {
       [name]: value,
     };
     console.log(updatedUrlAliases, 'updatedUrlAliases');
-    onChange({ target: { name: `url_alias`, value: updatedUrlAliases, type: 'array' } });
+    onChange({ target: { name: 'url_alias', value: updatedUrlAliases, type: 'array' } });
   };
 
   const [expanded, setExpanded] = React.useState<number>(0);

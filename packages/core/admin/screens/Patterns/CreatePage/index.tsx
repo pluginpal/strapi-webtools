@@ -63,10 +63,11 @@ const CreatePatternPage = () => {
     try {
       // Check if another primary pattern for the content type already exists
       if (values.primary) {
-        const response = await get(`/webtools/url-pattern/findMany`, { method: 'GET' });
+        const response = await get('/webtools/url-pattern/findMany', { method: 'GET' });
 
         // Find the other pattern with the same contenttype that is marked as primary
         const existingPrimary = response.data.find(
+          // eslint-disable-next-line max-len
           (pattern: PatternEntity) => pattern.contenttype === values.contenttype && pattern.primary === true,
         );
 
@@ -124,7 +125,7 @@ const CreatePatternPage = () => {
     return errors;
   };
 
-  if (loading || ! contentTypes) {
+  if (loading || !contentTypes) {
     return (
       <Center>
         <Loader>{formatMessage({ id: 'webtools.settings.loading', defaultMessage: 'Loading content...' })}</Loader>
