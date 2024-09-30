@@ -55,7 +55,7 @@ const EditView = () => {
   const initialUrlAliases = initialData.url_alias as UrlAliasEntity[];
 
   const onSubmit = async () => {
-    if (initialUrlAliases.length === 0) {
+    if (initialUrlAliases?.length === 0) {
       // Create new URL aliases
       const newAliases = await Promise.all(
         modifiedUrlAliases.map((alias) => createUrlAlias(alias, slug)),
@@ -76,7 +76,7 @@ const EditView = () => {
         })}
         onSubmit={onSubmit}
         onCancel={() => {
-          if (initialUrlAliases.length > 0) {
+          if (initialUrlAliases?.length > 0) {
             onChange({ target: { name: 'url_alias', value: initialUrlAliases, type: 'array' } });
           } else {
             onChange({ target: { name: 'url_alias', value: null, type: 'array' } });
@@ -86,7 +86,7 @@ const EditView = () => {
         <EditForm />
       </SidebarModal>
       <Permalink
-        path={modifiedUrlAliases.length > 0 ? modifiedUrlAliases[0].url_path : ''}
+        path={modifiedUrlAliases?.length > 0 ? modifiedUrlAliases[0].url_path : ''}
       />
     </CheckPermissions>
   );
