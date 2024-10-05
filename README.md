@@ -1,30 +1,80 @@
 <div align="center">
-<h1>Strapi Webtools Monorepo</h1>
+<h1>Strapi Webtools</h1>
 	
 <p style="margin-top: 0;">Everything you need to build a website with Strapi CMS</p>
+
+<a href="https://docs.pluginpal.io/webtools">Read the documentation</a>
+	
+<p>
+  <a href="https://www.npmjs.org/package/@pluginpal/webtools-core">
+    <img src="https://img.shields.io/npm/v/@pluginpal/webtools-core/latest.svg" alt="NPM Version" />
+  </a>
+  <a href="https://www.npmjs.org/package/@pluginpal/webtools-core">
+    <img src="https://img.shields.io/npm/dm/@pluginpal/webtools-core" alt="Monthly download on NPM" />
+  </a>
+  <a href="https://codecov.io/gh/pluginpal/strapi-webtools">
+    <img src="https://img.shields.io/github/actions/workflow/status/pluginpal/strapi-webtools/tests.yml?branch=master" alt="CI build status" />
+  </a>
+  <a href="https://codecov.io/gh/pluginpal/strapi-webtools">
+    <img src="https://codecov.io/gh/pluginpal/strapi-webtools/coverage.svg?branch=master" alt="codecov.io" />
+  </a>
+</p>
 	
 </div>
 
-## The Webtools suite is still in BETA
+> [!IMPORTANT]  
+> The Webtools suite is still in BETA
 
-## Packages
+## ✨ Features
 
-This repository contains several plugins:
+- **Unique URLs** Every page will get their own unique path
+- **Auto generated** Automatically generated based on a pattern
+- **Flexible** Overwrite single URLs
+- **Frontend router** Get any page by it's unique path from the public API
+- **Auto slugify** The URLs will automatically be slugified to ensure valid paths
 
-1. [The Core Plugin](https://github.com/pluginpal/strapi-webtools/tree/master/packages/core)
-2. [The Sitemap Addon](https://github.com/pluginpal/strapi-webtools/tree/master/packages/addons/sitemap)
+## ⏳ Installation
 
-_By clicking on the links above you'll be redirected to the documentation of each plugin_
+[Read the Getting Started tutorial](https://docs.pluginpal.io/webtools) or follow the steps below:
 
-## ✨ #StrapiPluginWeek
+```bash
+# using yarn
+yarn add @pluginpal/webtools-core
 
-This plugin was initially made as an entry to the <a href="https://lu.ma/strapihacks">Strapi Plugin Week</a> hackathon. Back then it went under the name "URL alias". Since then a lot has changed and the plugin has been renamed to Webtools where the URL alias feature is just a part of it.
+# using npm
+npm install @pluginpal/webtools-core --save
+```
 
-See the <a href="https://www.loom.com/share/5409b9415e3e4b66ad27eab967c393d0">demo video</a>.
+After successful installation you have to rebuild the admin UI so it'll include this plugin. To rebuild and restart Strapi run:
+
+```bash
+# using yarn
+yarn build
+yarn develop
+
+# using npm
+npm run build
+npm run develop
+```
+
+Enjoy 🎉
+
+## 📓 Documentation
+
+See our dedicated [repository](https://github.com/pluginpal/docs) for all of PluginPal's documentation, or view the Webtools documentation live:
+
+- [Webtools documentation](https://docs.pluginpal.io/webtools)
+
+## 🔌 Addons
+
+Webtools can be extended by installing addons that hook into the core Webtools functionality. Read more about how addons work and how to install them in the [addons documentation](https://docs.pluginpal.io/webtools/addons).
 
 ## 🔗 Links
 
+- [PluginPal marketplace](https://www.pluginpal.io/plugin/webtools)
+- [NPM package](https://www.npmjs.com/package/pluginpal/webtools-core)
 - [GitHub repository](https://github.com/pluginpal/strapi-webtools)
+- [Strapi marketplace](https://market.strapi.io/plugins/@pluginpal-webtools-core)
 
 ## 🌎 Community support
 
@@ -33,4 +83,4 @@ See the <a href="https://www.loom.com/share/5409b9415e3e4b66ad27eab967c393d0">de
 
 ## 📝 Resources
 
-- [MIT License](LICENSE.md)
+- [MIT License](https://github.com/pluginpal/strapi-webtools/blob/master/LICENSE.md)

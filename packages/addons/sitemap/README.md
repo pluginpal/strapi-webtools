@@ -2,6 +2,8 @@
 <h1>Webtools Sitemap add-on</h1>
 	
 <p style="margin-top: 0;">Create a highly customizable sitemap XML in Strapi CMS.</p>
+
+<a href="https://docs.pluginpal.io/webtools/addons/sitemap">Read the documentation</a>
 	
 <p>
   <a href="https://www.npmjs.org/package/@pluginpal/webtools-addon-sitemap">
@@ -10,11 +12,11 @@
   <a href="https://www.npmjs.org/package/@pluginpal/webtools-addon-sitemap">
     <img src="https://img.shields.io/npm/dm/@pluginpal/webtools-addon-sitemap" alt="Monthly download on NPM" />
   </a>
-  <a href="https://codecov.io/gh/boazpoolman/@pluginpal/webtools-addon-sitemap">
-    <img src="https://img.shields.io/github/actions/workflow/status/boazpoolman/@pluginpal/webtools-addon-sitemap/tests.yml?branch=master" alt="CI build status" />
+  <a href="https://codecov.io/gh/pluginpal/strapi-webtools">
+    <img src="https://img.shields.io/github/actions/workflow/status/pluginpal/strapi-webtools/tests.yml?branch=master" alt="CI build status" />
   </a>
-  <a href="https://codecov.io/gh/boazpoolman/@pluginpal/webtools-addon-sitemap">
-    <img src="https://codecov.io/gh/boazpoolman/@pluginpal/webtools-addon-sitemap/coverage.svg?branch=master" alt="codecov.io" />
+  <a href="https://codecov.io/gh/pluginpal/strapi-webtools">
+    <img src="https://codecov.io/gh/pluginpal/strapi-webtools/coverage.svg?branch=master" alt="codecov.io" />
   </a>
 </p>
 </div>
@@ -33,7 +35,7 @@
 
 ## ⏳ Installation
 
-Install the plugin in your Strapi project.
+[Read the Getting Started tutorial](https://docs.pluginpal.io/webtools/addons/sitemap) or follow the steps below:
 
 ```bash
 # using yarn
@@ -59,204 +61,11 @@ The **Sitemap** plugin should now appear in the **Settings** section of your Str
 
 Enjoy 🎉
 
-## 🖐 Requirements
+## 📓 Documentation
 
-Complete installation requirements are the exact same as for Strapi itself and can be found in the [Strapi documentation](https://strapi.io/documentation).
+See our dedicated [repository](https://github.com/pluginpal/docs) for all of PluginPal's documentation, or view the Webtools Sitemap add-on documentation live:
 
-**Supported Strapi versions**:
-
-- Strapi 4
-
-(This plugin may work with older Strapi versions, but these are not tested nor officially supported.)
-
-**We recommend always using the latest version of Strapi to start your new projects**.
-
-## 💡 Usage
-With this plugin you have full control over which URLs you add to your sitemap XML. Go to the admin section of the plugin and start adding URLs. Here you will find that there are two ways to add URLs to the sitemap. With **URL bundles** and **Custom URLs**.
-
-### URL bundles
-A URL bundle is a set of URLs grouped by type. If you set up an URL bundle, all pages of that content type will end up in the sitemap.
-
-URLs coming from a URL bundle will get the following XML attributes:
-
-- `<loc>`
-- `<lastmod>`
-- `<priority>`
-- `<changefreq>`
-
-### Custom URLs
-A custom URL is meant to add URLs to the sitemap which are not managed in Strapi. It might be that you have custom route like `/account` that is hardcoded in your front-end. If you'd want to add such a route (URL) to the sitemap you can add it as a custom URL.
-
-Custom URLs will get the following XML attributes:
-
-- `<loc>`
-- `<priority>`
-- `<changefreq>`
-
-## 🌍 Multilingual
-
-When adding a URL bundle of a type which has localizations enabled you will be presented with a language dropdown in the settings form. You can now set a different URL pattern for each language.
-
-For each localization of a page the `<url>` in the sitemap XML will get an extra attribute:
-
-- `<xhtml:link rel="alternate">`
-
-This implementation is based on [Google's guidelines](https://developers.google.com/search/docs/advanced/crawling/localized-versions) on localized sitemaps.
-
-## 🔗 Sitemap index
-
-Large sitemaps (larger then 45.000 urls) will automatically be split up in to seperate sitemaps. <br />
-A sitemap index will be created that links to all the different sitemap chunks. <br />
-That sitemap index will be accessible on the default `/api/sitemap/index.xml` location.
-
-It is required to set the `url` in the `./config/server.js` file in your Strapi installation.
-That will be used to create the links to the different chunks.
-
-You can alter the 45.000 magic number through plugin config.
-
-## 🤖 Robots.txt
-
-To make sure search engines are able to find the sitemap XML create a `robots.txt` file in the front-end of your website and add the following line:
-
-```
-Sitemap: https://your-strapi-domain.com/api/sitemap/index.xml
-```
-
-Read more about the `robots.txt` file [here](https://developers.google.com/search/docs/advanced/robots/create-robots-txt).
-
-## 📺 CLI
-
-This plugin comes with it's own `strapi-sitemap` CLI.
-You can add it to your project like so:
-
-```
-"scripts": {
-  // ...
-  "sitemap": "strapi-sitemap"
-},
-```
-
-You can now run the `generate` command like so:
-
-```bash
-# using yarn
-yarn sitemap generate
-
-# using npm
-npm run sitemap generate
-```
-
-## ⚙️ Settings
-Settings can be changed in the admin section of the plugin. In the last tab (Settings) you will find the settings as described below.
-
-### Hostname (required)
-
-The hostname is the URL of your website. It will be used as the base URL of all URLs added to the sitemap XML. It is required to generate the XML file.
-
-###### Key: `hostname`
-
-> `required:` YES | `type:` string | `default:` ''
-
-### Hostname overrides
-
-If you are using this plugin in a multilingual Strapi project you will be presented with a 'Hostname overrides' setting.
-With this setting you can set a specific hostname per language.
-
-This is handy for when you have a URL structure like this:
-
-- https://en.domain.com (english domain)
-- https://nl.domain.com (dutch domain)
-- https://de.domain.com (german domain)
-
-###### Key: `hostname_overrides`
-
-> `required:` NO | `type:` object | `default:` {}
-
-### Exclude drafts
-
-When using the draft/publish functionality in Strapi this setting will make sure that all draft pages are excluded from the sitemap. If you want to have the draft pages in the sitemap anyways you can disable this setting.
-
-###### Key: `excludeDrafts`
-
-> `required:` NO | `type:` bool | `default:` true
-
-### Include homepage
-
-This setting will add a default `/` entry to the sitemap XML when none is present. The `/` entry corresponds to the homepage of your website.
-
-###### Key: `includeHomepage`
-
-> `required:` NO | `type:` bool | `default:` true
-
-### Default language URL (x-default)
-
-This setting will add an additionnal `<link />` tag into each sitemap urls bundles with value `hreflang="x-default"` and the path of your choice. The hreflang x-default value is used to specify the language and region neutral URL for a piece of content when the site doesn't support the user's language and region. For example, if a page has hreflang annotations for English and Spanish versions of a page along with an x-default value pointing to the English version, French speaking users are sent to the English version of the page due to the x-default annotation. The x-default page can be a language and country selector page, the page where you redirect users when you have no content for their region, or just the version of the content that you consider default. 
-
-###### Key: `defaultLanguageUrlType`
-
-> `required:` NO | `type:` string | `default:` ''
-
-## 🔧 Config
-Config can be changed in the `config/plugins.js` file in your Strapi project.
-You can overwrite the config like so:
-
-```
-module.exports = ({ env }) => ({
-  // ...
-  'sitemap': {
-    enabled: true,
-    config: {
-      cron: '0 0 0 * * *',
-      limit: 45000,
-      xsl: true,
-      autoGenerate: false,
-    },
-  },
-});
-```
-### CRON
-
-To make sure the sitemap stays up-to-date this plugin will automatically schedule a cron job that generates the sitemap for you. That cron job is configured to run once a day at 00:00.
-
-If you want to change the cron interval you can alter the `cron` setting.
-
-###### Key: `cron `
-
-> `required:` NO | `type:` bool | `default:` 0 0 0 * * *
-
-### Limit
-
-When creating large sitemaps (50.000+ URLs) you might want to split the sitemap in to chunks that you bring together in a sitemap index.
-
-The limit is there to specify the maximum amount of URL a single sitemap may hold. If you try to add more URLs to a single sitemap.xml it will automatically be split up in to chunks which are brought together in a single sitemap index.
-
-###### Key: `limit `
-
-> `required:` NO | `type:` int | `default:` 45000
-
-### XSL
-
-This plugin ships with some XSL files to make your sitemaps human readable. It adds some styling and does some reordering of the links.
-
-These changes are by no means a requirement for your sitemap to be valid. It is really just there to make your sitemap look pretty.
-
-If you have a large sitemap you might encounter performance issues when accessing the sitemap.xml from the browser. In that case you can disable the XSL to fix these issues.
-
-###### Key: `xsl `
-
-> `required:` NO | `type:` bool | `default:` true
-
-### Auto generate
-
-Alternatively to using cron to regenerate your sitemap, this plugin offers an automatic generation feature that will generate the sitemap through lifecycle methods. On `create`, `update` and `delete` this plugin will do a full sitemap regeneration. This way your sitemap will always be up-to-date when making content changes.
-
-If you have a large sitemap the regeneration becomes an expensive task. Because of that this setting is disabled by default and it is not recommended to enable it for sitemaps with more than 1000 links.
-
-Also the search engines don't even crawl your sitemap that often, so generating it once a day through cron should be suffecient.
-
-###### Key: `autoGenerate `
-
-> `required:` NO | `type:` bool | `default:` false
+- [Webtools Sitemap add-on documentation](https://docs.pluginpal.io/webtools/addons/sitemap)
 
 ## 🤝 Contributing
 
@@ -268,8 +77,10 @@ Give a star if this project helped you.
 
 ## 🔗 Links
 
-- [NPM package](https://www.npmjs.com/package/@pluginpal/webtools-addon-sitemap)
+- [PluginPal marketplace](https://www.pluginpal.io/plugin/webtools)
+- [NPM package](https://www.npmjs.com/package/pluginpal/webtools-core)
 - [GitHub repository](https://github.com/pluginpal/strapi-webtools)
+- [Strapi marketplace](https://market.strapi.io/plugins/@pluginpal-webtools-core)
 
 ## 🌎 Community support
 
@@ -278,4 +89,4 @@ Give a star if this project helped you.
 
 ## 📝 Resources
 
-- [MIT License](LICENSE.md)
+- [MIT License](https://github.com/pluginpal/strapi-webtools/blob/master/LICENSE.md)
