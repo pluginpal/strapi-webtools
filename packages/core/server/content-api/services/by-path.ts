@@ -16,7 +16,6 @@ export default () => ({
     let excludeDrafts = false;
 
     const urlAliasEntity = await getPluginService('urlAliasService').findByPath(path);
-    console.log(urlAliasEntity);
     if (!urlAliasEntity) {
       return {};
     }
