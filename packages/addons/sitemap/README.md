@@ -78,7 +78,7 @@ Give a star if this project helped you.
 ## 🔗 Links
 
 - [PluginPal marketplace](https://www.pluginpal.io/plugin/webtools)
-- [NPM package](https://www.npmjs.com/package/pluginpal/webtools-core)
+- [NPM package](https://www.npmjs.com/package/@pluginpal/webtools-addon-sitemap)
 - [GitHub repository](https://github.com/pluginpal/strapi-webtools)
 - [Strapi marketplace](https://market.strapi.io/plugins/@pluginpal-webtools-core)
 

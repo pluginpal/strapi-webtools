@@ -72,7 +72,7 @@ Webtools can be extended by installing addons that hook into the core Webtools f
 ## 🔗 Links
 
 - [PluginPal marketplace](https://www.pluginpal.io/plugin/webtools)
-- [NPM package](https://www.npmjs.com/package/pluginpal/webtools-core)
+- [NPM package](https://www.npmjs.com/package/@pluginpal/webtools-core)
 - [GitHub repository](https://github.com/pluginpal/strapi-webtools)
 - [Strapi marketplace](https://market.strapi.io/plugins/@pluginpal-webtools-core)
 

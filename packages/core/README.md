@@ -2,6 +2,8 @@
 <h1>Strapi Webtools</h1>
 	
 <p style="margin-top: 0;">Everything you need to build a website with Strapi CMS</p>
+
+<a href="https://docs.pluginpal.io/webtools">Read the documentation</a>
 	
 <p>
   <a href="https://www.npmjs.org/package/@pluginpal/webtools-core">
@@ -33,7 +35,7 @@
 
 ## ⏳ Installation
 
-Install the plugin in your Strapi project.
+[Read the Getting Started tutorial](https://docs.pluginpal.io/webtools) or follow the steps below:
 
 ```bash
 # using yarn
@@ -70,7 +72,7 @@ Webtools can be extended by installing addons that hook into the core Webtools f
 ## 🔗 Links
 
 - [PluginPal marketplace](https://www.pluginpal.io/plugin/webtools)
-- [NPM package](https://www.npmjs.com/package/pluginpal/webtools-core)
+- [NPM package](https://www.npmjs.com/package/@pluginpal/webtools-core)
 - [GitHub repository](https://github.com/pluginpal/strapi-webtools)
 - [Strapi marketplace](https://market.strapi.io/plugins/@pluginpal-webtools-core)
 
