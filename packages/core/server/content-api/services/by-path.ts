@@ -16,6 +16,7 @@ export default () => ({
     let excludeDrafts = false;
 
     const urlAliasEntity = await getPluginService('urlAliasService').findByPath(path);
+    console.log(urlAliasEntity);
     if (!urlAliasEntity) {
       return {};
     }
@@ -28,7 +29,7 @@ export default () => ({
       excludeDrafts = true;
     }
 
-    const entity = await strapi.entityService.findMany(contentTypeUid, {
+    const entities = await strapi.entityService.findMany(contentTypeUid, {
       ...query,
       filters: {
         ...query?.filters,
@@ -42,12 +43,20 @@ export default () => ({
       limit: 1,
     });
 
-    if (!entity[0]) {
+    /**
+     * If we're querying a single type, which does not have localizations enabled,
+     * Strapi will return a single entity instead of an array. Which is slightly weird,
+     * because the API we're querying is called `findMany`. That's why we need to check
+     * if the result is an array or not and handle it accordingly.
+     */
+    const entity = Array.isArray(entities) ? entities[0] : entities;
+
+    if (!entity) {
       return {};
     }
 
     return {
-      entity: entity[0],
+      entity,
       contentType: urlAliasEntity.contenttype as Common.UID.ContentType,
     };
   },
