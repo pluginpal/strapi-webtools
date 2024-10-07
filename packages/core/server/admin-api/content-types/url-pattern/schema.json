@@ -39,6 +39,9 @@
     "languages": {
       "type": "json",
       "required": true
+    },
+    "primary": {
+      "type": "boolean"
     }
   }
 }
