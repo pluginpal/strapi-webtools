@@ -81,8 +81,7 @@ describe('Query layer decorator', () => {
       populate: ['url_alias']
     });
 
-    const oldAliasId = page.url_alias[0].id;
-
+    const oldAliasId = page.url_alias[0]?.id;
     // Delete the created url alias to make sure none is present
     // at the time of running the .update() query.
     await strapi.entityService.delete("plugin::webtools.url-alias", oldAliasId);
@@ -95,7 +94,7 @@ describe('Query layer decorator', () => {
       populate: ['url_alias']
     });
 
-    expect(updatedPage?.url_alias[0]?.id).not.toBe(oldAliasId);
+    expect(updatedPage.url_alias[0]?.id).not.toBe(oldAliasId);
     expect(updatedPage).toHaveProperty('url_alias[0].url_path', '/page/some-updated-page');
     expect(updatedPage).toHaveProperty('url_alias[0].generated', true);
     expect(updatedPage).toHaveProperty('url_alias[0].contenttype', 'api::test.test');
@@ -120,7 +119,7 @@ describe('Query layer decorator', () => {
       populate: ['url_alias']
     });
 
-    expect(updatedPage).toHaveProperty('url_alias[0].id', page.url_alias[0].id);
+    expect(updatedPage).toHaveProperty('url_alias[0].id', page.url_alias[0]?.id);
     expect(updatedPage).toHaveProperty('url_alias[0].url_path', '/page/some-updated-page-with-overwritten-url-alias');
     expect(updatedPage).toHaveProperty('url_alias[0].generated', true);
   });
@@ -137,7 +136,7 @@ describe('Query layer decorator', () => {
     const page = await strapi.entityService.create("api::test.test", {
       data: {
         title: 'Some about to be updated new page',
-        url_alias: alias[0].id,
+        url_alias: alias.id,
       },
       populate: ['url_alias']
     });
@@ -153,7 +152,7 @@ describe('Query layer decorator', () => {
       populate: ['url_alias']
     });
 
-    expect(updatedPage).toHaveProperty('url_alias[0].id', page.url_alias[0].id);
+    expect(updatedPage).toHaveProperty('url_alias[0].id', page.url_alias[0]?.id);
     expect(updatedPage).toHaveProperty('url_alias[0].url_path', '/path-should-not-update');
     expect(updatedPage).toHaveProperty('url_alias[0].generated', false);
   });
@@ -192,7 +191,7 @@ describe('Query layer decorator', () => {
 
     await strapi.entityService.delete("api::test.test", page.id);
 
-    const alias = await strapi.entityService.findOne("plugin::webtools.url-alias", page.url_alias.id);
+    const alias = await strapi.entityService.findOne("plugin::webtools.url-alias", page.url_alias[0]?.id);
 
     expect(alias).toBeNull();
   });
@@ -241,8 +240,8 @@ describe('Query layer decorator', () => {
       filters: { id: { $in: [page1.id, page2.id] } }
     });
 
-    const alias1 = await strapi.entityService.findOne("plugin::webtools.url-alias", page1.url_alias.id);
-    const alias2 = await strapi.entityService.findOne("plugin::webtools.url-alias", page2.url_alias.id);
+    const alias1 = await strapi.entityService.findOne("plugin::webtools.url-alias", page1.url_alias[0]?.id);
+    const alias2 = await strapi.entityService.findOne("plugin::webtools.url-alias", page2.url_alias[0]?.id);
 
     expect(alias1).toBeNull();
     expect(alias2).toBeNull();

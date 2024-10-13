@@ -1,4 +1,5 @@
 import { Attribute, Common } from '@strapi/types';
+import { ID } from '@strapi/types/dist/types/core/entity';
 import { IDecoratedService, IDecoratedServiceOptions } from '../../types/strapi';
 import { isContentTypeEnabled } from '../../util/enabledContentTypes';
 import { getPluginService } from '../../util/getPluginService';
@@ -192,11 +193,11 @@ const decorator = (service: IDecoratedService) => ({
       localizations: undefined,
     };
 
-    // If a URL alias is already present, fetch it.
-    if (opts.data.url_alias) {
+    // @ts-ignore
+    if (opts.data.url_alias?.length) {
       urlAliasEntity = await getPluginService('urlAliasService').findOne(opts.data.url_alias);
       // @ts-ignore
-    } else if (entity?.url_alias) {
+    } else if (entity.url_alias?.length) {
       // @ts-ignore
       urlAliasEntity = entity.url_alias;
     }
@@ -211,22 +212,29 @@ const decorator = (service: IDecoratedService) => ({
     await Promise.all(urlPatterns.map(async (urlPattern) => {
       const generatedPath = getPluginService('urlPatternService').resolvePattern(uid, entityWithoutLocalizations, urlPattern);
 
-      if (urlAliasEntity?.generated === true) {
-        // If a URL alias is present and 'generated' is set to true, update the alias.
-        urlAliasEntity = await getPluginService('urlAliasService').update(urlAliasEntity.id, {
-          // @ts-ignore
-          url_path: generatedPath,
-          generated: true,
-          contenttype: uid,
-          // @ts-ignore
-          locale: entity.locale,
-          // @ts-ignore
-          localizations: urlAliasLocalizations,
-        });
+      // @ts-ignore
+      if (urlAliasEntity?.length) {
+        // @ts-ignore
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+        await Promise.all(urlAliasEntity.map(async (alias: { generated: boolean; id: ID; }) => {
+          if (alias.generated === true) {
+            await getPluginService('urlAliasService').update(alias.id, {
+              // @ts-ignore
+              url_path: generatedPath,
+              generated: true,
+              contenttype: uid,
+              // @ts-ignore
+              locale: entity.locale,
+              // @ts-ignore
+              localizations: urlAliasLocalizations,
+            });
+          }
+        }));
       }
 
-      // If no URL alias is present, create one.
-      if (!urlAliasEntity) {
+      // @ts-ignore
+      if (!urlAliasEntity?.length) {
+        console.log('creating new url alias because empty array', urlAliasEntity);
         urlAliasEntity = await getPluginService('urlAliasService').create({
           url_path: generatedPath,
           generated: true,
@@ -259,7 +267,7 @@ const decorator = (service: IDecoratedService) => ({
       ...opts,
       data: {
         ...opts.data,
-        url_alias: [urlAliasEntity.id],
+        url_alias: urlAliasEntity.id,
       },
     });
   },
@@ -282,8 +290,16 @@ const decorator = (service: IDecoratedService) => ({
     });
 
     // If a URL alias is present, delete it.
-    if (entity.url_alias?.id) {
-      await getPluginService('urlAliasService').delete(entity.url_alias.id);
+    // @ts-ignore
+    if (entity.url_alias.length) {
+      // @ts-ignore
+      // eslint-disable-next-line max-len
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
+      await Promise.all(entity.url_alias.map(async (url_alias: { id: string | number; }) => {
+        if (url_alias?.id) {
+          await getPluginService('urlAliasService').delete(url_alias.id);
+        }
+      }));
     }
 
     // Eventually delete the entity.
@@ -311,7 +327,6 @@ const decorator = (service: IDecoratedService) => ({
     await Promise.all(languages.map(async (lang) => {
       const urlPattern = await getPluginService('urlPatternService').findByUid(uid, lang);
       const languageRelations = getPluginService('urlPatternService').getRelationsFromPattern(urlPattern);
-
       relations = [...relations, ...languageRelations];
     }));
 
@@ -394,11 +409,15 @@ const decorator = (service: IDecoratedService) => ({
 
     entitiesToDelete.map(async (entity) => {
       // @ts-ignore
-      if (entity.url_alias) {
+      if (entity.url_alias.length) {
         // @ts-ignore
         // eslint-disable-next-line max-len
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
-        await getPluginService('urlAliasService').delete(entity.url_alias.id);
+        await Promise.all(entity.url_alias.map(async (url_alias: { id: string | number; }) => {
+          if (url_alias?.id) {
+            await getPluginService('urlAliasService').delete(url_alias.id);
+          }
+        }));
       }
     });
 
