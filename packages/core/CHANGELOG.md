@@ -1,5 +1,13 @@
 # core
 
+## 1.0.0-beta.15
+
+### Patch Changes
+
+- [#199](https://github.com/pluginpal/strapi-webtools/pull/199) [`65fdc7f`](https://github.com/pluginpal/strapi-webtools/commit/65fdc7fbf510f7810ecee509902acfffa445aa77) Thanks [@boazpoolman](https://github.com/boazpoolman)! - Issue in the router endpoint when querying a single type which does not have localizations enabled.
+
+- [#197](https://github.com/pluginpal/strapi-webtools/pull/197) [`faec872`](https://github.com/pluginpal/strapi-webtools/commit/faec87287907ef5acd9ad0b12b728212fa823adf) Thanks [@boazpoolman](https://github.com/boazpoolman)! - Update the README files to reference the docs website
+
 ## 1.0.0-beta.14
 
 ### Patch Changes
