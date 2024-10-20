@@ -197,8 +197,11 @@ const decorator = (service: IDecoratedService) => ({
     if (opts.data.url_alias?.length) {
       urlAliasEntity = await getPluginService('urlAliasService').findOne(opts.data.url_alias);
       // @ts-ignore
+      // eslint-disable-next-line max-len
+      // eslint-disable-next-line ,@typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-member-access
     } else if (entity.url_alias?.length) {
       // @ts-ignore
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       urlAliasEntity = entity.url_alias;
     }
 
@@ -294,7 +297,7 @@ const decorator = (service: IDecoratedService) => ({
     if (entity.url_alias.length) {
       // @ts-ignore
       // eslint-disable-next-line max-len
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-call
       await Promise.all(entity.url_alias.map(async (url_alias: { id: string | number; }) => {
         if (url_alias?.id) {
           await getPluginService('urlAliasService').delete(url_alias.id);
@@ -409,10 +412,11 @@ const decorator = (service: IDecoratedService) => ({
 
     entitiesToDelete.map(async (entity) => {
       // @ts-ignore
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       if (entity.url_alias.length) {
         // @ts-ignore
         // eslint-disable-next-line max-len
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-call
         await Promise.all(entity.url_alias.map(async (url_alias: { id: string | number; }) => {
           if (url_alias?.id) {
             await getPluginService('urlAliasService').delete(url_alias.id);

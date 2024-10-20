@@ -63,12 +63,12 @@ const CreatePatternPage = () => {
     try {
       // Check if another primary pattern for the content type already exists
       if (values.primary) {
-        const response = await get('/webtools/url-pattern/findMany', { method: 'GET' });
-
+        const response = await get<PatternEntity[]>('/webtools/url-pattern/findMany', { method: 'GET' });
         // Find the other pattern with the same contenttype that is marked as primary
         const existingPrimary = response.data.find(
-          // eslint-disable-next-line max-len
-          (pattern: PatternEntity) => pattern.contenttype === values.contenttype && pattern.primary === true,
+          (pattern: PatternEntity) => pattern.contenttype ===
+            values.contenttype &&
+            pattern.primary === true,
         );
 
         if (existingPrimary) {
@@ -90,9 +90,10 @@ const CreatePatternPage = () => {
         message: { id: 'webtools.settings.success.create' },
       });
       setSubmitting(false);
-    } catch (err: ErrorResponse) {
-      if (err.response?.payload?.[0]?.message === 'This attribute must be unique') {
-        setErrors({ code: err.response.payload[0].message as string });
+    } catch (err) {
+      const error = err as ErrorResponse;
+      if (error.response?.payload?.[0]?.message === 'This attribute must be unique') {
+        setErrors({ code: error.response.payload[0].message as string });
       } else {
         toggleNotification({
           type: 'warning',
@@ -134,10 +135,7 @@ const CreatePatternPage = () => {
   }
 
   const getSelectedContentType = (uid: string) => {
-    const selectedContentType = contentTypes.filter(
-      (type) => type.uid === uid,
-    )[0];
-
+    const selectedContentType = contentTypes.find((type) => type.uid === uid);
     return selectedContentType;
   };
 
@@ -238,7 +236,7 @@ const CreatePatternPage = () => {
                       <Checkbox
                         name="isPrimary"
                         checked={values.primary}
-                        onChange={(e) => setFieldValue('primary', e.target.checked)}
+                        onChange={(e: { target: { checked: boolean; }; }) => setFieldValue('primary', e.target.checked)}
                       >
                         Set as primary
                       </Checkbox>

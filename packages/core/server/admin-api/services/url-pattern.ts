@@ -76,7 +76,7 @@ export default () => ({
    * @param {object} params - The parameters for finding URL patterns.
    * @returns {Promise<object[]>} The found URL patterns.
    */
-  findMany: async (params: any) => {
+  findMany: async (params: string) => {
     const patternEntities = await strapi.entityService.findMany('plugin::webtools.url-pattern', params);
 
     return patternEntities;

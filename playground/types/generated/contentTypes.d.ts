@@ -512,6 +512,12 @@ export interface PluginContentReleasesRelease extends Schema.CollectionType {
   attributes: {
     name: Attribute.String & Attribute.Required;
     releasedAt: Attribute.DateTime;
+    scheduledAt: Attribute.DateTime;
+    timezone: Attribute.String;
+    status: Attribute.Enumeration<
+      ['ready', 'blocked', 'failed', 'done', 'empty']
+    > &
+      Attribute.Required;
     actions: Attribute.Relation<
       'plugin::content-releases.release',
       'oneToMany',
@@ -566,6 +572,7 @@ export interface PluginContentReleasesReleaseAction
       'manyToOne',
       'plugin::content-releases.release'
     >;
+    isEntryValid: Attribute.Boolean;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -1075,7 +1082,6 @@ export interface ApiTestTest extends Schema.CollectionType {
   };
   options: {
     draftAndPublish: true;
-    populateCreatorFields: true;
   };
   pluginOptions: {
     webtools: {
@@ -1105,8 +1111,10 @@ export interface ApiTestTest extends Schema.CollectionType {
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<'api::test.test', 'oneToOne', 'admin::user'>;
-    updatedBy: Attribute.Relation<'api::test.test', 'oneToOne', 'admin::user'>;
+    createdBy: Attribute.Relation<'api::test.test', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::test.test', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
     url_alias: Attribute.Relation<
       'api::test.test',
       'oneToMany',

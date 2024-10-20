@@ -131,7 +131,7 @@ const generateUrlAliases = async (params: GenerateParams): Promise<number> => {
     // eslint-disable-next-line no-restricted-syntax
     for (const entity of entities) {
       // @ts-ignore
-      // eslint-disable-next-line no-await-in-loop
+      // eslint-disable-next-line no-await-in-loop, @typescript-eslint/no-unsafe-argument
       const urlPatterns = await getPluginService('urlPatternService').findByUid(type, entity.locale);
       const resolvedPathsArray = urlPatterns.map((urlPattern) => {
         const resolvedPaths = getPluginService('urlPatternService').resolvePattern(type, entity, urlPattern);
@@ -150,6 +150,7 @@ const generateUrlAliases = async (params: GenerateParams): Promise<number> => {
               generated: true,
               contenttype: type,
               // @ts-ignore
+              // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
               locale: entity.locale,
             });
 
@@ -162,11 +163,11 @@ const generateUrlAliases = async (params: GenerateParams): Promise<number> => {
 
             generatedCount += 1;
           } catch (error) {
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-            if (error.name === 'ValidationError' && error.message.includes('unique')) {
-              console.log(`Validation error caught: ${error.message}. It seems a duplicate was created by another process. Skipping creation.`);
+            const err = error as Error;
+            if (err.name === 'ValidationError' && err.message.includes('unique')) {
+              console.log(`Validation error caught: ${err.message}. It seems a duplicate was created by another process. Skipping creation.`);
             } else {
-              throw error; // Re-throw if it's not the expected validation error
+              throw err;
             }
           }
         }),

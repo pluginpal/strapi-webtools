@@ -34,7 +34,6 @@ const EditForm = () => {
       ...updatedUrlAliases[index],
       [name]: value,
     };
-    console.log(updatedUrlAliases, 'updatedUrlAliases');
     onChange({ target: { name: 'url_alias', value: updatedUrlAliases, type: 'array' } });
   };
 
