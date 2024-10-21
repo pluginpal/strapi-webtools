@@ -28,7 +28,7 @@ export default (strapi: IStrapi) => {
         visible: false,
         default: null,
         type: 'relation',
-        relation: 'oneToOne',
+        relation: 'oneToMany',
         target: 'plugin::webtools.url-alias',
         unique: true,
       });

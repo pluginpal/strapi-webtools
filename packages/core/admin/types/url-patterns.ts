@@ -5,6 +5,7 @@ export interface PatternEntity {
   code: string
   contenttype: string
   languages: any[]
+  primary?: boolean
   createdAt: string
   updatedAt: string
 }
@@ -16,6 +17,7 @@ export interface PatternFormValues {
   languages: any[],
   localized: boolean,
   code?: string,
+  primary?: boolean,
 }
 
 export interface ValidatePatternResponse {

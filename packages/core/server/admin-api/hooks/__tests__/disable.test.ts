@@ -23,8 +23,8 @@ describe('Hooks', () => {
 
       const urlAlias = entry.url_alias;
       expect(urlAlias).toBeDefined();
-
-      const id: number | string = urlAlias.id;
+      
+      const id: number | string = urlAlias[0].id;
       const urlPath: string | null = urlAlias.url_path;
       expect(urlPath).not.toBeNull();
 
@@ -47,7 +47,6 @@ describe('Hooks', () => {
       await disableContentType({ oldContentTypes, contentTypes });
 
       // The url alias should be deleted now
-
       // @ts-expect-error - fix types for tests
       const deletedEntry = await strapi.entityService.findOne(`plugin::${pluginId}.url-alias`, id);
       expect(deletedEntry).toBeNull();
