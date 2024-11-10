@@ -61,25 +61,7 @@ const CreatePatternPage = () => {
     { setSubmitting, setErrors }: FormikProps<PatternFormValues>,
   ) => {
     try {
-      // Check if another primary pattern for the content type already exists
-      if (values.primary) {
-        const response = await get<PatternEntity[]>('/webtools/url-pattern/findMany', { method: 'GET' });
-        // Find the other pattern with the same contenttype that is marked as primary
-        const existingPrimary = response.data.find(
-          (pattern: PatternEntity) => pattern.contenttype ===
-            values.contenttype &&
-            pattern.primary === true,
-        );
-
-        if (existingPrimary) {
-          // Step 2: Unset the primary status of the existing primary pattern
-          await put(`/webtools/url-pattern/update/${existingPrimary.id}`, {
-            data: { ...existingPrimary, primary: false },
-          });
-        }
-      }
-
-      // Proceed to create the new pattern (with primary if checked)
+      // Proceed to create the new pattern
       await post('/webtools/url-pattern/create', {
         data: values,
       });
@@ -143,7 +125,7 @@ const CreatePatternPage = () => {
     <Formik<PatternFormValues>
       enableReinitialize
       initialValues={{
-        label: '', pattern: '', contenttype: '', languages: [], localized: false, primary: false,
+        label: '', pattern: '', contenttype: '', languages: [], localized: false,
       }}
       onSubmit={handleCreateSubmit}
       validationSchema={schema}
@@ -231,16 +213,6 @@ const CreatePatternPage = () => {
                       />
                     </GridItem>
                     <GridItem col={12} />
-
-                    <GridItem col={12}>
-                      <Checkbox
-                        name="isPrimary"
-                        checked={values.primary}
-                        onChange={(e: { target: { checked: boolean; }; }) => setFieldValue('primary', e.target.checked)}
-                      >
-                        Set as primary
-                      </Checkbox>
-                    </GridItem>
 
                     {(values.contenttype !== '') && (
                       <GridItem col={6}>

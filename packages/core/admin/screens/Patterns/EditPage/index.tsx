@@ -74,25 +74,7 @@ const EditPatternPage = () => {
     { setSubmitting, setErrors }: FormikProps<PatternFormValues>,
   ) => {
     try {
-      // Check if another primary pattern for the content type already exists
-      if (values.primary) {
-        const response = await get<PatternEntity[]>('/webtools/url-pattern/findMany', { method: 'GET' });
-        // Find the other pattern with the same contenttype that is marked as primary
-        const existingPrimary = response.data.find(
-          (pattern: PatternEntity) => pattern.contenttype === values.contenttype &&
-            pattern.primary === true &&
-            pattern.id !== patternEntity.id,
-        );
-
-        if (existingPrimary) {
-          // Unset the primary status of the existing primary pattern
-          await put(`/webtools/url-pattern/update/${existingPrimary.id}`, {
-            data: { ...existingPrimary, primary: false },
-          });
-        }
-      }
-
-      // Proceed to update the current pattern (with primary if checked)
+      // Proceed to update the current pattern
       await put(`/webtools/url-pattern/update/${patternEntity.id}`, {
         data: values,
       });
@@ -168,7 +150,6 @@ const EditPatternPage = () => {
         languages: patternEntity.languages,
         code: patternEntity.code,
         localized: false,
-        primary: patternEntity.primary || false,
       }}
       onSubmit={handleEditSubmit}
       validationSchema={schema}
@@ -271,16 +252,6 @@ const EditPatternPage = () => {
                       />
                     </GridItem>
                     <GridItem col={12} />
-
-                    <GridItem col={12}>
-                      <Checkbox
-                        name="primary"
-                        checked={values.primary}
-                        onChange={(e: { target: { checked: any; }; }) => setFieldValue('primary', e.target.checked)}
-                      >
-                        Set as primary
-                      </Checkbox>
-                    </GridItem>
 
                     {values.contenttype !== '' && (
                       <GridItem col={6}>
