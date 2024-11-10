@@ -6,7 +6,6 @@ import {
   ContentLayout,
   HeaderLayout,
   Box,
-  Checkbox,
   Link,
   Button,
   Stack,

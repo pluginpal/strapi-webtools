@@ -10,7 +10,6 @@ import { useHistory } from 'react-router-dom';
 
 import {
   ContentLayout,
-  Checkbox,
   HeaderLayout,
   Box,
   Link,
@@ -30,7 +29,7 @@ import Center from '../../../components/Center';
 import Select from '../../../components/Select';
 import LabelField from '../../../components/LabelField';
 import PatternField from '../../../components/PatternField';
-import { PatternEntity, PatternFormValues, ValidatePatternResponse } from '../../../types/url-patterns';
+import { PatternFormValues, ValidatePatternResponse } from '../../../types/url-patterns';
 import { EnabledContentTypes } from '../../../types/enabled-contenttypes';
 import LanguageCheckboxes from '../../../components/LanguageCheckboxes';
 import HiddenLocalizedField from '../../../components/HiddenLocalizedField';
@@ -41,7 +40,7 @@ const CreatePatternPage = () => {
   const [loading, setLoading] = useState(false);
   const [contentTypes, setContentTypes] = useState<EnabledContentTypes>([]);
   const { formatMessage } = useIntl();
-  const { get, post, put } = useFetchClient();
+  const { get, post } = useFetchClient();
 
   useEffect(() => {
     setLoading(true);
