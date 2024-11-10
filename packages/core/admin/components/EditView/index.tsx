@@ -20,6 +20,7 @@ const EditView = () => {
     slug,
   } = useCMEditViewDataManager();
 
+
   const modifiedDataUrlAliases = modifiedData.url_alias as UrlAliasEntity[];
   const i18nLang = new URLSearchParams(window.location.search).get('plugins[i18n][locale]');
 
@@ -55,15 +56,18 @@ const EditView = () => {
   const initialUrlAliases = initialData.url_alias as UrlAliasEntity[];
 
   const onSubmit = async () => {
-    if (initialUrlAliases?.length === 0) {
+    if (!initialUrlAliases || initialUrlAliases?.length === 0) {
       // Create new URL aliases
       const newAliases = await Promise.all(
-        modifiedUrlAliases.map((alias) => createUrlAlias(alias, slug)),
+        modifiedUrlAliases.map(async (alias) => (await createUrlAlias(alias, slug)).data),
       );
+
       onChange({ target: { name: 'url_alias', value: newAliases, type: 'array' } });
     } else {
       // Update existing URL aliases
-      await updateUrlAliases(modifiedUrlAliases, slug);
+      await Promise.all(
+        modifiedUrlAliases.map((alias) => updateUrlAliases(alias, slug)),
+      );
     }
   };
 
@@ -76,7 +80,9 @@ const EditView = () => {
         })}
         onSubmit={onSubmit}
         onCancel={() => {
-          if (initialUrlAliases?.length > 0) {
+          if (modifiedUrlAliases?.length > 0) {
+            onChange({ target: { name: 'url_alias', value: modifiedUrlAliases, type: 'array' } });
+          } else if (initialUrlAliases?.length > 0) {
             onChange({ target: { name: 'url_alias', value: initialUrlAliases, type: 'array' } });
           } else {
             onChange({ target: { name: 'url_alias', value: null, type: 'array' } });

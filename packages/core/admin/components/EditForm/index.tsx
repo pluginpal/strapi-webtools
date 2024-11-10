@@ -19,16 +19,16 @@ import { UrlAliasEntity } from '../../types/url-aliases';
 
 const EditForm = () => {
   const { modifiedData, onChange } = useCMEditViewDataManager();
-  const modifiedDataUrlAliases = modifiedData.url_alias as UrlAliasEntity[];
+  const modifiedDataUrlAliases =
+    (modifiedData.url_alias as UrlAliasEntity[])?.length
+      ? modifiedData.url_alias as UrlAliasEntity[]
+      : [{
+        generated: true,
+      }] as UrlAliasEntity[];
   const { formatMessage } = useIntl();
 
   const updateValue = (index: number, name: string, value: string | number) => {
     const updatedUrlAliases = [...modifiedDataUrlAliases];
-
-    if (!updatedUrlAliases[index].id) {
-      console.error('Error: id is undefined', updatedUrlAliases[index]);
-      return;
-    }
 
     updatedUrlAliases[index] = {
       ...updatedUrlAliases[index],
@@ -53,7 +53,7 @@ const EditForm = () => {
           size="S"
         >
           <AccordionToggle
-            description={alias.url_path ? alias.url_path : 'URL alias not found'}
+            description={alias.url_path ? alias.url_path : 'Initial URL alias'}
           >
             {`Alias #${index + 1}`}
           </AccordionToggle>

@@ -5,7 +5,7 @@ export const useCreateUrlAlias = () => {
   const { post } = useFetchClient();
 
   const createUrlAlias = async (body: { id: number }, slug: string) => {
-    return post('/webtools/url-alias/create', {
+    return post<UrlAliasEntity>('/webtools/url-alias/create', {
       data: {
         ...body,
         contenttype: slug,
@@ -18,15 +18,13 @@ export const useCreateUrlAlias = () => {
 
 export const useUpdateUrlAlias = () => {
   const { put } = useFetchClient();
-  const updateUrlAliases = async (aliases: UrlAliasEntity[], slug: string) => {
-    return Promise.all(
-      aliases.map((alias) => put(`/webtools/url-alias/update/${alias.id}`, {
-        data: {
-          ...alias,
-          contenttype: slug,
-        },
-      })),
-    );
+  const updateUrlAliases = async (body: { id: number }, slug: string) => {
+    return put<UrlAliasEntity>(`/webtools/url-alias/update/${body.id}`, {
+      data: {
+        ...body,
+        contenttype: slug,
+      },
+    });
   };
 
   return { updateUrlAliases };
