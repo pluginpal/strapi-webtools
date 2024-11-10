@@ -10,10 +10,10 @@ import { getPluginService } from '../../util/getPluginService';
 
 export default () => ({
   /**
-   * Create.
+   * Create a new URL pattern.
    *
-   * @param {object} data the data.
-   * @returns {void}
+   * @param {object} data - The data to create the URL pattern with.
+   * @returns {Promise<object>} The created URL pattern entity.
    */
   create: async (data: EntityService.Params.Pick<'plugin::webtools.url-pattern', 'data'>['data']) => {
     const formattedData = data;
@@ -32,10 +32,10 @@ export default () => ({
   },
 
   /**
-   * FindOne.
+   * Find one URL pattern by its ID.
    *
-   * @param {number} id the id.
-   * @returns {void}
+   * @param {number} id - The ID of the URL pattern.
+   * @returns {Promise<object>} The found URL pattern entity.
    */
   findOne: async (id: number) => {
     const patternEntity = await strapi.entityService.findOne('plugin::webtools.url-pattern', id);
@@ -44,12 +44,13 @@ export default () => ({
   },
 
   /**
-   * FindByUid.
+   * Find URL patterns by UID and optionally language code.
    *
-   * @param {string} uid the uid.
-   * @param {string} langcode the langcode.
+   * @param {string} uid - The UID of the content type.
+   * @param {string} langcode - The optional language code.
+   * @returns {Promise<string[]>} The array of URL patterns.
    */
-  findByUid: async (uid: string, langcode?: string): Promise<string> => {
+  findByUid: async (uid: string, langcode?: string): Promise<string[]> => {
     let patterns = await getPluginService('urlPatternService').findMany({
       filters: {
         contenttype: uid,
@@ -57,49 +58,48 @@ export default () => ({
     });
 
     if (langcode) {
-      patterns = patterns
-        .filter((pattern) => (pattern.languages as string).includes(langcode));
+      patterns = patterns.filter((pattern) => (pattern.languages as string).includes(langcode));
     }
 
-    if (!patterns[0]) {
-      return strapi.config.get('plugin.webtools.default_pattern');
+    if (!patterns.length) {
+      return [strapi.config.get('plugin.webtools.default_pattern')];
     }
 
-    return patterns[0].pattern;
+    const patternsArray = patterns.map((pattern) => pattern.pattern);
+
+    return patternsArray;
   },
 
   /**
-   * FindMany.
+   * Find many URL patterns based on given parameters.
    *
-   * @param {object} params the params.
-   * @returns {void}
+   * @param {object} params - The parameters for finding URL patterns.
+   * @returns {Promise<object[]>} The found URL patterns.
    */
-  findMany: async (params) => {
+  findMany: async (params: string) => {
     const patternEntities = await strapi.entityService.findMany('plugin::webtools.url-pattern', params);
 
     return patternEntities;
   },
 
   /**
-   * Update.
+   * Update a URL pattern by its ID.
    *
-   * @param {number} id the id.
-   * @param {object} data the data.
-   * @returns {void}
+   * @param {number} id - The ID of the URL pattern to update.
+   * @param {object} data - The new data for the URL pattern.
+   * @returns {Promise<object>} The updated URL pattern entity.
    */
   update: async (id: number, data: EntityService.Params.Pick<'plugin::webtools.url-pattern', 'data'>['data']) => {
-    const patternEntity = await strapi.entityService.update('plugin::webtools.url-pattern', id, {
-      data,
-    });
+    const patternEntity = await strapi.entityService.update('plugin::webtools.url-pattern', id, { data });
 
     return patternEntity;
   },
 
   /**
-   * Delete.
+   * Delete a URL pattern by its ID.
    *
-   * @param {number} id the id.
-   * @returns {void}
+   * @param {number} id - The ID of the URL pattern to delete.
+   * @returns {Promise<void>}
    */
   delete: async (id: number) => {
     await strapi.entityService.delete('plugin::webtools.url-pattern', id);
@@ -109,9 +109,8 @@ export default () => ({
    * Get all field names allowed in the URL of a given content type.
    *
    * @param {string} contentType - The content type.
-   * @param {array} allowedFields - Override the allowed fields.
-   *
-   * @returns {string[]} The fields.
+   * @param {string[]} allowedFields - The allowed fields to include.
+   * @returns {string[]} The list of allowed field names.
    */
   getAllowedFields: (contentType: Schema.ContentType, allowedFields: string[] = []) => {
     const fields: string[] = [];
@@ -130,10 +129,7 @@ export default () => ({
           // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
           const relation = strapi.contentTypes[field.target];
 
-          if (
-            allowedFields.includes('id')
-            && !fields.includes(`${fieldName}.id`)
-          ) {
+          if (allowedFields.includes('id') && !fields.includes(`${fieldName}.id`)) {
             fields.push(`${fieldName}.id`);
           }
 
@@ -149,10 +145,7 @@ export default () => ({
         ) {
           const relation = strapi.components[field.component];
 
-          if (
-            allowedFields.includes('id')
-            && !fields.includes(`${fieldName}.id`)
-          ) {
+          if (allowedFields.includes('id') && !fields.includes(`${fieldName}.id`)) {
             fields.push(`${fieldName}.id`);
           }
 
@@ -177,54 +170,76 @@ export default () => ({
     return fields;
   },
 
-
   /**
    * Get all fields from a pattern.
    *
-   * @param {string} pattern - The pattern.
-   *
-   * @returns {array} The fields.\[([\w\d\[\]]+)\]
+   * @param {string[]} patterns - The patterns to extract fields from.
+   * @returns {string[]} The extracted fields.
    */
-  getFieldsFromPattern: (pattern: string) => {
-    const fields = pattern.match(/[[\w\d.]+]/g); // Get all substrings between [] as array.
-    if (!fields) return [];
+  getFieldsFromPattern: (patterns: string[]) => {
+    // Ensure patterns is an array
+    if (!Array.isArray(patterns)) {
+      // eslint-disable-next-line no-param-reassign
+      patterns = [patterns];
+    }
+
+    // Combine all patterns into a single string for regex application
+    const patternString = patterns.map((pattern) => pattern).join(',');
+    const fields = patternString.match(/[[\w\d.]+]/g); // Get all substrings between [] as array.
+
+    if (!fields) {
+      return [];
+    }
+
     const newFields = fields.map((field) => (/(?<=\[)(.*?)(?=\])/).exec(field)?.[0] ?? ''); // Strip [] from string.
+
     return newFields;
   },
 
   /**
    * Get all relations from a pattern.
    *
-   * @param {string} pattern - The pattern.
-   *
-   * @returns {array} The relations.
+   * @param {string[]} patterns - The patterns to extract relations from.
+   * @returns {string[]} The extracted relations.
    */
-  getRelationsFromPattern: (pattern: string) => {
-    let fields = getPluginService('urlPatternService').getFieldsFromPattern(pattern);
-    fields = fields.filter((field) => field.split('.').length > 1); // Filter on fields containing a dot (.)
-    fields = fields.map((field) => field.split('.')[0]); // Extract the first part of the fields
-    return fields;
+  getRelationsFromPattern: (patterns: string[]) => {
+    // Get fields from the pattern (assuming they are inside square brackets)
+    let fields = getPluginService('urlPatternService').getFieldsFromPattern(patterns);
+
+    // Filter out fields that are empty or malformed
+    fields = fields.filter((field) => field);
+
+    // For fields containing dots, extract the first part (relation)
+    const relationsWithDots = fields.filter((field) => field.includes('.')).map((field) => field.split('.')[0]);
+
+    // For fields without dots, treat them as direct fields (e.g., 'title' in /en/[title])
+    const directRelations = fields.filter((field) => !field.includes('.'));
+
+    // Combine both types of relations
+    return [...relationsWithDots, ...directRelations];
   },
 
 
   /**
    * Resolve a pattern string from pattern to path for a single entity.
    *
-   * @param {string} uid - The UID.
-   * @param {object} entity - The entity.
-   * @param {string} urlPattern - The URL pattern.
-   *
-   * @returns {string} The path.
+   * @param {string} uid - The UID of the content type.
+   * @param {object} entity - The entity to resolve the pattern for.
+   * @param {string} [urlPattern] - The URL pattern to resolve.
+   * @returns {string} The resolved path.
    */
-
   resolvePattern: (
     uid: Common.UID.ContentType,
     entity: { [key: string]: string | number | Date },
     urlPattern?: string,
-  ) => {
+  ): string => {
     const resolve = (pattern: string) => {
       let resolvedPattern: string = pattern;
-      const fields = getPluginService('urlPatternService').getFieldsFromPattern(pattern);
+
+      // Ensure pattern is an array before sending it to getFieldsFromPattern
+      const fields = getPluginService('urlPatternService').getFieldsFromPattern(
+        Array.isArray(pattern) ? pattern : [pattern],
+      );
 
       fields.forEach((field) => {
         const relationalField = field.split('.').length > 1 ? field.split('.') : null;
@@ -238,7 +253,7 @@ export default () => ({
 
           resolvedPattern = resolvedPattern.replace(`[${field}]`, fieldValue || '');
         } else if (!relationalField) {
-          // Slugify.
+          // Slugify the field value
           const fieldValue = kebabCase(deburr(toLower(String(entity[field]))));
           resolvedPattern = resolvedPattern.replace(`[${field}]`, fieldValue || '');
         } else if (Array.isArray(entity[relationalField[0]])) {
@@ -264,32 +279,34 @@ export default () => ({
   /**
    * Validate if a pattern is correctly structured.
    *
-   * @param {string} pattern - The pattern.
-   * @param {array} allowedFieldNames - Fields allowed in this pattern.
-   *
-   * @returns {object} object.
-   * @returns {boolean} object.valid Validation boolean.
-   * @returns {string} object.message Validation string.
+   * @param {string[]} pattern - The pattern to validate.
+   * @param {string[]} allowedFieldNames - The allowed field names in the pattern.
+   * @returns {object} The validation result.
+   * @returns {boolean} object.valid - Validation boolean.
+   * @returns {string} object.message - Validation message.
    */
-  validatePattern: (pattern: string, allowedFieldNames: string[]) => {
-    if (!pattern) {
+  validatePattern: (pattern: string[], allowedFieldNames: string[]) => {
+    if (!pattern.length) {
       return {
         valid: false,
-        message: 'Pattern can not be empty',
+        message: 'Pattern cannot be empty',
       };
     }
 
-    const preCharCount = pattern.split('[').length - 1;
-    const postCharount = pattern.split(']').length - 1;
+    // Flatten the array into a string for pre- / post-character count
+    const patternString = pattern.join('');
 
-    if (preCharCount < 1 || postCharount < 1) {
+    const preCharCount = patternString.split('[').length - 1;
+    const postCharCount = patternString.split(']').length - 1;
+
+    if (preCharCount < 1 || postCharCount < 1) {
       return {
         valid: false,
         message: 'Pattern should contain at least one field',
       };
     }
 
-    if (preCharCount !== postCharount) {
+    if (preCharCount !== postCharCount) {
       return {
         valid: false,
         message: 'Fields in the pattern are not escaped correctly',
@@ -298,6 +315,7 @@ export default () => ({
 
     let fieldsAreAllowed = true;
 
+    // Pass the original `pattern` array to getFieldsFromPattern
     getPluginService('urlPatternService').getFieldsFromPattern(pattern).forEach((field) => {
       if (!allowedFieldNames.includes(field)) fieldsAreAllowed = false;
     });

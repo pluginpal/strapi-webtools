@@ -512,6 +512,12 @@ export interface PluginContentReleasesRelease extends Schema.CollectionType {
   attributes: {
     name: Attribute.String & Attribute.Required;
     releasedAt: Attribute.DateTime;
+    scheduledAt: Attribute.DateTime;
+    timezone: Attribute.String;
+    status: Attribute.Enumeration<
+      ['ready', 'blocked', 'failed', 'done', 'empty']
+    > &
+      Attribute.Required;
     actions: Attribute.Relation<
       'plugin::content-releases.release',
       'oneToMany',
@@ -566,6 +572,7 @@ export interface PluginContentReleasesReleaseAction
       'manyToOne',
       'plugin::content-releases.release'
     >;
+    isEntryValid: Attribute.Boolean;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -957,7 +964,7 @@ export interface ApiCategoryCategory extends Schema.CollectionType {
       Attribute.Private;
     url_alias: Attribute.Relation<
       'api::category.category',
-      'oneToOne',
+      'oneToMany',
       'plugin::webtools.url-alias'
     > &
       Attribute.Unique;
@@ -1008,7 +1015,7 @@ export interface ApiPrivateCategoryPrivateCategory
       Attribute.Private;
     url_alias: Attribute.Relation<
       'api::private-category.private-category',
-      'oneToOne',
+      'oneToMany',
       'plugin::webtools.url-alias'
     > &
       Attribute.Unique;
@@ -1062,7 +1069,7 @@ export interface ApiTestTest extends Schema.CollectionType {
     updatedBy: Attribute.Relation<'api::test.test', 'oneToOne', 'admin::user'>;
     url_alias: Attribute.Relation<
       'api::test.test',
-      'oneToOne',
+      'oneToMany',
       'plugin::webtools.url-alias'
     > &
       Attribute.Unique;

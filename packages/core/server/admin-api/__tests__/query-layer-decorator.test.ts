@@ -23,9 +23,9 @@ describe('Query layer decorator', () => {
       populate: ['url_alias']
     });
 
-    expect(page).toHaveProperty('url_alias.url_path', '/page/some-amazing-new-page');
-    expect(page).toHaveProperty('url_alias.generated', true);
-    expect(page).toHaveProperty('url_alias.contenttype', 'api::test.test');
+    expect(page).toHaveProperty('url_alias[0].url_path', '/page/some-amazing-new-page');
+    expect(page).toHaveProperty('url_alias[0].generated', true);
+    expect(page).toHaveProperty('url_alias[0].contenttype', 'api::test.test');
   });
 
   it('Create - Should re-generate a pre-created URL alias if generated is set to true', async () => {
@@ -45,10 +45,10 @@ describe('Query layer decorator', () => {
       populate: ['url_alias']
     });
 
-    expect(page).toHaveProperty('url_alias.id', alias.id);
-    expect(page).toHaveProperty('url_alias.url_path', '/page/generated-amazing-new-page');
-    expect(page).toHaveProperty('url_alias.generated', true);
-    expect(page).toHaveProperty('url_alias.contenttype', 'api::test.test');
+    expect(page).toHaveProperty('url_alias[0].id', alias.id);
+    expect(page).toHaveProperty('url_alias[0].url_path', '/page/generated-amazing-new-page');
+    expect(page).toHaveProperty('url_alias[0].generated', true);
+    expect(page).toHaveProperty('url_alias[0].contenttype', 'api::test.test');
   });
 
   it('Create - Should not re-generate a pre-created URL alias if generated is set to false', async () => {
@@ -68,9 +68,9 @@ describe('Query layer decorator', () => {
       populate: ['url_alias']
     });
 
-    expect(page).toHaveProperty('url_alias.id', alias.id);
-    expect(page).toHaveProperty('url_alias.url_path', '/pre-created-path');
-    expect(page).toHaveProperty('url_alias.generated', false);
+    expect(page).toHaveProperty('url_alias[0].id', alias.id);
+    expect(page).toHaveProperty('url_alias[0].url_path', '/pre-created-path');
+    expect(page).toHaveProperty('url_alias[0].generated', false);
   });
 
   it('Update - Should generate a new URL alias if none is present', async () => {
@@ -81,8 +81,7 @@ describe('Query layer decorator', () => {
       populate: ['url_alias']
     });
 
-    const oldAliasId = page.url_alias.id;
-
+    const oldAliasId = page.url_alias[0]?.id;
     // Delete the created url alias to make sure none is present
     // at the time of running the .update() query.
     await strapi.entityService.delete("plugin::webtools.url-alias", oldAliasId);
@@ -95,10 +94,10 @@ describe('Query layer decorator', () => {
       populate: ['url_alias']
     });
 
-    expect(updatedPage?.url_alias?.id).not.toBe(oldAliasId);
-    expect(updatedPage).toHaveProperty('url_alias.url_path', '/page/some-updated-page');
-    expect(updatedPage).toHaveProperty('url_alias.generated', true);
-    expect(updatedPage).toHaveProperty('url_alias.contenttype', 'api::test.test');
+    expect(updatedPage.url_alias[0]?.id).not.toBe(oldAliasId);
+    expect(updatedPage).toHaveProperty('url_alias[0].url_path', '/page/some-updated-page');
+    expect(updatedPage).toHaveProperty('url_alias[0].generated', true);
+    expect(updatedPage).toHaveProperty('url_alias[0].contenttype', 'api::test.test');
   });
 
   it('Update - Should re-generate an existing URL alias if generated is set to true', async () => {
@@ -109,8 +108,8 @@ describe('Query layer decorator', () => {
       populate: ['url_alias']
     });
 
-    expect(page).toHaveProperty('url_alias.url_path', '/page/some-about-to-be-updated-new-page')
-    expect(page).toHaveProperty('url_alias.generated', true);
+    expect(page).toHaveProperty('url_alias[0].url_path', '/page/some-about-to-be-updated-new-page')
+    expect(page).toHaveProperty('url_alias[0].generated', true);
 
     const updatedPage = await strapi.entityService.update("api::test.test", page.id, {
       data: {
@@ -120,9 +119,9 @@ describe('Query layer decorator', () => {
       populate: ['url_alias']
     });
 
-    expect(updatedPage).toHaveProperty('url_alias.id', page.url_alias.id);
-    expect(updatedPage).toHaveProperty('url_alias.url_path', '/page/some-updated-page-with-overwritten-url-alias');
-    expect(updatedPage).toHaveProperty('url_alias.generated', true);
+    expect(updatedPage).toHaveProperty('url_alias[0].id', page.url_alias[0]?.id);
+    expect(updatedPage).toHaveProperty('url_alias[0].url_path', '/page/some-updated-page-with-overwritten-url-alias');
+    expect(updatedPage).toHaveProperty('url_alias[0].generated', true);
   });
 
   it('Update - Should not re-generate an existing URL alias if generated is set to false', async () => {
@@ -142,8 +141,8 @@ describe('Query layer decorator', () => {
       populate: ['url_alias']
     });
 
-    expect(page).toHaveProperty('url_alias.url_path', '/path-should-not-update')
-    expect(page).toHaveProperty('url_alias.generated', false);
+    expect(page).toHaveProperty('url_alias[0].url_path', '/path-should-not-update')
+    expect(page).toHaveProperty('url_alias[0].generated', false);
 
     const updatedPage = await strapi.entityService.update("api::test.test", page.id, {
       data: {
@@ -153,9 +152,9 @@ describe('Query layer decorator', () => {
       populate: ['url_alias']
     });
 
-    expect(updatedPage).toHaveProperty('url_alias.id', page.url_alias.id);
-    expect(updatedPage).toHaveProperty('url_alias.url_path', '/path-should-not-update');
-    expect(updatedPage).toHaveProperty('url_alias.generated', false);
+    expect(updatedPage).toHaveProperty('url_alias[0].id', page.url_alias[0]?.id);
+    expect(updatedPage).toHaveProperty('url_alias[0].url_path', '/path-should-not-update');
+    expect(updatedPage).toHaveProperty('url_alias[0].generated', false);
   });
 
   it('Update - Should not duplicate check the same entry when updated', async () => {
@@ -165,7 +164,8 @@ describe('Query layer decorator', () => {
       },
       populate: ['url_alias']
     });
-    const url = page.url_alias.url_path;
+
+    const url = page.url_alias[0].url_path;
 
     const updatedPage = await strapi.entityService.update("api::test.test", page.id, {
       data: {
@@ -175,7 +175,7 @@ describe('Query layer decorator', () => {
       populate: ['url_alias']
     });
 
-    expect(updatedPage).toHaveProperty('url_alias.url_path', url);
+    expect(updatedPage).toHaveProperty('url_alias[0].url_path', url);
   });
 
   it('Delete - Should delete the corresponding URL alias as well', async () => {
@@ -186,12 +186,12 @@ describe('Query layer decorator', () => {
       populate: ['url_alias']
     });
 
-    expect(page).toHaveProperty('url_alias.url_path', '/page/some-about-to-be-deleted-new-page')
-    expect(page).toHaveProperty('url_alias.generated', true);
+    expect(page).toHaveProperty('url_alias[0].url_path', '/page/some-about-to-be-deleted-new-page')
+    expect(page).toHaveProperty('url_alias[0].generated', true);
 
     await strapi.entityService.delete("api::test.test", page.id);
 
-    const alias = await strapi.entityService.findOne("plugin::webtools.url-alias", page.url_alias.id);
+    const alias = await strapi.entityService.findOne("plugin::webtools.url-alias", page.url_alias[0]?.id);
 
     expect(alias).toBeNull();
   });
@@ -213,9 +213,9 @@ describe('Query layer decorator', () => {
 
     if (clonedPage) {
       const newUrlAliasPath = `${page.url_alias.url_path}-0`;
-      expect(clonedPage).toHaveProperty('url_alias.url_path', newUrlAliasPath);
-      expect(clonedPage).toHaveProperty('url_alias.generated', true);
-      expect(clonedPage).toHaveProperty('url_alias.contenttype', 'api::test.test');
+      expect(clonedPage).toHaveProperty('url_alias[0].url_path', newUrlAliasPath);
+      expect(clonedPage).toHaveProperty('url_alias[0].generated', true);
+      expect(clonedPage).toHaveProperty('url_alias[0].contenttype', 'api::test.test');
       expect(clonedPage.id).not.toBe(page.id);
       expect(clonedPage.url_alias.id).not.toBe(page.url_alias.id);
     }
@@ -240,8 +240,8 @@ describe('Query layer decorator', () => {
       filters: { id: { $in: [page1.id, page2.id] } }
     });
 
-    const alias1 = await strapi.entityService.findOne("plugin::webtools.url-alias", page1.url_alias.id);
-    const alias2 = await strapi.entityService.findOne("plugin::webtools.url-alias", page2.url_alias.id);
+    const alias1 = await strapi.entityService.findOne("plugin::webtools.url-alias", page1.url_alias[0]?.id);
+    const alias2 = await strapi.entityService.findOne("plugin::webtools.url-alias", page2.url_alias[0]?.id);
 
     expect(alias1).toBeNull();
     expect(alias2).toBeNull();

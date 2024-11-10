@@ -55,26 +55,34 @@ const CreatePatternPage = () => {
       });
   }, [get]);
 
-  const handleCreateSubmit = (
+  const handleCreateSubmit = async (
     values: PatternFormValues,
     { setSubmitting, setErrors }: FormikProps<PatternFormValues>,
   ) => {
-    post('/webtools/url-pattern/create', {
-      data: values,
-    })
-      .then(() => {
-        push(`/plugins/${pluginId}/patterns`);
-        toggleNotification({ type: 'success', message: { id: 'webtools.settings.success.create' } });
-        setSubmitting(false);
-      })
-      .catch((err: ErrorResponse) => {
-        if (err.response?.payload?.[0]?.message === 'This attribute must be unique') {
-          setErrors({ code: err.response.payload[0].message as string });
-        } else {
-          toggleNotification({ type: 'warning', message: { id: 'notification.error' } });
-        }
-        setSubmitting(false);
+    try {
+      // Proceed to create the new pattern
+      await post('/webtools/url-pattern/create', {
+        data: values,
       });
+
+      push(`/plugins/${pluginId}/patterns`);
+      toggleNotification({
+        type: 'success',
+        message: { id: 'webtools.settings.success.create' },
+      });
+      setSubmitting(false);
+    } catch (err) {
+      const error = err as ErrorResponse;
+      if (error.response?.payload?.[0]?.message === 'This attribute must be unique') {
+        setErrors({ code: error.response.payload[0].message as string });
+      } else {
+        toggleNotification({
+          type: 'warning',
+          message: { id: 'notification.error' },
+        });
+      }
+      setSubmitting(false);
+    }
   };
 
   const validatePattern = async (values: PatternFormValues) => {
@@ -92,7 +100,9 @@ const CreatePatternPage = () => {
           errors.pattern = response.message;
         }
       })
-      .catch(() => {});
+      .catch((err: ErrorResponse) => {
+        console.error(err, 'Error in create validate pattern');
+      });
 
     return errors;
   };
@@ -106,10 +116,7 @@ const CreatePatternPage = () => {
   }
 
   const getSelectedContentType = (uid: string) => {
-    const selectedContentType = contentTypes.filter(
-      (type) => type.uid === uid,
-    )[0];
-
+    const selectedContentType = contentTypes.find((type) => type.uid === uid);
     return selectedContentType;
   };
 
@@ -149,7 +156,7 @@ const CreatePatternPage = () => {
                   defaultMessage: 'Back',
                 })}
               </Link>
-                          )}
+            )}
             primaryAction={(
               <Button type="submit" loading={isSubmitting} startIcon={<Check />}>
                 {formatMessage({
@@ -157,7 +164,7 @@ const CreatePatternPage = () => {
                   defaultMessage: 'Save',
                 })}
               </Button>
-                          )}
+            )}
           />
           <ContentLayout>
             <Stack spacing={7}>
@@ -189,9 +196,9 @@ const CreatePatternPage = () => {
                           defaultMessage: 'Content type',
                         })}
                         error={
-                            errors.contenttype && touched.contenttype
-                              ? formatMessage({ id: String(errors.contenttype), defaultMessage: 'Invalid value' })
-                              : null
+                          errors.contenttype && touched.contenttype
+                            ? formatMessage({ id: String(errors.contenttype), defaultMessage: 'Invalid value' })
+                            : null
                         }
                       />
                     </GridItem>
@@ -205,19 +212,20 @@ const CreatePatternPage = () => {
                       />
                     </GridItem>
                     <GridItem col={12} />
+
                     {(values.contenttype !== '') && (
-                    <GridItem col={6}>
-                      <PatternField
-                        values={values}
-                        uid={values.contenttype}
-                        setFieldValue={setFieldValue}
-                        error={
-                                  errors.pattern && touched.pattern
-                                    ? errors.pattern
-                                    : null
-                              }
-                      />
-                    </GridItem>
+                      <GridItem col={6}>
+                        <PatternField
+                          values={values}
+                          uid={values.contenttype}
+                          setFieldValue={setFieldValue}
+                          error={
+                            errors.pattern && touched.pattern
+                              ? errors.pattern
+                              : null
+                          }
+                        />
+                      </GridItem>
                     )}
                     <HiddenLocalizedField
                       localized={getSelectedContentType(values.contenttype)?.localized}
