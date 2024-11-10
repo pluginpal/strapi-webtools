@@ -664,7 +664,6 @@ export interface PluginWebtoolsUrlPattern extends Schema.CollectionType {
     code: Attribute.String & Attribute.Required & Attribute.Unique;
     contenttype: Attribute.String & Attribute.Required;
     languages: Attribute.JSON & Attribute.Required;
-    primary: Attribute.Boolean;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
