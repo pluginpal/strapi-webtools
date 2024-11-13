@@ -5,20 +5,21 @@ import {
   ContentLayout, HeaderLayout, Typography, Grid, GridItem, Flex, Link,
 } from '@strapi/design-system';
 import { ExternalLink } from '@strapi/icons';
-import { CheckPagePermissions, request } from '@strapi/helper-plugin';
+import { Page, getFetchClient } from '@strapi/strapi/admin';
 
 import pluginPermissions from '../../permissions';
 import { WebtoolsAddonInfo } from '../../types/addons';
 import packageJson from '../../../package.json';
 
 const List = () => {
-  const [addons, setAddons] = useState<WebtoolsAddonInfo[]>(null);
+  const [addons, setAddons] = useState<WebtoolsAddonInfo[] | null>(null);
+  const { get } = getFetchClient();
   const { formatMessage } = useIntl();
 
   useEffect(() => {
-    request<WebtoolsAddonInfo[]>('/webtools/info/addons', { method: 'GET' })
+    get<WebtoolsAddonInfo[]>('/webtools/info/addons')
       .then((res) => {
-        setAddons(res);
+        setAddons(res.data);
       })
       .catch(() => {
       });
@@ -31,7 +32,7 @@ const List = () => {
     );
   }
   return (
-    <CheckPagePermissions permissions={pluginPermissions['settings.patterns']}>
+    <Page.Protect permissions={pluginPermissions['settings.patterns']}>
       <HeaderLayout
         title={formatMessage({ id: 'webtools.settings.page.overview.title', defaultMessage: 'Overview' })}
         subtitle={formatMessage({ id: 'webtools.settings.page.overview.description', defaultMessage: 'Webtools global information' })}
@@ -51,7 +52,7 @@ const List = () => {
             paddingRight={7}
             paddingLeft={7}
           >
-            <Typography variant="delta" as="h3">
+            <Typography variant="delta">
               {formatMessage({
                 id: 'global.details',
                 defaultMessage: 'Details',
@@ -135,7 +136,7 @@ const List = () => {
           </Flex>
         </Box> */}
       </ContentLayout>
-    </CheckPagePermissions>
+    </Page.Protect>
   );
 };
 

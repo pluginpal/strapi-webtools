@@ -9,7 +9,8 @@ import {
   SubNavSection,
   SubNavLink,
 } from '@strapi/design-system';
-import { CheckPagePermissions, InjectionZone } from '@strapi/helper-plugin';
+import { Page, useStrapiApp } from '@strapi/strapi/admin';
+
 
 import pluginPermissions from '../../permissions';
 import pluginId from '../../helpers/pluginId';
@@ -20,12 +21,18 @@ import Overview from '../../screens/Overview';
 const App = () => {
   const history = useHistory();
 
+  const getPlugin = useStrapiApp('MyComponent', (state) => state.getPlugin);
+
+  const plugin = getPlugin(pluginId);
+  const sidebarComponents = plugin?.getInjectedComponents('webtoolsSidebar', 'link');
+  const routerComponents = plugin?.getInjectedComponents('webtoolsRouter', 'route');
+
   if (history.location.pathname === `/plugins/${pluginId}`) {
     history.replace(`/plugins/${pluginId}/overview`);
   }
 
   return (
-    <CheckPagePermissions permissions={pluginPermissions['settings.patterns']}>
+    <Page.Protect permissions={pluginPermissions['settings.patterns']}>
       <Layout
         sideNav={(
           <SubNav ariaLabel="Webtools sub nav">
@@ -43,9 +50,7 @@ const App = () => {
                 </SubNavLink>
               </SubNavSection>
               <SubNavSection label="Addons">
-                <InjectionZone
-                  area={`${pluginId}.webtoolsSidebar.link`}
-                />
+                {sidebarComponents.map(({ Component }) => <Component />)}
                 {/* <SubNavLink to="/test" active key="test">
                   Sitemap
                 </SubNavLink> */}
@@ -61,13 +66,11 @@ const App = () => {
             path={`/plugins/${pluginId}/patterns`}
             component={Patterns}
           />
-          <InjectionZone
-            area={`${pluginId}.webtoolsRouter.route`}
-          />
+          {routerComponents.map(({ Component }) => <Component />)}
           {/* <Route path="" component={NotFound} /> */}
         </Switch>
       </Layout>
-    </CheckPagePermissions>
+    </Page.Protect>
   );
 };
 

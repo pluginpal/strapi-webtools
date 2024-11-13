@@ -15,11 +15,8 @@ import {
   Tbody,
   Button,
   Flex,
-} from '@strapi/design-system';
-
-import {
   EmptyStateLayout,
-} from '@strapi/helper-plugin';
+} from '@strapi/design-system';
 
 import TableRow from '../TableRow';
 import PaginationFooter from '../PaginationFooter';
@@ -119,11 +116,10 @@ const TableComponent: FC<Props> = (props) => {
         </Table>
       ) : (
         <EmptyStateLayout
-          content={{
+          content={formatMessage({
             id: 'webtools.settings.page.list.table.empty',
             defaultMessage: 'You don\'t have any URL paths yet.',
-          }}
-          action={() => {}}
+          })}
           shadow="tableShadow"
           hasRadius
         />

@@ -20,8 +20,8 @@ import {
   Grid,
   Loader,
 } from '@strapi/design-system';
+import { useNotification, getFetchClient } from '@strapi/strapi/admin';
 import { ArrowLeft, Check } from '@strapi/icons';
-import { useNotification, useFetchClient } from '@strapi/helper-plugin';
 import schema from './utils/schema';
 import { ErrorResponse } from '../../../types/error-response';
 import pluginId from '../../../helpers/pluginId';
@@ -36,11 +36,11 @@ import HiddenLocalizedField from '../../../components/HiddenLocalizedField';
 
 const CreatePatternPage = () => {
   const { push } = useHistory();
-  const toggleNotification = useNotification();
+  const { toggleNotification } = useNotification();
   const [loading, setLoading] = useState(false);
   const [contentTypes, setContentTypes] = useState<EnabledContentTypes>([]);
   const { formatMessage } = useIntl();
-  const { get, post } = useFetchClient();
+  const { get, post } = getFetchClient();
 
   useEffect(() => {
     setLoading(true);
@@ -68,7 +68,7 @@ const CreatePatternPage = () => {
       push(`/plugins/${pluginId}/patterns`);
       toggleNotification({
         type: 'success',
-        message: { id: 'webtools.settings.success.create' },
+        message: formatMessage({ id: 'webtools.settings.success.create' }),
       });
       setSubmitting(false);
     } catch (err) {
@@ -78,7 +78,7 @@ const CreatePatternPage = () => {
       } else {
         toggleNotification({
           type: 'warning',
-          message: { id: 'notification.error' },
+          message: formatMessage({ id: 'notification.error' }),
         });
       }
       setSubmitting(false);
@@ -178,7 +178,7 @@ const CreatePatternPage = () => {
                 paddingRight={7}
               >
                 <Stack spacing={4}>
-                  <Typography variant="delta" as="h2">
+                  <Typography variant="delta">
                     {formatMessage({
                       id: 'webtools.settings.page.patterns.create.subtitle',
                       defaultMessage: 'Pattern details',

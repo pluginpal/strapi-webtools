@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Map } from 'immutable';
 import { useIntl } from 'react-intl';
 
-import { useFetchClient, useNotification } from '@strapi/helper-plugin';
+import { useNotification, getFetchClient } from '@strapi/strapi/admin';
 import { Box, Button, HeaderLayout } from '@strapi/design-system';
 import { Check } from '@strapi/icons';
 
@@ -12,8 +12,8 @@ import { discardAllChanges, submit } from '../../state/actions/Sitemap';
 const Header = () => {
   const settings = useSelector((state) => state.getIn(['sitemap', 'settings'], Map()));
   const initialData = useSelector((state) => state.getIn(['sitemap', 'initialData'], Map()));
-  const toggleNotification = useNotification();
-  const { put } = useFetchClient();
+  const { toggleNotification } = useNotification();
+  const { put } = getFetchClient();
 
   const dispatch = useDispatch();
   const { formatMessage } = useIntl();

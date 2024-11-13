@@ -8,7 +8,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { useFetchClient, useNotification } from '@strapi/helper-plugin';
+import { getFetchClient, useNotification } from '@strapi/strapi/admin';
 
 import Tabs from '../../components/Tabs';
 import Header from '../../components/Header';
@@ -21,8 +21,8 @@ const App = () => {
   const loading = useSelector((state) => state.getIn(['sitemap', 'loading'], false));
 
   const dispatch = useDispatch();
-  const toggleNotification = useNotification();
-  const { get } = useFetchClient();
+  const { toggleNotification } = useNotification();
+  const { get } = getFetchClient();
 
   useEffect(() => {
     dispatch(getSettings(toggleNotification, get));

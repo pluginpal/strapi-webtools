@@ -14,7 +14,7 @@ import {
   Grid,
   Loader,
 } from '@strapi/design-system';
-import { useFetchClient, useNotification } from '@strapi/helper-plugin';
+import { useNotification, getFetchClient } from '@strapi/strapi/admin';
 import { ArrowLeft, Check } from '@strapi/icons';
 import { ErrorResponse } from '../../../types/error-response';
 import schema from './utils/schema';
@@ -30,12 +30,12 @@ import LanguageCheckboxes from '../../../components/LanguageCheckboxes';
 
 const EditPatternPage = () => {
   const { push } = useHistory();
-  const toggleNotification = useNotification();
+  const { toggleNotification } = useNotification();
   const [loading, setLoading] = useState(false);
   const [patternEntity, setPatternEntity] = useState<null | PatternEntity>(null);
   const [contentTypes, setContentTypes] = useState<EnabledContentTypes>([]);
   const { formatMessage } = useIntl();
-  const { get, put, post } = useFetchClient();
+  const { get, put, post } = getFetchClient();
 
   const {
     params: { id },
@@ -43,7 +43,7 @@ const EditPatternPage = () => {
 
   useEffect(() => {
     setLoading(true);
-    get<EnabledContentTypes>('/webtools/info/getContentTypes', { method: 'GET' })
+    get<EnabledContentTypes>('/webtools/info/getContentTypes')
       .then((res) => {
         const { data } = res;
         setContentTypes(data);
@@ -56,7 +56,7 @@ const EditPatternPage = () => {
 
   useEffect(() => {
     setLoading(true);
-    get<PatternEntity>(`/webtools/url-pattern/findOne/${id}`, { method: 'GET' })
+    get<PatternEntity>(`/webtools/url-pattern/findOne/${id}`)
       .then((res) => {
         const { data } = res;
         setPatternEntity(data);
@@ -81,7 +81,7 @@ const EditPatternPage = () => {
       push(`/plugins/${pluginId}/patterns`);
       toggleNotification({
         type: 'success',
-        message: { id: 'webtools.settings.success.edit' },
+        message: formatMessage({ id: 'webtools.settings.success.edit' }),
       });
       setSubmitting(false);
     } catch (err) {
@@ -91,7 +91,7 @@ const EditPatternPage = () => {
       } else {
         toggleNotification({
           type: 'warning',
-          message: { id: 'notification.error' },
+          message: formatMessage({ id: 'notification.error' }),
         });
       }
       setSubmitting(false);
@@ -210,7 +210,7 @@ const EditPatternPage = () => {
                 paddingRight={7}
               >
                 <Stack spacing={4}>
-                  <Typography variant="delta" as="h2">
+                  <Typography variant="delta">
                     {formatMessage({
                       id: 'webtools.settings.page.patterns.edit.subtitle',
                       defaultMessage: 'Pattern details',

@@ -9,7 +9,7 @@ import { FormikErrors } from 'formik';
 import {
   TextInput, Popover, Stack, Box, Loader, Typography,
 } from '@strapi/design-system';
-import { useFetchClient } from '@strapi/helper-plugin';
+import { getFetchClient } from '@strapi/strapi/admin';
 import { PatternFormValues } from '../../types/url-patterns';
 import { Theme } from '../../types/theme';
 
@@ -29,9 +29,9 @@ const PatternField: FC<Props> = ({
   const patternRef = useRef<HTMLDivElement>(null);
   const [loading, setLoading] = useState(false);
   const [loadingError, setLoadingError] = useState(false);
-  const [allowedFields, setAllowedFields] = useState<Record<string, string[]>>(null);
+  const [allowedFields, setAllowedFields] = useState<Record<string, string[]> | null>(null);
   const { formatMessage } = useIntl();
-  const { get } = useFetchClient();
+  const { get } = getFetchClient();
 
   const [popoverDismissed, setPopoverDismissed] = useState(false);
 
@@ -39,7 +39,7 @@ const PatternField: FC<Props> = ({
     const fetchAllowedFields = async () => {
       try {
         setLoading(true);
-        const data = await get<Record<string, string[]>>('/webtools/url-pattern/allowed-fields', { method: 'GET' });
+        const data = await get<Record<string, string[]>>('/webtools/url-pattern/allowed-fields');
         setAllowedFields(data.data);
         setLoading(false);
       } catch (err) {

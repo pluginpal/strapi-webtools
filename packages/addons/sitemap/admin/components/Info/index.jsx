@@ -4,7 +4,7 @@ import { Map } from 'immutable';
 import { useIntl } from 'react-intl';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { useFetchClient, useNotification } from '@strapi/helper-plugin';
+import { getFetchClient, useNotification } from '@strapi/strapi/admin';
 import { Typography, Box, Button, Link } from '@strapi/design-system';
 
 import { generateSitemap } from '../../state/actions/Sitemap';
@@ -14,8 +14,8 @@ const Info = () => {
   const hasHostname = useSelector((state) => state.getIn(['sitemap', 'initialData', 'hostname'], Map()));
   const sitemapInfo = useSelector((state) => state.getIn(['sitemap', 'info'], Map()));
   const dispatch = useDispatch();
-  const toggleNotification = useNotification();
-  const { get } = useFetchClient();
+  const { toggleNotification } = useNotification();
+  const { get } = getFetchClient();
   const { formatMessage } = useIntl();
 
   const updateDate = new Date(sitemapInfo.get('updateTime'));

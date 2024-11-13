@@ -2,8 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useIntl } from 'react-intl';
 import { useSelector } from 'react-redux';
 
-import { InjectionZone } from '@strapi/helper-plugin';
-
 import {
   ModalLayout,
   ModalFooter,
@@ -103,9 +101,9 @@ const ModalForm = (props) => {
               {form()}
             </TabPanel>
             <TabPanel>
-              <InjectionZone
+              {/* <InjectionZone
                 area={`${pluginId}.modal.advanced`}
-              />
+              /> */}
             </TabPanel>
           </TabPanels>
         </TabGroup>

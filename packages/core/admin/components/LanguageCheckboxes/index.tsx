@@ -7,7 +7,8 @@ import {
   FieldLabel,
   FieldError,
 } from '@strapi/design-system';
-import { request } from '@strapi/helper-plugin';
+import { getFetchClient } from '@strapi/strapi/admin';
+
 import { EnabledContentTypes } from '../../types/enabled-contenttypes';
 
 type Props = {
@@ -24,11 +25,13 @@ const LanguageCheckboxes = ({
   const [languages, setLanguages] = React.useState<EnabledContentTypes>([]);
   const [loading, setLoading] = React.useState<boolean>(false);
 
+  const { get } = getFetchClient();
+
   React.useEffect(() => {
     setLoading(true);
-    request('/webtools/info/getLanguages', { method: 'GET' })
-      .then((res: EnabledContentTypes) => {
-        setLanguages(res);
+    get<EnabledContentTypes>('/webtools/info/getLanguages')
+      .then((res) => {
+        setLanguages(res.data);
         setLoading(false);
       })
       .catch(() => {

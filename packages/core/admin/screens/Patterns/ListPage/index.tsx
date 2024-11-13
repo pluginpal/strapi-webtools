@@ -10,7 +10,7 @@ import {
 } from '@strapi/design-system';
 
 import { Plus } from '@strapi/icons';
-import { useFetchClient } from '@strapi/helper-plugin';
+import { getFetchClient } from '@strapi/strapi/admin';
 
 import pluginId from '../../../helpers/pluginId';
 import Table from './components/Table';
@@ -22,13 +22,13 @@ const ListPatternPage = () => {
   const [loading, setLoading] = useState(false);
   const { formatMessage } = useIntl();
   const { push } = useHistory();
-  const fetchClient = useFetchClient();
+  const { get } = getFetchClient();
 
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const response = await fetchClient.get<PatternEntity[]>('/webtools/url-pattern/findMany');
+        const response = await get<PatternEntity[]>('/webtools/url-pattern/findMany');
         setPatterns(response.data);
       } catch (error) {
         console.error('Failed to fetch data:', error);
@@ -40,7 +40,7 @@ const ListPatternPage = () => {
     fetchData().catch((error) => {
       console.error('Failed to fetch data:', error);
     });
-  }, [fetchClient]);
+  }, [get]);
 
   if (loading) {
     return (

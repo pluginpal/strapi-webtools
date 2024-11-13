@@ -4,12 +4,8 @@ import { useIntl } from 'react-intl';
 import { useHistory } from 'react-router-dom';
 
 import { ContentLayout, HeaderLayout, Button } from '@strapi/design-system';
-import {
-  CheckPagePermissions,
-  request,
-  useFetchClient,
-  useNotification,
-} from '@strapi/helper-plugin';
+
+import { Page, useNotification, getFetchClient } from '@strapi/strapi/admin';
 
 import pluginPermissions from '../../permissions';
 import Table from './components/Table';
@@ -29,16 +25,17 @@ export type Pagination = {
 const List = () => {
   const [queryCount, setQueryCount] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
-  const [paths, setPaths] = useState<Attribute.GetValues<'plugin::webtools.url-alias'>[]>(null);
-  const [config, setConfig] = useState<Config>(null);
-  const [pagination, setPagination] = useState<Pagination>(null);
-  const [openModal, setOpenModal] = useState<boolean>(null);
-  const { post } = useFetchClient();
+  const [paths, setPaths] = useState<Attribute.GetValues<'plugin::webtools.url-alias'>[] | null>(null);
+  const [config, setConfig] = useState<Config | null>(null);
+  const [pagination, setPagination] = useState<Pagination | null>(null);
+  const [openModal, setOpenModal] = useState<boolean>(false);
+  const { post } = getFetchClient();
+
   const history = useHistory();
   const { formatMessage } = useIntl();
-  const { get } = useFetchClient();
+  const { get } = getFetchClient();
   const [contentTypes, setContentTypes] = useState<EnabledContentTypes>([]);
-  const toggleNotification = useNotification();
+  const { toggleNotification } = useNotification();
 
   useEffect(() => {
     get('/webtools/info/getContentTypes')
@@ -46,28 +43,28 @@ const List = () => {
         setContentTypes(res.data);
       })
       .catch(() => {
-        toggleNotification({ type: 'warning', message: { id: 'notification.error' } });
+        toggleNotification({ type: 'warning', message: formatMessage({ id: 'notification.error' }) });
       });
   }, [get, toggleNotification]);
 
   useEffect(() => {
-    request(`/webtools/url-alias/findMany${history.location.search}`, { method: 'GET' })
-      .then((res: EntityService.PaginatedResult<'plugin::webtools.url-alias'>) => {
-        setPaths(res.results);
-        setPagination(res.pagination);
+    get<EntityService.PaginatedResult<'plugin::webtools.url-alias'>>(`/webtools/url-alias/findMany${history.location.search}`)
+      .then((res) => {
+        setPaths(res.data.results);
+        setPagination(res.data.pagination);
       })
       .catch(() => {
-        toggleNotification({ type: 'warning', message: { id: 'notification.error' } });
+        toggleNotification({ type: 'warning', message: formatMessage({ id: 'notification.error' }) });
       });
   }, [history.location.search, queryCount, toggleNotification]);
 
   useEffect(() => {
-    request('/webtools/info/config', { method: 'GET' })
-      .then((res: Config) => {
-        setConfig(res);
+    get<Config>('/webtools/info/config')
+      .then((res) => {
+        setConfig(res.data);
       })
       .catch(() => {
-        toggleNotification({ type: 'warning', message: { id: 'notification.error' } });
+        toggleNotification({ type: 'warning', message: formatMessage({ id: 'notification.error' }) });
       });
   }, [toggleNotification]);
 
@@ -75,11 +72,11 @@ const List = () => {
     setLoading(true);
     await post('/webtools/url-alias/generate', { types, generationType })
       .then((response: { data: { message: string } }) => {
-        toggleNotification({ type: 'success', message: { id: 'webtools.success.url-alias.generate', defaultMessage: response.data.message } });
+        toggleNotification({ type: 'success', message: formatMessage({ id: 'webtools.success.url-alias.generate', defaultMessage: response.data.message }) });
         setLoading(false);
       })
       .catch(() => {
-        toggleNotification({ type: 'warning', message: { id: 'notification.error' } });
+        toggleNotification({ type: 'warning', message: formatMessage({ id: 'notification.error' }) });
         setLoading(false);
       });
 
@@ -93,7 +90,7 @@ const List = () => {
   }
 
   return (
-    <CheckPagePermissions permissions={pluginPermissions['settings.patterns']}>
+    <Page.Protect permissions={pluginPermissions['settings.patterns']}>
       {loading && <Loader />}
       <HeaderLayout
         title={formatMessage({ id: 'webtools.settings.page.list.title', defaultMessage: 'URLs' })}
@@ -125,7 +122,7 @@ const List = () => {
         onClose={() => setOpenModal(false)}
         contentTypes={contentTypes}
       />
-    </CheckPagePermissions>
+    </Page.Protect>
   );
 };
 

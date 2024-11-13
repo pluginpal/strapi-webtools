@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useIntl } from 'react-intl';
 
-import { useCMEditViewDataManager } from '@strapi/helper-plugin';
+import { unstable_useContentManagerContext } from '@strapi/strapi/admin';
 
 import {
   Box,
@@ -18,10 +18,13 @@ import getTrad from '../../helpers/getTrad';
 import { UrlAliasEntity } from '../../types/url-aliases';
 
 const EditForm = () => {
-  const { modifiedData, onChange } = useCMEditViewDataManager();
+  const { form } = unstable_useContentManagerContext();
+
+  const { values, onChange } = form;
+
   const modifiedDataUrlAliases =
-    (modifiedData.url_alias as UrlAliasEntity[])?.length
-      ? modifiedData.url_alias as UrlAliasEntity[]
+    (values.url_alias as UrlAliasEntity[])?.length
+      ? values.url_alias as UrlAliasEntity[]
       : [{
         generated: true,
       }] as UrlAliasEntity[];
@@ -34,10 +37,10 @@ const EditForm = () => {
       ...updatedUrlAliases[index],
       [name]: value,
     };
-    onChange({ target: { name: 'url_alias', value: updatedUrlAliases, type: 'array' } });
+    onChange('url_alias', updatedUrlAliases);
   };
 
-  const [expanded, setExpanded] = React.useState<number>(0);
+  const [expanded, setExpanded] = React.useState<number | null>(0);
   // eslint-disable-next-line max-len
   const toggle = (index: number) => setExpanded((prevExpanded) => (prevExpanded === index ? null : index));
 

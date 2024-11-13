@@ -7,10 +7,7 @@ import {
   Flex,
   IconButton,
 } from '@strapi/design-system';
-import {
-  request,
-  useNotification,
-} from '@strapi/helper-plugin';
+import { useNotification, getFetchClient } from '@strapi/strapi/admin';
 import { Attribute, Entity } from '@strapi/strapi';
 import { useIntl } from 'react-intl';
 import { Trash, ExternalLink, Pencil } from '@strapi/icons';
@@ -35,28 +32,29 @@ const TableRow: FC<Props> = ({
   config,
   onDelete,
 }) => {
-  const toggleNotification = useNotification();
+  const { toggleNotification } = useNotification();
+  const { get } = getFetchClient();
   const { formatMessage } = useIntl();
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const { push } = useHistory();
 
   const handleClick = (path: string) => {
-    request(`/webtools/url-alias/editLink?path=${path}`, { method: 'GET' })
-      .then((res: { link: string }) => {
-        push(res.link);
+    get<{ link: string }>(`/webtools/url-alias/editLink?path=${path}`)
+      .then((res) => {
+        push(res.data.link);
       })
       .catch(() => { });
   };
 
   const handleDelete = (id: Entity.ID) => {
-    request(`/webtools/url-alias/delete/${id}`, { method: 'POST' })
+    get(`/webtools/url-alias/delete/${id}`)
       .then(() => {
-        onDelete();
-        toggleNotification({ type: 'success', message: { id: 'webtools.settings.success.url_alias.delete' } });
+        if (onDelete) onDelete();
+        toggleNotification({ type: 'success', message: formatMessage({ id: 'webtools.settings.success.url_alias.delete' }) });
       })
       .catch(() => {
-        onDelete();
-        toggleNotification({ type: 'warning', message: { id: 'notification.error' } });
+        if (onDelete) onDelete();
+        toggleNotification({ type: 'warning', message: formatMessage({ id: 'notification.error' }) });
       });
   };
 
@@ -79,32 +77,32 @@ const TableRow: FC<Props> = ({
           {config.website_url && (
             <IconButton
               onClick={() => window.open(`${config.website_url}${row.url_path}`, '_blank')}
-              noBorder
-              icon={<ExternalLink />}
               label={formatMessage(
                 { id: 'webtools.settings.page.list.table.actions.edit', defaultMessage: 'Go to the front-end page' },
                 { target: `${row.url_path}` },
               )}
-            />
+            >
+              <ExternalLink />
+            </IconButton>
           )}
           <IconButton
             onClick={() => handleClick(row.url_path)}
-            noBorder
-            icon={<Pencil />}
             label={formatMessage(
               { id: 'webtools.settings.page.list.table.actions.goTo', defaultMessage: 'Edit {target}' },
               { target: `${row.url_path}` },
             )}
-          />
+          >
+            <Pencil />
+          </IconButton>
           <IconButton
             onClick={() => setOpenDeleteModal(true)}
-            noBorder
-            icon={<Trash />}
             label={formatMessage(
               { id: 'webtools.settings.page.list.table.actions.delete', defaultMessage: 'Delete {target}' },
               { target: `${row.url_path}` },
             )}
-          />
+          >
+            <Trash />
+          </IconButton>
           <DeleteConfirmModal
             isOpen={openDeleteModal}
             onClose={() => setOpenDeleteModal(false)}

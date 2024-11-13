@@ -40,11 +40,11 @@
     "eslint:fix": "../../node_modules/.bin/eslint --fix './**/*.{js,jsx,ts,tsx}'"
   },
   "peerDependencies": {
-    "@strapi/strapi": "^4.0.0",
+    "@strapi/strapi": "^5.0.0",
     "react": "^17.0.0 || ^18.0.0",
     "react-dom": "^17.0.0 || ^18.0.0",
-    "react-router-dom": "^5.2.0",
-    "styled-components": "^5.2.1"
+    "react-router-dom": "^6.0.0",
+    "styled-components": "^6.0.0"
   },
   "devDependencies": {
     "@strapi/pack-up": "^5.0.0",
@@ -59,11 +59,10 @@
   },
   "dependencies": {
     "@pluginpal/webtools-helper-plugin": "^1.0.0-beta.4",
-    "@strapi/design-system": "1.19.0",
-    "@strapi/helper-plugin": "4.20.3",
-    "@strapi/icons": "1.19.0",
-    "@strapi/strapi": "4.20.3",
-    "@strapi/utils": "4.20.3",
+    "@strapi/admin": "^5.3.0",
+    "@strapi/design-system": "2.0.0-rc.12",
+    "@strapi/icons": "2.0.0-rc.12",
+    "@strapi/utils": "5.3.0",
     "formik": "^2.4.0",
     "lodash": "^4.17.21",
     "react-copy-to-clipboard": "^5.1.0",

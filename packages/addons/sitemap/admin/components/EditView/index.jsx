@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 
-import { useCMEditViewDataManager, useFetchClient } from '@strapi/helper-plugin';
 import { Box, Checkbox } from '@strapi/design-system';
 import { SidebarDropdown } from '@pluginpal/webtools-helper-plugin';
+import { unstable_useContentManagerContext, getFetchClient } from '@strapi/strapi/admin';
 
 import getTrad from '../../helpers/getTrad';
 
 const CMEditViewExclude = () => {
   const [sitemapSettings, setSitemapSettings] = useState({});
   const { formatMessage } = useIntl();
-  const { get } = useFetchClient();
-  const { modifiedData, onChange, ...props } = useCMEditViewDataManager();
+  const { get } = getFetchClient();
+  const { modifiedData, onChange, ...props } = unstable_useContentManagerContext();
 
   useEffect(() => {
     const getSitemapSettings = async () => {
