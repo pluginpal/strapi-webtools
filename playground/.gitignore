@@ -129,3 +129,13 @@ dist
 build
 .strapi-updater.json
 .strapi-cloud.json
+
+############################
+# Webtools
+############################
+
+config/env/development
+
+# yalc
+.yalc
+yalc.lock
