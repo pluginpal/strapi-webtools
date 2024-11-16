@@ -20,7 +20,7 @@ export default {
     });
   },
   bootstrap(app: AdminApp) {
-    app.injectContentManagerComponent('editView', 'right-links', {
+    app.getPlugin('content-manager').injectComponent('editView', 'right-links', {
       name: 'sitemap-edit-view',
       Component: EditView,
     });

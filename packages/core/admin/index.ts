@@ -52,7 +52,7 @@ export default {
     });
   },
   bootstrap(app: AdminApp) {
-    app.injectContentManagerComponent('editView', 'right-links', {
+    app.getPlugin('content-manager')?.injectComponent('editView', 'right-links', {
       name: 'url-alias-edit-view',
       Component: EditView,
     });
