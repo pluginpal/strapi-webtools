@@ -4,8 +4,6 @@ import {
   Flex,
   Checkbox,
   Field,
-  FieldLabel,
-  FieldError,
 } from '@strapi/design-system';
 import { getFetchClient } from '@strapi/strapi/admin';
 
@@ -44,12 +42,13 @@ const LanguageCheckboxes = ({
   }
 
   return (
-    <Field name="password" error={error as string}>
-      <FieldLabel>Select the language</FieldLabel>
+    <Field.Root name="password" error={error as string}>
+      <Field.Label>Select the language</Field.Label>
       <Flex direction="column" alignItems="start" gap="1" marginTop="2">
         {languages.map((contentType) => (
           <Checkbox
             aria-label={`Select ${contentType.name}`}
+            // @ts-ignore
             value={selectedLanguages.includes(contentType.uid)}
             onValueChange={() => {
               if (selectedLanguages.includes(contentType.uid)) {
@@ -66,9 +65,9 @@ const LanguageCheckboxes = ({
             {contentType.name}
           </Checkbox>
         ))}
-        <FieldError />
+        <Field.Error />
       </Flex>
-    </Field>
+    </Field.Root>
   );
 };
 

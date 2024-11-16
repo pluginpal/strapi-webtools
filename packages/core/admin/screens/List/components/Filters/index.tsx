@@ -34,7 +34,7 @@ const Filters = ({ contentTypes }: Props) => {
         metadatas: {
           label: 'Content-Type',
           // eslint-disable-next-line react/no-unstable-nested-components
-          customInput: (props) => <FilterInput contentTypes={contentTypes} {...props} />,
+          customInput: (props: any) => <FilterInput contentTypes={contentTypes} {...props} />,
         },
         fieldSchema: {
           type: 'string',
@@ -75,17 +75,15 @@ const Filters = ({ contentTypes }: Props) => {
             })}
           </Button>
           {isVisible && (
-            <StrapiFilters.Popover
-              displayedFilters={filters}
-              isVisible={isVisible}
-              onToggle={() => setIsVisible((prev) => !prev)}
-              source={buttonRef}
-            />
+            <StrapiFilters.Popover />
+            // displayedFilters={filters}
+            // isVisible={isVisible}
+            // onToggle={() => setIsVisible((prev) => !prev)}
+            // source={buttonRef}
           )}
         </Box>
-        <StrapiFilters.List
-          filtersSchema={filters}
-        />
+        <StrapiFilters.List />
+        {/* filtersSchema={filters} */}
       </Flex>
     </StrapiFilters.Root>
   );

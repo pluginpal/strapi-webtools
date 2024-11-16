@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { EntityService, Attribute } from '@strapi/types';
 import { useIntl } from 'react-intl';
 import { useHistory } from 'react-router-dom';
 
-import { ContentLayout, HeaderLayout, Button } from '@strapi/design-system';
+import { Button } from '@strapi/design-system';
 
-import { Page, useNotification, getFetchClient } from '@strapi/strapi/admin';
+import {
+  Page,
+  useNotification,
+  getFetchClient,
+  Layouts,
+} from '@strapi/strapi/admin';
 
 import pluginPermissions from '../../permissions';
 import Table from './components/Table';
@@ -25,7 +29,7 @@ export type Pagination = {
 const List = () => {
   const [queryCount, setQueryCount] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(false);
-  const [paths, setPaths] = useState<Attribute.GetValues<'plugin::webtools.url-alias'>[] | null>(null);
+  const [paths, setPaths] = useState<any[] | null>(null);
   const [config, setConfig] = useState<Config | null>(null);
   const [pagination, setPagination] = useState<Pagination | null>(null);
   const [openModal, setOpenModal] = useState<boolean>(false);
@@ -48,7 +52,7 @@ const List = () => {
   }, [get, toggleNotification]);
 
   useEffect(() => {
-    get<EntityService.PaginatedResult<'plugin::webtools.url-alias'>>(`/webtools/url-alias/findMany${history.location.search}`)
+    get<any>(`/webtools/url-alias/findMany${history.location.search}`)
       .then((res) => {
         setPaths(res.data.results);
         setPagination(res.data.pagination);
@@ -92,10 +96,9 @@ const List = () => {
   return (
     <Page.Protect permissions={pluginPermissions['settings.patterns']}>
       {loading && <Loader />}
-      <HeaderLayout
+      <Layouts.Header
         title={formatMessage({ id: 'webtools.settings.page.list.title', defaultMessage: 'URLs' })}
         subtitle={formatMessage({ id: 'webtools.settings.page.list.description', defaultMessage: 'A list of all the known URL aliases.' })}
-        as="h2"
         // TODO: Generate all button.
         primaryAction={(
           <Button onClick={() => setOpenModal(true)} size="L">
@@ -106,7 +109,7 @@ const List = () => {
           </Button>
         )}
       />
-      <ContentLayout>
+      <Layouts.Content>
         <Table
           paths={paths}
           pagination={pagination}
@@ -114,10 +117,10 @@ const List = () => {
           config={config}
           contentTypes={contentTypes}
         />
-      </ContentLayout>
+      </Layouts.Content>
       <GeneratePathsModal
         isOpen={openModal}
-        // eslint-disable-next-line @typescript-eslint/no-misused-promises
+        // @ts-ignore
         onSubmit={handleGeneratePaths}
         onClose={() => setOpenModal(false)}
         contentTypes={contentTypes}

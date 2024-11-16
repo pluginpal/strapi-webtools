@@ -3,14 +3,12 @@ import { useIntl } from 'react-intl';
 import { useHistory } from 'react-router-dom';
 import {
   Loader,
-  ContentLayout,
-  HeaderLayout,
   Button,
   Box,
 } from '@strapi/design-system';
 
 import { Plus } from '@strapi/icons';
-import { getFetchClient } from '@strapi/strapi/admin';
+import { getFetchClient, Layouts } from '@strapi/strapi/admin';
 
 import pluginId from '../../../helpers/pluginId';
 import Table from './components/Table';
@@ -52,10 +50,9 @@ const ListPatternPage = () => {
 
   return (
     <Box>
-      <HeaderLayout
+      <Layouts.Header
         title={formatMessage({ id: 'webtools.settings.page.patterns.title', defaultMessage: 'Patterns' })}
         subtitle={formatMessage({ id: 'webtools.settings.page.patterns.description', defaultMessage: 'A list of all the known URL alias patterns.' })}
-        as="h2"
         primaryAction={(
           <Button onClick={() => push(`/plugins/${pluginId}/patterns/new`)} startIcon={<Plus />} size="L">
             {formatMessage({
@@ -63,11 +60,11 @@ const ListPatternPage = () => {
               defaultMessage: 'Add new pattern',
             })}
           </Button>
-                )}
+        )}
       />
-      <ContentLayout>
+      <Layouts.Content>
         <Table patterns={patterns} />
-      </ContentLayout>
+      </Layouts.Content>
     </Box>
   );
 };

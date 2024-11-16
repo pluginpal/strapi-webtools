@@ -4,7 +4,6 @@ import React, {
   useState,
 } from 'react';
 import { useIntl } from 'react-intl';
-import { Attribute } from '@strapi/strapi';
 
 import {
   Table,
@@ -25,7 +24,7 @@ import Filters from '../Filters';
 import { Config } from '../../../../../server/admin-api/config';
 
 type Props = {
-  paths: Attribute.GetValues<'plugin::webtools.url-alias'>[],
+  paths: any[],
   onDelete: () => void,
   pagination: Pagination,
   contentTypes: any[],

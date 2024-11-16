@@ -8,7 +8,6 @@ import {
   IconButton,
 } from '@strapi/design-system';
 import { useNotification, getFetchClient } from '@strapi/strapi/admin';
-import { Attribute, Entity } from '@strapi/strapi';
 import { useIntl } from 'react-intl';
 import { Trash, ExternalLink, Pencil } from '@strapi/icons';
 import { useHistory } from 'react-router-dom';
@@ -16,7 +15,7 @@ import DeleteConfirmModal from '../DeleteConfirmModal';
 import { Config } from '../../../../../server/admin-api/config';
 
 type Props = {
-  row: Attribute.GetValues<'plugin::webtools.url-alias'>;
+  row: any;
   checked?: boolean;
   onDelete?: () => void;
   updateValue: () => any;
@@ -46,7 +45,7 @@ const TableRow: FC<Props> = ({
       .catch(() => { });
   };
 
-  const handleDelete = (id: Entity.ID) => {
+  const handleDelete = (id: number) => {
     get(`/webtools/url-alias/delete/${id}`)
       .then(() => {
         if (onDelete) onDelete();

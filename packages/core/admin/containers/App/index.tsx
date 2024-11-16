@@ -2,14 +2,13 @@ import React from 'react';
 import { Route, Switch, useHistory } from 'react-router-dom';
 
 import {
-  Layout,
   SubNav,
   SubNavHeader,
   SubNavSections,
   SubNavSection,
   SubNavLink,
 } from '@strapi/design-system';
-import { Page, useStrapiApp } from '@strapi/strapi/admin';
+import { Page, useStrapiApp, Layouts } from '@strapi/strapi/admin';
 
 
 import pluginPermissions from '../../permissions';
@@ -33,19 +32,19 @@ const App = () => {
 
   return (
     <Page.Protect permissions={pluginPermissions['settings.patterns']}>
-      <Layout
+      <Layouts.Root
         sideNav={(
-          <SubNav ariaLabel="Webtools sub nav">
+          <SubNav>
             <SubNavHeader value="" label="Webtools" />
             <SubNavSections>
               <SubNavSection label="Core">
-                <SubNavLink to="/plugins/webtools/overview" key="test">
+                <SubNavLink href="/plugins/webtools/overview" key="test">
                   Overview
                 </SubNavLink>
-                <SubNavLink to="/plugins/webtools/urls" key="test">
+                <SubNavLink href="/plugins/webtools/urls" key="test">
                   All URLs
                 </SubNavLink>
-                <SubNavLink to="/plugins/webtools/patterns" key="test">
+                <SubNavLink href="/plugins/webtools/patterns" key="test">
                   Url Patterns
                 </SubNavLink>
               </SubNavSection>
@@ -69,7 +68,7 @@ const App = () => {
           {routerComponents.map(({ Component }) => <Component />)}
           {/* <Route path="" component={NotFound} /> */}
         </Switch>
-      </Layout>
+      </Layouts.Root>
     </Page.Protect>
   );
 };
