@@ -1,7 +1,14 @@
 import React from 'react';
 
 import { Pencil, Trash } from '@strapi/icons';
-import { Box, Flex, Tr, Td, Typography, IconButton } from '@strapi/design-system';
+import {
+  Box,
+  Flex,
+  Tr,
+  Td,
+  Typography,
+  IconButton,
+} from '@strapi/design-system';
 
 const CustomRow = ({ openModal, entry }) => {
   const handleEditClick = (e) => {
@@ -26,10 +33,20 @@ const CustomRow = ({ openModal, entry }) => {
         <Typography variant="omega" textColor="neutral800">{entry.changefreq}</Typography>
       </Td>
       <Td>
-        <Flex>
-          <IconButton onClick={handleEditClick} label="Edit" noBorder icon={<Pencil />} />
+        <Flex marginLeft="auto">
+          <IconButton
+            onClick={handleEditClick}
+            label="Edit"
+          >
+            <Pencil />
+          </IconButton>
           <Box paddingLeft={1}>
-            <IconButton onClick={handleDeleteClick} label="Delete" noBorder icon={<Trash />} />
+            <IconButton
+              onClick={handleDeleteClick}
+              label="Delete"
+            >
+              <Trash />
+            </IconButton>
           </Box>
         </Flex>
       </Td>

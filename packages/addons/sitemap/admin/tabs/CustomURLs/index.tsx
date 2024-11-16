@@ -2,12 +2,17 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Map } from 'immutable';
 
-import { discardModifiedContentTypes, onChangeCustomEntry, submitModal, deleteCustomEntry } from '../../state/actions/Sitemap';
+import {
+  discardModifiedContentTypes,
+  onChangeCustomEntry,
+  submitModal,
+  deleteCustomEntry,
+} from '../../state/actions/Sitemap';
 import List from '../../components/List/Custom';
 import ModalForm from '../../components/ModalForm';
 
 const CustomURLs = () => {
-  const state = useSelector((store) => store.get('sitemap', Map()));
+  const state = useSelector((store: any) => store.get('sitemap', Map()));
   const dispatch = useDispatch();
   const [modalOpen, setModalOpen] = useState(false);
   const [uid, setUid] = useState(null);

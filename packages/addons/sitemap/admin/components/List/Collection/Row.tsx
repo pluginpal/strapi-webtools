@@ -1,12 +1,19 @@
 import React from 'react';
 
 import { Pencil, Trash } from '@strapi/icons';
-import { Box, Flex, Tr, Td, Typography, IconButton } from '@strapi/design-system';
+import {
+  Box,
+  Flex,
+  Tr,
+  Td,
+  Typography,
+  IconButton,
+} from '@strapi/design-system';
 import { useSelector } from 'react-redux';
 import getSelectedContentType from '../../../helpers/getSelectedContentType';
 
 const CustomRow = ({ openModal, entry }) => {
-  const contentTypes = useSelector((store) => store.getIn(['sitemap', 'contentTypes'], {}));
+  const contentTypes = useSelector((store: any) => store.getIn(['sitemap', 'contentTypes'], {}));
 
   const handleEditClick = (e) => {
     openModal(entry.name, entry.langcode);
@@ -26,9 +33,19 @@ const CustomRow = ({ openModal, entry }) => {
       <Td>
         <Flex>
           <Flex marginLeft="auto">
-            <IconButton onClick={handleEditClick} label="Edit" noBorder icon={<Pencil />} />
+            <IconButton
+              onClick={handleEditClick}
+              label="Edit"
+            >
+              <Pencil />
+            </IconButton>
             <Box paddingLeft={1}>
-              <IconButton onClick={handleDeleteClick} label="Delete" noBorder icon={<Trash />} />
+              <IconButton
+                onClick={handleDeleteClick}
+                label="Delete"
+              >
+                <Trash />
+              </IconButton>
             </Box>
           </Flex>
         </Flex>

@@ -26,8 +26,8 @@ const ListComponent = (props) => {
     return null;
   }
 
-  items.map((item, key) => {
-    const formattedItem = {};
+  items.forEach((item, key) => {
+    const formattedItem: any = {};
     formattedItem.name = key;
     formattedItem.priority = item.get('priority');
     formattedItem.changefreq = item.get('changefreq');
@@ -39,7 +39,7 @@ const ListComponent = (props) => {
   if (items.size === 0) {
     return (
       <EmptyStateLayout
-        content={{ id: 'sitemap.Empty.CustomURLs.Description', defaultMessage: 'No custom URLs have been configured yet.' }}
+        content={formatMessage({ id: 'sitemap.Empty.CustomURLs.Description', defaultMessage: 'No custom URLs have been configured yet.' })}
         action={<Button onClick={() => openModal()}>{formatMessage({ id: 'sitemap.Empty.CustomURLs.Button', defaultMessage: 'Add the first URL' })}</Button>}
       />
     );

@@ -8,10 +8,11 @@ import { unstable_useContentManagerContext, getFetchClient } from '@strapi/strap
 import getTrad from '../../helpers/getTrad';
 
 const CMEditViewExclude = () => {
-  const [sitemapSettings, setSitemapSettings] = useState({});
+  const [sitemapSettings, setSitemapSettings] = useState<any>({});
   const { formatMessage } = useIntl();
   const { get } = getFetchClient();
-  const { modifiedData, onChange, ...props } = unstable_useContentManagerContext();
+  const { form, ...props } = unstable_useContentManagerContext();
+  const { values, onChange } = form;
 
   useEffect(() => {
     const getSitemapSettings = async () => {
@@ -19,6 +20,7 @@ const CMEditViewExclude = () => {
       setSitemapSettings(settings.data);
     };
 
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     getSitemapSettings();
   }, [get]);
 
@@ -34,10 +36,10 @@ const CMEditViewExclude = () => {
     >
       <Box>
         <Checkbox
-          onValueChange={(value) => {
-            onChange({ target: { name: 'sitemap_exclude', value } });
+          onCheckedChange={(value) => {
+            onChange('sitemap_exclude', value);
           }}
-          value={modifiedData.sitemap_exclude}
+          value={values.sitemap_exclude}
           name="exclude-from-sitemap"
         >
           {formatMessage({ id: getTrad('EditView.ExcludeFromSitemap'), defaultMessage: 'Exclude from sitemap' })}

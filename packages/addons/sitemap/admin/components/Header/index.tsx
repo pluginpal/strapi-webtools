@@ -3,15 +3,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Map } from 'immutable';
 import { useIntl } from 'react-intl';
 
-import { useNotification, getFetchClient } from '@strapi/strapi/admin';
-import { Box, Button, HeaderLayout } from '@strapi/design-system';
+import { useNotification, getFetchClient, Layouts } from '@strapi/strapi/admin';
+import { Box, Button } from '@strapi/design-system';
 import { Check } from '@strapi/icons';
 
 import { discardAllChanges, submit } from '../../state/actions/Sitemap';
 
 const Header = () => {
-  const settings = useSelector((state) => state.getIn(['sitemap', 'settings'], Map()));
-  const initialData = useSelector((state) => state.getIn(['sitemap', 'initialData'], Map()));
+  const settings = useSelector((state: any) => state.getIn(['sitemap', 'settings'], Map()));
+  const initialData = useSelector((state: any) => state.getIn(['sitemap', 'initialData'], Map()));
   const { toggleNotification } = useNotification();
   const { put } = getFetchClient();
 
@@ -32,13 +32,12 @@ const Header = () => {
 
   return (
     <Box background="neutral100">
-      <HeaderLayout
+      <Layouts.Header
         primaryAction={(
           <Box style={{ display: 'flex' }}>
             <Button
               onClick={handleCancel}
               disabled={disabled}
-              type="cancel"
               size="L"
               variant="secondary"
             >
@@ -58,7 +57,6 @@ const Header = () => {
         )}
         title={formatMessage({ id: 'sitemap.Header.Title', defaultMessage: 'Sitemap' })}
         subtitle={formatMessage({ id: 'sitemap.Header.Description', defaultMessage: 'Settings for the sitemap XML' })}
-        as="h2"
       />
     </Box>
   );

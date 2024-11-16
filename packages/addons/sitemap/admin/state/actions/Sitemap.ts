@@ -30,7 +30,7 @@ import getTrad from '../../helpers/getTrad';
 
 // Get initial settings
 export function getSettings(toggleNotification, get) {
-  return async function(dispatch) {
+  return async function (dispatch) {
     try {
       const res = await get('/webtools-addon-sitemap/settings/');
       const settings = res.data;
@@ -95,11 +95,11 @@ export function discardModifiedContentTypes() {
 }
 
 export function generateSitemap(toggleNotification, get) {
-  return async function(dispatch) {
+  return async function (dispatch) {
     try {
       dispatch(setLoading(true));
       const res = await get('/webtools-addon-sitemap');
-      const message = res.data.message;
+      const message = res.data.message as string;
       dispatch(getSitemapInfo(toggleNotification, get));
       toggleNotification({ type: 'success', message });
       dispatch(setLoading(false));
@@ -110,7 +110,7 @@ export function generateSitemap(toggleNotification, get) {
 }
 
 export function getContentTypes(toggleNotification, get) {
-  return async function(dispatch) {
+  return async function (dispatch) {
     try {
       const res = await get('/webtools/info/getContentTypes');
       const contentTypes = res.data;
@@ -129,7 +129,7 @@ export function getContentTypesSucceeded(contentTypes) {
 }
 
 export function getLanguages(toggleNotification, get) {
-  return async function(dispatch) {
+  return async function (dispatch) {
     try {
       const res = await get('/webtools/info/getLanguages');
       const languages = res.data;
@@ -148,7 +148,7 @@ export function getLanguagesSucceeded(languages) {
 }
 
 export function submit(settings, toggleNotification, put) {
-  return async function(dispatch) {
+  return async function (dispatch) {
     try {
       await put('/webtools-addon-sitemap/settings/', settings);
       dispatch(onSubmitSucceeded());
@@ -187,7 +187,7 @@ export function deleteCustomEntry(key) {
 }
 
 export function getSitemapInfo(toggleNotification, get) {
-  return async function(dispatch) {
+  return async function (dispatch) {
     try {
       const res = await get('/webtools-addon-sitemap/info');
       const info = res.data;
@@ -206,7 +206,7 @@ export function getSitemapInfoSucceeded(info) {
 }
 
 export function getAllowedFields(toggleNotification, get) {
-  return async function(dispatch) {
+  return async function (dispatch) {
     try {
       const res = await get('/webtools-addon-sitemap/pattern/allowed-fields/');
       const fields = res.data;

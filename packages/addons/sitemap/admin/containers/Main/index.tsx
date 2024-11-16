@@ -14,11 +14,16 @@ import Tabs from '../../components/Tabs';
 import Header from '../../components/Header';
 import Info from '../../components/Info';
 
-import { getContentTypes, getSettings, getSitemapInfo, getLanguages } from '../../state/actions/Sitemap';
+import {
+  getContentTypes,
+  getSettings,
+  getSitemapInfo,
+  getLanguages,
+} from '../../state/actions/Sitemap';
 import Loader from '../../components/Loader';
 
 const App = () => {
-  const loading = useSelector((state) => state.getIn(['sitemap', 'loading'], false));
+  const loading = useSelector((state: any) => state.getIn(['sitemap', 'loading'], false));
 
   const dispatch = useDispatch();
   const { toggleNotification } = useNotification();
@@ -34,7 +39,7 @@ const App = () => {
 
   return (
     <div style={{ position: 'relative' }}>
-      {loading && <Loader fullPage />}
+      {loading && <Loader />}
       <Header />
       <Info />
       <Tabs />
