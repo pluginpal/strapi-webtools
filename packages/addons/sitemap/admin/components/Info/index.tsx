@@ -45,7 +45,7 @@ const Info = () => {
             <Button
               onClick={() => {
                 document.getElementById('tabs-2-tab').click();
-                setTimeout(() => (document.querySelector('input[name="hostname"]') as HTMLInputElement).focus(), 0);
+                setTimeout(() => (document.querySelector('input[name="hostname"]')).focus(), 0);
               }}
               variant="secondary"
               style={{ marginTop: '15px' }}
