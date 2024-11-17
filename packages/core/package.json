@@ -49,6 +49,7 @@
   "devDependencies": {
     "@strapi/pack-up": "^5.0.0",
     "@strapi/sdk-plugin": "^5.2.7",
+    "@strapi/strapi": "^5.0.0",
     "@types/koa": "^2.15.0",
     "@types/lodash": "^4",
     "@types/react-copy-to-clipboard": "^5.0.7",
