@@ -35,6 +35,8 @@ const EditPatternPage = () => {
   const { formatMessage } = useIntl();
   const { get, put, post } = getFetchClient();
 
+  console.log('why rerender?');
+
   useEffect(() => {
     setLoading(true);
     get<EnabledContentTypes>('/webtools/info/getContentTypes')
@@ -46,7 +48,7 @@ const EditPatternPage = () => {
       .catch(() => {
         setLoading(false);
       });
-  }, [get]);
+  }, []);
 
   useEffect(() => {
     setLoading(true);
@@ -60,7 +62,7 @@ const EditPatternPage = () => {
         setLoading(false);
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [get, id]);
+  }, [id]);
 
   const handleEditSubmit = async (
     values: PatternFormValues,
@@ -171,7 +173,7 @@ const EditPatternPage = () => {
             navigationAction={(
               <Link
                 startIcon={<ArrowLeft />}
-                href={`/plugins/${pluginId}/patterns`}
+                href={`/admin/plugins/${pluginId}/patterns`}
               >
                 {formatMessage({
                   id: 'global.back',

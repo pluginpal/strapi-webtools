@@ -76,7 +76,7 @@ const EditForm = () => {
                     defaultMessage: ' Generate automatic URL alias',
                   })}
                 </Checkbox>
-                <Link href="/plugins/webtools/patterns">Configure URL alias patterns.</Link>
+                <Link href="/admin/plugins/webtools/patterns">Configure URL alias patterns.</Link>
               </Box>
               <Box paddingTop={4}>
                 <Field.Root

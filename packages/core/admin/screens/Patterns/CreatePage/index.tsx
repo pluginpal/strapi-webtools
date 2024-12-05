@@ -50,7 +50,7 @@ const CreatePatternPage = () => {
       .catch(() => {
         setLoading(false);
       });
-  }, [get]);
+  }, []);
 
   const handleCreateSubmit = async (
     values: PatternFormValues,
@@ -147,7 +147,7 @@ const CreatePatternPage = () => {
               defaultMessage: 'Add a pattern for automatic URL alias generation.',
             })}
             navigationAction={(
-              <Link startIcon={<ArrowLeft />} href={`/plugins/${pluginId}/patterns`}>
+              <Link startIcon={<ArrowLeft />} href={`/admin/plugins/${pluginId}/patterns`}>
                 {formatMessage({
                   id: 'global.back',
                   defaultMessage: 'Back',

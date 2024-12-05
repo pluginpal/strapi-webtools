@@ -38,7 +38,7 @@ const ListPatternPage = () => {
     fetchData().catch((error) => {
       console.error('Failed to fetch data:', error);
     });
-  }, [get]);
+  }, []);
 
   if (loading) {
     return (

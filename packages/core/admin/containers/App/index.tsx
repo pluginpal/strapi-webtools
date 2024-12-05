@@ -13,9 +13,11 @@ import { Page, useStrapiApp, Layouts } from '@strapi/strapi/admin';
 
 import pluginPermissions from '../../permissions';
 import pluginId from '../../helpers/pluginId';
-import Patterns from '../../screens/Patterns';
 import List from '../../screens/List';
 import Overview from '../../screens/Overview';
+import PatternsListPage from '../../screens/Patterns/ListPage';
+import PatternsEditPage from '../../screens/Patterns/EditPage';
+import PatternsCreatePage from '../../screens/Patterns/CreatePage';
 
 const App = () => {
   const getPlugin = useStrapiApp('MyComponent', (state) => state.getPlugin);
@@ -61,10 +63,9 @@ const App = () => {
         <Routes>
           <Route path="/overview" element={<Overview />} />
           <Route path="/urls" element={<List />} />
-          <Route
-            path="/patterns"
-            element={<Patterns />}
-          />
+          <Route path="/patterns" element={<PatternsListPage />} />
+          <Route path="/patterns/new" element={<PatternsCreatePage />} />
+          <Route path="/patterns/:id" element={<PatternsEditPage />} />
           {routerComponents.map(({ Component }) => {
             console.log(Component);
             return (

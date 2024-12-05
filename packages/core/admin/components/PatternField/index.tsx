@@ -54,7 +54,7 @@ const PatternField: FC<Props> = ({
       setLoadingError(true);
       setLoading(false);
     });
-  }, [error, get]);
+  }, [error]);
 
   const HoverBox = styled(Box)`
     cursor: pointer;
