@@ -10,26 +10,22 @@ import {
 import { WarningCircle } from '@strapi/icons';
 
 type Props = {
-  isOpen: boolean;
-  onClose: () => void;
   onSubmit: () => void;
+  children: React.ReactNode;
 };
 
 const DeleteConfirmModal = (props: Props) => {
   const {
-    isOpen,
-    onClose,
     onSubmit,
+    children,
   } = props;
 
   const { formatMessage } = useIntl();
 
-  if (!isOpen) return null;
-
   return (
     <Dialog.Root>
       <Dialog.Trigger>
-        <div>test</div>
+        {children}
       </Dialog.Trigger>
       <Dialog.Content>
         <Dialog.Header>
@@ -53,9 +49,6 @@ const DeleteConfirmModal = (props: Props) => {
         <Dialog.Footer>
           <Dialog.Cancel>
             <Button
-              onClick={() => {
-                onClose();
-              }}
               variant="tertiary"
             >
               {formatMessage({
@@ -67,7 +60,6 @@ const DeleteConfirmModal = (props: Props) => {
           <Button
             variant="secondary"
             onClick={() => {
-              onClose();
               onSubmit();
             }}
           >

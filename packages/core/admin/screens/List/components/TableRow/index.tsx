@@ -32,9 +32,8 @@ const TableRow: FC<Props> = ({
   onDelete,
 }) => {
   const { toggleNotification } = useNotification();
-  const { get } = getFetchClient();
+  const { get, post } = getFetchClient();
   const { formatMessage } = useIntl();
-  const [openDeleteModal, setOpenDeleteModal] = useState(false);
   const navigate = useNavigate();
 
   const handleClick = (path: string) => {
@@ -46,7 +45,7 @@ const TableRow: FC<Props> = ({
   };
 
   const handleDelete = (id: number) => {
-    get(`/webtools/url-alias/delete/${id}`)
+    post(`/webtools/url-alias/delete/${id}`)
       .then(() => {
         if (onDelete) onDelete();
         toggleNotification({ type: 'success', message: formatMessage({ id: 'webtools.settings.success.url_alias.delete' }) });
@@ -93,20 +92,18 @@ const TableRow: FC<Props> = ({
           >
             <Pencil />
           </IconButton>
-          <IconButton
-            onClick={() => setOpenDeleteModal(true)}
-            label={formatMessage(
-              { id: 'webtools.settings.page.list.table.actions.delete', defaultMessage: 'Delete {target}' },
-              { target: `${row.url_path}` },
-            )}
-          >
-            <Trash />
-          </IconButton>
           <DeleteConfirmModal
-            isOpen={openDeleteModal}
-            onClose={() => setOpenDeleteModal(false)}
             onSubmit={() => handleDelete(row.id)}
-          />
+          >
+            <IconButton
+              label={formatMessage(
+                { id: 'webtools.settings.page.list.table.actions.delete', defaultMessage: 'Delete {target}' },
+                { target: `${row.url_path}` },
+              )}
+            >
+              <Trash />
+            </IconButton>
+          </DeleteConfirmModal>
         </Flex>
       </Td>
     </Tr>
