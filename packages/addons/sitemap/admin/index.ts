@@ -1,10 +1,13 @@
+import React from 'react';
 import { AdminApp } from '@pluginpal/webtools-helper-plugin';
+import { Route } from 'react-router-dom';
 import pluginPkg from '../package.json';
 import pluginId from './helpers/pluginId';
 import EditView from './components/EditView';
 import AdminRoute from './components/AdminRoute';
 import NavLink from './components/NavLink';
 import getTranslation from './helpers/getTranslation';
+import App from './containers/Main';
 
 const pluginDescription = pluginPkg.strapi.description || pluginPkg.description;
 const { name } = pluginPkg.strapi;
@@ -32,7 +35,10 @@ export default {
 
     app.getPlugin('webtools').injectComponent('webtoolsRouter', 'route', {
       name: 'settings-route',
-      Component: AdminRoute,
+      Component: {
+        path: "/plugins/webtools/sitemap",
+        element: App,
+      },
     });
   },
   async registerTrads(app: any) {

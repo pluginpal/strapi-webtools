@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { Formik, Form, FormikProps } from 'formik';
-import { useRouteMatch, useHistory } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import {
   Box,
   Link,
@@ -26,17 +26,14 @@ import HiddenLocalizedField from '../../../components/HiddenLocalizedField';
 import LanguageCheckboxes from '../../../components/LanguageCheckboxes';
 
 const EditPatternPage = () => {
-  const { push } = useHistory();
+  const navigate = useNavigate();
+  const { id } = useParams<{ id: string }>();
   const { toggleNotification } = useNotification();
   const [loading, setLoading] = useState(false);
   const [patternEntity, setPatternEntity] = useState<null | PatternEntity>(null);
   const [contentTypes, setContentTypes] = useState<EnabledContentTypes>([]);
   const { formatMessage } = useIntl();
   const { get, put, post } = getFetchClient();
-
-  const {
-    params: { id },
-  } = useRouteMatch<{ id: string }>(`/plugins/${pluginId}/patterns/:id`)!;
 
   useEffect(() => {
     setLoading(true);
@@ -75,7 +72,7 @@ const EditPatternPage = () => {
         data: values,
       });
 
-      push(`/plugins/${pluginId}/patterns`);
+      navigate(`/plugins/${pluginId}/patterns`);
       toggleNotification({
         type: 'success',
         message: formatMessage({ id: 'webtools.settings.success.edit' }),

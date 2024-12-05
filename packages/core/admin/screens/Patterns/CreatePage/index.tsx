@@ -6,7 +6,7 @@ import {
   FormikProps,
   FormikErrors,
 } from 'formik';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import {
   Box,
@@ -32,7 +32,7 @@ import LanguageCheckboxes from '../../../components/LanguageCheckboxes';
 import HiddenLocalizedField from '../../../components/HiddenLocalizedField';
 
 const CreatePatternPage = () => {
-  const { push } = useHistory();
+  const navigate = useNavigate();
   const { toggleNotification } = useNotification();
   const [loading, setLoading] = useState(false);
   const [contentTypes, setContentTypes] = useState<EnabledContentTypes>([]);
@@ -62,7 +62,7 @@ const CreatePatternPage = () => {
         data: values,
       });
 
-      push(`/plugins/${pluginId}/patterns`);
+      navigate(`/plugins/${pluginId}/patterns`);
       toggleNotification({
         type: 'success',
         message: formatMessage({ id: 'webtools.settings.success.create' }),

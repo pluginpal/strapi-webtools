@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch, useHistory } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
 import {
   SubNav,
@@ -18,17 +18,17 @@ import List from '../../screens/List';
 import Overview from '../../screens/Overview';
 
 const App = () => {
-  const history = useHistory();
-
   const getPlugin = useStrapiApp('MyComponent', (state) => state.getPlugin);
 
   const plugin = getPlugin(pluginId);
+  console.log(plugin);
   const sidebarComponents = plugin?.getInjectedComponents('webtoolsSidebar', 'link');
   const routerComponents = plugin?.getInjectedComponents('webtoolsRouter', 'route');
 
-  if (history.location.pathname === `/plugins/${pluginId}`) {
-    history.replace(`/plugins/${pluginId}/overview`);
-  }
+
+  // if (history.location.pathname === `/plugins/${pluginId}`) {
+  //   history.replace(`/plugins/${pluginId}/overview`);
+  // }
 
   return (
     <Page.Protect permissions={pluginPermissions['settings.patterns']}>
@@ -38,13 +38,13 @@ const App = () => {
             <SubNavHeader value="" label="Webtools" />
             <SubNavSections>
               <SubNavSection label="Core">
-                <SubNavLink href="/plugins/webtools/overview" key="test">
+                <SubNavLink href="/admin/plugins/webtools/overview" key="test">
                   Overview
                 </SubNavLink>
-                <SubNavLink href="/plugins/webtools/urls" key="test">
+                <SubNavLink href="/admin/plugins/webtools/urls" key="test">
                   All URLs
                 </SubNavLink>
-                <SubNavLink href="/plugins/webtools/patterns" key="test">
+                <SubNavLink href="/admin/plugins/webtools/patterns" key="test">
                   Url Patterns
                 </SubNavLink>
               </SubNavSection>
@@ -58,16 +58,27 @@ const App = () => {
           </SubNav>
         )}
       >
-        <Switch>
-          <Route path={[`/plugins/${pluginId}/overview`, `/plugins/${pluginId}`]} component={Overview} exact />
-          <Route path={`/plugins/${pluginId}/urls`} component={List} exact />
+        <Routes>
+          <Route path="/overview" element={<Overview />} />
+          <Route path="/urls" element={<List />} />
           <Route
-            path={`/plugins/${pluginId}/patterns`}
-            component={Patterns}
+            path="/patterns"
+            element={<Patterns />}
           />
-          {routerComponents.map(({ Component }) => <Component />)}
+          {routerComponents.map(({ Component }) => {
+            console.log(Component);
+            return (
+              <Route
+                path={Component.path}
+                element={<Component.element />}
+              />
+            );
+            // @ts-ignore
+            // eslint-disable-next-line react/jsx-pascal-case
+            return <Component.type />;
+          })}
           {/* <Route path="" component={NotFound} /> */}
-        </Switch>
+        </Routes>
       </Layouts.Root>
     </Page.Protect>
   );

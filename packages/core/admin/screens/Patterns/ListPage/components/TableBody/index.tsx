@@ -5,7 +5,7 @@ import {
 import { Pencil, Trash } from '@strapi/icons';
 import { getFetchClient, useNotification } from '@strapi/strapi/admin';
 import { useIntl } from 'react-intl';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import pluginId from '../../../../../helpers/pluginId';
 import { PatternEntity } from '../../../../../types/url-patterns';
@@ -17,7 +17,7 @@ interface Props {
 const TableBody: React.FC<Props> = ({ patterns }) => {
   const [statePatterns, setStatePatterns] = useState(patterns);
   const { formatMessage } = useIntl();
-  const { push } = useHistory();
+  const navigate = useNavigate();
   const { toggleNotification } = useNotification();
   const { get } = getFetchClient();
 
@@ -34,7 +34,7 @@ const TableBody: React.FC<Props> = ({ patterns }) => {
   };
 
   const handleClickEdit = (id: number) => {
-    push(`/plugins/${pluginId}/patterns/${id}`);
+    navigate(`/plugins/${pluginId}/patterns/${id}`);
   };
 
   return (

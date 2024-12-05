@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { useHistory } from 'react-router-dom';
 
 import { Button } from '@strapi/design-system';
 
@@ -35,7 +34,6 @@ const List = () => {
   const [openModal, setOpenModal] = useState<boolean>(false);
   const { post } = getFetchClient();
 
-  const history = useHistory();
   const { formatMessage } = useIntl();
   const { get } = getFetchClient();
   const [contentTypes, setContentTypes] = useState<EnabledContentTypes>([]);
@@ -49,10 +47,10 @@ const List = () => {
       .catch(() => {
         toggleNotification({ type: 'warning', message: formatMessage({ id: 'notification.error' }) });
       });
-  }, [get, toggleNotification]);
+  }, []);
 
   useEffect(() => {
-    get<any>(`/webtools/url-alias/findMany${history.location.search}`)
+    get<any>(`/webtools/url-alias/findMany${window.location.search}`)
       .then((res) => {
         setPaths(res.data.results);
         setPagination(res.data.pagination);
@@ -60,7 +58,7 @@ const List = () => {
       .catch(() => {
         toggleNotification({ type: 'warning', message: formatMessage({ id: 'notification.error' }) });
       });
-  }, [history.location.search, queryCount, toggleNotification]);
+  }, [window.location.search, queryCount, toggleNotification]);
 
   useEffect(() => {
     get<Config>('/webtools/info/config')

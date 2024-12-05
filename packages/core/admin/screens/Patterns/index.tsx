@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { Page } from '@strapi/strapi/admin';
 import pluginId from '../../helpers/pluginId';
 import pluginPermissions from '../../permissions';
@@ -9,16 +9,15 @@ import PatternsCreatePage from './CreatePage';
 
 const Patterns = () => (
   <Page.Protect permissions={pluginPermissions['settings.patterns']}>
-    <Switch>
+    <Routes>
       <Route
         path={`/plugins/${pluginId}/patterns/new`}
-        component={PatternsCreatePage}
-        exact
+        element={<PatternsCreatePage />}
       />
-      <Route path={`/plugins/${pluginId}/patterns/:id`} component={PatternsEditPage} exact />
-      <Route path={`/plugins/${pluginId}/patterns`} component={PatternsListPage} exact />
+      <Route path={`/plugins/${pluginId}/patterns/:id`} element={<PatternsEditPage />} />
+      <Route path={`/plugins/${pluginId}/patterns`} element={<PatternsListPage />} />
       {/* <Route path="" component={NotFound} /> */}
-    </Switch>
+    </Routes>
   </Page.Protect>
 );
 

@@ -10,7 +10,7 @@ import {
 import { useNotification, getFetchClient } from '@strapi/strapi/admin';
 import { useIntl } from 'react-intl';
 import { Trash, ExternalLink, Pencil } from '@strapi/icons';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import DeleteConfirmModal from '../DeleteConfirmModal';
 import { Config } from '../../../../../server/admin-api/config';
 
@@ -35,12 +35,12 @@ const TableRow: FC<Props> = ({
   const { get } = getFetchClient();
   const { formatMessage } = useIntl();
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
-  const { push } = useHistory();
+  const navigate = useNavigate();
 
   const handleClick = (path: string) => {
     get<{ link: string }>(`/webtools/url-alias/editLink?path=${path}`)
       .then((res) => {
-        push(res.data.link);
+        navigate(res.data.link);
       })
       .catch(() => { });
   };

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import {
   Loader,
   Button,
@@ -19,7 +19,7 @@ const ListPatternPage = () => {
   const [patterns, setPatterns] = useState<PatternEntity[]>([]);
   const [loading, setLoading] = useState(false);
   const { formatMessage } = useIntl();
-  const { push } = useHistory();
+  const navigate = useNavigate();
   const { get } = getFetchClient();
 
   useEffect(() => {
@@ -54,7 +54,7 @@ const ListPatternPage = () => {
         title={formatMessage({ id: 'webtools.settings.page.patterns.title', defaultMessage: 'Patterns' })}
         subtitle={formatMessage({ id: 'webtools.settings.page.patterns.description', defaultMessage: 'A list of all the known URL alias patterns.' })}
         primaryAction={(
-          <Button onClick={() => push(`/plugins/${pluginId}/patterns/new`)} startIcon={<Plus />} size="L">
+          <Button onClick={() => navigate(`/plugins/${pluginId}/patterns/new`)} startIcon={<Plus />} size="L">
             {formatMessage({
               id: 'webtools.settings.button.add_pattern',
               defaultMessage: 'Add new pattern',

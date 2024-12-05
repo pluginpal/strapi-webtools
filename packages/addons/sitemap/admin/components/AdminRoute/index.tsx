@@ -6,7 +6,7 @@ const AdminRoute = () => {
   return (
     <Route
       path="/plugins/webtools/sitemap"
-      component={App}
+      element={<App />}
     />
   );
 };
