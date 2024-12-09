@@ -210,13 +210,9 @@ export default () => ({
     fields = fields.filter((field) => field);
 
     // For fields containing dots, extract the first part (relation)
-    const relationsWithDots = fields.filter((field) => field.includes('.')).map((field) => field.split('.')[0]);
+    const relations = fields.filter((field) => field.includes('.')).map((field) => field.split('.')[0]);
 
-    // For fields without dots, treat them as direct fields (e.g., 'title' in /en/[title])
-    const directRelations = fields.filter((field) => !field.includes('.'));
-
-    // Combine both types of relations
-    return [...relationsWithDots, ...directRelations];
+    return relations;
   },
 
 
