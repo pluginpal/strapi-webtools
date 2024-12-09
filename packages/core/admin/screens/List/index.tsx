@@ -31,7 +31,6 @@ const List = () => {
   const [paths, setPaths] = useState<any[] | null>(null);
   const [config, setConfig] = useState<Config | null>(null);
   const [pagination, setPagination] = useState<Pagination | null>(null);
-  const [openModal, setOpenModal] = useState<boolean>(false);
   const { post } = getFetchClient();
 
   const { formatMessage } = useIntl();
@@ -99,12 +98,18 @@ const List = () => {
         subtitle={formatMessage({ id: 'webtools.settings.page.list.description', defaultMessage: 'A list of all the known URL aliases.' })}
         // TODO: Generate all button.
         primaryAction={(
-          <Button onClick={() => setOpenModal(true)} size="L">
-            {formatMessage({
-              id: 'webtools.settings.button.generate_paths',
-              // defaultMessage: 'Generate paths',
-            })}
-          </Button>
+          <GeneratePathsModal
+            // @ts-ignore
+            onSubmit={handleGeneratePaths}
+            contentTypes={contentTypes}
+          >
+            <Button size="L">
+              {formatMessage({
+                id: 'webtools.settings.button.generate_paths',
+                // defaultMessage: 'Generate paths',
+              })}
+            </Button>
+          </GeneratePathsModal>
         )}
       />
       <Layouts.Content>
@@ -116,13 +121,6 @@ const List = () => {
           contentTypes={contentTypes}
         />
       </Layouts.Content>
-      <GeneratePathsModal
-        isOpen={openModal}
-        // @ts-ignore
-        onSubmit={handleGeneratePaths}
-        onClose={() => setOpenModal(false)}
-        contentTypes={contentTypes}
-      />
     </Page.Protect>
   );
 };

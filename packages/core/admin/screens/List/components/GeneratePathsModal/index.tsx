@@ -15,25 +15,25 @@ import { EnabledContentType, EnabledContentTypes } from '../../../../types/enabl
 import { GenerationType } from '../../../../../server/types';
 
 type Props = {
-  isOpen: boolean;
-  onClose: () => void;
   onSubmit: (types: EnabledContentType['uid'][], generationType?: GenerationType) => void;
   contentTypes: EnabledContentTypes;
+  children: React.ReactNode;
 };
 
 const GeneratePathsModal = ({
-  isOpen,
-  onClose,
   onSubmit,
   contentTypes,
+  children,
 }: Props) => {
   const { formatMessage } = useIntl();
   const [selectedContentTypes, setSelectedContentTypes] = React.useState<EnabledContentType['uid'][]>([]);
   const [selectedGenerationType, setSelectedGenerationType] = React.useState<GenerationType>();
-  if (!isOpen) return null;
 
   return (
     <Modal.Root>
+      <Modal.Trigger>
+        {children}
+      </Modal.Trigger>
       <Modal.Content>
         <Modal.Header>
           <Typography textColor="neutral800" variant="omega" fontWeight="bold">
@@ -64,7 +64,7 @@ const GeneratePathsModal = ({
                     aria-label={`Select ${contentType.name}`}
                     // @ts-ignore
                     value={selectedContentTypes.includes(contentType.uid)}
-                    onValueChange={() => {
+                    onCheckedChange={() => {
                       if (selectedContentTypes.includes(contentType.uid)) {
                         const newContentTypes = selectedContentTypes
                           .filter((uid) => uid !== contentType.uid);
@@ -96,7 +96,7 @@ const GeneratePathsModal = ({
                 })}
               </Typography>
               <Box marginTop="2">
-                <Radio.Group onChange={(e: ChangeEvent<HTMLInputElement>) => setSelectedGenerationType(e.target.value as GenerationType)} value={selectedGenerationType} name="meal">
+                <Radio.Group onValueChange={(value: GenerationType) => setSelectedGenerationType(value)} value={selectedGenerationType} name="meal">
                   <Flex direction="column" alignItems="start" gap="2">
                     <Radio.Item value="only_without_alias">
                       {formatMessage({
@@ -124,7 +124,7 @@ const GeneratePathsModal = ({
         </Modal.Body>
         <Modal.Footer>
           <Modal.Close>
-            <Button onClick={onClose} variant="tertiary">
+            <Button variant="tertiary">
               {formatMessage({
                 id: 'webtools.settings.button.cancel',
                 defaultMessage: 'Cancel',
@@ -134,7 +134,6 @@ const GeneratePathsModal = ({
           <Button
             onClick={() => {
               onSubmit(selectedContentTypes, selectedGenerationType);
-              onClose();
             }}
           >
             {formatMessage({
