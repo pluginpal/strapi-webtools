@@ -3,8 +3,7 @@
 import get from 'lodash/get';
 import { Schema } from '@strapi/strapi';
 import { Context } from 'koa';
-
-import getAddons from '../../util/getAddons';
+import getAddons from '../util/getAddons';
 
 /**
  * Info controller

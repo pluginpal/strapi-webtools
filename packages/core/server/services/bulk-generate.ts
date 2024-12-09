@@ -1,10 +1,11 @@
-import { Common } from '@strapi/types';
-import { getPluginService } from '../../util/getPluginService';
-import { GenerationType } from '../../types';
+import { UID } from '@strapi/strapi';
+
+import { getPluginService } from '../util/getPluginService';
+import { GenerationType } from '../types';
 
 export interface GenerateParams {
-  types: Common.UID.ContentType[],
-  generationType: GenerationType
+  types: UID.ContentType[],
+  generationType: GenerationType,
 }
 
 /**
@@ -13,12 +14,11 @@ export interface GenerateParams {
  * @returns {void}
  */
 const createLanguageLinksForUrlAliases = async () => {
-  const urlAliases = await getPluginService('urlAliasService').findMany(true, {
-    // @ts-ignore
+  const urlAliases = await strapi.documents('plugin::webtools.url-alias').findMany({
     fields: ['id', 'contenttype', 'locale'],
   });
 
-  await Promise.all(urlAliases.results.map(async (urlAlias) => {
+  await Promise.all(urlAliases.map(async (urlAlias) => {
     const relatedEntity = await getPluginService('urlAliasService').findRelatedEntity(urlAlias, {
       fields: [],
       populate: {

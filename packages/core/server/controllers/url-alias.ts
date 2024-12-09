@@ -1,49 +1,19 @@
 
-
+import { factories } from '@strapi/strapi';
 import { Context } from 'koa';
-import { EntityService } from '@strapi/strapi';
 import { errors } from '@strapi/utils';
 
-import { getPluginService } from '../../util/getPluginService';
-import { KoaContext } from '../../types/koa';
-import { GenerateParams } from '../services/bulk-generate';
-
+import { getPluginService } from '../util/getPluginService';
+import { KoaContext } from '../types/koa';
+import { GenerateParams } from '../admin-api/services/bulk-generate';
 
 /**
- * Path controller
+ * URL alias controller
  */
 
-export default {
-  findOne: async (ctx: Context & { params: { id: number } }) => {
-    const { id } = ctx.params;
-    const pathEntity = await getPluginService('urlAliasService').findOne(id);
-    ctx.body = pathEntity;
-  },
-  findMany: async (ctx: Context) => {
-    const pathEntities = await getPluginService('urlAliasService').findMany(true, ctx.query);
-    ctx.body = pathEntities;
-  },
-  delete: async (ctx: Context & { params: { id: number } }) => {
-    const { id } = ctx.params;
-    await getPluginService('urlAliasService').delete(id);
-    ctx.body = { succes: true };
-  },
-  update: async (ctx: KoaContext<EntityService.Params.Pick<'plugin::webtools.url-alias', 'data'>> & { params: { id: number } }) => {
-    const { id } = ctx.params;
-    const { data } = ctx.request.body;
-    const patternEntity = await getPluginService('urlAliasService').update(
-      id,
-      data,
-    );
-    ctx.body = patternEntity;
-  },
-  create: async (ctx: KoaContext<EntityService.Params.Pick<'plugin::webtools.url-alias', 'data'>>) => {
-    const { data } = ctx.request.body;
-    const patternEntity = await getPluginService('urlAliasService').create(
-      data,
-    );
-    ctx.body = patternEntity;
-  },
+const contentTypeSlug = 'plugin::webtools.url-alias';
+
+export default factories.createCoreController(contentTypeSlug, ({ strapi }) => ({
   editLink: async (ctx: Context) => {
     const { path } = ctx.query;
     const { entity, contentType } = await getPluginService('byPathService').byPath(path as string);
@@ -87,4 +57,4 @@ export default {
       message: `Successfully generated ${generatedCount} URL alias${generatedCount > 1 ? 'es' : ''}.`,
     };
   },
-};
+}));

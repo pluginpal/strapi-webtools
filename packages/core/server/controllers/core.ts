@@ -1,8 +1,8 @@
 
 import { Context } from 'koa';
 
-import { getPluginService } from '../../util/getPluginService';
-import { sanitizeOutput } from '../../util/sanitizeOutput';
+import { getPluginService } from '../util/getPluginService';
+import { sanitizeOutput } from '../util/sanitizeOutput';
 
 /**
  * Router controller

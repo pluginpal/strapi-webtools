@@ -1,47 +1,34 @@
+import { factories, Schema, UID } from '@strapi/strapi';
 import snakeCase from 'lodash/snakeCase';
 import deburr from 'lodash/deburr';
 import toLower from 'lodash/toLower';
 import kebabCase from 'lodash/kebabCase';
-import { EntityService, Schema } from '@strapi/strapi';
-import { Common } from '@strapi/types';
+import { getPluginService } from '../util/getPluginService';
 
-import { getPluginService } from '../../util/getPluginService';
+const contentTypeSlug = 'plugin::webtools.url-pattern';
 
+export default factories.createCoreService(contentTypeSlug, ({ strapi }) => ({
+  // /**
+  //  * Create a new URL pattern.
+  //  *
+  //  * @param {object} data - The data to create the URL pattern with.
+  //  * @returns {Promise<object>} The created URL pattern entity.
+  //  */
+  // create: async (data: EntityService.Params.Pick<'plugin::webtools.url-pattern', 'data'>['data']) => {
+  //   const formattedData = data;
 
-export default () => ({
-  /**
-   * Create a new URL pattern.
-   *
-   * @param {object} data - The data to create the URL pattern with.
-   * @returns {Promise<object>} The created URL pattern entity.
-   */
-  create: async (data: EntityService.Params.Pick<'plugin::webtools.url-pattern', 'data'>['data']) => {
-    const formattedData = data;
+  //   if (data.code) {
+  //     formattedData.code = snakeCase(deburr(toLower(data.code)));
+  //   } else {
+  //     formattedData.code = snakeCase(deburr(toLower(data.label)));
+  //   }
 
-    if (data.code) {
-      formattedData.code = snakeCase(deburr(toLower(data.code)));
-    } else {
-      formattedData.code = snakeCase(deburr(toLower(data.label)));
-    }
+  //   const patternEntity = await strapi.entityService.create('plugin::webtools.url-pattern', {
+  //     data,
+  //   });
 
-    const patternEntity = await strapi.entityService.create('plugin::webtools.url-pattern', {
-      data,
-    });
-
-    return patternEntity;
-  },
-
-  /**
-   * Find one URL pattern by its ID.
-   *
-   * @param {number} id - The ID of the URL pattern.
-   * @returns {Promise<object>} The found URL pattern entity.
-   */
-  findOne: async (id: number) => {
-    const patternEntity = await strapi.entityService.findOne('plugin::webtools.url-pattern', id);
-
-    return patternEntity;
-  },
+  //   return patternEntity;
+  // },
 
   /**
    * Find URL patterns by UID and optionally language code.
@@ -68,41 +55,6 @@ export default () => ({
     const patternsArray = patterns.map((pattern) => pattern.pattern);
 
     return patternsArray;
-  },
-
-  /**
-   * Find many URL patterns based on given parameters.
-   *
-   * @param {object} params - The parameters for finding URL patterns.
-   * @returns {Promise<object[]>} The found URL patterns.
-   */
-  findMany: async (params: string) => {
-    const patternEntities = await strapi.entityService.findMany('plugin::webtools.url-pattern', params);
-
-    return patternEntities;
-  },
-
-  /**
-   * Update a URL pattern by its ID.
-   *
-   * @param {number} id - The ID of the URL pattern to update.
-   * @param {object} data - The new data for the URL pattern.
-   * @returns {Promise<object>} The updated URL pattern entity.
-   */
-  update: async (id: number, data: EntityService.Params.Pick<'plugin::webtools.url-pattern', 'data'>['data']) => {
-    const patternEntity = await strapi.entityService.update('plugin::webtools.url-pattern', id, { data });
-
-    return patternEntity;
-  },
-
-  /**
-   * Delete a URL pattern by its ID.
-   *
-   * @param {number} id - The ID of the URL pattern to delete.
-   * @returns {Promise<void>}
-   */
-  delete: async (id: number) => {
-    await strapi.entityService.delete('plugin::webtools.url-pattern', id);
   },
 
   /**
@@ -225,7 +177,7 @@ export default () => ({
    * @returns {string} The resolved path.
    */
   resolvePattern: (
-    uid: Common.UID.ContentType,
+    uid: UID.ContentType,
     entity: { [key: string]: string | number | Date },
     urlPattern?: string,
   ): string => {
@@ -328,4 +280,4 @@ export default () => ({
       message: 'Valid pattern',
     };
   },
-});
+}));

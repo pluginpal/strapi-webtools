@@ -1,15 +1,15 @@
-import { Schema, Shared } from '@strapi/strapi';
-import { isContentTypeEnabled } from '../../util/enabledContentTypes';
-import { pluginId } from '../../util/pluginId';
+import { Schema } from '@strapi/strapi';
+import { isContentTypeEnabled } from '../util/enabledContentTypes';
+import { pluginId } from '../util/pluginId';
 
 export const disableContentType = async ({ oldContentTypes, contentTypes }: {
   oldContentTypes?: null | {
-    [uid in keyof Shared.ContentTypes]?: Shared.ContentTypes[uid];
+    [uid in keyof Schema.ContentTypes]?: Schema.ContentTypes[uid];
   } & {
     [uid: string]: Schema.ContentType;
   },
   contentTypes: {
-    [uid in keyof Shared.ContentTypes]: Shared.ContentTypes[uid];
+    [uid in keyof Schema.ContentTypes]: Schema.ContentTypes[uid];
   } & {
     [uid: string]: Schema.ContentType;
   },
