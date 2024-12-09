@@ -8,7 +8,7 @@ import pluginPkg from '../package.json';
 import EditView from './components/EditView';
 import pluginId from './helpers/pluginId';
 import getTrad from './helpers/getTrad';
-import getTranslation from './helpers/getTranslation';
+import { prefixPluginTranslations } from './helpers/prefixPluginTranslations';
 import CheckboxConfirmation from './components/ContentManagerHooks/ConfirmationCheckbox';
 
 import { PluginIcon } from './components/PluginIcon';
@@ -98,7 +98,7 @@ export default {
         return import(`./translations/${locale}.json`)
           .then(({ default: data }) => {
             return {
-              data: getTranslation(data),
+              data: prefixPluginTranslations(data, pluginId),
               locale,
             };
           })
