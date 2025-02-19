@@ -29,15 +29,15 @@
 //     }
 
 //     await Promise.all(languages.map(async (lang) => {
-//       const urlPattern = await getPluginService('urlPatternService').findByUid(uid, lang);
-//       const languageRelations = getPluginService('urlPatternService').getRelationsFromPattern(urlPattern);
+//       const urlPattern = await getPluginService('url-pattern').findByUid(uid, lang);
+//       const languageRelations = getPluginService('url-pattern').getRelationsFromPattern(urlPattern);
 
 //       relations = [...relations, ...languageRelations];
 //     }));
 
 //     // If a URL alias was created, fetch it.
 //     if (opts.data.url_alias) {
-//       urlAliasEntity = await getPluginService('urlAliasService').findOne(opts.data.url_alias);
+//       urlAliasEntity = await getPluginService('url-alias').findOne(opts.data.url_alias);
 //     }
 
 //     // If a URL alias was created and 'generated' is set to false, do nothing.
@@ -78,14 +78,14 @@
 //     };
 
 //     const combinedEntity = { ...newEntityWithoutLocalizations };
-//     const urlPatterns = await getPluginService('urlPatternService').findByUid(uid, combinedEntity.locale);
+//     const urlPatterns = await getPluginService('url-pattern').findByUid(uid, combinedEntity.locale);
 
 //     await Promise.all(urlPatterns.map(async (urlPattern) => {
-//       const generatedPath = getPluginService('urlPatternService').resolvePattern(uid, combinedEntity, urlPattern);
+//       const generatedPath = getPluginService('url-pattern').resolvePattern(uid, combinedEntity, urlPattern);
 
 //       // If a URL alias was created and 'generated' is set to true, update the alias.
 //       if (urlAliasEntity?.generated === true) {
-//         urlAliasEntity = await getPluginService('urlAliasService').update(urlAliasEntity.id, {
+//         urlAliasEntity = await getPluginService('url-alias').update(urlAliasEntity.id, {
 //           // @ts-ignore
 //           url_path: generatedPath,
 //           generated: true,
@@ -98,7 +98,7 @@
 
 //       // If no URL alias was created, create one.
 //       if (!urlAliasEntity) {
-//         urlAliasEntity = await getPluginService('urlAliasService').create({
+//         urlAliasEntity = await getPluginService('url-alias').create({
 //           url_path: generatedPath,
 //           generated: true,
 //           contenttype: uid,
@@ -158,8 +158,8 @@
 //     }
 
 //     await Promise.all(languages.map(async (lang) => {
-//       const urlPattern = await getPluginService('urlPatternService').findByUid(uid, lang);
-//       const languageRelations = getPluginService('urlPatternService').getRelationsFromPattern(urlPattern);
+//       const urlPattern = await getPluginService('url-pattern').findByUid(uid, lang);
+//       const languageRelations = getPluginService('url-pattern').getRelationsFromPattern(urlPattern);
 
 //       relations = [...relations, ...languageRelations];
 //     }));
@@ -195,7 +195,7 @@
 
 //     // @ts-ignore
 //     if (opts.data.url_alias?.length) {
-//       urlAliasEntity = await getPluginService('urlAliasService').findOne(opts.data.url_alias);
+//       urlAliasEntity = await getPluginService('url-alias').findOne(opts.data.url_alias);
 //       // @ts-ignore
 //       // eslint-disable-next-line max-len
 //       // eslint-disable-next-line ,@typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-member-access
@@ -211,9 +211,9 @@
 //     }
 
 //     // Generate the path.
-//     const urlPatterns = await getPluginService('urlPatternService').findByUid(uid, entity.locale);
+//     const urlPatterns = await getPluginService('url-pattern').findByUid(uid, entity.locale);
 //     await Promise.all(urlPatterns.map(async (urlPattern) => {
-//       const generatedPath = getPluginService('urlPatternService').resolvePattern(uid, entityWithoutLocalizations, urlPattern);
+//       const generatedPath = getPluginService('url-pattern').resolvePattern(uid, entityWithoutLocalizations, urlPattern);
 
 //       // @ts-ignore
 //       if (urlAliasEntity?.length) {
@@ -221,7 +221,7 @@
 //         // eslint-disable-next-line @typescript-eslint/no-unsafe-call
 //         await Promise.all(urlAliasEntity.map(async (alias: { generated: boolean; id: ID; }) => {
 //           if (alias.generated === true) {
-//             await getPluginService('urlAliasService').update(alias.id, {
+//             await getPluginService('url-alias').update(alias.id, {
 //               // @ts-ignore
 //               url_path: generatedPath,
 //               generated: true,
@@ -238,7 +238,7 @@
 //       // @ts-ignore
 //       if (!urlAliasEntity?.length) {
 //         console.log('creating new url alias because empty array', urlAliasEntity);
-//         urlAliasEntity = await getPluginService('urlAliasService').create({
+//         urlAliasEntity = await getPluginService('url-alias').create({
 //           url_path: generatedPath,
 //           generated: true,
 //           contenttype: uid,
@@ -300,7 +300,7 @@
 //       // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-call
 //       await Promise.all(entity.url_alias.map(async (url_alias: { id: string | number; }) => {
 //         if (url_alias?.id) {
-//           await getPluginService('urlAliasService').delete(url_alias.id);
+//           await getPluginService('url-alias').delete(url_alias.id);
 //         }
 //       }));
 //     }
@@ -328,8 +328,8 @@
 //     }
 
 //     await Promise.all(languages.map(async (lang) => {
-//       const urlPattern = await getPluginService('urlPatternService').findByUid(uid, lang);
-//       const languageRelations = getPluginService('urlPatternService').getRelationsFromPattern(urlPattern);
+//       const urlPattern = await getPluginService('url-pattern').findByUid(uid, lang);
+//       const languageRelations = getPluginService('url-pattern').getRelationsFromPattern(urlPattern);
 //       relations = [...relations, ...languageRelations];
 //     }));
 
@@ -367,11 +367,11 @@
 
 //     const combinedEntity = { ...clonedEntityWithoutLocalizations };
 
-//     const urlPatterns = await getPluginService('urlPatternService').findByUid(uid, combinedEntity.locale);
+//     const urlPatterns = await getPluginService('url-pattern').findByUid(uid, combinedEntity.locale);
 //     await Promise.all(urlPatterns.map(async (urlPattern) => {
-//       const generatedPath = getPluginService('urlPatternService').resolvePattern(uid, combinedEntity, urlPattern);
+//       const generatedPath = getPluginService('url-pattern').resolvePattern(uid, combinedEntity, urlPattern);
 //       // Create a new URL alias for the cloned entity
-//       const newUrlAlias = await getPluginService('urlAliasService').create({
+//       const newUrlAlias = await getPluginService('url-alias').create({
 //         url_path: generatedPath,
 //         generated: true,
 //         contenttype: uid,
@@ -419,7 +419,7 @@
 //         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-call
 //         await Promise.all(entity.url_alias.map(async (url_alias: { id: string | number; }) => {
 //           if (url_alias?.id) {
-//             await getPluginService('urlAliasService').delete(url_alias.id);
+//             await getPluginService('url-alias').delete(url_alias.id);
 //           }
 //         }));
 //       }

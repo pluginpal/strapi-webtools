@@ -47,7 +47,7 @@ export default {
       uid: string;
     }[] = [];
     if (strapi.plugin('i18n')) {
-      const locales = await strapi.entityService.findMany('plugin::i18n.locale');
+      const locales = await strapi.documents('plugin::i18n.locale').findMany();
       locales.forEach((locale) => {
         formattedLocales.push({
           name: locale.name,
@@ -61,7 +61,7 @@ export default {
   },
 
   getAddons: (ctx: Context) => {
-    const addons = getAddons(strapi);
+    const addons = getAddons();
     ctx.body = addons;
   },
 

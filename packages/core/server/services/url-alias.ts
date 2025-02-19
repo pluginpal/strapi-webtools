@@ -1,4 +1,5 @@
 import { factories, UID } from '@strapi/strapi';
+import { Modules } from '@strapi/types';
 import { get } from 'lodash';
 import { getPluginService } from '../util/getPluginService';
 
@@ -8,35 +9,16 @@ import { getPluginService } from '../util/getPluginService';
 
 const contentTypeSlug = 'plugin::webtools.url-alias';
 
-/**
- * Finds a path from the original path that is unique
- */
-const duplicateCheck = async (
-  originalPath: string,
-  ignoreId?: number,
-  ext: number = -1,
-): Promise<string> => {
-  const extension = ext >= 0 ? `-${ext}` : '';
-  const newPath = originalPath + extension;
-  const pathAlreadyExists = await getPluginService('urlAliasService').findByPath(newPath, ignoreId);
-
-  if (pathAlreadyExists) {
-    return duplicateCheck(originalPath, ignoreId, ext + 1);
-  }
-
-  return newPath;
-};
-
-export default factories.createCoreService(contentTypeSlug, ({ strapi }) => ({
-  findRelatedEntity: async (path: string, query: EntityService.Params.Pick<any, 'fields' | 'populate' | 'pagination' | 'sort' | 'filters' | '_q' | 'publicationState' | 'plugin'> = {}) => {
+const customServices = () => ({
+  findRelatedEntity: async (path: string, query: Modules.Documents.ServiceParams['findMany'] = {}) => {
     let excludeDrafts = false;
 
-    const urlAliasEntity = await getPluginService('urlAliasService').findByPath(path);
+    const urlAliasEntity = await getPluginService('url-alias').findByPath(path);
     if (!urlAliasEntity) {
       return {};
     }
 
-    const contentTypeUid = urlAliasEntity.contenttype as Common.UID.ContentType;
+    const contentTypeUid = urlAliasEntity.contenttype as UID.ContentType;
 
     // Check drafAndPublish setting.
     const contentType = strapi.contentTypes[contentTypeUid];
@@ -44,13 +26,11 @@ export default factories.createCoreService(contentTypeSlug, ({ strapi }) => ({
       excludeDrafts = true;
     }
 
-    const entities = await strapi.entityService.findMany(contentTypeUid, {
-      ...query,
+    const entities = await strapi.documents(contentTypeUid).findMany({
       filters: {
         ...query?.filters,
-        // @ts-ignore
         url_alias: urlAliasEntity.id,
-        published_at: excludeDrafts ? {
+        publishedAt: excludeDrafts ? {
           $notNull: true,
         } : {},
       },
@@ -82,12 +62,12 @@ export default factories.createCoreService(contentTypeSlug, ({ strapi }) => ({
    * @param {string} path the path.
    * @param {number} id the id to ignore.
    */
-  findByPath: async (path: string, id: Entity.ID = 0) => {
-    const pathEntity = await strapi.entityService.findMany('plugin::webtools.url-alias', {
+  findByPath: async (path: string, documentId: string = '') => {
+    const pathEntity = await strapi.documents('plugin::webtools.url-alias').findMany({
       filters: {
         url_path: path,
-        id: {
-          $not: id,
+        documentId: {
+          $not: documentId,
         },
       },
       limit: 1,
@@ -95,4 +75,6 @@ export default factories.createCoreService(contentTypeSlug, ({ strapi }) => ({
 
     return pathEntity[0];
   },
-}));
+});
+
+export default factories.createCoreService(contentTypeSlug, customServices);

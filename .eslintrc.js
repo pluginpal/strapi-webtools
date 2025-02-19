@@ -34,7 +34,8 @@ module.exports = {
         "project": [path.join(__dirname, './tsconfig.jest.json')],
       },
       "rules": {
-        "@typescript-eslint/await-thenable": "off"
+        "@typescript-eslint/await-thenable": "off",
+        "import/no-relative-packages": "off",
       }
     }
   ],
@@ -48,6 +49,6 @@ module.exports = {
     }],
     "import/prefer-default-export": "off",
     "arrow-body-style": "off",
-    "@typescript-eslint/unbound-method": "off"
+    "@typescript-eslint/unbound-method": "off",
   }
 }

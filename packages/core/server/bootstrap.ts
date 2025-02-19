@@ -1,6 +1,4 @@
 import { Core } from '@strapi/strapi';
-import { IStrapi } from './types/strapi';
-import { getPluginService } from './util/getPluginService';
 
 export default async ({ strapi }: { strapi: Core.Strapi }) => {
   try {

@@ -15,16 +15,16 @@ export interface GenerateParams {
  */
 const createLanguageLinksForUrlAliases = async () => {
   const urlAliases = await strapi.documents('plugin::webtools.url-alias').findMany({
-    fields: ['id', 'contenttype', 'locale'],
+    fields: ['id', 'contenttype', 'locale', 'url_path'],
   });
 
   await Promise.all(urlAliases.map(async (urlAlias) => {
-    const relatedEntity = await getPluginService('urlAliasService').findRelatedEntity(urlAlias, {
-      fields: [],
+    const relatedEntity = await getPluginService('url-alias').findRelatedEntity(urlAlias.url_path, {
+      fields: ['id'],
       populate: {
-        // @ts-ignore
         localizations: {
           populate: {
+            // @ts-ignore
             url_alias: {
               fields: ['id'],
             },
@@ -80,19 +80,15 @@ const generateUrlAliases = async (params: GenerateParams): Promise<number> => {
   await Promise.all(types.map(async (type) => {
     if (generationType === 'all') {
       // Delete all the URL aliases for the given type.
-      await strapi.entityService.deleteMany('plugin::webtools.url-alias', {
-        // @ts-ignore
-        locale: 'all',
-        filters: { contenttype: type },
+      await strapi.db.query('plugin::webtools.url-alias').deleteMany({
+        where: { contenttype: type },
       });
     }
 
     if (generationType === 'only_generated') {
       // Delete all the auto generated URL aliases of the given type.
-      await strapi.entityService.deleteMany('plugin::webtools.url-alias', {
-        // @ts-ignore
-        locale: 'all',
-        filters: { contenttype: type, generated: true },
+      await strapi.db.query('plugin::webtools.url-alias').deleteMany({
+        where: { contenttype: type, generated: true },
       });
     }
 
@@ -101,22 +97,25 @@ const generateUrlAliases = async (params: GenerateParams): Promise<number> => {
 
     if (strapi.plugin('i18n')) {
       languages = [];
-      const locales = await strapi.entityService.findMany('plugin::i18n.locale', {});
+      const locales = await strapi.documents('plugin::i18n.locale').findMany({});
       languages = locales.map((locale) => locale.code);
     }
 
     // Get all relations for the type
     await Promise.all(languages.map(async (lang) => {
-      const urlPatterns = await getPluginService('urlPatternService').findByUid(type, lang);
-      const languageRelations = getPluginService('urlPatternService').getRelationsFromPattern(urlPatterns);
-      relations = [...relations, ...languageRelations];
+      const urlPatterns = await getPluginService('url-pattern').findByUid(type, lang);
+      urlPatterns.forEach((urlPattern) => {
+        const languageRelations = getPluginService('url-pattern').getRelationsFromPattern(urlPattern);
+        // @todo check if this works
+        relations = [...relations, ...languageRelations];
+      });
     }));
 
     // Query all the entities of the type that do not have a corresponding URL alias.
-    const entities = await strapi.entityService.findMany(type, {
+    const entities = await strapi.documents(type).findMany({
+      // @ts-ignore
       filters: { url_alias: null },
       locale: 'all',
-      // @ts-ignore
       populate: { ...relations.reduce((obj, key) => ({ ...obj, [key]: {} }), {}) },
     });
 
@@ -132,9 +131,9 @@ const generateUrlAliases = async (params: GenerateParams): Promise<number> => {
     for (const entity of entities) {
       // @ts-ignore
       // eslint-disable-next-line no-await-in-loop, @typescript-eslint/no-unsafe-argument
-      const urlPatterns = await getPluginService('urlPatternService').findByUid(type, entity.locale);
+      const urlPatterns = await getPluginService('url-pattern').findByUid(type, entity.locale);
       const resolvedPathsArray = urlPatterns.map((urlPattern) => {
-        const resolvedPaths = getPluginService('urlPatternService').resolvePattern(type, entity, urlPattern);
+        const resolvedPaths = getPluginService('url-pattern').resolvePattern(type, entity, urlPattern);
 
         return resolvedPaths;
       });
@@ -145,16 +144,15 @@ const generateUrlAliases = async (params: GenerateParams): Promise<number> => {
         // eslint-disable-next-line @typescript-eslint/no-loop-func
         resolvedPathsArray.map(async (path) => {
           try {
-            const newUrlAlias = await getPluginService('urlAliasService').create({
+            const newUrlAlias = await strapi.documents('plugin::webtools.url-alias').create({
               url_path: path,
               generated: true,
               contenttype: type,
-              // @ts-ignore
-              // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
               locale: entity.locale,
             });
 
-            await strapi.entityService.update(type, entity.id, {
+            await strapi.documents(type).update({
+              documentId: entity.documentId,
               data: {
                 // @ts-ignore
                 url_alias: newUrlAlias.id,

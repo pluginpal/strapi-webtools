@@ -1,35 +1,13 @@
 import { factories, Schema, UID } from '@strapi/strapi';
-import snakeCase from 'lodash/snakeCase';
 import deburr from 'lodash/deburr';
 import toLower from 'lodash/toLower';
 import kebabCase from 'lodash/kebabCase';
 import { getPluginService } from '../util/getPluginService';
+import { typedEntries } from '../util/typeHelpers';
 
 const contentTypeSlug = 'plugin::webtools.url-pattern';
 
-export default factories.createCoreService(contentTypeSlug, ({ strapi }) => ({
-  // /**
-  //  * Create a new URL pattern.
-  //  *
-  //  * @param {object} data - The data to create the URL pattern with.
-  //  * @returns {Promise<object>} The created URL pattern entity.
-  //  */
-  // create: async (data: EntityService.Params.Pick<'plugin::webtools.url-pattern', 'data'>['data']) => {
-  //   const formattedData = data;
-
-  //   if (data.code) {
-  //     formattedData.code = snakeCase(deburr(toLower(data.code)));
-  //   } else {
-  //     formattedData.code = snakeCase(deburr(toLower(data.label)));
-  //   }
-
-  //   const patternEntity = await strapi.entityService.create('plugin::webtools.url-pattern', {
-  //     data,
-  //   });
-
-  //   return patternEntity;
-  // },
-
+const customServices = () => ({
   /**
    * Find URL patterns by UID and optionally language code.
    *
@@ -38,7 +16,7 @@ export default factories.createCoreService(contentTypeSlug, ({ strapi }) => ({
    * @returns {Promise<string[]>} The array of URL patterns.
    */
   findByUid: async (uid: string, langcode?: string): Promise<string[]> => {
-    let patterns = await getPluginService('urlPatternService').findMany({
+    let patterns = await strapi.documents(contentTypeSlug).findMany({
       filters: {
         contenttype: uid,
       },
@@ -67,8 +45,8 @@ export default factories.createCoreService(contentTypeSlug, ({ strapi }) => ({
   getAllowedFields: (contentType: Schema.ContentType, allowedFields: string[] = []) => {
     const fields: string[] = [];
     allowedFields.forEach((fieldType) => {
-      Object.entries(contentType.attributes).forEach(([fieldName, field]) => {
-        if ((field.type === fieldType || fieldName === fieldType) && field.type !== 'relation' && fieldName !== 'url_path_id') {
+      typedEntries(contentType.attributes).forEach(([fieldName, field]) => {
+        if ((field.type === fieldType || fieldName === fieldType) && field.type !== 'relation') {
           fields.push(fieldName);
         } else if (
           field.type === 'relation'
@@ -77,15 +55,15 @@ export default factories.createCoreService(contentTypeSlug, ({ strapi }) => ({
           && fieldName !== 'createdBy'
           && fieldName !== 'updatedBy'
         ) {
-          // @ts-ignore
-          // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-          const relation = strapi.contentTypes[field.target];
+          // @ts-expect-error
+          // field.target is not strongly typed in the Strapi Attribute types.
+          const relation = strapi.contentTypes[field.target as UID.ContentType];
 
           if (allowedFields.includes('id') && !fields.includes(`${fieldName}.id`)) {
             fields.push(`${fieldName}.id`);
           }
 
-          Object.entries(relation.attributes).forEach(([subFieldName, subField]) => {
+          typedEntries(relation.attributes).forEach(([subFieldName, subField]) => {
             if (subField.type === fieldType || subFieldName === fieldType) {
               fields.push(`${fieldName}.${subFieldName}`);
             }
@@ -128,16 +106,8 @@ export default factories.createCoreService(contentTypeSlug, ({ strapi }) => ({
    * @param {string[]} patterns - The patterns to extract fields from.
    * @returns {string[]} The extracted fields.
    */
-  getFieldsFromPattern: (patterns: string[]) => {
-    // Ensure patterns is an array
-    if (!Array.isArray(patterns)) {
-      // eslint-disable-next-line no-param-reassign
-      patterns = [patterns];
-    }
-
-    // Combine all patterns into a single string for regex application
-    const patternString = patterns.map((pattern) => pattern).join(',');
-    const fields = patternString.match(/[[\w\d.]+]/g); // Get all substrings between [] as array.
+  getFieldsFromPattern: (pattern: string) => {
+    const fields = pattern.match(/[[\w\d.]+]/g); // Get all substrings between [] as array.
 
     if (!fields) {
       return [];
@@ -154,9 +124,9 @@ export default factories.createCoreService(contentTypeSlug, ({ strapi }) => ({
    * @param {string[]} patterns - The patterns to extract relations from.
    * @returns {string[]} The extracted relations.
    */
-  getRelationsFromPattern: (patterns: string[]) => {
+  getRelationsFromPattern: (pattern: string) => {
     // Get fields from the pattern (assuming they are inside square brackets)
-    let fields = getPluginService('urlPatternService').getFieldsFromPattern(patterns);
+    let fields = getPluginService('url-pattern').getFieldsFromPattern(pattern);
 
     // Filter out fields that are empty or malformed
     fields = fields.filter((field) => field);
@@ -185,8 +155,8 @@ export default factories.createCoreService(contentTypeSlug, ({ strapi }) => ({
       let resolvedPattern: string = pattern;
 
       // Ensure pattern is an array before sending it to getFieldsFromPattern
-      const fields = getPluginService('urlPatternService').getFieldsFromPattern(
-        Array.isArray(pattern) ? pattern : [pattern],
+      const fields = getPluginService('url-pattern').getFieldsFromPattern(
+        pattern,
       );
 
       fields.forEach((field) => {
@@ -233,7 +203,7 @@ export default factories.createCoreService(contentTypeSlug, ({ strapi }) => ({
    * @returns {boolean} object.valid - Validation boolean.
    * @returns {string} object.message - Validation message.
    */
-  validatePattern: (pattern: string[], allowedFieldNames: string[]) => {
+  validatePattern: (pattern: string, allowedFieldNames: string[]) => {
     if (!pattern.length) {
       return {
         valid: false,
@@ -241,11 +211,8 @@ export default factories.createCoreService(contentTypeSlug, ({ strapi }) => ({
       };
     }
 
-    // Flatten the array into a string for pre- / post-character count
-    const patternString = pattern.join('');
-
-    const preCharCount = patternString.split('[').length - 1;
-    const postCharCount = patternString.split(']').length - 1;
+    const preCharCount = pattern.split('[').length - 1;
+    const postCharCount = pattern.split(']').length - 1;
 
     if (preCharCount < 1 || postCharCount < 1) {
       return {
@@ -264,7 +231,7 @@ export default factories.createCoreService(contentTypeSlug, ({ strapi }) => ({
     let fieldsAreAllowed = true;
 
     // Pass the original `pattern` array to getFieldsFromPattern
-    getPluginService('urlPatternService').getFieldsFromPattern(pattern).forEach((field) => {
+    getPluginService('url-pattern').getFieldsFromPattern(pattern).forEach((field) => {
       if (!allowedFieldNames.includes(field)) fieldsAreAllowed = false;
     });
 
@@ -280,4 +247,6 @@ export default factories.createCoreService(contentTypeSlug, ({ strapi }) => ({
       message: 'Valid pattern',
     };
   },
-}));
+});
+
+export default factories.createCoreService(contentTypeSlug, customServices);

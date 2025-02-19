@@ -5,7 +5,7 @@ import { errors } from '@strapi/utils';
 
 import { getPluginService } from '../util/getPluginService';
 import { KoaContext } from '../types/koa';
-import { GenerateParams } from '../admin-api/services/bulk-generate';
+import { GenerateParams } from '../services/bulk-generate';
 
 /**
  * URL alias controller
@@ -16,7 +16,7 @@ const contentTypeSlug = 'plugin::webtools.url-alias';
 export default factories.createCoreController(contentTypeSlug, ({ strapi }) => ({
   editLink: async (ctx: Context) => {
     const { path } = ctx.query;
-    const { entity, contentType } = await getPluginService('byPathService').byPath(path as string);
+    const { entity, contentType } = await getPluginService('url-alias').findRelatedEntity(path as string);
 
     if (!entity) {
       ctx.notFound();
@@ -45,10 +45,10 @@ export default factories.createCoreController(contentTypeSlug, ({ strapi }) => (
       throw new errors.ValidationError('Missing required POST parameter(s)', details);
     }
 
-    const generatedCount = await getPluginService('bulkGenerate').generateUrlAliases({ types, generationType });
+    const generatedCount = await getPluginService('bulk-generate').generateUrlAliases({ types, generationType });
 
     if (strapi.plugin('i18n')) {
-      await getPluginService('bulkGenerate').createLanguageLinksForUrlAliases();
+      await getPluginService('bulk-generate').createLanguageLinksForUrlAliases();
     }
 
     // Return the amount of generated URL aliases.

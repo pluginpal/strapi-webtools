@@ -3,12 +3,11 @@
 
 import set from 'lodash/set';
 import { Core, Schema } from '@strapi/strapi';
-import { IStrapi } from './types/strapi';
 import { isContentTypeEnabled } from './util/enabledContentTypes';
 import { disableContentType } from './hooks/disable';
 
 export default ({ strapi }: { strapi: Core.Strapi }) => {
-  // strapi.hook('strapi::content-types.beforeSync').register(disableContentType);
+  strapi.hook('strapi::content-types.beforeSync').register(disableContentType);
 
   // Register the url_alias field.
   Object.values(strapi.contentTypes).forEach((contentType: Schema.ContentType) => {

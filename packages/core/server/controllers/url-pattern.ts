@@ -26,7 +26,7 @@ export default factories.createCoreController(contentTypeSlug, ({ strapi }) => (
       ]) as boolean;
       if (isInContentManager === false) return;
 
-      const fields = getPluginService('urlPatternService').getAllowedFields(
+      const fields = getPluginService('url-pattern').getAllowedFields(
         contentType,
         ['pluralName', 'string', 'uid', 'id'],
       );
@@ -37,7 +37,7 @@ export default factories.createCoreController(contentTypeSlug, ({ strapi }) => (
   },
 
   validatePattern: (ctx: KoaContext<{ pattern: string, modelName: UID.ContentType }>) => {
-    const urlPatternService = getPluginService('urlPatternService');
+    const urlPatternService = getPluginService('url-pattern');
     const { pattern, modelName } = ctx.request.body;
 
     const contentType = strapi.contentTypes[modelName];
