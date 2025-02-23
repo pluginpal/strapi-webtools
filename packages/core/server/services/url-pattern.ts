@@ -1,4 +1,4 @@
-import { factories, Schema, UID } from '@strapi/strapi';
+import { factories, Modules, Schema, UID } from '@strapi/strapi';
 import deburr from 'lodash/deburr';
 import toLower from 'lodash/toLower';
 import kebabCase from 'lodash/kebabCase';
@@ -148,7 +148,7 @@ const customServices = () => ({
    */
   resolvePattern: (
     uid: UID.ContentType,
-    entity: { [key: string]: string | number | Date },
+    entity: { [key: string]: any },
     urlPattern?: string,
   ): string => {
     const resolve = (pattern: string) => {
