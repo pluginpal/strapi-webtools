@@ -11,6 +11,7 @@
     "resolveJsonModule": true,
     "noEmitOnError": true,
     "noImplicitThis": true,
+    "allowJs": true,
     "outDir": "dist",
     "rootDir": ".",
     "jsx": "react-jsx",
