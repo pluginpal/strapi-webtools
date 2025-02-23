@@ -5,9 +5,18 @@ import set from 'lodash/set';
 import { Core, Schema } from '@strapi/strapi';
 import { isContentTypeEnabled } from './util/enabledContentTypes';
 import { disableContentType } from './hooks/disable';
+import createMiddleware from './middlewares/create';
+import updateMiddleware from './middlewares/update';
+import deleteMiddleware from './middlewares/delete';
+import cloneMiddleware from './middlewares/clone';
 
 export default ({ strapi }: { strapi: Core.Strapi }) => {
   strapi.hook('strapi::content-types.beforeSync').register(disableContentType);
+
+  strapi.documents.use(createMiddleware);
+  strapi.documents.use(updateMiddleware);
+  strapi.documents.use(deleteMiddleware);
+  strapi.documents.use(cloneMiddleware);
 
   // Register the url_alias field.
   Object.values(strapi.contentTypes).forEach((contentType: Schema.ContentType) => {
