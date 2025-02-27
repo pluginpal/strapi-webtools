@@ -7,7 +7,7 @@
 **/config
 **/scripts
 **/docs
-**/server/types/generated
+**/types/generated
 **/__tests__
 strapi-admin.js
 strapi-server.js

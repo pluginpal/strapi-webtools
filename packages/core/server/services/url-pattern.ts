@@ -1,4 +1,4 @@
-import { factories, Modules, Schema, UID } from '@strapi/strapi';
+import { factories, Schema, UID } from '@strapi/strapi';
 import deburr from 'lodash/deburr';
 import toLower from 'lodash/toLower';
 import kebabCase from 'lodash/kebabCase';
@@ -177,7 +177,7 @@ const customServices = () => ({
         } else if (Array.isArray(entity[relationalField[0]])) {
           strapi.log.error('Something went wrong whilst resolving the pattern.');
         } else if (typeof entity[relationalField[0]] === 'object') {
-          resolvedPattern = resolvedPattern.replace(`[${field}]`, entity[relationalField[0]] && String(entity[relationalField[0]][relationalField[1]]) ? String(entity[relationalField[0]][relationalField[1]]) : '');
+          resolvedPattern = resolvedPattern.replace(`[${field}]`, entity[relationalField[0]] && String((entity[relationalField[0]] as any[])[relationalField[1]]) ? String((entity[relationalField[0]] as any[])[relationalField[1]]) : '');
         }
       });
 

@@ -1,11 +1,7 @@
 import { Core } from '@strapi/strapi';
 
-export default async ({ strapi }: { strapi: Core.Strapi }) => {
+export default ({ strapi }: { strapi: Core.Strapi }) => {
   try {
-    // // Decorate the entity service with review workflow logic
-    // const { decorator } = getPluginService('queryLayerDecorator');
-    // strapi.entityService.decorate(decorator);
-
     // Register permission actions.
     const actions = [
       {
@@ -28,37 +24,8 @@ export default async ({ strapi }: { strapi: Core.Strapi }) => {
       },
     ];
 
-    strapi.admin.services.permission.actionProvider.registerMany(actions);
-
-    // Give the public role permissions to access the public API endpoints.
-    if (strapi.plugin('users-permissions')) {
-      const roles = await strapi
-        .service('plugin::users-permissions.role')
-        .find();
-
-      const publicId = roles.filter((role) => role.type === 'public')[0]?.id;
-
-      if (publicId) {
-        const publicRole = await strapi
-          .service('plugin::users-permissions.role')
-          .findOne(publicId);
-
-        publicRole.permissions['plugin::webtools'] = {
-          controllers: {
-            core: {
-              router: { enabled: true },
-            },
-            'url-alias': {
-              find: { enabled: true },
-            },
-          },
-        };
-
-        await strapi
-          .service('plugin::users-permissions.role')
-          .updateRole(publicRole.id, publicRole);
-      }
-    }
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    (strapi.admin.services.permission.actionProvider.registerMany as (a: any) => void)(actions);
   } catch (error) {
     strapi.log.error(`Bootstrap failed. ${String(error)}`);
   }

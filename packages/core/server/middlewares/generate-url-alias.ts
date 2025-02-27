@@ -63,7 +63,7 @@ const generateUrlAliasMiddleware: Modules.Documents.Middleware.Middleware = asyn
   // If the document already has an URL alias, fetch it.
   if (params.data.url_alias?.[0]) {
     urlAliasEntity = await strapi.documents('plugin::webtools.url-alias').findOne({
-      documentId: params.data.url_alias[0],
+      documentId: params.data.url_alias[0] as string,
     });
   } else if (fullEntity.url_alias[0]) {
     [urlAliasEntity] = fullEntity.url_alias;
