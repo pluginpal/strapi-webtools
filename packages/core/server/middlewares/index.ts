@@ -1,11 +1,9 @@
-import cloneMiddleware from './clone';
-import deleteMiddleware from './delete';
-import creatMiddleware from './create';
-import updateMiddleware from './update';
+import generateUrlAlias from './generate-url-alias';
+import preventDuplicateUrls from './prevent-duplicate-urls';
+import deleteUrlAlias from './delete-url-alias';
 
 export default {
-  clone: cloneMiddleware,
-  delete: deleteMiddleware,
-  create: creatMiddleware,
-  update: updateMiddleware,
+  generateUrlAlias,
+  preventDuplicateUrls,
+  deleteUrlAlias,
 };

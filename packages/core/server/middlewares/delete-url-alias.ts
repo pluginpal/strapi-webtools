@@ -1,7 +1,7 @@
 import { Modules } from '@strapi/strapi';
 import { isContentTypeEnabled } from '../util/enabledContentTypes';
 
-const deleteMiddleware: Modules.Documents.Middleware.Middleware = async (context, next) => {
+const deleteUrlAliasMiddleware: Modules.Documents.Middleware.Middleware = async (context, next) => {
   const { uid, action, params } = context;
   const hasWT = isContentTypeEnabled(uid);
 
@@ -38,4 +38,4 @@ const deleteMiddleware: Modules.Documents.Middleware.Middleware = async (context
   return next();
 };
 
-export default deleteMiddleware;
+export default deleteUrlAliasMiddleware;

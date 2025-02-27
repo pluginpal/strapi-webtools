@@ -75,6 +75,25 @@ const customServices = () => ({
 
     return pathEntity[0];
   },
+
+  /**
+   * Finds a path from the original path that is unique
+   */
+  makeUniquePath: async (
+    originalPath: string,
+    ignoreId?: string,
+    ext: number = -1,
+  ): Promise<string> => {
+    const extension = ext >= 0 ? `-${ext}` : '';
+    const newPath = originalPath + extension;
+    const pathAlreadyExists = await getPluginService('url-alias').findByPath(newPath, ignoreId);
+
+    if (pathAlreadyExists) {
+      return getPluginService('url-alias').makeUniquePath(originalPath, ignoreId, ext + 1);
+    }
+
+    return newPath;
+  },
 });
 
 export default factories.createCoreService(contentTypeSlug, customServices);

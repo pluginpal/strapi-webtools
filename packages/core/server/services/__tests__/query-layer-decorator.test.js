@@ -12,6 +12,38 @@ afterAll(async () => {
 });
 
 describe('Query layer decorator', () => {
+  it('Clone - Should create a new entity with a cloned URL alias', async () => {
+    let page = await strapi.documents('api::test.test').create({
+      data: {
+        title: 'Some page to clone',
+      },
+    });
+
+    page = await strapi.documents('api::test.test').findOne({
+      documentId: page.documentId,
+      populate: ['url_alias'],
+    });
+
+    let clonedPage = await strapi.documents('api::test.test').clone({
+      documentId: page.documentId,
+      data: {},
+    });
+
+    clonedPage = await strapi.documents('api::test.test').findOne({
+      documentId: clonedPage.documentId,
+      populate: ['url_alias'],
+    });
+
+    expect(clonedPage).not.toBeNull();
+
+    const newUrlAliasPath = `${page.url_alias[0].url_path}-0`;
+    expect(clonedPage).toHaveProperty('url_alias[0].url_path', newUrlAliasPath);
+    expect(clonedPage).toHaveProperty('url_alias[0].generated', true);
+    expect(clonedPage).toHaveProperty('url_alias[0].contenttype', 'api::test.test');
+    expect(clonedPage.documentId).not.toBe(page.documentId);
+    expect(clonedPage.url_alias[0].documentId).not.toBe(page.url_alias[0].documentId);
+  });
+
   it('Create - Should generate a new URL alias', async () => {
     let page = await strapi.documents('api::test.test').create({
       data: {
@@ -95,8 +127,6 @@ describe('Query layer decorator', () => {
     });
 
     const oldAliasId = page.url_alias[0]?.documentId;
-
-    console.log('aa', oldAliasId);
 
     // Delete the created url alias to make sure none is present
     // at the time of running the .update() query.
@@ -244,37 +274,5 @@ describe('Query layer decorator', () => {
     });
 
     expect(alias).toBeNull();
-  });
-
-  it('Clone - Should create a new entity with a cloned URL alias', async () => {
-    let page = await strapi.documents('api::test.test').create({
-      data: {
-        title: 'Some page to clone',
-      },
-    });
-
-    page = await strapi.documents('api::test.test').findOne({
-      documentId: page.documentId,
-      populate: ['url_alias'],
-    });
-
-    let clonedPage = await strapi.documents('api::test.test').clone({
-      documentId: page.documentId,
-      data: {},
-    });
-
-    clonedPage = await strapi.documents('api::test.test').findOne({
-      documentId: clonedPage.documentId,
-      populate: ['url_alias'],
-    });
-
-    expect(clonedPage).not.toBeNull();
-
-    const newUrlAliasPath = `${page.url_alias[0].url_path}-0`;
-    expect(clonedPage).toHaveProperty('url_alias[0].url_path', newUrlAliasPath);
-    expect(clonedPage).toHaveProperty('url_alias[0].generated', true);
-    expect(clonedPage).toHaveProperty('url_alias[0].contenttype', 'api::test.test');
-    expect(clonedPage.documentId).not.toBe(page.documentId);
-    expect(clonedPage.url_alias[0].documentId).not.toBe(page.url_alias[0].documentId);
   });
 });

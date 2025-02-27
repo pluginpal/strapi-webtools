@@ -2,7 +2,8 @@ import { Modules, Data } from '@strapi/strapi';
 import { isContentTypeEnabled } from '../util/enabledContentTypes';
 import { getPluginService } from '../util/getPluginService';
 
-const createMiddleware: Modules.Documents.Middleware.Middleware = async (context, next) => {
+// eslint-disable-next-line max-len
+const generateUrlAliasMiddleware: Modules.Documents.Middleware.Middleware = async (context, next) => {
   const { uid, action } = context;
   const hasWT = isContentTypeEnabled(uid);
 
@@ -11,12 +12,12 @@ const createMiddleware: Modules.Documents.Middleware.Middleware = async (context
     return next();
   }
 
-  // Run this middleware only for the create action.
-  if (action !== 'create') {
+  // Run this middleware only for the create, update and clone action.
+  if (!['clone', 'create', 'update'].includes(action)) {
     return next();
   }
 
-  const params = context.params as Modules.Documents.ServiceParams<'api::test.test'>['create'];
+  const params = context.params as Modules.Documents.ServiceParams<'api::test.test'>['create' | 'update' | 'clone'];
 
   // Fetch the URL pattern for this content type.
   let relations: string[] = [];
@@ -38,36 +39,40 @@ const createMiddleware: Modules.Documents.Middleware.Middleware = async (context
     });
   }));
 
-  // If a URL alias was created, fetch it.
-  if (params.data.url_alias?.[0]) {
-    urlAliasEntity = await strapi.documents('plugin::webtools.url-alias').findOne({
-      documentId: params.data.url_alias[0],
-    });
-  }
+  // Fire the action.
+  const entity = await next() as Modules.Documents.AnyDocument;
 
-  // If a URL alias was created and 'generated' is set to false, do nothing.
-  if (urlAliasEntity?.generated === false) {
-    return next();
-  }
-
-  // Ideally here we would create the URL alias an directly fire
-  // the `service.create.call` function with the new URL alias id.
-  // Though it is possible that the `id` field is used in the URL.
-  // In that case we have to create the entity first. Then when we know
-  // the id, can we create the URL alias entity and can we update
-  // the previously created entity.
-  const newEntity = await next() as Modules.Documents.AnyDocument;
-
+  // Fetch the full entity.
   const fullEntity = await strapi.documents(uid as 'api::test.test').findOne({
-    documentId: newEntity.documentId,
+    documentId: entity.documentId,
     populate: {
+      ...relations.reduce((obj, key) => ({ ...obj, [key]: {} }), {}),
+      url_alias: {
+        fields: ['id', 'generated'],
+      },
       localizations: {
         populate: {
-          url_alias: true,
+          url_alias: {
+            fields: ['id'],
+          },
         },
       },
     },
   });
+
+  // If the document already has an URL alias, fetch it.
+  if (params.data.url_alias?.[0]) {
+    urlAliasEntity = await strapi.documents('plugin::webtools.url-alias').findOne({
+      documentId: params.data.url_alias[0],
+    });
+  } else if (fullEntity.url_alias[0]) {
+    [urlAliasEntity] = fullEntity.url_alias;
+  }
+
+  // If the URL alias has 'generated' set to false, do nothing.
+  if (urlAliasEntity?.generated === false) {
+    return next();
+  }
 
   // Fetch the URL alias localizations.
   const urlAliasLocalizations = fullEntity.localizations
@@ -129,14 +134,9 @@ const createMiddleware: Modules.Documents.Middleware.Middleware = async (context
   }));
 
   // Eventually update the entity to include the URL alias.
-  const updatedEntity = await strapi.documents(uid as 'api::test.test').update({
-    documentId: fullEntity.documentId,
-    data: {
-      url_alias: [urlAliasEntity.documentId],
-    },
-  });
+  params.data.url_alias = [urlAliasEntity?.documentId];
 
-  return updatedEntity;
+  return next();
 };
 
-export default createMiddleware;
+export default generateUrlAliasMiddleware;
