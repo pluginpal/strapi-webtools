@@ -71,7 +71,7 @@ const generateUrlAliasMiddleware: Modules.Documents.Middleware.Middleware = asyn
 
   // If the URL alias has 'generated' set to false, do nothing.
   if (urlAliasEntity?.generated === false) {
-    return next();
+    return entity;
   }
 
   // Fetch the URL alias localizations.
@@ -133,10 +133,24 @@ const generateUrlAliasMiddleware: Modules.Documents.Middleware.Middleware = asyn
     });
   }));
 
-  // Eventually update the entity to include the URL alias.
-  params.data.url_alias = [urlAliasEntity?.documentId];
+  const all = await strapi.db.query(uid as 'api::test.test').findMany({
+    where: {
+      document_id: entity.documentId,
+    },
+  });
 
-  return next();
+  await Promise.all(all.map(async (doc) => {
+    await strapi.db.query(uid as 'api::test.test').update({
+      where: {
+        id: doc.id as string,
+      },
+      data: {
+        url_alias: [urlAliasEntity?.id],
+      },
+    });
+  }));
+
+  return entity;
 };
 
 export default generateUrlAliasMiddleware;
