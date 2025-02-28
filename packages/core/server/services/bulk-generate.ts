@@ -40,12 +40,12 @@ const createLanguageLinksForUrlAliases = async () => {
     // @ts-ignore
     const localizations = relatedEntity.localizations as Array<{
       url_alias: {
-        id: number
+        documentId: number
       },
     }>;
 
     const urlAliasLocalizations = localizations
-      ?.map((loc) => loc.url_alias?.id)
+      ?.map((loc) => loc.url_alias?.documentId)
       ?.filter((loc) => loc) || [];
 
     /**
@@ -155,7 +155,7 @@ const generateUrlAliases = async (params: GenerateParams): Promise<number> => {
               documentId: entity.documentId,
               data: {
                 // @ts-ignore
-                url_alias: newUrlAlias.id,
+                url_alias: newUrlAlias.documentId,
               },
             });
 

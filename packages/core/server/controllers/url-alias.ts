@@ -27,7 +27,7 @@ export default factories.createCoreController(contentTypeSlug, ({ strapi }) => (
     const contentTypeUrlPartial = contentTypeObj.kind === 'singleType' ? 'single-types' : 'collection-types';
 
     ctx.body = {
-      link: `/content-manager/${contentTypeUrlPartial}/${contentType}/${entity.id}`,
+      link: `/content-manager/${contentTypeUrlPartial}/${contentType}/${entity.documentId}`,
     };
   },
   generate: async (
