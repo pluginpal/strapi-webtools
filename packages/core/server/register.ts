@@ -27,7 +27,15 @@ export default ({ strapi }: { strapi: Core.Strapi }) => {
         writable: true,
         private: false,
         configurable: false,
-        visible: false,
+        editable: false,
+        /**
+         * Ideally this field would be hidden, but doing so will cause an issue.
+         * The issue can be prevented by setting the field to visible.
+         *
+         * @see https://github.com/strapi/strapi/issues/23039
+         * @see https://github.com/strapi/strapi/issues/22975
+         */
+        visible: true,
         default: null,
         type: 'relation',
         relation: 'oneToMany',
