@@ -14,12 +14,12 @@ afterAll(async () => {
 describe('Core controller - Router', () => {
   it('Should return a 200 if a page was found', async () => {
     const page = await request(strapi.server.httpServer)
-      .get('/api/webtools/router?path=/page/published-test-page')
+      .get('/api/webtools/router?path=/page/published-test-page&status=published')
       .expect(200)
       .then((data) => data.body);
 
-    expect(page).toHaveProperty('data.attributes.title', 'Published test page');
-    expect(page).toHaveProperty('data.attributes.contentType', 'api::test.test');
+    expect(page).toHaveProperty('data.title', 'Published test page');
+    expect(page).toHaveProperty('data.contentType', 'api::test.test');
   });
 
   it('Should return a 404 if no page was found', async () => {
@@ -42,29 +42,28 @@ describe('Core controller - Router', () => {
     expect(page).toHaveProperty('error.status', 403);
   });
 
-  it('Should fetch a draft entries by default', async () => {
-    const page = await request(strapi.server.httpServer)
+  it('Should not fetch a draft entries by default', async () => {
+    await request(strapi.server.httpServer)
       .get('/api/webtools/router?path=/page/unpublished-test-page')
+      .expect(404);
+  });
+
+  it('Should fetch draft entries with status set to draft', async () => {
+    const page = await request(strapi.server.httpServer)
+      .get('/api/webtools/router?path=/page/unpublished-test-page&status=draft')
       .expect(200)
       .then((data) => data.body);
 
-    expect(page).toHaveProperty('data.attributes.title', 'Unpublished test page');
-  });
-
-  it('Should not fetch draft entries with publicationState set to live', async () => {
-    const page = await request(strapi.server.httpServer)
-      .get('/api/webtools/router?path=/page/unpublished-test-page&publicationState=live')
-      .expect(404)
-      .then((data) => data.body);
+    expect(page).toHaveProperty('data.title', 'Unpublished test page');
   });
 
   it('Should allow query parameters for population', async () => {
     const page = await request(strapi.server.httpServer)
-      .get('/api/webtools/router?path=/page/unpublished-test-page&publicationState=preview&populate=*')
+      .get('/api/webtools/router?path=/page/unpublished-test-page&status=draft&populate=*')
       .expect(200)
       .then((data) => data.body);
 
-    expect(page.data.attributes.category.data).not.toBe(null);
+    expect(page.data.category).not.toBe(null);
   });
 
   it('Should sanitize populated relations without the "find" permission', async () => {
@@ -73,25 +72,25 @@ describe('Core controller - Router', () => {
       .expect(200)
       .then((data) => data.body);
 
-    expect(page).not.toHaveProperty('data.attributes.private-category');
+    expect(page).not.toHaveProperty('data.private-category');
   });
 
-  it('Should not sanitize unpublished populated relations', async () => {
+  it('Should sanitize unpublished populated relations', async () => {
     const page = await request(strapi.server.httpServer)
       .get('/api/webtools/router?path=/page/published-test-page&populate=*')
       .expect(200)
       .then((data) => data.body);
 
-    expect(page.data.attributes.category.data).not.toBe(null);
+    expect(page.data.category).toBe(null);
   });
 
-  it('Should sanitize unpublished populated relations with publicationState set to live', async () => {
+  it('Should not sanitize unpublished populated relations with status set to draft', async () => {
     const page = await request(strapi.server.httpServer)
-      .get('/api/webtools/router?path=/page/published-test-page&populate=*&publicationState=live')
+      .get('/api/webtools/router?path=/page/published-test-page&populate=*&status=draft')
       .expect(200)
       .then((data) => data.body);
 
-    expect(page.data.attributes.category.data).toBe(null);
+    expect(page.data.category).not.toBe(null);
   });
 
   it('Should allow query parameters for field selection', async () => {
@@ -100,25 +99,25 @@ describe('Core controller - Router', () => {
       .expect(200)
       .then((data) => data.body);
 
-    expect(page).toHaveProperty("data.attributes.createdAt");
+    expect(page).toHaveProperty('data.createdAt');
 
     const filteredPage = await request(strapi.server.httpServer)
       .get('/api/webtools/router?path=/page/published-test-page&fields[0]=title')
       .expect(200)
       .then((data) => data.body);
 
-    expect(filteredPage).not.toHaveProperty("data.attributes.createdAt");
-    expect(page).toHaveProperty("data.attributes.title");
+    expect(filteredPage).not.toHaveProperty('data.createdAt');
+    expect(page).toHaveProperty('data.title');
   });
 
   it('Should allow creator field population if the populateCreatorFields is true', async () => {
     const page = await request(strapi.server.httpServer)
-      .get('/api/webtools/router?path=/page/published-test-page&populate=createdBy,updatedBy')
+      .get('/api/webtools/router?path=/page/published-test-page&populate[0]=createdBy&populate[1]=updatedBy')
       .expect(200)
       .then((data) => data.body);
 
-    expect(page).toHaveProperty("data.attributes.createdBy");
-    expect(page).toHaveProperty("data.attributes.updatedBy");
+    expect(page).toHaveProperty('data.createdBy');
+    expect(page).toHaveProperty('data.updatedBy');
   });
 
   it('Should not allow creator field population if the populateCreatorFields is false', async () => {
@@ -127,9 +126,7 @@ describe('Core controller - Router', () => {
       .expect(200)
       .then((data) => data.body);
 
-    expect(page).not.toHaveProperty("data.attributes.createdBy");
-    expect(page).not.toHaveProperty("data.attributes.updatedBy");
+    expect(page).not.toHaveProperty('data.createdBy');
+    expect(page).not.toHaveProperty('data.updatedBy');
   });
-
-  // it('Should allow query parameters for localization', async () => {});
 });

@@ -18,8 +18,8 @@
     "playground:start": "cd playground && yarn start",
     "playground:develop": "rm -rf playground/node_modules/.strapi/ && cd playground && yarn develop --watch-admin --bundler=vite",
     "test:e2e": "cypress open",
-    "test:unit": "ENV_PATH=./playground/.env jest --verbose --runInBand --detectOpenHandles --forceExit",
-    "test:integration": "ENV_PATH=./playground/.env jest --verbose --runInBand --detectOpenHandles --forceExit --testMatch '**/healthcheck.test.js'"
+    "test:unit": "ENV_PATH=./playground/.env jest --verbose --runInBand --forceExit",
+    "test:integration": "ENV_PATH=./playground/.env jest --verbose --runInBand --forceExit --testMatch '**/healthcheck.test.js'"
   },
   "devDependencies": {
     "@changesets/changelog-github": "^0.5.0",

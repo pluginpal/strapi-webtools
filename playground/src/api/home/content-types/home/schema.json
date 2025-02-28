@@ -4,12 +4,17 @@
   "info": {
     "singularName": "home",
     "pluralName": "homes",
-    "displayName": "Home"
+    "displayName": "Home",
+    "description": ""
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
-  "pluginOptions": {},
+  "pluginOptions": {
+    "webtools": {
+      "enabled": true
+    }
+  },
   "attributes": {
     "title": {
       "type": "string"

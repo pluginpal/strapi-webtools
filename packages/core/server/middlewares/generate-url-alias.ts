@@ -39,6 +39,12 @@ const generateUrlAliasMiddleware: Modules.Documents.Middleware.Middleware = asyn
     });
   }));
 
+  // Remove the URL alias if we're cloning the entity.
+  // This way we can generate a new URL alias for the cloned entity.
+  if (action === 'clone') {
+    params.data.url_alias = null;
+  }
+
   // Fire the action.
   const entity = await next() as Modules.Documents.AnyDocument;
 
@@ -150,7 +156,14 @@ const generateUrlAliasMiddleware: Modules.Documents.Middleware.Middleware = asyn
     });
   }));
 
-  return entity;
+  const finalEntity = await strapi.documents(uid as 'api::test.test').findOne({
+    documentId: entity.documentId,
+    fields: params.fields,
+    locale: params.locale,
+    populate: params.populate,
+  });
+
+  return finalEntity;
 };
 
 export default generateUrlAliasMiddleware;

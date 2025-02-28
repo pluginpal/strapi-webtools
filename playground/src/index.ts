@@ -63,7 +63,7 @@ export default {
           .updateRole(publicRole.id, publicRole);
       }
 
-      await strapi.entityService.create('plugin::webtools.url-pattern', {
+      await strapi.documents('plugin::webtools.url-pattern').create({
         data: {
           pattern: '/page/[title]',
           label: 'Test API pattern',
@@ -73,7 +73,7 @@ export default {
         },
       });
 
-      await strapi.entityService.create('plugin::webtools.url-pattern', {
+      await strapi.documents('plugin::webtools.url-pattern').create({
         data: {
           pattern: '/category/[title]',
           label: 'Category API pattern',
@@ -83,7 +83,7 @@ export default {
         },
       });
 
-      await strapi.entityService.create('plugin::webtools.url-pattern', {
+      await strapi.documents('plugin::webtools.url-pattern').create({
         data: {
           pattern: '/private-category/[title]',
           label: 'Private category API pattern',
@@ -93,39 +93,41 @@ export default {
         },
       });
 
-      const privateCategory = await strapi.entityService.create('api::private-category.private-category', {
+      const privateCategory = await strapi.documents('api::private-category.private-category').create({
         data: {
           title: 'Published',
-          publishedAt: new Date(),
         },
+        status: 'published',
       });
 
-      const publishedCategory = await strapi.entityService.create('api::category.category', {
+      const publishedCategory = await strapi.documents('api::category.category').create({
         data: {
           title: 'Published category',
-          publishedAt: new Date(),
         },
+        status: 'published',
+        populate: '*',
       });
 
-      const unpublishedCategory = await strapi.entityService.create('api::category.category', {
+      const unpublishedCategory = await strapi.documents('api::category.category').create({
         data: {
           title: 'Unpublished category',
         },
       });
 
-      await strapi.entityService.create('api::test.test', {
+      await strapi.documents('api::test.test').create({
         data: {
           title: 'Published test page',
-          publishedAt: new Date(),
-          category: unpublishedCategory.id,
-          private_category: privateCategory.id,
+          category: unpublishedCategory.documentId,
+          private_category: privateCategory.documentId,
         },
+        status: 'published',
+        populate: '*',
       });
 
-      await strapi.entityService.create('api::test.test', {
+      await strapi.documents('api::test.test').create({
         data: {
           title: 'Unpublished test page',
-          category: publishedCategory.id,
+          category: publishedCategory.documentId,
         },
       });
     }

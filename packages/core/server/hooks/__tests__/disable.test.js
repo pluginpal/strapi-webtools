@@ -20,7 +20,7 @@ describe('Hooks', () => {
         populate: ['url_alias'],
       });
 
-      const urlAlias = entry.url_alias as { documentId: string, url_path: string }[];
+      const urlAlias = entry.url_alias;
       expect(urlAlias).toBeDefined();
 
       const { documentId, url_path: urlPath } = urlAlias[0];

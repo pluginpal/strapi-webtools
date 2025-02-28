@@ -8,7 +8,6 @@ export default {
         handler: 'url-alias.find',
         config: {
           policies: [],
-          auth: false,
         },
       },
       {
@@ -17,7 +16,6 @@ export default {
         handler: 'core.router',
         config: {
           policies: [],
-          auth: false,
         },
       },
     ],

@@ -11,14 +11,14 @@ const preventDuplicateUrlsMiddleware: Modules.Documents.Middleware.Middleware = 
   }
 
   // Run this middleware only for the create, update and clone action.
-  if (!['create', 'update', 'clone'].includes(action)) {
+  if (!['create', 'update'].includes(action)) {
     return next();
   }
 
   const params = context.params as Modules.Documents.ServiceParams<'plugin::webtools.url-alias'>['create' | 'update' | 'clone'] & { documentId: string };
 
   if (params.data.url_path) {
-    params.data.url_path = await getPluginService('url-alias').makeUniquePath(params.data.url_path, params.documentId);
+    params.data.url_path = await getPluginService('url-alias').makeUniquePath(params.data.url_path, action !== 'clone' && params.documentId);
   }
 
   return next();

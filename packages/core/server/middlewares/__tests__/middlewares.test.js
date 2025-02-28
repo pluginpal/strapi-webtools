@@ -13,24 +13,16 @@ afterAll(async () => {
 
 describe('Query layer decorator', () => {
   it('Clone - Should create a new entity with a cloned URL alias', async () => {
-    let page = await strapi.documents('api::test.test').create({
+    const page = await strapi.documents('api::test.test').create({
       data: {
         title: 'Some page to clone',
       },
-    });
-
-    page = await strapi.documents('api::test.test').findOne({
-      documentId: page.documentId,
       populate: ['url_alias'],
     });
 
-    let clonedPage = await strapi.documents('api::test.test').clone({
+    const clonedPage = await strapi.documents('api::test.test').clone({
       documentId: page.documentId,
       data: {},
-    });
-
-    clonedPage = await strapi.documents('api::test.test').findOne({
-      documentId: clonedPage.documentId,
       populate: ['url_alias'],
     });
 
@@ -45,14 +37,10 @@ describe('Query layer decorator', () => {
   });
 
   it('Create - Should generate a new URL alias', async () => {
-    let page = await strapi.documents('api::test.test').create({
+    const page = await strapi.documents('api::test.test').create({
       data: {
         title: 'Some amazing new page',
       },
-    });
-
-    page = await strapi.documents('api::test.test').findOne({
-      documentId: page.documentId,
       populate: ['url_alias'],
     });
 
@@ -70,15 +58,11 @@ describe('Query layer decorator', () => {
       },
     });
 
-    let page = await strapi.documents('api::test.test').create({
+    const page = await strapi.documents('api::test.test').create({
       data: {
         title: 'Generated amazing new page',
         url_alias: [alias.documentId],
       },
-    });
-
-    page = await strapi.documents('api::test.test').findOne({
-      documentId: page.documentId,
       populate: ['url_alias'],
     });
 
@@ -97,15 +81,11 @@ describe('Query layer decorator', () => {
       },
     });
 
-    let page = await strapi.documents('api::test.test').create({
+    const page = await strapi.documents('api::test.test').create({
       data: {
         title: 'Some amazing new page',
         url_alias: [alias.documentId],
       },
-    });
-
-    page = await strapi.documents('api::test.test').findOne({
-      documentId: page.documentId,
       populate: ['url_alias'],
     });
 
@@ -115,14 +95,10 @@ describe('Query layer decorator', () => {
   });
 
   it('Update - Should generate a new URL alias if none is present', async () => {
-    let page = await strapi.documents('api::test.test').create({
+    const page = await strapi.documents('api::test.test').create({
       data: {
         title: 'Some about to be updated new page',
       },
-    });
-
-    page = await strapi.documents('api::test.test').findOne({
-      documentId: page.documentId,
       populate: ['url_alias'],
     });
 
@@ -139,7 +115,7 @@ describe('Query layer decorator', () => {
       data: {
         title: 'Some updated page',
       },
-      populate: ['url_alias']
+      populate: ['url_alias'],
     });
 
     expect(updatedPage.url_alias[0]?.documentId).not.toBe(oldAliasId);
@@ -149,29 +125,21 @@ describe('Query layer decorator', () => {
   });
 
   it('Update - Should re-generate an existing URL alias if generated is set to true', async () => {
-    let page = await strapi.documents('api::test.test').create({
+    const page = await strapi.documents('api::test.test').create({
       data: {
         title: 'Some about to be updated new page',
       },
-    });
-
-    page = await strapi.documents('api::test.test').findOne({
-      documentId: page.documentId,
       populate: ['url_alias'],
     });
 
     expect(page).toHaveProperty('url_alias[0].url_path', '/page/some-about-to-be-updated-new-page')
     expect(page).toHaveProperty('url_alias[0].generated', true);
 
-    let updatedPage = await strapi.documents('api::test.test').update({
+    const updatedPage = await strapi.documents('api::test.test').update({
       documentId: page.documentId,
       data: {
         title: 'Some updated page with overwritten url alias',
       },
-    });
-
-    updatedPage = await strapi.documents('api::test.test').findOne({
-      documentId: page.documentId,
       populate: ['url_alias'],
     });
 
@@ -189,30 +157,22 @@ describe('Query layer decorator', () => {
       },
     });
 
-    let page = await strapi.documents('api::test.test').create({
+    const page = await strapi.documents('api::test.test').create({
       data: {
         title: 'Some about to be updated new page',
         url_alias: [alias.documentId],
       },
-    });
-
-    page = await strapi.documents('api::test.test').findOne({
-      documentId: page.documentId,
       populate: ['url_alias'],
     });
 
     expect(page).toHaveProperty('url_alias[0].url_path', '/path-should-not-update')
     expect(page).toHaveProperty('url_alias[0].generated', false);
 
-    let updatedPage = await strapi.documents('api::test.test').update({
+    const updatedPage = await strapi.documents('api::test.test').update({
       documentId: page.documentId,
       data: {
         title: 'Some updated page',
       },
-    });
-
-    updatedPage = await strapi.documents('api::test.test').findOne({
-      documentId: page.documentId,
       populate: ['url_alias'],
     });
 
@@ -222,28 +182,20 @@ describe('Query layer decorator', () => {
   });
 
   it('Update - Should not duplicate check the same entry when updated', async () => {
-    let page = await strapi.documents('api::test.test').create({
+    const page = await strapi.documents('api::test.test').create({
       data: {
         title: 'Unpublished page',
       },
-    });
-
-    page = await strapi.documents('api::test.test').findOne({
-      documentId: page.documentId,
       populate: ['url_alias'],
     });
 
     const url = page.url_alias[0].url_path;
 
-    let updatedPage = await strapi.documents('api::test.test').update({
+    const updatedPage = await strapi.documents('api::test.test').update({
       documentId: page.documentId,
       data: {
         published_at: new Date(),
       },
-    });
-
-    updatedPage = await strapi.documents('api::test.test').findOne({
-      documentId: page.documentId,
       populate: ['url_alias'],
     });
 
@@ -251,14 +203,10 @@ describe('Query layer decorator', () => {
   });
 
   it('Delete - Should delete the corresponding URL alias as well', async () => {
-    let page = await strapi.documents('api::test.test').create({
+    const page = await strapi.documents('api::test.test').create({
       data: {
         title: 'Some about to be deleted new page',
       },
-    });
-
-    page = await strapi.documents('api::test.test').findOne({
-      documentId: page.documentId,
       populate: ['url_alias'],
     });
 
