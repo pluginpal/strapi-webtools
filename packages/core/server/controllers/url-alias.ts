@@ -16,7 +16,7 @@ const contentTypeSlug = 'plugin::webtools.url-alias';
 export default factories.createCoreController(contentTypeSlug, ({ strapi }) => ({
   editLink: async (ctx: Context) => {
     const { path } = ctx.query;
-    const { entity, contentType } = await getPluginService('url-alias').findRelatedEntity(path as string);
+    const { entity, contentType } = await getPluginService('url-alias').findRelatedEntity(path as string, { status: 'draft' });
 
     if (!entity) {
       ctx.notFound();
@@ -27,7 +27,7 @@ export default factories.createCoreController(contentTypeSlug, ({ strapi }) => (
     const contentTypeUrlPartial = contentTypeObj.kind === 'singleType' ? 'single-types' : 'collection-types';
 
     ctx.body = {
-      link: `/content-manager/${contentTypeUrlPartial}/${contentType}/${entity.documentId}`,
+      link: `/content-manager/${contentTypeUrlPartial}/${contentType}/${contentTypeObj.kind === 'collectionType' ? entity.documentId : ''}`,
     };
   },
   generate: async (
