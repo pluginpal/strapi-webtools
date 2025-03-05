@@ -1,7 +1,8 @@
-import _ from 'lodash';
-import { Common, Schema } from '@strapi/strapi';
+import get from 'lodash/get';
+import { UID, Schema } from '@strapi/strapi';
 
-export const isContentTypeEnabled = (ct: Common.UID.ContentType | Schema.ContentType) => {
+
+export const isContentTypeEnabled = (ct: UID.ContentType) => {
   let contentType: Schema.ContentType;
 
   if (typeof ct === 'string') {
@@ -11,7 +12,7 @@ export const isContentTypeEnabled = (ct: Common.UID.ContentType | Schema.Content
   }
 
   const { pluginOptions } = contentType;
-  const enabled = _.get(pluginOptions, ['webtools', 'enabled'], false) as boolean;
+  const enabled = get(pluginOptions, ['webtools', 'enabled'], false) as boolean;
 
   if (!enabled) return false;
 

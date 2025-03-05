@@ -8,7 +8,7 @@ import { unstable_useContentManagerContext, getFetchClient } from '@strapi/strap
 import getTrad from '../../helpers/getTrad';
 
 const CMEditViewExclude = () => {
-  const [sitemapSettings, setSitemapSettings] = useState<any>({});
+  const [sitemapSettings, setSitemapSettings] = useState({});
   const { formatMessage } = useIntl();
   const { get } = getFetchClient();
   const { form, ...props } = unstable_useContentManagerContext();
@@ -22,7 +22,8 @@ const CMEditViewExclude = () => {
 
     // eslint-disable-next-line @typescript-eslint/no-floating-promises
     getSitemapSettings();
-  }, [get]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (!sitemapSettings.contentTypes) return null;
   if (!sitemapSettings.contentTypes[props.slug]) return null;

@@ -1,19 +1,15 @@
-import React from 'react';
-import { AdminApp } from '@pluginpal/webtools-helper-plugin';
-import { Route } from 'react-router-dom';
 import pluginPkg from '../package.json';
 import pluginId from './helpers/pluginId';
 import EditView from './components/EditView';
-import AdminRoute from './components/AdminRoute';
 import NavLink from './components/NavLink';
 import getTranslation from './helpers/getTranslation';
-import App from './containers/Main';
+import App from './containers/App';
 
 const pluginDescription = pluginPkg.strapi.description || pluginPkg.description;
 const { name } = pluginPkg.strapi;
 
 export default {
-  register(app: AdminApp) {
+  register(app) {
     app.registerPlugin({
       description: pluginDescription,
       id: pluginId,
@@ -22,7 +18,7 @@ export default {
       name,
     });
   },
-  bootstrap(app: AdminApp) {
+  bootstrap(app) {
     app.getPlugin('content-manager').injectComponent('editView', 'right-links', {
       name: 'sitemap-edit-view',
       Component: EditView,
@@ -35,17 +31,15 @@ export default {
 
     app.getPlugin('webtools').injectComponent('webtoolsRouter', 'route', {
       name: 'settings-route',
-      Component: {
-        path: "/plugins/webtools/sitemap",
-        element: App,
-      },
+      path: '/sitemap',
+      Component: App,
     });
   },
-  async registerTrads(app: any) {
+  async registerTrads(app) {
     const { locales } = app;
 
     const importedTranslations = await Promise.all(
-      (locales as string[]).map((locale) => {
+      locales.map((locale) => {
         return import(`./translations/${locale}.json`)
           .then(({ default: data }) => {
             return {

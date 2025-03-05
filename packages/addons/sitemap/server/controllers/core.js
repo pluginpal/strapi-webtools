@@ -27,7 +27,7 @@ export default {
   },
 
   info: async (ctx) => {
-    const sitemap = await getService('query').getSitemap('default', 0, ['link_count', 'updated_at', 'type']);
+    const sitemap = await getService('query').getSitemap('default', 0, ['link_count', 'updatedAt', 'type']);
     const sitemapInfo = {};
 
     if (sitemap) {
