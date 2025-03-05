@@ -45,6 +45,7 @@ const SelectComponent: FC<Props> = ({
         name={name}
         placeholder={placeholder}
         value={value}
+        // eslint-disable-next-line @typescript-eslint/no-misused-promises
         onChange={(v: any) => setFieldValue(name, v)}
       >
         {list.map((item) => (

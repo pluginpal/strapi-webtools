@@ -3,7 +3,7 @@ import { UID, Schema } from '@strapi/strapi';
 
 import { pluginId } from './pluginId';
 
-export const isContentTypeEnabled = (ct: UID.ContentType | Schema.ContentType) => {
+export const isContentTypeEnabled = (ct: UID.ContentType) => {
   let contentType: Schema.ContentType;
 
   if (typeof ct === 'string') {

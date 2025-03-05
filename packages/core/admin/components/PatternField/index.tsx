@@ -8,13 +8,12 @@ import { FormikErrors } from 'formik';
 import { useQuery } from 'react-query';
 
 import {
-  TextInput, Popover, Box, Loader, Typography,
+  TextInput, Popover, Box, Loader,
   Field,
 } from '@strapi/design-system';
 import { getFetchClient } from '@strapi/strapi/admin';
 import { PatternFormValues } from '../../types/url-patterns';
 import { Theme } from '../../types/theme';
-import useActiveElement from '../../helpers/useActiveElement';
 
 type Props = {
   uid: string;

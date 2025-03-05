@@ -25,8 +25,6 @@ const App = () => {
   const plugin = getPlugin(pluginId);
   console.log(plugin);
   const sidebarComponents = plugin?.getInjectedComponents('webtoolsSidebar', 'link');
-  const routerComponents = plugin?.getInjectedComponents('webtoolsRouter', 'route');
-
 
   // if (history.location.pathname === `/plugins/${pluginId}`) {
   //   history.replace(`/plugins/${pluginId}/overview`);

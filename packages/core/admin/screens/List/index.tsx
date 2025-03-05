@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useIntl } from 'react-intl';
 import {
   useQuery,
   useQueryClient,
 } from 'react-query';
-
-import { useLocation } from 'react-router-dom';
 
 import { Button } from '@strapi/design-system';
 

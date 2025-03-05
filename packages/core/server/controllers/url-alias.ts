@@ -1,5 +1,5 @@
 
-import { factories } from '@strapi/strapi';
+import { factories, UID } from '@strapi/strapi';
 import { Context } from 'koa';
 import { errors } from '@strapi/utils';
 
@@ -56,5 +56,21 @@ export default factories.createCoreController(contentTypeSlug, ({ strapi }) => (
       success: true,
       message: `Successfully generated ${generatedCount} URL alias${generatedCount > 1 ? 'es' : ''}.`,
     };
+  },
+  findFrom: async (ctx: KoaContext) => {
+    const { model, documentId } = ctx.query as { model: UID.ContentType, documentId: string };
+
+    const entity = await strapi.documents(model as 'api::test.test').findOne({
+      documentId,
+      populate: ['url_alias'],
+      fields: [],
+    });
+
+    if (!entity || !entity.url_alias) {
+      ctx.body = [];
+      return;
+    }
+
+    ctx.body = entity.url_alias;
   },
 }));

@@ -6,6 +6,7 @@ import {
   Field,
 } from '@strapi/design-system';
 import { getFetchClient } from '@strapi/strapi/admin';
+import { useQuery } from 'react-query';
 
 import { EnabledContentTypes } from '../../types/enabled-contenttypes';
 
@@ -20,24 +21,10 @@ const LanguageCheckboxes = ({
   onChange,
   error,
 }: Props) => {
-  const [languages, setLanguages] = React.useState<EnabledContentTypes>([]);
-  const [loading, setLoading] = React.useState<boolean>(false);
-
   const { get } = getFetchClient();
+  const languages = useQuery('languages', async () => get<EnabledContentTypes>('/webtools/info/getLanguages'));
 
-  React.useEffect(() => {
-    setLoading(true);
-    get<EnabledContentTypes>('/webtools/info/getLanguages')
-      .then((res) => {
-        setLanguages(res.data);
-        setLoading(false);
-      })
-      .catch(() => {
-        setLoading(false);
-      });
-  }, []);
-
-  if (loading) {
+  if (languages.isLoading) {
     return null;
   }
 
@@ -45,7 +32,7 @@ const LanguageCheckboxes = ({
     <Field.Root name="password" error={error as string}>
       <Field.Label>Select the language</Field.Label>
       <Flex direction="column" alignItems="start" gap="1" marginTop="2">
-        {languages.map((contentType) => (
+        {languages.data.data.map((contentType) => (
           <Checkbox
             aria-label={`Select ${contentType.name}`}
             // @ts-ignore

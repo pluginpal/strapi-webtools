@@ -148,6 +148,7 @@ const generateUrlAliasMiddleware: Modules.Documents.Middleware.Middleware = asyn
   await Promise.all(all.map(async (doc) => {
     await strapi.db.query(uid as 'api::test.test').update({
       where: {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
         id: doc.id as string,
       },
       data: {

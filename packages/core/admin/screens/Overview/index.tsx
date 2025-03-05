@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useIntl } from 'react-intl';
 
 import {
@@ -6,27 +6,19 @@ import {
 } from '@strapi/design-system';
 import { ExternalLink } from '@strapi/icons';
 import { Page, getFetchClient, Layouts } from '@strapi/strapi/admin';
+import { useQuery } from 'react-query';
 
 import pluginPermissions from '../../permissions';
 import { WebtoolsAddonInfo } from '../../types/addons';
 import packageJson from '../../../package.json';
 
 const List = () => {
-  const [addons, setAddons] = useState<WebtoolsAddonInfo[] | null>(null);
   const { get } = getFetchClient();
+  const addons = useQuery('addons', async () => get<WebtoolsAddonInfo[]>('/webtools/info/addons'));
   const { formatMessage } = useIntl();
 
-  useEffect(() => {
-    get<WebtoolsAddonInfo[]>('/webtools/info/addons')
-      .then((res) => {
-        setAddons(res.data);
-      })
-      .catch(() => {
-      });
-  }, []);
-
   // TODO: fix loading state
-  if (!addons) {
+  if (addons.isLoading) {
     return (
       <div>Loading...</div>
     );

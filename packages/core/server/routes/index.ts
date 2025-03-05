@@ -43,6 +43,14 @@ export default {
         },
       },
       {
+        method: 'GET',
+        path: '/url-alias/findFrom',
+        handler: 'url-alias.findFrom',
+        config: {
+          policies: [],
+        },
+      },
+      {
         method: 'POST',
         path: '/url-alias/delete/:id',
         handler: 'url-alias.delete',

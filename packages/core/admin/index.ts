@@ -52,10 +52,10 @@ export default {
     });
   },
   bootstrap(app: AdminApp) {
-    // app.getPlugin('content-manager')?.injectComponent('editView', 'right-links', {
-    //   name: 'url-alias-edit-view',
-    //   Component: EditView,
-    // });
+    app.getPlugin('content-manager')?.injectComponent('editView', 'right-links', {
+      name: 'url-alias-edit-view',
+      Component: EditView,
+    });
 
     const ctbPlugin = app.getPlugin('content-type-builder');
 
