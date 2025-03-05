@@ -11,7 +11,7 @@ import { WarningCircle } from '@strapi/icons';
 
 type Props = {
   onSubmit: () => void;
-  children: React.ReactNode;
+  children: React.ReactElement<any, string>;
 };
 
 const DeleteConfirmModal = (props: Props) => {

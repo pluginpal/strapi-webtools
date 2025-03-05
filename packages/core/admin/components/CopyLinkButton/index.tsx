@@ -16,30 +16,33 @@ const CopyLinkButton: React.FC<Props> = ({ url }) => {
   const { toggleNotification } = useNotification();
 
   return (
-    <CopyToClipboard
-      text={url}
-      onCopy={() => {
-        toggleNotification({
-          type: 'success',
-          message: formatMessage({
-            id: getTrad('notification.success.permalink_copied'),
-            defaultMessage: 'Permalink copied to the clipboard',
-          }),
-        });
-      }}
-    >
-      <LinkButton
-        size="S"
-        startIcon={<LinkIcon />}
-        variant="secondary"
-        style={{ width: '100%' }}
+    <>
+      {/* @ts-ignore */}
+      <CopyToClipboard
+        text={url}
+        onCopy={() => {
+          toggleNotification({
+            type: 'success',
+            message: formatMessage({
+              id: getTrad('notification.success.permalink_copied'),
+              defaultMessage: 'Permalink copied to the clipboard',
+            }),
+          });
+        }}
       >
-        { formatMessage({
-          id: getTrad('settings.button.copy_permalink'),
-          defaultMessage: 'Copy permalink',
-        }) }
-      </LinkButton>
-    </CopyToClipboard>
+        <LinkButton
+          size="S"
+          startIcon={<LinkIcon />}
+          variant="secondary"
+          style={{ width: '100%' }}
+        >
+          { formatMessage({
+            id: getTrad('settings.button.copy_permalink'),
+            defaultMessage: 'Copy permalink',
+          }) }
+        </LinkButton>
+      </CopyToClipboard>
+    </>
   );
 };
 

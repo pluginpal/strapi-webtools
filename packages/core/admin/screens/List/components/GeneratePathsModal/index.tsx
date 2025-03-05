@@ -1,4 +1,4 @@
-import React, { ChangeEvent } from 'react';
+import React from 'react';
 import { useIntl } from 'react-intl';
 
 import {
@@ -17,7 +17,7 @@ import { GenerationType } from '../../../../../server/types';
 type Props = {
   onSubmit: (types: EnabledContentType['uid'][], generationType?: GenerationType) => void;
   contentTypes: EnabledContentTypes;
-  children: React.ReactNode;
+  children: React.ReactElement<any, string>;
 };
 
 const GeneratePathsModal = ({

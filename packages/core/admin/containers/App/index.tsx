@@ -66,18 +66,7 @@ const App = () => {
           <Route path="/patterns" element={<PatternsListPage />} />
           <Route path="/patterns/new" element={<PatternsCreatePage />} />
           <Route path="/patterns/:id" element={<PatternsEditPage />} />
-          {routerComponents.map(({ Component }) => {
-            console.log(Component);
-            return (
-              <Route
-                path={Component.path}
-                element={<Component.element />}
-              />
-            );
-            // @ts-ignore
-            // eslint-disable-next-line react/jsx-pascal-case
-            return <Component.type />;
-          })}
+
           {/* <Route path="" component={NotFound} /> */}
         </Routes>
       </Layouts.Root>

@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC } from 'react';
 import {
   Typography,
   Box,
@@ -12,10 +12,11 @@ import { useIntl } from 'react-intl';
 import { Trash, ExternalLink, Pencil } from '@strapi/icons';
 import { useNavigate } from 'react-router-dom';
 import DeleteConfirmModal from '../DeleteConfirmModal';
-import { Config } from '../../../../../server/admin-api/config';
+import { Config } from '../../../../../server/config';
+import { UrlAliasEntity } from '../../../../types/url-aliases';
 
 type Props = {
-  row: any;
+  row: UrlAliasEntity;
   checked?: boolean;
   onDelete?: () => void;
   updateValue: () => any;
@@ -44,7 +45,7 @@ const TableRow: FC<Props> = ({
       .catch(() => { });
   };
 
-  const handleDelete = (id: number) => {
+  const handleDelete = (id: string) => {
     post(`/webtools/url-alias/delete/${id}`)
       .then(() => {
         if (onDelete) onDelete();
@@ -93,7 +94,7 @@ const TableRow: FC<Props> = ({
             <Pencil />
           </IconButton>
           <DeleteConfirmModal
-            onSubmit={() => handleDelete(row.id)}
+            onSubmit={() => handleDelete(row.documentId)}
           >
             <IconButton
               label={formatMessage(

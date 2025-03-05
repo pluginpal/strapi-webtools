@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   IconButton, Typography, Flex, Tbody, Tr, Td,
 } from '@strapi/design-system';
@@ -6,6 +6,7 @@ import { Pencil, Trash } from '@strapi/icons';
 import { getFetchClient, useNotification } from '@strapi/strapi/admin';
 import { useIntl } from 'react-intl';
 import { useNavigate } from 'react-router-dom';
+import { useQueryClient } from 'react-query';
 
 import pluginId from '../../../../../helpers/pluginId';
 import { PatternEntity } from '../../../../../types/url-patterns';
@@ -15,17 +16,16 @@ interface Props {
 }
 
 const TableBody: React.FC<Props> = ({ patterns }) => {
-  const [statePatterns, setStatePatterns] = useState(patterns);
   const { formatMessage } = useIntl();
   const navigate = useNavigate();
   const { toggleNotification } = useNotification();
   const { get } = getFetchClient();
+  const queryClient = useQueryClient();
 
-  const handleClickDelete = (id: number) => {
+  const handleClickDelete = (id: string) => {
     get(`/webtools/url-pattern/delete/${id}`)
-      .then(() => {
-        const newPatterns = statePatterns.filter((pattern) => pattern.id !== id);
-        setStatePatterns(newPatterns);
+      .then(async () => {
+        await queryClient.invalidateQueries('url-patterns');
         toggleNotification({ type: 'success', message: formatMessage({ id: 'webtools.settings.success.delete' }) });
       })
       .catch(() => {
@@ -33,36 +33,34 @@ const TableBody: React.FC<Props> = ({ patterns }) => {
       });
   };
 
-  const handleClickEdit = (id: number) => {
+  const handleClickEdit = (id: string) => {
     navigate(`/plugins/${pluginId}/patterns/${id}`);
   };
 
   return (
     <Tbody>
-      {statePatterns.map((pattern) => (
-        <Tr key={pattern.label} onClick={() => handleClickEdit(pattern.id)}>
-          <Td width="20%">
-            <Typography>{pattern.label}</Typography>
-          </Td>
+      {patterns.map((pattern) => (
+        <Tr key={pattern.id}>
           <Td width="50%">
             <Typography>{pattern.pattern}</Typography>
+          </Td>
+          <Td width="50%">
+            <Typography>{pattern.contenttype}</Typography>
           </Td>
           <Td>
             <Flex justifyContent="end">
               <IconButton
-                onClick={() => handleClickEdit(pattern.id)}
+                onClick={() => handleClickEdit(pattern.documentId)}
                 label={formatMessage(
-                  { id: 'webtools.settings.page.patterns.table.actions.edit', defaultMessage: 'Edit {target}' },
-                  { target: `${pattern.label}` },
+                  { id: 'webtools.settings.page.patterns.table.actions.edit', defaultMessage: 'Edit' },
                 )}
               >
                 <Pencil />
               </IconButton>
               <IconButton
-                onClick={() => handleClickDelete(pattern.id)}
+                onClick={() => handleClickDelete(pattern.documentId)}
                 label={formatMessage(
-                  { id: 'webtools.settings.page.patterns.table.actions.delete', defaultMessage: 'Delete {target}' },
-                  { target: `${pattern.label}` },
+                  { id: 'webtools.settings.page.patterns.table.actions.delete', defaultMessage: 'Delete' },
                 )}
               >
                 <Trash />

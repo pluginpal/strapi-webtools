@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useIntl } from 'react-intl';
 import { Formik, Form, FormikProps } from 'formik';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useQuery } from 'react-query';
 import {
   Box,
   Link,
@@ -18,60 +19,34 @@ import schema from './utils/schema';
 import pluginId from '../../../helpers/pluginId';
 import Center from '../../../components/Center';
 import Select from '../../../components/Select';
-import LabelField from '../../../components/LabelField';
 import PatternField from '../../../components/PatternField';
 import { PatternEntity, PatternFormValues, ValidatePatternResponse } from '../../../types/url-patterns';
 import { EnabledContentTypes } from '../../../types/enabled-contenttypes';
 import HiddenLocalizedField from '../../../components/HiddenLocalizedField';
 import LanguageCheckboxes from '../../../components/LanguageCheckboxes';
+import { GenericResponse } from '../../../types/content-api';
 
 const EditPatternPage = () => {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const { toggleNotification } = useNotification();
-  const [loading, setLoading] = useState(false);
-  const [patternEntity, setPatternEntity] = useState<null | PatternEntity>(null);
-  const [contentTypes, setContentTypes] = useState<EnabledContentTypes>([]);
-  const { formatMessage } = useIntl();
   const { get, put, post } = getFetchClient();
-
-  console.log('why rerender?');
-
-  useEffect(() => {
-    setLoading(true);
-    get<EnabledContentTypes>('/webtools/info/getContentTypes')
-      .then((res) => {
-        const { data } = res;
-        setContentTypes(data);
-        setLoading(false);
-      })
-      .catch(() => {
-        setLoading(false);
-      });
-  }, []);
-
-  useEffect(() => {
-    setLoading(true);
-    get<PatternEntity>(`/webtools/url-pattern/findOne/${id}`)
-      .then((res) => {
-        const { data } = res;
-        setPatternEntity(data);
-        setLoading(false);
-      })
-      .catch(() => {
-        setLoading(false);
-      });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
+  const pattern = useQuery(['url-pattern', id], async () => get<GenericResponse<PatternEntity>>(`/webtools/url-pattern/findOne/${id}`));
+  const contentTypes = useQuery('content-types', async () => get<EnabledContentTypes>('/webtools/info/getContentTypes'));
+  const { formatMessage } = useIntl();
 
   const handleEditSubmit = async (
     values: PatternFormValues,
-    { setSubmitting, setErrors }: FormikProps<PatternFormValues>,
+    { setSubmitting }: FormikProps<PatternFormValues>,
   ) => {
     try {
       // Proceed to update the current pattern
-      await put(`/webtools/url-pattern/update/${patternEntity?.id}`, {
-        data: values,
+      await put(`/webtools/url-pattern/update/${pattern.data.data.data.documentId}`, {
+        data: {
+          pattern: values.pattern,
+          languages: values.languages,
+          contenttype: values.contenttype,
+        },
       });
 
       navigate(`/plugins/${pluginId}/patterns`);
@@ -81,15 +56,10 @@ const EditPatternPage = () => {
       });
       setSubmitting(false);
     } catch (err) {
-      const error = err as ErrorResponse;
-      if (error.response?.payload?.[0]?.message === 'This attribute must be unique') {
-        setErrors({ code: error.response.payload[0].message as string });
-      } else {
-        toggleNotification({
-          type: 'warning',
-          message: formatMessage({ id: 'notification.error' }),
-        });
-      }
+      toggleNotification({
+        type: 'warning',
+        message: formatMessage({ id: 'notification.error' }),
+      });
       setSubmitting(false);
     }
   };
@@ -114,7 +84,7 @@ const EditPatternPage = () => {
     return errors;
   };
 
-  if (loading || !contentTypes || !patternEntity) {
+  if (pattern.isLoading || contentTypes.isLoading) {
     return (
       <Center>
         <Loader>
@@ -128,7 +98,7 @@ const EditPatternPage = () => {
   }
 
   const getSelectedContentType = (uid: string) => {
-    const selectedContentType = contentTypes.filter(
+    const selectedContentType = contentTypes.data.data.filter(
       (type) => type.uid === uid,
     )[0];
 
@@ -139,14 +109,11 @@ const EditPatternPage = () => {
     <Formik<PatternFormValues>
       enableReinitialize
       initialValues={{
-        label: patternEntity.label,
-        pattern: patternEntity.pattern,
-        contenttype: patternEntity.contenttype,
-        languages: patternEntity.languages,
-        code: patternEntity.code,
+        pattern: pattern.data.data.data.pattern,
+        contenttype: pattern.data.data.data.contenttype,
+        languages: pattern.data.data.data.languages,
         localized: false,
       }}
-      // @ts-ignore
       onSubmit={handleEditSubmit}
       validationSchema={schema}
       validate={validatePattern}
@@ -159,64 +126,65 @@ const EditPatternPage = () => {
         isSubmitting,
         setFieldValue,
       }) => (
-        <Form noValidate onSubmit={handleSubmit}>
-          <Layouts.Header
-            title={formatMessage({
-              id: 'webtools.settings.page.patterns.edit.title',
-              defaultMessage: 'Edit pattern',
-            })}
-            subtitle={formatMessage({
-              id: 'webtools.settings.page.patterns.edit.description',
-              defaultMessage:
-                'Edit this pattern for automatic URL alias generation.',
-            })}
-            navigationAction={(
-              <Link
-                startIcon={<ArrowLeft />}
-                href={`/admin/plugins/${pluginId}/patterns`}
-              >
-                {formatMessage({
-                  id: 'global.back',
-                  defaultMessage: 'Back',
-                })}
-              </Link>
-            )}
-            primaryAction={(
-              <Button
-                type="submit"
-                loading={isSubmitting}
-                startIcon={<Check />}
-              >
-                {formatMessage({
-                  id: 'global.save',
-                  defaultMessage: 'Save',
-                })}
-              </Button>
-            )}
-          />
-          <Layouts.Content>
-            <Flex>
-              <Box
-                background="neutral0"
-                hasRadius
-                shadow="filterShadow"
-                paddingTop={6}
-                paddingBottom={6}
-                paddingLeft={7}
-                paddingRight={7}
-              >
-                <Flex>
+        <>
+          {/** @ts-ignore */}
+          <Form noValidate onSubmit={handleSubmit}>
+            <Layouts.Header
+              title={formatMessage({
+                id: 'webtools.settings.page.patterns.edit.title',
+                defaultMessage: 'Edit pattern',
+              })}
+              subtitle={formatMessage({
+                id: 'webtools.settings.page.patterns.edit.description',
+                defaultMessage:
+                  'Edit this pattern for automatic URL alias generation.',
+              })}
+              navigationAction={(
+                <Link
+                  startIcon={<ArrowLeft />}
+                  href={`/admin/plugins/${pluginId}/patterns`}
+                >
+                  {formatMessage({
+                    id: 'global.back',
+                    defaultMessage: 'Back',
+                  })}
+                </Link>
+              )}
+              primaryAction={(
+                <Button
+                  type="submit"
+                  loading={isSubmitting}
+                  startIcon={<Check />}
+                >
+                  {formatMessage({
+                    id: 'global.save',
+                    defaultMessage: 'Save',
+                  })}
+                </Button>
+              )}
+            />
+            <Layouts.Content>
+              <Flex>
+                <Box
+                  background="neutral0"
+                  hasRadius
+                  shadow="filterShadow"
+                  paddingTop={6}
+                  paddingBottom={6}
+                  paddingLeft={7}
+                  paddingRight={7}
+                >
                   <Typography variant="delta">
                     {formatMessage({
                       id: 'webtools.settings.page.patterns.edit.subtitle',
                       defaultMessage: 'Pattern details',
                     })}
                   </Typography>
-                  <Grid.Root gap={4}>
-                    <Grid.Item col={6}>
+                  <Grid.Root gap={4} marginTop="4">
+                    <Grid.Item col={6} gap="4" alignItems="flex-start" direction="column">
                       <Select
                         name="contenttype"
-                        list={contentTypes}
+                        list={contentTypes.data.data}
                         value={values.contenttype || ''}
                         setFieldValue={setFieldValue}
                         label={formatMessage({
@@ -235,26 +203,11 @@ const EditPatternPage = () => {
                             : null
                         }
                       />
-                    </Grid.Item>
-                    <Grid.Item col={12} />
-                    <Grid.Item col={12} />
-                    <Grid.Item col={6}>
-                      <LabelField
-                        values={values}
-                        setFieldValue={setFieldValue}
-                        errors={errors}
-                        touched={touched}
-                      />
-                    </Grid.Item>
-                    <Grid.Item col={12} />
-
-                    {values.contenttype !== '' && (
-                      <Grid.Item col={6}>
+                      {values.contenttype !== '' && (
                         <PatternField
                           values={values}
                           uid={values.contenttype}
                           setFieldValue={setFieldValue}
-                          // @ts-ignore
                           error={
                               errors.pattern
                               && touched.pattern
@@ -263,33 +216,29 @@ const EditPatternPage = () => {
                                 : null
                             }
                         />
-                      </Grid.Item>
-                    )}
-                    <HiddenLocalizedField
-                      localized={getSelectedContentType(values.contenttype)?.localized}
-                      setFieldValue={setFieldValue}
-                    />
-                    {values.localized && (
-                      <Grid.Item col={12}>
-                        <Grid.Item col={6}>
-                          <LanguageCheckboxes
-                            onChange={(newLanguages) => setFieldValue('languages', newLanguages)}
-                            selectedLanguages={values.languages}
-                            error={
-                              errors.languages && touched.languages
-                                ? errors.languages
-                                : null
-                            }
-                          />
-                        </Grid.Item>
-                      </Grid.Item>
-                    )}
+                      )}
+                      <HiddenLocalizedField
+                        localized={getSelectedContentType(values.contenttype)?.localized}
+                        setFieldValue={setFieldValue}
+                      />
+                      {values.localized && (
+                        <LanguageCheckboxes
+                          onChange={(newLanguages) => setFieldValue('languages', newLanguages)}
+                          selectedLanguages={values.languages}
+                          error={
+                            errors.languages && touched.languages
+                              ? errors.languages
+                              : null
+                          }
+                        />
+                      )}
+                    </Grid.Item>
                   </Grid.Root>
-                </Flex>
-              </Box>
-            </Flex>
-          </Layouts.Content>
-        </Form>
+                </Box>
+              </Flex>
+            </Layouts.Content>
+          </Form>
+        </>
       )}
     </Formik>
   );

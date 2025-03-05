@@ -35,8 +35,8 @@ const SelectComponent: FC<Props> = ({
   return (
     <Field.Root
       hint={hint}
-      // @ts-ignore
       error={error}
+      width="100%"
     >
       <Field.Label>
         {label}

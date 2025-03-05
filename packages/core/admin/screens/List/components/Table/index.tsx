@@ -21,11 +21,12 @@ import TableRow from '../TableRow';
 import PaginationFooter from '../PaginationFooter';
 import type { Pagination } from '../..';
 import Filters from '../Filters';
-import { Config } from '../../../../../server/admin-api/config';
+import { Config } from '../../../../../server/config';
+import { UrlAliasEntity } from '../../../../types/url-aliases';
 
 type Props = {
-  paths: any[],
-  onDelete: () => void,
+  paths: UrlAliasEntity[],
+  onDelete: () => any,
   pagination: Pagination,
   contentTypes: any[],
   config: Config,

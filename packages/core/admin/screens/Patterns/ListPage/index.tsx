@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useIntl } from 'react-intl';
 import { useNavigate } from 'react-router-dom';
+import { useQuery } from 'react-query';
 import {
   Loader,
   Button,
@@ -14,33 +15,16 @@ import pluginId from '../../../helpers/pluginId';
 import Table from './components/Table';
 import Center from '../../../components/Center';
 import { PatternEntity } from '../../../types/url-patterns';
+import { GenericResponse } from '../../../types/content-api';
 
 const ListPatternPage = () => {
-  const [patterns, setPatterns] = useState<PatternEntity[]>([]);
-  const [loading, setLoading] = useState(false);
+  const { get } = getFetchClient();
+  const items = useQuery(['url-patterns'], async () => get<GenericResponse<PatternEntity[]>>('/webtools/url-pattern/findMany'));
+
   const { formatMessage } = useIntl();
   const navigate = useNavigate();
-  const { get } = getFetchClient();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const response = await get<PatternEntity[]>('/webtools/url-pattern/findMany');
-        setPatterns(response.data);
-      } catch (error) {
-        console.error('Failed to fetch data:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData().catch((error) => {
-      console.error('Failed to fetch data:', error);
-    });
-  }, []);
-
-  if (loading) {
+  if (items.isLoading) {
     return (
       <Center>
         <Loader>{formatMessage({ id: 'webtools.settings.loading', defaultMessage: 'Loading content...' })}</Loader>
@@ -63,7 +47,7 @@ const ListPatternPage = () => {
         )}
       />
       <Layouts.Content>
-        <Table patterns={patterns} />
+        <Table patterns={items.data.data.data} />
       </Layouts.Content>
     </Box>
   );

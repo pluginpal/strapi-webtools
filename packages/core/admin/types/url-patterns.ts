@@ -1,8 +1,7 @@
 export interface PatternEntity {
   id: number
-  label: string
+  documentId: string;
   pattern: string
-  code: string
   contenttype: string
   languages: any[]
   createdAt: string
@@ -10,12 +9,10 @@ export interface PatternEntity {
 }
 
 export interface PatternFormValues {
-  label: string,
   pattern: string,
   contenttype: string,
   languages: any[],
   localized: boolean,
-  code?: string,
 }
 
 export interface ValidatePatternResponse {

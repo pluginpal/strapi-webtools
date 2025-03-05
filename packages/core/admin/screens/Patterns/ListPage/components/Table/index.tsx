@@ -26,14 +26,17 @@ const TableComponent: React.FC<Props> = ({ patterns }) => {
             <Tr>
               <Th>
                 <Typography variant="sigma" textColor="neutral600">
-                  {formatMessage({ id: 'webtools.settings.page.patterns.table.head.label', defaultMessage: 'Label' })}
+                  {formatMessage({
+                    id: 'webtools.settings.page.patterns.table.head.pattern',
+                    defaultMessage: 'Pattern',
+                  })}
                 </Typography>
               </Th>
               <Th>
                 <Typography variant="sigma" textColor="neutral600">
                   {formatMessage({
-                    id: 'webtools.settings.page.patterns.table.head.pattern',
-                    defaultMessage: 'Pattern',
+                    id: 'webtools.settings.page.patterns.table.head.content-type',
+                    defaultMessage: 'Content Type',
                   })}
                 </Typography>
               </Th>
