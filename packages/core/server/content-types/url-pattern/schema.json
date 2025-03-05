@@ -19,17 +19,8 @@
     }
   },
   "attributes": {
-    "label": {
-      "type": "string",
-      "required": true
-    },
     "pattern": {
       "type": "string",
-      "required": true
-    },
-    "code": {
-      "type": "string",
-      "unique": true,
       "required": true
     },
     "contenttype": {

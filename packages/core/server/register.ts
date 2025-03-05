@@ -55,7 +55,7 @@ export default ({ strapi }: { strapi: Core.Strapi }) => {
     strapi.plugin('config-sync').pluginTypes.push({
       configName: 'url-pattern',
       queryString: 'plugin::webtools.url-pattern',
-      uid: 'code',
+      uid: 'documentId',
     });
   }
 };
