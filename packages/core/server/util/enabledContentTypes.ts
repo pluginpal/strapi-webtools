@@ -1,9 +1,9 @@
 import get from 'lodash/get';
-import { UID, Schema } from '@strapi/strapi';
+import { Schema } from '@strapi/strapi';
 
 import { pluginId } from './pluginId';
 
-export const isContentTypeEnabled = (ct: UID.ContentType) => {
+export const isContentTypeEnabled = (ct: Schema.ContentType) => {
   let contentType: Schema.ContentType;
 
   if (typeof ct === 'string') {
