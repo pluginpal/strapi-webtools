@@ -6,10 +6,10 @@ import {
 } from '..';
 
 describe('Generic utilities', () => {
-  describe('Log message formatting', () => {
+  it('Log message formatting', () => {
     const message = logMessage('An error occurred');
 
-    expect(message).toEqual('[strapi-plugin-sitemap]: An error occurred');
+    expect(message).toEqual('[webtools-addon-sitemap]: An error occurred');
 
   });
 });
