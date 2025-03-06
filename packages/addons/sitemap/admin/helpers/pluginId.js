@@ -5,6 +5,6 @@ import pluginPkg from '../../package.json';
  *
  * @return {string} The plugin id.
  */
-const pluginId: string = pluginPkg.strapi.name;
+const pluginId = pluginPkg.strapi.name;
 
 export default pluginId;

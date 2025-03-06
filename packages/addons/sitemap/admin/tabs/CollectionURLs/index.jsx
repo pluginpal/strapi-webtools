@@ -12,7 +12,7 @@ import List from '../../components/List/Collection';
 import ModalForm from '../../components/ModalForm';
 
 const CollectionURLs = () => {
-  const state = useSelector((store: any) => store.get('sitemap', Map()));
+  const state = useSelector((store) => store.get('sitemap', Map()));
   const dispatch = useDispatch();
   const [modalOpen, setModalOpen] = useState(false);
   const [uid, setUid] = useState(null);

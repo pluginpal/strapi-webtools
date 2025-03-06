@@ -28,7 +28,7 @@ const ListComponent = (props) => {
 
   items.forEach((item, key) => {
     item.get('languages').forEach((langItem, langKey) => {
-      const formattedItem: any = {};
+      const formattedItem = {};
       formattedItem.name = key;
       formattedItem.langcode = langKey;
       formattedItem.pattern = langItem.get('pattern');

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Loader as LoaderComponent } from '@strapi/design-system';
 
 const Loader = () => {
-  const style: React.CSSProperties = {
+  const style = {
     display: 'flex',
     justifyContent: 'center',
     height: '100%',

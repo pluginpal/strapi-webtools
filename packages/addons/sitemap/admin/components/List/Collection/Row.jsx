@@ -13,7 +13,7 @@ import { useSelector } from 'react-redux';
 import getSelectedContentType from '../../../helpers/getSelectedContentType';
 
 const CustomRow = ({ openModal, entry }) => {
-  const contentTypes = useSelector((store: any) => store.getIn(['sitemap', 'contentTypes'], {}));
+  const contentTypes = useSelector((store) => store.getIn(['sitemap', 'contentTypes'], {}));
 
   const handleEditClick = (e) => {
     openModal(entry.name, entry.langcode);

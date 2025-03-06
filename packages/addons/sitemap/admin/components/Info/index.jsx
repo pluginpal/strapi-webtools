@@ -16,8 +16,8 @@ import { generateSitemap } from '../../state/actions/Sitemap';
 import { formatTime } from '../../helpers/timeFormat';
 
 const Info = () => {
-  const hasHostname = useSelector((state: any) => state.getIn(['sitemap', 'initialData', 'hostname'], Map()));
-  const sitemapInfo = useSelector((state: any) => state.getIn(['sitemap', 'info'], Map()));
+  const hasHostname = useSelector((state) => state.getIn(['sitemap', 'initialData', 'hostname'], Map()));
+  const sitemapInfo = useSelector((state) => state.getIn(['sitemap', 'info'], Map()));
   const dispatch = useDispatch();
   const { toggleNotification } = useNotification();
   const { get } = getFetchClient();

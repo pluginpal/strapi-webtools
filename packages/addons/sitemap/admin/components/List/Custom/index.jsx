@@ -27,7 +27,7 @@ const ListComponent = (props) => {
   }
 
   items.forEach((item, key) => {
-    const formattedItem: any = {};
+    const formattedItem = {};
     formattedItem.name = key;
     formattedItem.priority = item.get('priority');
     formattedItem.changefreq = item.get('changefreq');

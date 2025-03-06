@@ -10,8 +10,8 @@ import { Check } from '@strapi/icons';
 import { discardAllChanges, submit } from '../../state/actions/Sitemap';
 
 const Header = () => {
-  const settings = useSelector((state: any) => state.getIn(['sitemap', 'settings'], Map()));
-  const initialData = useSelector((state: any) => state.getIn(['sitemap', 'initialData'], Map()));
+  const settings = useSelector((state) => state.getIn(['sitemap', 'settings'], Map()));
+  const initialData = useSelector((state) => state.getIn(['sitemap', 'initialData'], Map()));
   const { toggleNotification } = useNotification();
   const { put } = getFetchClient();
 

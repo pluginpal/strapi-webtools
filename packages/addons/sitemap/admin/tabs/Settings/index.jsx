@@ -22,9 +22,9 @@ const Settings = () => {
   const { formatMessage } = useIntl();
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
-  const languages = useSelector((store: any) => store.getIn(['sitemap', 'languages'], {}));
-  const settings = useSelector((state: any) => state.getIn(['sitemap', 'settings'], Map()));
-  const hostnameOverrides = useSelector((state: any) => state.getIn(['sitemap', 'settings', 'hostname_overrides'], {}));
+  const languages = useSelector((store) => store.getIn(['sitemap', 'languages'], {}));
+  const settings = useSelector((state) => state.getIn(['sitemap', 'settings'], Map()));
+  const hostnameOverrides = useSelector((state) => state.getIn(['sitemap', 'settings', 'hostname_overrides'], {}));
   const [inputVisible, setInputVisible] = useState(settings.get('defaultLanguageUrlType') === DEFAULT_LANGUAGE_URL_TYPE_OTHER);
 
   const saveHostnameOverrides = (hostnames) => {
