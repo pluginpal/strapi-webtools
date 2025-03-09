@@ -41,24 +41,21 @@ const CollectionForm = (props) => {
   return (
     <form>
       <Grid.Root gap={6}>
-        <Grid.Item col={6} s={12}>
-          <Grid.Root gap={4}>
-            <Grid.Item col={12}>
-              <SelectContentTypes
-                contentTypes={contentTypes}
-                onChange={(value) => handleSelectChange(value)}
-                value={uid}
-                disabled={!isEmpty(id)}
-                modifiedContentTypes={modifiedState}
-              />
-            </Grid.Item>
-          </Grid.Root>
+        <Grid.Item col={6} s={12} alignItems="flex-start">
+          <SelectContentTypes
+            contentTypes={contentTypes}
+            onChange={(value) => handleSelectChange(value)}
+            value={uid}
+            disabled={!isEmpty(id)}
+            modifiedContentTypes={modifiedState}
+          />
         </Grid.Item>
         <Grid.Item col={6} s={12}>
           <Grid.Root gap={4}>
             {Object.keys(form).map((input) => (
               <Grid.Item col={12} key={input}>
                 <Field.Root
+                  width="100%"
                   hint={formatMessage({ id: `sitemap.Settings.Field.${input.replace(/^\w/, (c) => c.toUpperCase())}.Description`, defaultMessage: '' })}
                 >
                   <Field.Label>{formatMessage({ id: `sitemap.Settings.Field.${input.replace(/^\w/, (c) => c.toUpperCase())}.Label`, defaultMessage: input.replace(/^\w/, (c) => c.toUpperCase()) })}</Field.Label>

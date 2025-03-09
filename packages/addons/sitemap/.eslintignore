@@ -7,6 +7,7 @@
 **/config
 **/scripts
 **/docs
+**/types
 **/xsl
 **/server/types/generated
 **/__tests__

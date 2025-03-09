@@ -2,8 +2,8 @@ import pluginPkg from '../package.json';
 import pluginId from './helpers/pluginId';
 import EditView from './components/EditView';
 import NavLink from './components/NavLink';
-import getTranslation from './helpers/getTranslation';
 import App from './containers/App';
+import { prefixPluginTranslations } from './helpers/prefixPluginTranslations';
 
 const pluginDescription = pluginPkg.strapi.description || pluginPkg.description;
 const { name } = pluginPkg.strapi;
@@ -43,7 +43,7 @@ export default {
         return import(`./translations/${locale}.json`)
           .then(({ default: data }) => {
             return {
-              data: getTranslation(data),
+              data: prefixPluginTranslations(data, pluginId),
               locale,
             };
           })

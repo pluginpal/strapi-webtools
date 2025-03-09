@@ -28,15 +28,16 @@ import {
 
 import getTrad from '../../helpers/getTrad';
 
+
 // Get initial settings
-export function getSettings(toggleNotification, get) {
+export function getSettings(toggleNotification, formatMessage, get) {
   return async function(dispatch) {
     try {
       const res = await get('/webtools-addon-sitemap/settings/');
       const settings = res.data;
       dispatch(getSettingsSucceeded(Map(settings)));
     } catch (err) {
-      toggleNotification({ type: 'warning', message: { id: 'notification.error' } });
+      toggleNotification({ type: 'warning', message: formatMessage({ id: 'notification.error' }) });
     }
   };
 }
@@ -94,29 +95,29 @@ export function discardModifiedContentTypes() {
   };
 }
 
-export function generateSitemap(toggleNotification, get) {
+export function generateSitemap(toggleNotification, formatMessage, get) {
   return async function(dispatch) {
     try {
       dispatch(setLoading(true));
       const res = await get('/webtools-addon-sitemap');
       const message = res.data.message;
-      dispatch(getSitemapInfo(toggleNotification, get));
+      dispatch(getSitemapInfo(toggleNotification, formatMessage, get));
       toggleNotification({ type: 'success', message });
       dispatch(setLoading(false));
     } catch (err) {
-      toggleNotification({ type: 'warning', message: { id: 'notification.error' } });
+      toggleNotification({ type: 'warning', message: formatMessage({ id: 'notification.error' }) });
     }
   };
 }
 
-export function getContentTypes(toggleNotification, get) {
+export function getContentTypes(toggleNotification, formatMessage, get) {
   return async function(dispatch) {
     try {
       const res = await get('/webtools/info/getContentTypes');
       const contentTypes = res.data;
       dispatch(getContentTypesSucceeded(contentTypes));
     } catch (err) {
-      toggleNotification({ type: 'warning', message: { id: 'notification.error' } });
+      toggleNotification({ type: 'warning', message: formatMessage({ id: 'notification.error' }) });
     }
   };
 }
@@ -128,14 +129,14 @@ export function getContentTypesSucceeded(contentTypes) {
   };
 }
 
-export function getLanguages(toggleNotification, get) {
+export function getLanguages(toggleNotification, formatMessage, get) {
   return async function(dispatch) {
     try {
       const res = await get('/webtools/info/getLanguages');
       const languages = res.data;
       dispatch(getLanguagesSucceeded(languages));
     } catch (err) {
-      toggleNotification({ type: 'warning', message: { id: 'notification.error' } });
+      toggleNotification({ type: 'warning', message: formatMessage({ id: 'notification.error' }) });
     }
   };
 }
@@ -147,14 +148,14 @@ export function getLanguagesSucceeded(languages) {
   };
 }
 
-export function submit(settings, toggleNotification, put) {
+export function submit(settings, toggleNotification, formatMessage, put) {
   return async function(dispatch) {
     try {
       await put('/webtools-addon-sitemap/settings/', settings);
       dispatch(onSubmitSucceeded());
-      toggleNotification({ type: 'success', message: { id: getTrad('notification.success.submit') } });
+      toggleNotification({ type: 'success', message: formatMessage({ id: getTrad('notification.success.submit') }) });
     } catch (err) {
-      toggleNotification({ type: 'warning', message: { id: 'notification.error' } });
+      toggleNotification({ type: 'warning', message: formatMessage({ id: 'notification.error' }) });
     }
   };
 }
@@ -186,14 +187,14 @@ export function deleteCustomEntry(key) {
   };
 }
 
-export function getSitemapInfo(toggleNotification, get) {
+export function getSitemapInfo(toggleNotification, formatMessage, get) {
   return async function(dispatch) {
     try {
       const res = await get('/webtools-addon-sitemap/info');
       const info = res.data;
       dispatch(getSitemapInfoSucceeded(info));
     } catch (err) {
-      toggleNotification({ type: 'warning', message: { id: 'notification.error' } });
+      toggleNotification({ type: 'warning', message: formatMessage({ id: 'notification.error' }) });
     }
   };
 }
@@ -205,14 +206,14 @@ export function getSitemapInfoSucceeded(info) {
   };
 }
 
-export function getAllowedFields(toggleNotification, get) {
+export function getAllowedFields(toggleNotification, formatMessage, get) {
   return async function(dispatch) {
     try {
       const res = await get('/webtools-addon-sitemap/pattern/allowed-fields/');
       const fields = res.data;
       dispatch(getAllowedFieldsSucceeded(fields));
     } catch (err) {
-      toggleNotification({ type: 'warning', message: { id: 'notification.error' } });
+      toggleNotification({ type: 'warning', message: formatMessage({ id: 'notification.error' }) });
     }
   };
 }

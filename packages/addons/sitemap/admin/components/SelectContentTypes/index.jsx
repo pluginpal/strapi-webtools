@@ -14,6 +14,7 @@ const SelectContentTypes = (props) => {
 
   return (
     <Field.Root
+      width="100%"
       hint={formatMessage({ id: 'sitemap.Settings.Field.SelectContentType.Description', defaultMessage: 'Select a content type.' })}
     >
       <Field.Label>

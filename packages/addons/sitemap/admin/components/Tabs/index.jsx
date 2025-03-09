@@ -11,7 +11,7 @@ const SitemapTabs = () => {
 
   return (
     <Box padding={8}>
-      <Tabs.Root id="tabs">
+      <Tabs.Root id="tabs" defaultValue="url-bundles">
         <Tabs.List>
           <Tabs.Trigger value="url-bundles">{formatMessage({ id: 'sitemap.Settings.CollectionTitle', defaultMessage: 'URL bundles' })}</Tabs.Trigger>
           <Tabs.Trigger value="custom-urls">{formatMessage({ id: 'sitemap.Settings.CustomTitle', defaultMessage: 'Custom URLs' })}</Tabs.Trigger>

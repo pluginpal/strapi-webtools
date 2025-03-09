@@ -22,7 +22,7 @@ const Header = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(submit(settings.toJS(), toggleNotification, put));
+    dispatch(submit(settings.toJS(), toggleNotification, formatMessage, put));
   };
 
   const handleCancel = (e) => {

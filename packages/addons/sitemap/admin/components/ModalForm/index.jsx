@@ -37,13 +37,8 @@ const ModalForm = (props) => {
     } else {
       setLangcode('und');
     }
-
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen]);
-
-  if (!isOpen) {
-    return null;
-  }
 
   const form = () => {
     switch (type) {
@@ -65,7 +60,11 @@ const ModalForm = (props) => {
   };
 
   return (
-    <Modal.Root>
+    <Modal.Root
+      open={isOpen}
+      onOpenChange={(open) => {
+        if (!open) onCancel();
+      }}>
       <Modal.Content>
         <Modal.Header>
           <Typography textColor="neutral800" variant="omega" fontWeight="bold">

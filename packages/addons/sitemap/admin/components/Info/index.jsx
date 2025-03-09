@@ -68,7 +68,7 @@ const Info = () => {
               {formatMessage({ id: 'sitemap.Info.NoSitemap.Description', defaultMessage: 'Generate your first sitemap XML with the button below.' })}
             </Typography>
             <Button
-              onClick={() => dispatch(generateSitemap(toggleNotification, get))}
+              onClick={() => dispatch(generateSitemap(toggleNotification, formatMessage, get))}
               variant="secondary"
               style={{ marginTop: '15px' }}
             >
@@ -113,7 +113,7 @@ const Info = () => {
         )}
         <div style={{ display: 'flex', flexDirection: 'row' }}>
           <Button
-            onClick={() => dispatch(generateSitemap(toggleNotification, get))}
+            onClick={() => dispatch(generateSitemap(toggleNotification, formatMessage, get))}
             variant="secondary"
             style={{ marginRight: '10px' }}
           >

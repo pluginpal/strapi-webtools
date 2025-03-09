@@ -26,7 +26,7 @@ const getPages = async (config, contentType, ids) => {
     strapi.contentTypes[contentType].pluginOptions?.i18n?.localized
     && strapi.plugin('i18n');
 
-  const locales = await noLimit('plugin::i18n.locale', { fields: 'code' });
+  const locales = isLocalized ? await noLimit('plugin::i18n.locale', { fields: 'code' }) : ['und'];
   let allPages = [];
 
   await Promise.all(locales.map(async (locale) => {
@@ -48,14 +48,14 @@ const getPages = async (config, contentType, ids) => {
           $in: ids,
         } : {},
       },
-      locale: locale.code,
+      ...(isLocalized ? { locale: locale.code } : {}),
       fields: isLocalized ? 'locale' : undefined,
       populate: {
         url_alias: {
           populate: '*',
         },
         localizations: {
-          fields: 'locale',
+          fields: isLocalized ? 'locale' : undefined,
           filters: {
             $or: [
               {

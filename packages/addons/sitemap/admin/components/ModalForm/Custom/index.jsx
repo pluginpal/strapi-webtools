@@ -43,8 +43,9 @@ const CustomForm = (props) => {
   return (
     <form>
       <Grid.Root gap={6}>
-        <Grid.Item col={6} s={12}>
+        <Grid.Item col={6} s={12} alignItems="flex-start">
           <Field.Root
+            width="100%"
             hint={formatMessage({ id: 'sitemap.Settings.Field.URL.Description', defaultMessage: 'This field forces the UID type regex' })}
           >
             <Field.Label>
@@ -60,10 +61,11 @@ const CustomForm = (props) => {
           </Field.Root>
         </Grid.Item>
         <Grid.Item col={6} s={12}>
-          <Grid.Root gap={4}>
+          <Grid.Root gap={4} width="100%">
             {Object.keys(form).map((input) => (
-              <Grid.Item col={12} key={input}>
+              <Grid.Item col={12} key={input} width="100%">
                 <Field.Root
+                  width="100%"
                   hint={formatMessage({ id: `sitemap.Settings.Field.${input.replace(/^\w/, (c) => c.toUpperCase())}.Description`, defaultMessage: '' })}
                 >
                   <Field.Label>

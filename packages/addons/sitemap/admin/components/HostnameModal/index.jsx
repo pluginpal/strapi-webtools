@@ -33,12 +33,8 @@ const ModalForm = (props) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen]);
 
-  if (!isOpen) {
-    return null;
-  }
-
   return (
-    <Modal.Root>
+    <Modal.Root open={isOpen}>
       <Modal.Content>
         <Modal.Header>
           <Typography textColor="neutral800" variant="omega" fontWeight="bold">
@@ -73,20 +69,20 @@ const ModalForm = (props) => {
             ))}
           </Grid.Root>
         </Modal.Body>
-      </Modal.Content>
-      <Modal.Footer>
-        <Modal.Close>
-          <Button onClick={() => onCancel()} variant="tertiary">
-            {formatMessage({ id: 'sitemap.Button.Cancel', defaultMessage: 'Cancel' })}
+        <Modal.Footer>
+          <Modal.Close>
+            <Button onClick={() => onCancel()} variant="tertiary">
+              {formatMessage({ id: 'sitemap.Button.Cancel', defaultMessage: 'Cancel' })}
+            </Button>
+          </Modal.Close>
+          <Button
+            onClick={() => onSave(hostnames)}
+            disabled={isEqual(hostnames, hostnameOverrides)}
+          >
+            {formatMessage({ id: 'sitemap.Button.Save', defaultMessage: 'Save' })}
           </Button>
-        </Modal.Close>
-        <Button
-          onClick={() => onSave(hostnames)}
-          disabled={isEqual(hostnames, hostnameOverrides)}
-        >
-          {formatMessage({ id: 'sitemap.Button.Save', defaultMessage: 'Save' })}
-        </Button>
-      </Modal.Footer>
+        </Modal.Footer>
+      </Modal.Content>
     </Modal.Root>
   );
 };

@@ -125,7 +125,7 @@ const getSitemapPageData = async (config, page, contentType, defaultLocale) => {
 
   const pageData = {
     lastmod: page.updatedAt,
-    url: path,
+    url,
     links: getPluginService('core').getLanguageLinks(config, page, contentType, url, defaultLocale),
     changefreq: config.contentTypes[contentType]['languages'][locale].changefreq || 'monthly',
     priority: parseFloat(config.contentTypes[contentType]['languages'][locale].priority) || 0.5,

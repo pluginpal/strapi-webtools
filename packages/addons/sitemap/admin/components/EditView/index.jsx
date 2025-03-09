@@ -1,17 +1,26 @@
 import React, { useEffect, useState } from 'react';
-import { useIntl } from 'react-intl';
 
-import { Box, Checkbox } from '@strapi/design-system';
-import { SidebarDropdown } from '@pluginpal/webtools-helper-plugin';
-import { unstable_useContentManagerContext, getFetchClient } from '@strapi/strapi/admin';
-
-import getTrad from '../../helpers/getTrad';
+import { Button } from '@strapi/design-system';
+import { CheckCircle, CrossCircle } from '@strapi/icons';
+import { unstable_useContentManagerContext, getFetchClient, unstable_useDocument } from '@strapi/strapi/admin';
 
 const CMEditViewExclude = () => {
   const [sitemapSettings, setSitemapSettings] = useState({});
-  const { formatMessage } = useIntl();
   const { get } = getFetchClient();
-  const { form, ...props } = unstable_useContentManagerContext();
+  const { form, model, collectionType, id, ...props } = unstable_useContentManagerContext();
+  const urlParams = new URLSearchParams(window.location.search);
+  const locale = urlParams.get('plugins[i18n][locale]');
+
+  console.log(locale);
+
+  const { document } = unstable_useDocument({
+    model,
+    collectionType,
+    documentId: id,
+    // params: {
+    //   ...(locale ? { locale } : {}),
+    // },
+  });
   const { values, onChange } = form;
 
   useEffect(() => {
@@ -20,7 +29,6 @@ const CMEditViewExclude = () => {
       setSitemapSettings(settings.data);
     };
 
-    // eslint-disable-next-line @typescript-eslint/no-floating-promises
     getSitemapSettings();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -28,25 +36,20 @@ const CMEditViewExclude = () => {
   if (!sitemapSettings.contentTypes) return null;
   if (!sitemapSettings.contentTypes[props.slug]) return null;
 
+  const excluded = 'sitemap_exclude' in values ? values.sitemap_exclude : document?.sitemap_exclude;
+
   return (
-    <SidebarDropdown
-      label={formatMessage({
-        id: getTrad('plugin.name'),
-        defaultMessage: 'Sitemap',
-      })}
+    <Button
+      size="S"
+      width="100%"
+      variant={excluded ? 'tertiary' : 'secondary'}
+      startIcon={excluded ? <CrossCircle /> : <CheckCircle />}
+      onClick={() => {
+        onChange('sitemap_exclude', !excluded);
+      }}
     >
-      <Box>
-        <Checkbox
-          onCheckedChange={(value) => {
-            onChange('sitemap_exclude', value);
-          }}
-          value={values.sitemap_exclude}
-          name="exclude-from-sitemap"
-        >
-          {formatMessage({ id: getTrad('EditView.ExcludeFromSitemap'), defaultMessage: 'Exclude from sitemap' })}
-        </Checkbox>
-      </Box>
-    </SidebarDropdown>
+      {excluded ? 'Excluded from ' : 'Included in '} Sitemap
+    </Button>
   );
 };
 

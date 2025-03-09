@@ -57,7 +57,7 @@ const Settings = () => {
         <Field.Hint />
       </Grid.Item>
       {languages.length > 1 && (
-        <Grid.Item col={12} s={12}>
+        <Grid.Item col={12} s={12} direction="column" alignItems="flex-start">
           <Typography variant="pi" fontWeight="bold">
             {formatMessage({ id: 'sitemap.Settings.Field.HostnameOverrides.Label', defaultMessage: 'Hostname overrides' })}
           </Typography>
