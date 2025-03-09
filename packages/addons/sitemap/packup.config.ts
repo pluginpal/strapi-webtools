@@ -14,6 +14,12 @@ const config: Config = defineConfig({
       require: './dist/server/index.js',
       runtime: 'node',
     },
+    {
+      source: './server/cli.js',
+      import: './dist/cli/index.mjs',
+      require: './dist/cli/index.js',
+      runtime: 'node',
+    },
   ],
   dist: './dist',
   /**

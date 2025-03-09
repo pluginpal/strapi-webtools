@@ -18,6 +18,9 @@
     "strapi-admin.js",
     "strapi-server.js"
   ],
+  "bin": {
+    "strapi-sitemap": "./bin/strapi-sitemap"
+  },
   "exports": {
     "./strapi-admin": {
       "source": "./admin/index.js",
