@@ -51,6 +51,7 @@ const generateUrlAliasMiddleware: Modules.Documents.Middleware.Middleware = asyn
   // Fetch the full entity.
   const fullEntity = await strapi.documents(uid as 'api::test.test').findOne({
     documentId: entity.documentId,
+    locale: params.locale,
     populate: {
       ...relations.reduce((obj, key) => ({ ...obj, [key]: {} }), {}),
       url_alias: {
@@ -80,11 +81,10 @@ const generateUrlAliasMiddleware: Modules.Documents.Middleware.Middleware = asyn
     return entity;
   }
 
-  // Fetch the URL alias localizations.
-  const urlAliasLocalizations = fullEntity.localizations
-    // @todo check all url aliases, not just the first.
-    ?.map((loc) => loc.url_alias[0].documentId)
-    ?.filter((loc) => loc) || [];
+  // Fetch the URL alias localization.
+  const urlAliasLocalization = fullEntity.localizations
+    ?.map((loc) => loc?.url_alias[0]?.documentId)
+    ?.filter((loc) => loc)[0] || null;
 
   const fullEntityWithoutLocalizations = {
     ...fullEntity,
@@ -99,44 +99,40 @@ const generateUrlAliasMiddleware: Modules.Documents.Middleware.Middleware = asyn
 
     // If a URL alias was created and 'generated' is set to true, update the alias.
     if (urlAliasEntity?.generated === true) {
-      urlAliasEntity = await getPluginService('url-alias').update(urlAliasEntity.documentId, {
+      urlAliasEntity = await strapi.documents('plugin::webtools.url-alias').update({
+        documentId: urlAliasEntity.documentId,
+        locale: combinedEntity.locale,
         data: {
           url_path: generatedPath,
           generated: true,
           contenttype: uid,
-          locale: combinedEntity.locale,
-          localizations: urlAliasLocalizations,
         },
       });
     }
 
     // If no URL alias was created, create one.
     if (!urlAliasEntity) {
-      urlAliasEntity = await getPluginService('url-alias').create({
-        data: {
-          url_path: generatedPath,
-          generated: true,
-          contenttype: uid,
+      if (urlAliasLocalization) {
+        urlAliasEntity = await strapi.documents('plugin::webtools.url-alias').update({
+          documentId: urlAliasLocalization,
           locale: combinedEntity.locale,
-          localizations: urlAliasLocalizations,
-        },
-      });
+          data: {
+            url_path: generatedPath,
+            generated: true,
+            contenttype: uid,
+          },
+        });
+      } else {
+        urlAliasEntity = await strapi.documents('plugin::webtools.url-alias').create({
+          locale: combinedEntity.locale,
+          data: {
+            url_path: generatedPath,
+            generated: true,
+            contenttype: uid,
+          },
+        });
+      }
     }
-  }));
-
-  // Update all the URL alias localizations.
-  await Promise.all(urlAliasLocalizations.map(async (localization) => {
-    await strapi.db.query('plugin::webtools.url-alias').update({
-      where: {
-        id: localization,
-      },
-      data: {
-        localizations: [
-          ...(urlAliasLocalizations.filter((loc) => loc !== localization)),
-          urlAliasEntity.documentId,
-        ],
-      },
-    });
   }));
 
   const all = await strapi.db.query(uid as 'api::test.test').findMany({

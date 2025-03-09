@@ -43,17 +43,26 @@ const customServices = () => ({
    * @param {number} id the id to ignore.
    */
   findByPath: async (path: string, documentId: string = '') => {
-    const pathEntity = await strapi.documents('plugin::webtools.url-alias').findMany({
-      filters: {
-        url_path: path,
-        documentId: {
-          $not: documentId,
-        },
-      },
-      limit: 1,
-    });
+    const locales = await strapi.documents('plugin::i18n.locale').findMany({ fields: 'code' });
 
-    return pathEntity[0];
+    let pathEntity: Modules.Documents.Document<'plugin::webtools.url-alias'> | null = null;
+
+    await locales.reduce(async (prevPromise, locale) => {
+      await prevPromise; // Ensure previous iteration is done
+      if (pathEntity) return; // Stop early if we already found one
+
+      pathEntity = await strapi.documents('plugin::webtools.url-alias').findFirst({
+        locale: locale.code,
+        filters: {
+          url_path: path,
+          documentId: {
+            $not: documentId,
+          },
+        },
+      });
+    }, Promise.resolve());
+
+    return pathEntity;
   },
 
   /**
