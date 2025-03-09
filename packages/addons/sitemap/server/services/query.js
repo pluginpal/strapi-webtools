@@ -26,86 +26,64 @@ const getPages = async (config, contentType, ids) => {
     strapi.contentTypes[contentType].pluginOptions?.i18n?.localized
     && strapi.plugin('i18n');
 
-  const pages = await noLimit(strapi, contentType, {
-    filters: {
-      $or: [
-        {
-          sitemap_exclude: {
-            $null: true,
-          },
-        },
-        {
-          sitemap_exclude: {
-            $eq: false,
-          },
-        },
-      ],
-      id: ids ? {
-        $in: ids,
-      } : {},
-    },
-    locale: 'all',
-    fields: isLocalized ? 'locale' : undefined,
-    populate: {
-      url_alias: {
-        populate: 'url_path',
-      },
-      localizations: {
-        fields: 'locale',
-        filters: {
-          $or: [
-            {
-              sitemap_exclude: {
-                $null: true,
-              },
+  const locales = await noLimit('plugin::i18n.locale', { fields: 'code' });
+  let allPages = [];
+
+  await Promise.all(locales.map(async (locale) => {
+    const pages = await noLimit(contentType, {
+      filters: {
+        $or: [
+          {
+            sitemap_exclude: {
+              $null: true,
             },
-            {
-              sitemap_exclude: {
-                $eq: false,
-              },
+          },
+          {
+            sitemap_exclude: {
+              $eq: false,
             },
-          ],
+          },
+        ],
+        id: ids ? {
+          $in: ids,
+        } : {},
+      },
+      locale: locale.code,
+      fields: isLocalized ? 'locale' : undefined,
+      populate: {
+        url_alias: {
+          populate: '*',
         },
-        populate: {
-          url_alias: {
-            populate: 'url_path',
+        localizations: {
+          fields: 'locale',
+          filters: {
+            $or: [
+              {
+                sitemap_exclude: {
+                  $null: true,
+                },
+              },
+              {
+                sitemap_exclude: {
+                  $eq: false,
+                },
+              },
+            ],
+          },
+          populate: {
+            url_alias: {
+              populate: '*',
+            },
           },
         },
       },
-    },
-    orderBy: 'id',
-    publicationState: excludeDrafts ? 'live' : 'preview',
-  });
-
-  return pages;
-};
-
-/**
- * Query the IDs of the corresponding localization entities.
- *
- * @param {obj} contentType - The content type
- * @param {array} ids - Page ids
- *
- * @returns {object} The pages.
- */
-const getLocalizationIds = async (contentType, ids) => {
-  const isLocalized =
-    strapi.contentTypes[contentType].pluginOptions?.i18n?.localized
-    && strapi.plugin('i18n');
-
-  const localizationIds = [];
-
-  if (isLocalized) {
-    const response = await strapi.entityService.findMany(contentType, {
-      filters: { localizations: ids },
-      locale: 'all',
-      fields: ['id'],
+      orderBy: 'id',
+      status: excludeDrafts ? 'published' : 'draft',
     });
+    allPages = [...allPages, ...pages];
+  }));
 
-    response.map((localization) => localizationIds.push(localization.id));
-  }
-
-  return localizationIds;
+  return allPages;
 };
 
 /**
@@ -118,7 +96,7 @@ const getLocalizationIds = async (contentType, ids) => {
  * @returns {void}
  */
 const getSitemap = async (name, delta, fields = ['sitemap_string']) => {
-  const sitemap = await strapi.entityService.findMany('plugin::webtools-addon-sitemap.sitemap', {
+  const sitemap = await strapi.documents('plugin::webtools-addon-sitemap.sitemap').findMany({
     filters: {
       name,
       delta,
@@ -137,7 +115,7 @@ const getSitemap = async (name, delta, fields = ['sitemap_string']) => {
  * @returns {void}
  */
 const deleteSitemap = async (name) => {
-  const sitemaps = await strapi.entityService.findMany('plugin::webtools-addon-sitemap.sitemap', {
+  const sitemaps = await strapi.documents('plugin::webtools-addon-sitemap.sitemap').findMany({
     filters: {
       name,
     },
@@ -145,7 +123,9 @@ const deleteSitemap = async (name) => {
   });
 
   await Promise.all(sitemaps.map(async (sm) => {
-    await strapi.entityService.delete('plugin::webtools-addon-sitemap.sitemap', sm.id);
+    await strapi.documents('plugin::webtools-addon-sitemap.sitemap').delete({
+      documentId: sm.documentId,
+    });
   }));
 };
 
@@ -177,7 +157,7 @@ const createSitemap = async (data) => {
     }
   });
 
-  const sitemap = await strapi.entityService.create('plugin::webtools-addon-sitemap.sitemap', {
+  const sitemap = await strapi.documents('plugin::webtools-addon-sitemap.sitemap').create({
     data: {
       sitemap_string,
       name,
@@ -192,7 +172,6 @@ const createSitemap = async (data) => {
 
 export default () => ({
   getPages,
-  getLocalizationIds,
   createSitemap,
   getSitemap,
   deleteSitemap,

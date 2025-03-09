@@ -4,11 +4,11 @@
  * Sitemap service.
  */
 
-import { getConfigUrls } from '@strapi/utils';
 import { SitemapStream, streamToPromise, SitemapAndIndexStream } from 'sitemap';
 import { isEmpty } from 'lodash';
 
-import { logMessage, getService, isValidUrl } from '../utils';
+import { logMessage, isValidUrl } from '../utils';
+import { getPluginService } from '../utils/getPluginService';
 
 /**
  * Add link x-default url to url bundles from strapi i18n plugin default locale.
@@ -64,11 +64,11 @@ const getLanguageLinks = (config, page, contentType, defaultURL, defaultLocale) 
       return null;
     }
 
-    if (!translation.url_alias) {
+    if (!translation.url_alias[0]) {
       return null;
     }
 
-    const translationUrl = translation.url_alias.url_path;
+    const translationUrl = translation.url_alias[0].url_path;
 
     let hostnameOverride = config.hostname_overrides[translation.locale] || '';
     hostnameOverride = hostnameOverride.replace(/\/+$/, '');
@@ -80,7 +80,7 @@ const getLanguageLinks = (config, page, contentType, defaultURL, defaultLocale) 
 
   // add optional x-default link url
   if (config.defaultLanguageUrlType) {
-    const defaultLink = getService('core').getDefaultLanguageLink(config, links, defaultLocale);
+    const defaultLink = getPluginService('core').getDefaultLanguageLink(config, links, defaultLocale);
     if (defaultLink) links.push(defaultLink);
   }
 
@@ -114,11 +114,11 @@ const getSitemapPageData = async (config, page, contentType, defaultLocale) => {
     return null;
   }
 
-  if (!page.url_alias) {
+  if (!page.url_alias[0]) {
     return null;
   }
 
-  const path = page.url_alias.url_path;
+  const path = page.url_alias[0].url_path;
   let hostnameOverride = config.hostname_overrides[page.locale] || '';
   hostnameOverride = hostnameOverride.replace(/\/+$/, '');
   const url = `${hostnameOverride}${path}`;
@@ -126,7 +126,7 @@ const getSitemapPageData = async (config, page, contentType, defaultLocale) => {
   const pageData = {
     lastmod: page.updatedAt,
     url: path,
-    links: getService('core').getLanguageLinks(config, page, contentType, url, defaultLocale),
+    links: getPluginService('core').getLanguageLinks(config, page, contentType, url, defaultLocale),
     changefreq: config.contentTypes[contentType]['languages'][locale].changefreq || 'monthly',
     priority: parseFloat(config.contentTypes[contentType]['languages'][locale].priority) || 0.5,
   };
@@ -144,7 +144,7 @@ const getSitemapPageData = async (config, page, contentType, defaultLocale) => {
  * @returns {object} The sitemap entries.
  */
 const createSitemapEntries = async () => {
-  const config = await getService('settings').getConfig();
+  const config = await getPluginService('settings').getConfig();
   let defaultLocale;
 
   if (strapi.plugin('i18n')) {
@@ -157,11 +157,11 @@ const createSitemapEntries = async () => {
   // Collection entries.
   await Promise.all(Object.keys(config.contentTypes).map(async (contentType) => {
     // Query all the pages
-    const pages = await getService('query').getPages(config, contentType);
+    const pages = await getPluginService('query').getPages(config, contentType);
 
     // Add formatted sitemap page data to the array.
     await Promise.all(pages.map(async (page, i) => {
-      const pageData = await getService('core').getSitemapPageData(config, page, contentType, defaultLocale);
+      const pageData = await getPluginService('core').getSitemapPageData(config, page, contentType, defaultLocale);
       if (pageData) {
         sitemapEntries.push(pageData);
       }
@@ -209,7 +209,7 @@ const saveSitemap = async (filename, sitemap, isIndex) => {
   return streamToPromise(sitemap)
     .then(async (sm) => {
       try {
-        return await getService('query').createSitemap({
+        return await getPluginService('query').createSitemap({
           sitemap_string: sm.toString(),
           name: filename,
           delta: 0,
@@ -234,10 +234,10 @@ const saveSitemap = async (filename, sitemap, isIndex) => {
  * @returns {SitemapStream} - The sitemap stream.
  */
 const getSitemapStream = async (urlCount) => {
-  const config = await getService('settings').getConfig();
-  const LIMIT = strapi.config.get('plugin.webtools-addon-sitemap.limit');
-  const enableXsl = strapi.config.get('plugin.webtools-addon-sitemap.xsl');
-  const { serverUrl } = getConfigUrls(strapi.config);
+  const config = await getPluginService('settings').getConfig();
+  const LIMIT = strapi.config.get('plugin::webtools-addon-sitemap.limit');
+  const enableXsl = strapi.config.get('plugin::webtools-addon-sitemap.xsl');
+  const serverUrl = strapi.config.get('server.serverUrl');
 
   const xslObj = {};
 
@@ -266,7 +266,7 @@ const getSitemapStream = async (urlCount) => {
 
         streamToPromise(sitemapStream)
           .then((sm) => {
-            getService('query').createSitemap({
+            getPluginService('query').createSitemap({
               sitemap_string: sm.toString(),
               name: 'default',
               type: 'default_hreflang',
@@ -286,9 +286,9 @@ const getSitemapStream = async (urlCount) => {
  * @returns {void}
  */
 const createSitemap = async () => {
-  const sitemapEntries = await getService('core').createSitemapEntries();
+  const sitemapEntries = await getPluginService('core').createSitemapEntries();
 
-  const config = await getService('settings').getConfig();
+  const config = await getPluginService('settings').getConfig();
 
   if (isEmpty(sitemapEntries)) {
     strapi.log.warn(logMessage('No sitemap XML was generated because there were 0 URLs configured.'));
@@ -305,13 +305,13 @@ const createSitemap = async () => {
     return;
   }
 
-  await getService('query').deleteSitemap('default');
+  await getPluginService('query').deleteSitemap('default');
   const [sitemap, isIndex] = await getSitemapStream(sitemapEntries.length);
 
   sitemapEntries.map((sitemapEntry) => sitemap.write(sitemapEntry));
   sitemap.end();
 
-  await getService('core').saveSitemap('default', sitemap, isIndex);
+  await getPluginService('core').saveSitemap('default', sitemap, isIndex);
 
   strapi.log.info(logMessage('The sitemap XML has been generated. It can be accessed on /api/sitemap/index.xml.'));
 };

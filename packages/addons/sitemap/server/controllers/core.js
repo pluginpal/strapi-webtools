@@ -3,7 +3,7 @@
 import fs from 'fs';
 import path from 'path';
 
-import { getService } from '../utils';
+import { getPluginService } from '../utils/getPluginService';
 
 /**
  * Sitemap.js controller
@@ -14,7 +14,7 @@ import { getService } from '../utils';
 export default {
   buildSitemap: async (ctx) => {
     try {
-      await getService('core').createSitemap();
+      await getPluginService('core').createSitemap();
 
       ctx.send({
         message: 'The sitemap has been generated.',
@@ -27,7 +27,7 @@ export default {
   },
 
   info: async (ctx) => {
-    const sitemap = await getService('query').getSitemap('default', 0, ['link_count', 'updatedAt', 'type']);
+    const sitemap = await getPluginService('query').getSitemap('default', 0, ['link_count', 'updatedAt', 'type']);
     const sitemapInfo = {};
 
     if (sitemap) {
@@ -50,7 +50,7 @@ export default {
 
   getSitemap: async (ctx) => {
     const { page = 0 } = ctx.query;
-    const sitemap = await getService('query').getSitemap('default', page);
+    const sitemap = await getPluginService('query').getSitemap('default', page);
 
     if (!sitemap) {
       ctx.notFound('Not found');

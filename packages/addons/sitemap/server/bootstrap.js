@@ -1,8 +1,9 @@
-import { logMessage, getService } from './utils';
+import { logMessage } from './utils';
+import { getPluginService } from './utils/getPluginService';
 
 export default async () => {
   const sitemap = strapi.plugin('webtools-addon-sitemap');
-  const cron = strapi.config.get('plugin.webtools-addon-sitemap.cron');
+  const cron = strapi.config.get('plugin::webtools-addon-sitemap.cron');
 
   try {
     // Give the public role permissions to access the public API endpoints.
@@ -55,7 +56,7 @@ export default async () => {
       strapi.cron.add({
         generateSitemap: {
           task: async ({ strapi }) => {
-            await getService('core').createSitemap();
+            await getPluginService('core').createSitemap();
           },
           options: {
             rule: cron,

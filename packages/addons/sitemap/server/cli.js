@@ -1,40 +1,19 @@
 #!/usr/bin/env node
 
-const { Command } = require('commander');
-const chalk = require('chalk');
-const fs = require('fs');
-const strapi = require('@strapi/strapi'); // eslint-disable-line
+import { Command } from 'commander';
+import chalk from 'chalk';
+import strapi from '@strapi/strapi';
 
-const packageJSON = require('../package.json');
+import packageJSON from '../package.json';
 
 const program = new Command();
 
 const getStrapiApp = async () => {
-  try {
-    const tsUtils = require('@strapi/typescript-utils'); // eslint-disable-line
+  process.env.CONFIG_SYNC_CLI = 'true';
 
-    const appDir = process.cwd();
-    const isTSProject = await tsUtils.isUsingTypeScript(appDir);
-    const outDir = await tsUtils.resolveOutDir(appDir);
-    const alreadyCompiled = await fs.existsSync(outDir);
-
-    if (isTSProject && !alreadyCompiled) {
-      await tsUtils.compile(appDir, {
-        watch: false,
-        configOptions: { options: { incremental: true } },
-      });
-    }
-
-    const distDir = isTSProject ? outDir : appDir;
-
-    const app = await strapi({ appDir, distDir }).load();
-
-    return app;
-  } catch (e) {
-    // Fallback for pre Strapi 4.2.
-    const app = await strapi().load();
-    return app;
-  }
+  const appContext = await strapi.compileStrapi();
+  const app = await strapi.createStrapi(appContext).load();
+  return app;
 };
 
 // Initial program setup
@@ -61,7 +40,7 @@ program
     const app = await getStrapiApp();
 
     try {
-      app.plugin('sitemap').service('core').createSitemap();
+      app.plugin('webtools-addon-sitemap').service('core').createSitemap();
       console.log(`${chalk.green.bold('[success]')} Successfully generated the sitemap XML.`);
     } catch (err) {
       console.log(`${chalk.red.bold('[error]')} Something went wrong when generating the sitemap XML. ${err}`);

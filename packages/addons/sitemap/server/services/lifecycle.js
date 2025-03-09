@@ -1,6 +1,7 @@
 'use strict';
 
-import { getService, logMessage } from '../utils';
+import { logMessage } from '../utils';
+import { getPluginService } from '../utils/getPluginService';
 
 /**
  * Gets lifecycle service
@@ -14,27 +15,27 @@ const subscribeLifecycleMethods = async (modelName) => {
       models: [modelName],
 
       async afterCreate() {
-        await getService('core').createSitemap();
+        await getPluginService('core').createSitemap();
       },
 
       async afterCreateMany() {
-        await getService('core').createSitemap();
+        await getPluginService('core').createSitemap();
       },
 
       async afterUpdate() {
-        await getService('core').createSitemap();
+        await getPluginService('core').createSitemap();
       },
 
       async afterUpdateMany() {
-        await getService('core').createSitemap();
+        await getPluginService('core').createSitemap();
       },
 
       async afterDelete() {
-        await getService('core').createSitemap();
+        await getPluginService('core').createSitemap();
       },
 
       async afterDeleteMany() {
-        await getService('core').createSitemap();
+        await getPluginService('core').createSitemap();
       },
     });
   } else {
@@ -44,10 +45,10 @@ const subscribeLifecycleMethods = async (modelName) => {
 
 export default () => ({
   async loadAllLifecycleMethods() {
-    const settings = await getService('settings').getConfig();
+    const settings = await getPluginService('settings').getConfig();
 
     // Loop over configured contentTypes from store.
-    if (settings.contentTypes && strapi.config.get('plugin.webtools-addon-sitemap.autoGenerate')) {
+    if (settings.contentTypes && strapi.config.get('plugin::webtools-addon-sitemap.autoGenerate')) {
       Object.keys(settings.contentTypes).map(async (contentType) => {
         await subscribeLifecycleMethods(contentType);
       });
@@ -55,7 +56,7 @@ export default () => ({
   },
 
   async loadLifecycleMethod(modelName) {
-    if (strapi.config.get('plugin.webtools-addon-sitemap.autoGenerate')) {
+    if (strapi.config.get('plugin::webtools-addon-sitemap.autoGenerate')) {
       await subscribeLifecycleMethods(modelName);
     }
   },

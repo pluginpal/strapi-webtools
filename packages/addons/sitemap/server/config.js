@@ -5,7 +5,7 @@ export default {
     cron: '0 0 0 * * *',
     limit: 45000,
     xsl: true,
-    autoGenerate: false,
+    autoGenerate: true,
   },
   validator() {},
 };
