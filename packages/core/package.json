@@ -1,5 +1,5 @@
 {
-  "name": "@pluginpal/webtools-core",
+  "name": "strapi-plugin-webtools",
   "version": "1.0.0-beta.15",
   "description": "This is the description of the plugin.",
   "strapi": {
