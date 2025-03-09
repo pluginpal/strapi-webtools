@@ -4,7 +4,6 @@
 describe('Webtools Core', () => {
   it('Load the homepage and check if somethings there', () => {
     cy.visit('/');
-    // eslint-disable-next-line quotes
-    cy.contains("Welcome to Strapi");
+    cy.contains('Welcome to Strapi');
   });
 });
