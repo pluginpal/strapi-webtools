@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useQuery } from 'react-query';
 import { unstable_useContentManagerContext, Page, useFetchClient } from '@strapi/strapi/admin';
 import EditForm from '../EditForm';
@@ -18,32 +18,32 @@ const EditView = () => {
 
   const aliases = useQuery(`aliases-${model}-${id}`, async () => get<UrlAliasEntity[]>(`/webtools/url-alias/findFrom?model=${model}&documentId=${id}`));
 
+  /**
+   * Ideally the url_alias field would be hidden, but doing so will cause an issue.
+   * The issue can be prevented by setting the field to visible. To make sure the user
+   * doesn't see the url_alias field, we just remove it from the dom.
+   *
+   * @see https://github.com/strapi/strapi/issues/23039
+   * @see https://github.com/strapi/strapi/issues/22975
+   */
+  useEffect(() => {
+    const label = Array.from(document.querySelectorAll('label')).find((l) => l.textContent.startsWith('url_alias'));
+    if (label) {
+      let parentDiv = label.closest('div');
+      for (let i = 0; i < 3; i++) {
+        if (parentDiv) {
+          // @ts-ignore
+          parentDiv = parentDiv.parentElement;
+        }
+      }
+      if (parentDiv) {
+        parentDiv.remove();
+      }
+    }
+  }, []);
+
   if (aliases.isLoading) return null;
   if (aliases.error) return null;
-
-  // const i18nLang = new URLSearchParams(window.location.search).get('plugins[i18n][locale]');
-
-  // useEffect(() => {
-  //   // Early return for when the i18n plugin is not enabled.
-  //   if (!i18nLang) return;
-
-  //   // Map through all url_aliases and clear those that do not match the current i18n language
-  //   // If the URL alias is not the same language as the entity,
-  //   // we should clear it. This happens when you're copying content
-  //   // from a different locale.
-  //   const updatedUrlAliases = modifiedDataUrlAliases?.map((alias) => {
-  //     if (alias?.locale !== i18nLang) {
-  //       return { ...alias, locale: null }; // Clear the alias if the locale doesn't match
-  //     }
-  //     return alias;
-  //   });
-
-  //   // If the URL aliases have changed, update the form data
-  //   // We fire the onChange here because we don't want unnecessary re-renders
-  //   if (JSON.stringify(updatedUrlAliases) !== JSON.stringify(modifiedDataUrlAliases)) {
-  //     onChange('url_alias', updatedUrlAliases);
-  //   }
-  // }, [modifiedDataUrlAliases, onChange, i18nLang]);
 
   // @ts-ignore
   if (!isContentTypeEnabled(contentType)) return null;

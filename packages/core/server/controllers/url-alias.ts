@@ -66,6 +66,8 @@ export default factories.createCoreController(contentTypeSlug, ({ strapi }) => (
       fields: [],
     });
 
+    console.log(entity);
+
     if (!entity || !entity.url_alias) {
       ctx.body = [];
       return;

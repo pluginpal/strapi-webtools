@@ -23,8 +23,8 @@ const App = () => {
   const getPlugin = useStrapiApp('MyComponent', (state) => state.getPlugin);
 
   const plugin = getPlugin(pluginId);
-  console.log(plugin);
   const sidebarComponents = plugin?.getInjectedComponents('webtoolsSidebar', 'link');
+  const routerComponents = plugin?.getInjectedComponents('webtoolsRouter', 'route');
 
   // if (history.location.pathname === `/plugins/${pluginId}`) {
   //   history.replace(`/plugins/${pluginId}/overview`);
@@ -64,6 +64,11 @@ const App = () => {
           <Route path="/patterns" element={<PatternsListPage />} />
           <Route path="/patterns/new" element={<PatternsCreatePage />} />
           <Route path="/patterns/:id" element={<PatternsEditPage />} />
+          {routerComponents.map((component) => (
+            // @ts-ignore
+            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+            <Route path={component.path} element={<component.Component />} />
+          ))}
 
           {/* <Route path="" component={NotFound} /> */}
         </Routes>

@@ -28,7 +28,7 @@ export default factories.createCoreController(contentTypeSlug, ({ strapi }) => (
 
       const fields = getPluginService('url-pattern').getAllowedFields(
         contentType,
-        ['pluralName', 'string', 'uid', 'id'],
+        ['pluralName', 'string', 'uid', 'documentId'],
       );
       formattedFields[contentType.uid] = fields;
     });
@@ -46,7 +46,7 @@ export default factories.createCoreController(contentTypeSlug, ({ strapi }) => (
       'pluralName',
       'string',
       'uid',
-      'id',
+      'documentId',
     ]);
     const validated = urlPatternService.validatePattern(pattern, fields);
 

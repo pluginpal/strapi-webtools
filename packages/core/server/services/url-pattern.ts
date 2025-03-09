@@ -59,8 +59,8 @@ const customServices = () => ({
           // field.target is not strongly typed in the Strapi Attribute types.
           const relation = strapi.contentTypes[field.target as UID.ContentType];
 
-          if (allowedFields.includes('id') && !fields.includes(`${fieldName}.id`)) {
-            fields.push(`${fieldName}.id`);
+          if (allowedFields.includes('documentId') && !fields.includes(`${fieldName}.documentId`)) {
+            fields.push(`${fieldName}.documentId`);
           }
 
           typedEntries(relation.attributes).forEach(([subFieldName, subField]) => {
@@ -75,8 +75,8 @@ const customServices = () => ({
         ) {
           const relation = strapi.components[field.component];
 
-          if (allowedFields.includes('id') && !fields.includes(`${fieldName}.id`)) {
-            fields.push(`${fieldName}.id`);
+          if (allowedFields.includes('documentId') && !fields.includes(`${fieldName}.documentId`)) {
+            fields.push(`${fieldName}.documentId`);
           }
 
           Object.entries(relation.attributes).forEach(([subFieldName, subField]) => {
@@ -88,9 +88,9 @@ const customServices = () => ({
       });
     });
 
-    // Add id field manually because it is not on the attributes object of a content type.
-    if (allowedFields.includes('id')) {
-      fields.push('id');
+    // Add documentId field manually because it is not on the attributes object of a content type.
+    if (allowedFields.includes('documentId')) {
+      fields.push('documentId');
     }
 
     if (allowedFields.includes('pluralName')) {

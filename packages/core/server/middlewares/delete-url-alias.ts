@@ -15,23 +15,34 @@ const deleteUrlAliasMiddleware: Modules.Documents.Middleware.Middleware = async 
     return next();
   }
 
-  // Fetch the entity because we need the url_alias id.
-  const entity = await strapi.documents(uid as 'api::test.test').findOne({
-    documentId: params.documentId,
-    populate: {
-      url_alias: {
-        fields: ['id'],
+  const locales = await strapi.documents('plugin::i18n.locale').findMany({ fields: 'code' });
+  let urlAlias: Modules.Documents.Document<'plugin::webtools.url-alias'> | null = null;
+
+  await locales.reduce(async (prevPromise, locale) => {
+    await prevPromise; // Ensure previous iteration is done
+    if (urlAlias) return; // Stop early if we already found one
+
+    const entity = await strapi.documents(uid as 'api::test.test').findOne({
+      documentId: params.documentId,
+      locale: locale.code,
+      populate: {
+        url_alias: {
+          fields: ['id'],
+        },
       },
-    },
-  });
+    });
+
+    if (entity?.url_alias[0]) {
+      [urlAlias] = entity.url_alias;
+    }
+  }, Promise.resolve());
 
   // If a URL alias is present, delete it.
-  if (entity.url_alias[0]) {
-    await Promise.all(entity.url_alias.map(async (url_alias) => {
-      await strapi.documents('plugin::webtools.url-alias').delete({
-        documentId: url_alias.documentId,
-      });
-    }));
+  if (urlAlias) {
+    await strapi.documents('plugin::webtools.url-alias').delete({
+      locale: params.locale,
+      documentId: urlAlias.documentId,
+    });
   }
 
   // Eventually delete the entity.

@@ -51,7 +51,7 @@ const generateUrlAliasMiddleware: Modules.Documents.Middleware.Middleware = asyn
   // Fetch the full entity.
   const fullEntity = await strapi.documents(uid as 'api::test.test').findOne({
     documentId: entity.documentId,
-    locale: params.locale,
+    ...(params.locale ? { locale: params.locale } : {}),
     populate: {
       ...relations.reduce((obj, key) => ({ ...obj, [key]: {} }), {}),
       url_alias: {
@@ -70,6 +70,7 @@ const generateUrlAliasMiddleware: Modules.Documents.Middleware.Middleware = asyn
   // If the document already has an URL alias, fetch it.
   if (params.data.url_alias?.[0]) {
     urlAliasEntity = await strapi.documents('plugin::webtools.url-alias').findOne({
+      ...(params.locale ? { locale: params.locale } : {}),
       documentId: params.data.url_alias[0] as string,
     });
   } else if (fullEntity.url_alias[0]) {
@@ -137,6 +138,7 @@ const generateUrlAliasMiddleware: Modules.Documents.Middleware.Middleware = asyn
 
   const all = await strapi.db.query(uid as 'api::test.test').findMany({
     where: {
+      ...(params.locale ? { locale: params.locale } : {}),
       document_id: entity.documentId,
     },
   });
@@ -156,7 +158,7 @@ const generateUrlAliasMiddleware: Modules.Documents.Middleware.Middleware = asyn
   const finalEntity = await strapi.documents(uid as 'api::test.test').findOne({
     documentId: entity.documentId,
     fields: params.fields,
-    locale: params.locale,
+    ...(params.locale ? { locale: params.locale } : {}),
     populate: params.populate,
   });
 

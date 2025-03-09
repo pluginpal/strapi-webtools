@@ -9,7 +9,7 @@ const config: {
 } = {
   default: {
     website_url: null,
-    default_pattern: '/[pluralName]/[id]',
+    default_pattern: '/[pluralName]/[documentId]',
   },
   validator() {},
 };
