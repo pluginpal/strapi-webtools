@@ -1,5 +1,3 @@
-/* eslint-disable camelcase */
-
 import { get } from 'lodash';
 import xml2js from 'xml2js';
 

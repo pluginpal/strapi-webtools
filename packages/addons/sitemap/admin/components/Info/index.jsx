@@ -120,7 +120,6 @@ const Info = () => {
             {formatMessage({ id: 'sitemap.Header.Button.Generate', defaultMessage: 'Generate sitemap' })}
           </Button>
           <Link
-            // @ts-ignore
             href={`${strapi.backendURL}${sitemapInfo.get('location')}`}
             target="_blank"
           >

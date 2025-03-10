@@ -34,7 +34,6 @@ const generateUrlAliasMiddleware: Modules.Documents.Middleware.Middleware = asyn
     const urlPatterns = await getPluginService('url-pattern').findByUid(uid, lang);
     urlPatterns.forEach((urlPattern) => {
       const languageRelations = getPluginService('url-pattern').getRelationsFromPattern(urlPattern);
-      // @todo check if this works
       relations = [...relations, ...languageRelations];
     });
   }));

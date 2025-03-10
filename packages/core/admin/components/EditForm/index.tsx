@@ -26,7 +26,9 @@ const EditForm = () => {
   const { id, model } = context;
   const { get, put } = useFetchClient();
   const queryClient = useQueryClient();
-  const aliases = useQuery(`aliases-${model}-${id}`, async () => get<UrlAliasEntity[]>(`/webtools/url-alias/findFrom?model=${model}&documentId=${id}`));
+  const urlParams = new URLSearchParams(window.location.search);
+  const locale = urlParams.get('plugins[i18n][locale]');
+  const aliases = useQuery(`aliases-${model}-${id}-${locale}`, async () => get<UrlAliasEntity[]>(`/webtools/url-alias/findFrom?model=${model}&documentId=${id}&locale=${locale}`));
   const mutation = useMutation((updatedAlias: Partial<UrlAliasEntity>) => put(`/webtools/url-alias/update/${aliases.data.data[0].documentId}`, {
     data: updatedAlias,
   }));
@@ -69,7 +71,6 @@ const EditForm = () => {
               </Typography>
             </Modal.Header>
             <Modal.Body>
-              {/** @ts-ignore */}
               <Form>
                 <Box>
                   <Field.Root hint="Uncheck this to create a custom alias below.">

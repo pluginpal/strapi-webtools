@@ -12,8 +12,6 @@
     "sitemap": "strapi-sitemap"
   },
   "dependencies": {
-    "@pluginpal/webtools-addon-sitemap": "link:.yalc/@pluginpal/webtools-addon-sitemap",
-    "@pluginpal/webtools-core": "link:.yalc/@pluginpal/webtools-core",
     "@strapi/plugin-cloud": "5.10.4",
     "@strapi/plugin-users-permissions": "5.10.4",
     "@strapi/strapi": "5.10.4",

@@ -11,15 +11,13 @@ const CMEditViewExclude = () => {
   const urlParams = new URLSearchParams(window.location.search);
   const locale = urlParams.get('plugins[i18n][locale]');
 
-  console.log(locale);
-
   const { document } = unstable_useDocument({
     model,
     collectionType,
     documentId: id,
-    // params: {
-    //   ...(locale ? { locale } : {}),
-    // },
+    params: {
+      ...(locale ? { locale } : {}),
+    },
   });
   const { values, onChange } = form;
 

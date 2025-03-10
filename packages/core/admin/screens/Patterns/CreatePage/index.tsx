@@ -5,12 +5,12 @@ import {
   Form,
   FormikConfig,
 } from 'formik';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useQuery } from 'react-query';
 
 import {
   Box,
-  Link,
+  Link as DsLink,
   Button,
   Typography,
   Grid,
@@ -75,7 +75,7 @@ const CreatePatternPage = () => {
       .then((res) => {
         const response = res.data;
         if (response.valid === false) {
-          // @ts-ignore
+          // @ts-expect-error
           errors.pattern = response.message;
         }
       })
@@ -118,101 +118,98 @@ const CreatePatternPage = () => {
         isSubmitting,
         setFieldValue,
       }) => (
-        <>
-          {/** @ts-ignore */}
-          <Form noValidate onSubmit={handleSubmit}>
-            <Layouts.Header
-              title={formatMessage({
-                id: 'webtools.settings.page.patterns.create.title',
-                defaultMessage: 'Add new pattern',
-              })}
-              subtitle={formatMessage({
-                id: 'webtools.settings.page.patterns.create.description',
-                defaultMessage: 'Add a pattern for automatic URL alias generation.',
-              })}
-              navigationAction={(
-                <Link startIcon={<ArrowLeft />} href={`/admin/plugins/${pluginId}/patterns`}>
-                  {formatMessage({
-                    id: 'global.back',
-                    defaultMessage: 'Back',
-                  })}
-                </Link>
-              )}
-              primaryAction={(
-                <Button type="submit" loading={isSubmitting} startIcon={<Check />}>
-                  {formatMessage({
-                    id: 'global.save',
-                    defaultMessage: 'Save',
-                  })}
-                </Button>
-              )}
-            />
-            <Layouts.Content>
-              <Box
-                background="neutral0"
-                hasRadius
-                shadow="filterShadow"
-                paddingTop={6}
-                paddingBottom={6}
-                paddingLeft={7}
-                paddingRight={7}
-              >
-                <Typography variant="delta">
-                  {formatMessage({
-                    id: 'webtools.settings.page.patterns.create.subtitle',
-                    defaultMessage: 'Pattern details',
-                  })}
-                </Typography>
-                <Grid.Root gap={4} marginTop={4}>
-                  <Grid.Item col={6} direction="column" alignItems="flex-start" gap="4">
-                    <Select
-                      name="contenttype"
-                      list={contentTypes.data.data}
-                      value={values.contenttype || ''}
+        <Form noValidate onSubmit={handleSubmit}>
+          <Layouts.Header
+            title={formatMessage({
+              id: 'webtools.settings.page.patterns.create.title',
+              defaultMessage: 'Add new pattern',
+            })}
+            subtitle={formatMessage({
+              id: 'webtools.settings.page.patterns.create.description',
+              defaultMessage: 'Add a pattern for automatic URL alias generation.',
+            })}
+            navigationAction={(
+              <DsLink startIcon={<ArrowLeft />} tag={Link} to={`/plugins/${pluginId}/patterns`}>
+                {formatMessage({
+                  id: 'global.back',
+                  defaultMessage: 'Back',
+                })}
+              </DsLink>
+            )}
+            primaryAction={(
+              <Button type="submit" loading={isSubmitting} startIcon={<Check />}>
+                {formatMessage({
+                  id: 'global.save',
+                  defaultMessage: 'Save',
+                })}
+              </Button>
+            )}
+          />
+          <Layouts.Content>
+            <Box
+              background="neutral0"
+              hasRadius
+              shadow="filterShadow"
+              paddingTop={6}
+              paddingBottom={6}
+              paddingLeft={7}
+              paddingRight={7}
+            >
+              <Typography variant="delta">
+                {formatMessage({
+                  id: 'webtools.settings.page.patterns.create.subtitle',
+                  defaultMessage: 'Pattern details',
+                })}
+              </Typography>
+              <Grid.Root gap={4} marginTop={4}>
+                <Grid.Item col={6} direction="column" alignItems="flex-start" gap="4">
+                  <Select
+                    name="contenttype"
+                    list={contentTypes.data.data}
+                    value={values.contenttype || ''}
+                    setFieldValue={setFieldValue}
+                    label={formatMessage({
+                      id: 'webtools.settings.form.contenttype.label',
+                      defaultMessage: 'Content type',
+                    })}
+                    error={
+                      errors.contenttype && touched.contenttype
+                        ? formatMessage({ id: String(errors.contenttype), defaultMessage: 'Invalid value' })
+                        : null
+                    }
+                  />
+                  {(values.contenttype !== '') && (
+                    <PatternField
+                      values={values}
+                      uid={values.contenttype}
                       setFieldValue={setFieldValue}
-                      label={formatMessage({
-                        id: 'webtools.settings.form.contenttype.label',
-                        defaultMessage: 'Content type',
-                      })}
                       error={
-                        errors.contenttype && touched.contenttype
-                          ? formatMessage({ id: String(errors.contenttype), defaultMessage: 'Invalid value' })
+                        errors.pattern && touched.pattern
+                          ? errors.pattern
                           : null
                       }
                     />
-                    {(values.contenttype !== '') && (
-                      <PatternField
-                        values={values}
-                        uid={values.contenttype}
-                        setFieldValue={setFieldValue}
-                        error={
-                          errors.pattern && touched.pattern
-                            ? errors.pattern
-                            : null
-                        }
-                      />
-                    )}
-                    <HiddenLocalizedField
-                      localized={getSelectedContentType(values.contenttype)?.localized}
-                      setFieldValue={setFieldValue}
+                  )}
+                  <HiddenLocalizedField
+                    localized={getSelectedContentType(values.contenttype)?.localized}
+                    setFieldValue={setFieldValue}
+                  />
+                  {values.localized && (
+                    <LanguageCheckboxes
+                      onChange={(newLanguages) => setFieldValue('languages', newLanguages)}
+                      selectedLanguages={values.languages}
+                      error={
+                        errors.languages && touched.languages
+                          ? errors.languages
+                          : null
+                      }
                     />
-                    {values.localized && (
-                      <LanguageCheckboxes
-                        onChange={(newLanguages) => setFieldValue('languages', newLanguages)}
-                        selectedLanguages={values.languages}
-                        error={
-                          errors.languages && touched.languages
-                            ? errors.languages
-                            : null
-                        }
-                      />
-                    )}
-                  </Grid.Item>
-                </Grid.Root>
-              </Box>
-            </Layouts.Content>
-          </Form>
-        </>
+                  )}
+                </Grid.Item>
+              </Grid.Root>
+            </Box>
+          </Layouts.Content>
+        </Form>
       )}
     </Formik>
   );

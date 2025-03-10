@@ -1,7 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+
 import { StrapiApp } from '@strapi/admin/strapi-admin';
 import * as yup from 'yup';
 import pluginPkg from '../package.json';
@@ -22,9 +20,6 @@ export default {
       isReady: true,
       name,
       injectionZones: {
-        webtoolsSidebar: {
-          link: [],
-        },
         webtoolsRouter: {
           route: [],
         },
@@ -34,6 +29,7 @@ export default {
     app.addMenuLink({
       to: '/plugins/webtools',
       icon: PluginIcon,
+      position: 4,
       intlLabel: {
         id: `${pluginId}.settings.title`,
         defaultMessage: 'Webtools',
@@ -59,6 +55,7 @@ export default {
     if (ctbPlugin) {
       const ctbFormsAPI = ctbPlugin.apis.forms;
       // @ts-expect-error
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       ctbFormsAPI.components.add({ id: 'webtools.checkboxConfirmation', component: CheckboxConfirmation });
 
       // @ts-expect-error
@@ -90,6 +87,7 @@ export default {
     }
   },
   async registerTrads(app: any) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const { locales } = app;
 
     const importedTranslations = await Promise.all(

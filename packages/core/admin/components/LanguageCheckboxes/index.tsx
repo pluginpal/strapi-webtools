@@ -35,10 +35,8 @@ const LanguageCheckboxes = ({
         {languages.data.data.map((contentType) => (
           <Checkbox
             aria-label={`Select ${contentType.name}`}
-            // @ts-ignore
             checked={selectedLanguages.includes(contentType.uid)}
             onCheckedChange={() => {
-              console.log('change');
               if (selectedLanguages.includes(contentType.uid)) {
                 const newContentTypes = selectedLanguages
                   .filter((uid) => uid !== contentType.uid);

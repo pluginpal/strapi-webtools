@@ -4,6 +4,7 @@ import {
   Button,
   Checkbox,
   Dialog,
+  Field,
   Flex,
   Typography,
 } from '@strapi/design-system';
@@ -80,60 +81,59 @@ const CheckboxConfirmation: FC<Props> = ({
 
   return (
     <>
-      <Checkbox
-        hint={hint}
-        id={name}
-        name={name}
-        onValueChange={handleChange}
-        // @ts-ignore
-        value={value}
-      >
-        {label}
-      </Checkbox>
-      {isOpen && (
-        <Dialog.Root>
-          <Dialog.Trigger />
-          <Dialog.Content>
-            <Dialog.Body icon={<WarningCircle />}>
-              <Flex direction="column" alignItems="stretch" gap={2}>
-                <Flex justifyContent="center">
-                  <TextAlignTypography id="confirm-description">
-                    {formatMessage({
-                      id: getTrad('webtools.CheckboxConfirmation.Modal.content'),
-                      defaultMessage:
-                        'Disabling url alias will engender the deletion of all your paths for this content type',
-                    })}
-                  </TextAlignTypography>
-                </Flex>
-                <Flex justifyContent="center">
-                  <Typography fontWeight="semiBold" id="confirm-description">
-                    {formatMessage({
-                      id: getTrad('CheckboxConfirmation.Modal.body'),
-                      defaultMessage: 'Do you want to disable it?',
-                    })}
-                  </Typography>
-                </Flex>
-              </Flex>
-            </Dialog.Body>
-            <Dialog.Footer>
-              <Dialog.Cancel>
-                <Button onClick={handleToggle} variant="tertiary">
+      <Field.Root hint={hint}>
+        <Checkbox
+          id={name}
+          name={name}
+          onCheckedChange={handleChange}
+          checked={value}
+        >
+          {label}
+        </Checkbox>
+        <Field.Hint />
+      </Field.Root>
+      <Dialog.Root open={isOpen}>
+        <Dialog.Trigger />
+        <Dialog.Content>
+          <Dialog.Body icon={<WarningCircle />}>
+            <Flex direction="column" alignItems="stretch" gap={2}>
+              <Flex justifyContent="center">
+                <TextAlignTypography id="confirm-description">
                   {formatMessage({
-                    id: 'components.popUpWarning.button.cancel',
-                    defaultMessage: 'No, cancel',
+                    id: getTrad('webtools.CheckboxConfirmation.Modal.content'),
+                    defaultMessage:
+                      'Disabling webtools will trigger the deletion of all your paths for this content type',
                   })}
-                </Button>
-              </Dialog.Cancel>
-              <Button variant="danger-light" onClick={handleConfirm}>
+                </TextAlignTypography>
+              </Flex>
+              <Flex justifyContent="center">
+                <Typography fontWeight="semiBold" id="confirm-description">
+                  {formatMessage({
+                    id: getTrad('CheckboxConfirmation.Modal.body'),
+                    defaultMessage: 'Do you want to disable it?',
+                  })}
+                </Typography>
+              </Flex>
+            </Flex>
+          </Dialog.Body>
+          <Dialog.Footer>
+            <Dialog.Cancel>
+              <Button onClick={handleToggle} variant="tertiary">
                 {formatMessage({
-                  id: getTrad('CheckboxConfirmation.Modal.button-confirm'),
-                  defaultMessage: 'Yes, disable',
+                  id: 'components.popUpWarning.button.cancel',
+                  defaultMessage: 'No, cancel',
                 })}
               </Button>
-            </Dialog.Footer>
-          </Dialog.Content>
-        </Dialog.Root>
-      )}
+            </Dialog.Cancel>
+            <Button variant="danger-light" onClick={handleConfirm}>
+              {formatMessage({
+                id: getTrad('CheckboxConfirmation.Modal.button-confirm'),
+                defaultMessage: 'Yes, disable',
+              })}
+            </Button>
+          </Dialog.Footer>
+        </Dialog.Content>
+      </Dialog.Root>
     </>
   );
 };

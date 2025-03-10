@@ -40,7 +40,6 @@ describe('Hooks', () => {
         },
       };
 
-      // @ts-expect-error - fix types for tests
       await disableContentType({ oldContentTypes, contentTypes });
 
       // The url alias should be deleted now

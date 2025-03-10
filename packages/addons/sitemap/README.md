@@ -6,11 +6,11 @@
 <a href="https://docs.pluginpal.io/webtools/addons/sitemap">Read the documentation</a>
 	
 <p>
-  <a href="https://www.npmjs.org/package/@pluginpal/webtools-addon-sitemap">
-    <img src="https://img.shields.io/npm/v/@pluginpal/webtools-addon-sitemap/latest.svg" alt="NPM Version" />
+  <a href="https://www.npmjs.org/package/webtools-addon-sitemap">
+    <img src="https://img.shields.io/npm/v/webtools-addon-sitemap/latest.svg" alt="NPM Version" />
   </a>
-  <a href="https://www.npmjs.org/package/@pluginpal/webtools-addon-sitemap">
-    <img src="https://img.shields.io/npm/dm/@pluginpal/webtools-addon-sitemap" alt="Monthly download on NPM" />
+  <a href="https://www.npmjs.org/package/webtools-addon-sitemap">
+    <img src="https://img.shields.io/npm/dm/webtools-addon-sitemap" alt="Monthly download on NPM" />
   </a>
   <a href="https://codecov.io/gh/pluginpal/strapi-webtools">
     <img src="https://img.shields.io/github/actions/workflow/status/pluginpal/strapi-webtools/tests.yml?branch=master" alt="CI build status" />
@@ -39,10 +39,10 @@
 
 ```bash
 # using yarn
-yarn add @pluginpal/webtools-addon-sitemap
+yarn add webtools-addon-sitemap
 
 # using npm
-npm install @pluginpal/webtools-addon-sitemap --save
+npm install webtools-addon-sitemap --save
 ```
 
 After successful installation you have to rebuild the admin UI so it'll include this plugin. To rebuild and restart Strapi run:
@@ -78,7 +78,7 @@ Give a star if this project helped you.
 ## 🔗 Links
 
 - [PluginPal marketplace](https://www.pluginpal.io/plugin/webtools)
-- [NPM package](https://www.npmjs.com/package/@pluginpal/webtools-addon-sitemap)
+- [NPM package](https://www.npmjs.com/package/webtools-addon-sitemap)
 - [GitHub repository](https://github.com/pluginpal/strapi-webtools)
 - [Strapi marketplace](https://market.strapi.io/plugins/@pluginpal-webtools-core)
 

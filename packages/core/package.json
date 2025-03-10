@@ -63,8 +63,8 @@
     "@types/react-copy-to-clipboard": "^5.0.7",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
-    "react-router-dom": "^6",
-    "styled-components": "^6"
+    "react-router-dom": "^6.0.0",
+    "styled-components": "^6.0.0"
   },
   "dependencies": {
     "formik": "^2.4.0",

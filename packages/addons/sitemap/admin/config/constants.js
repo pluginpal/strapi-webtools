@@ -4,7 +4,6 @@
  *
  */
 
-// eslint-disable-next-line @typescript-eslint/naming-convention, no-underscore-dangle
 export const __DEBUG__ = true; // TODO: set actual env.
 
 export const SUBMIT = 'Sitemap/ConfigPage/SUBMIT';

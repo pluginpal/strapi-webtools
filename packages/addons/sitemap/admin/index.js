@@ -1,7 +1,6 @@
 import pluginPkg from '../package.json';
 import pluginId from './helpers/pluginId';
 import EditView from './components/EditView';
-import NavLink from './components/NavLink';
 import App from './containers/App';
 import { prefixPluginTranslations } from './helpers/prefixPluginTranslations';
 
@@ -24,13 +23,9 @@ export default {
       Component: EditView,
     });
 
-    app.getPlugin('webtools').injectComponent('webtoolsSidebar', 'link', {
-      name: 'navigation-link',
-      Component: NavLink,
-    });
-
     app.getPlugin('webtools').injectComponent('webtoolsRouter', 'route', {
       name: 'settings-route',
+      label: 'Sitemap',
       path: '/sitemap',
       Component: App,
     });

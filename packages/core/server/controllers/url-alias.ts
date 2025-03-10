@@ -58,15 +58,18 @@ export default factories.createCoreController(contentTypeSlug, ({ strapi }) => (
     };
   },
   findFrom: async (ctx: KoaContext) => {
-    const { model, documentId } = ctx.query as { model: UID.ContentType, documentId: string };
+    const {
+      model,
+      documentId,
+      locale,
+    } = ctx.query as { model: UID.ContentType, documentId: string, locale?: string };
 
     const entity = await strapi.documents(model as 'api::test.test').findOne({
       documentId,
+      ...(locale ? { locale } : {}),
       populate: ['url_alias'],
       fields: [],
     });
-
-    console.log(entity);
 
     if (!entity || !entity.url_alias) {
       ctx.body = [];

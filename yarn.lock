@@ -83,7 +83,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/helper-annotate-as-pure@npm:^7.18.6, @babel/helper-annotate-as-pure@npm:^7.22.5, @babel/helper-annotate-as-pure@npm:^7.25.9":
+"@babel/helper-annotate-as-pure@npm:^7.18.6, @babel/helper-annotate-as-pure@npm:^7.25.9":
   version: 7.25.9
   resolution: "@babel/helper-annotate-as-pure@npm:7.25.9"
   dependencies:
@@ -160,7 +160,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/helper-module-imports@npm:^7.0.0, @babel/helper-module-imports@npm:^7.16.7, @babel/helper-module-imports@npm:^7.22.5, @babel/helper-module-imports@npm:^7.25.9":
+"@babel/helper-module-imports@npm:^7.16.7, @babel/helper-module-imports@npm:^7.25.9":
   version: 7.25.9
   resolution: "@babel/helper-module-imports@npm:7.25.9"
   dependencies:
@@ -554,7 +554,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/plugin-syntax-jsx@npm:^7.22.5, @babel/plugin-syntax-jsx@npm:^7.25.9, @babel/plugin-syntax-jsx@npm:^7.7.2":
+"@babel/plugin-syntax-jsx@npm:^7.25.9, @babel/plugin-syntax-jsx@npm:^7.7.2":
   version: 7.25.9
   resolution: "@babel/plugin-syntax-jsx@npm:7.25.9"
   dependencies:
@@ -1508,7 +1508,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/traverse@npm:^7.25.9, @babel/traverse@npm:^7.26.5, @babel/traverse@npm:^7.26.8, @babel/traverse@npm:^7.26.9, @babel/traverse@npm:^7.4.5":
+"@babel/traverse@npm:^7.25.9, @babel/traverse@npm:^7.26.5, @babel/traverse@npm:^7.26.8, @babel/traverse@npm:^7.26.9":
   version: 7.26.9
   resolution: "@babel/traverse@npm:7.26.9"
   dependencies:
@@ -2022,22 +2022,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@emotion/is-prop-valid@npm:^0.8.8":
-  version: 0.8.8
-  resolution: "@emotion/is-prop-valid@npm:0.8.8"
-  dependencies:
-    "@emotion/memoize": "npm:0.7.4"
-  checksum: f6be625f067c7fa56a12a4edaf090715616dc4fc7803c87212831f38c969350107b9709b1be54100e53153b18d9fa068eb4bf4f9ac66a37a8edf1bac9b64e279
-  languageName: node
-  linkType: hard
-
-"@emotion/memoize@npm:0.7.4":
-  version: 0.7.4
-  resolution: "@emotion/memoize@npm:0.7.4"
-  checksum: b2376548fc147b43afd1ff005a80a1a025bd7eb4fb759fdb23e96e5ff290ee8ba16628a332848d600fb91c3cdc319eee5395fa33d8875e5d5a8c4ce18cddc18e
-  languageName: node
-  linkType: hard
-
 "@emotion/memoize@npm:^0.8.1":
   version: 0.8.1
   resolution: "@emotion/memoize@npm:0.8.1"
@@ -2093,13 +2077,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@emotion/stylis@npm:^0.8.4":
-  version: 0.8.5
-  resolution: "@emotion/stylis@npm:0.8.5"
-  checksum: f109e3f11cb0d48e8658aaa23578c5bcfe35e297819cfb089a3de6ba8dc0f89b0960474922690c6028df5d2e1895b4967f2fb280642c030054c312f1e137ce26
-  languageName: node
-  linkType: hard
-
 "@emotion/unitless@npm:0.8.1":
   version: 0.8.1
   resolution: "@emotion/unitless@npm:0.8.1"
@@ -2111,13 +2088,6 @@ __metadata:
   version: 0.10.0
   resolution: "@emotion/unitless@npm:0.10.0"
   checksum: 150943192727b7650eb9a6851a98034ddb58a8b6958b37546080f794696141c3760966ac695ab9af97efe10178690987aee4791f9f0ad1ff76783cdca83c1d49
-  languageName: node
-  linkType: hard
-
-"@emotion/unitless@npm:^0.7.4":
-  version: 0.7.5
-  resolution: "@emotion/unitless@npm:0.7.5"
-  checksum: 4d0d94f53cb97b4481bbfa394953e1899a0b877644642ba9dd7247c27eb8c48e14e22aeb11411d7d9874685ad85dd5fb5b50eb78c6d8840eb56a84b92dcef2f4
   languageName: node
   linkType: hard
 
@@ -3677,18 +3647,6 @@ __metadata:
   checksum: 3f7536bc7f57320ab2cf96f8973664bef624710c403357429fbf680a5c3b4843c1dbd389bb43daa6b1f6f1f007bb082f5abcb76bb2b5dc9f421647743b71d3d8
   languageName: node
   linkType: hard
-
-"@pluginpal/webtools-addon-sitemap@link:.yalc/@pluginpal/webtools-addon-sitemap::locator=strapi-webtools%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "@pluginpal/webtools-addon-sitemap@link:.yalc/@pluginpal/webtools-addon-sitemap::locator=strapi-webtools%40workspace%3A."
-  languageName: node
-  linkType: soft
-
-"@pluginpal/webtools-core@link:.yalc/@pluginpal/webtools-core::locator=strapi-webtools%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "@pluginpal/webtools-core@link:.yalc/@pluginpal/webtools-core::locator=strapi-webtools%40workspace%3A."
-  languageName: node
-  linkType: soft
 
 "@pmmmwh/react-refresh-webpack-plugin@npm:0.5.15":
   version: 0.5.15
@@ -7949,21 +7907,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"babel-plugin-styled-components@npm:>= 1.12.0":
-  version: 2.1.4
-  resolution: "babel-plugin-styled-components@npm:2.1.4"
-  dependencies:
-    "@babel/helper-annotate-as-pure": "npm:^7.22.5"
-    "@babel/helper-module-imports": "npm:^7.22.5"
-    "@babel/plugin-syntax-jsx": "npm:^7.22.5"
-    lodash: "npm:^4.17.21"
-    picomatch: "npm:^2.3.1"
-  peerDependencies:
-    styled-components: ">= 2"
-  checksum: 553f35f5feb4b51fda9c9aeef8a31c1b66f430687ab17830b7cdacfe7e93f912aef55bf59e402f4e0a1fa7ad039768ab3626512bbb9bf1f76fcc67ba47e7a56e
-  languageName: node
-  linkType: hard
-
 "babel-plugin-transform-react-remove-prop-types@npm:^0.4.24":
   version: 0.4.24
   resolution: "babel-plugin-transform-react-remove-prop-types@npm:0.4.24"
@@ -9582,7 +9525,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"css-to-react-native@npm:3.2.0, css-to-react-native@npm:^3.0.0":
+"css-to-react-native@npm:3.2.0":
   version: 3.2.0
   resolution: "css-to-react-native@npm:3.2.0"
   dependencies:
@@ -12930,7 +12873,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"hoist-non-react-statics@npm:3, hoist-non-react-statics@npm:^3.0.0, hoist-non-react-statics@npm:^3.3.0, hoist-non-react-statics@npm:^3.3.1, hoist-non-react-statics@npm:^3.3.2":
+"hoist-non-react-statics@npm:3, hoist-non-react-statics@npm:^3.3.0, hoist-non-react-statics@npm:^3.3.1, hoist-non-react-statics@npm:^3.3.2":
   version: 3.3.2
   resolution: "hoist-non-react-statics@npm:3.3.2"
   dependencies:
@@ -19277,7 +19220,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"shallowequal@npm:1.1.0, shallowequal@npm:^1.1.0":
+"shallowequal@npm:1.1.0":
   version: 1.1.0
   resolution: "shallowequal@npm:1.1.0"
   checksum: b926efb51cd0f47aa9bc061add788a4a650550bbe50647962113a4579b60af2abe7b62f9b02314acc6f97151d4cf87033a2b15fc20852fae306d1a095215396c
@@ -19832,6 +19775,12 @@ __metadata:
   languageName: node
   linkType: hard
 
+"strapi-plugin-webtools@link:.yalc/strapi-plugin-webtools::locator=strapi-webtools%40workspace%3A.":
+  version: 0.0.0-use.local
+  resolution: "strapi-plugin-webtools@link:.yalc/strapi-plugin-webtools::locator=strapi-webtools%40workspace%3A."
+  languageName: node
+  linkType: soft
+
 "strapi-plugin-webtools@workspace:packages/core":
   version: 0.0.0-use.local
   resolution: "strapi-plugin-webtools@workspace:packages/core"
@@ -19853,8 +19802,8 @@ __metadata:
     react-dom: "npm:^18.0.0"
     react-intl: "npm:^6.4.1"
     react-query: "npm:^3.39.3"
-    react-router-dom: "npm:^6"
-    styled-components: "npm:^6"
+    react-router-dom: "npm:^6.0.0"
+    styled-components: "npm:^6.0.0"
     yup: "npm:^0.32.9"
   peerDependencies:
     "@strapi/admin": ^5.0.0
@@ -19875,8 +19824,6 @@ __metadata:
   dependencies:
     "@changesets/changelog-github": "npm:^0.5.0"
     "@changesets/cli": "npm:^2.27.1"
-    "@pluginpal/webtools-addon-sitemap": "link:.yalc/@pluginpal/webtools-addon-sitemap"
-    "@pluginpal/webtools-core": "link:.yalc/@pluginpal/webtools-core"
     "@types/jest": "npm:^29.4.0"
     "@uncinc/eslint-config": "npm:1.1.2"
     cypress: "npm:^13.9.0"
@@ -19886,9 +19833,11 @@ __metadata:
     eslint-plugin-jest-dom: "npm:^5.4.0"
     jest: "npm:^29.4.1"
     jest-cli: "npm:^29.2.2"
+    strapi-plugin-webtools: "link:.yalc/strapi-plugin-webtools"
     supertest: "npm:^6.3.3"
     ts-jest: "npm:^29.0.3"
     turbo: "npm:latest"
+    webtools-addon-sitemap: "link:.yalc/webtools-addon-sitemap"
     yalc: "npm:^1.0.0-pre.53"
   languageName: unknown
   linkType: soft
@@ -20191,29 +20140,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"styled-components@npm:5.3.3":
-  version: 5.3.3
-  resolution: "styled-components@npm:5.3.3"
-  dependencies:
-    "@babel/helper-module-imports": "npm:^7.0.0"
-    "@babel/traverse": "npm:^7.4.5"
-    "@emotion/is-prop-valid": "npm:^0.8.8"
-    "@emotion/stylis": "npm:^0.8.4"
-    "@emotion/unitless": "npm:^0.7.4"
-    babel-plugin-styled-components: "npm:>= 1.12.0"
-    css-to-react-native: "npm:^3.0.0"
-    hoist-non-react-statics: "npm:^3.0.0"
-    shallowequal: "npm:^1.1.0"
-    supports-color: "npm:^5.5.0"
-  peerDependencies:
-    react: ">= 16.8.0"
-    react-dom: ">= 16.8.0"
-    react-is: ">= 16.8.0"
-  checksum: 0fda77406c668a16c753f0778850a90d5fbeae419791dac533e3f67e77f8c767d89022626aafa169fffe8b0873e15bf71126b2bab945dc98af6079d8b90e7488
-  languageName: node
-  linkType: hard
-
-"styled-components@npm:^6":
+"styled-components@npm:^6, styled-components@npm:^6.0.0":
   version: 6.1.15
   resolution: "styled-components@npm:6.1.15"
   dependencies:
@@ -21823,6 +21750,12 @@ __metadata:
   languageName: node
   linkType: hard
 
+"webtools-addon-sitemap@link:.yalc/webtools-addon-sitemap::locator=strapi-webtools%40workspace%3A.":
+  version: 0.0.0-use.local
+  resolution: "webtools-addon-sitemap@link:.yalc/webtools-addon-sitemap::locator=strapi-webtools%40workspace%3A."
+  languageName: node
+  linkType: soft
+
 "webtools-addon-sitemap@workspace:packages/addons/sitemap":
   version: 0.0.0-use.local
   resolution: "webtools-addon-sitemap@workspace:packages/addons/sitemap"
@@ -21842,23 +21775,23 @@ __metadata:
     react-dom: "npm:^18.0.0"
     react-intl: "npm:^6.4.1"
     react-redux: "npm:^8.1.1"
-    react-router-dom: "npm:^6.0.0"
+    react-router-dom: "npm:^6"
     redux-immutable: "npm:^4.0.0"
     redux-thunk: "npm:^2.3.0"
     sitemap: "npm:^7.1.0"
-    styled-components: "npm:5.3.3"
+    styled-components: "npm:^6"
     xml2js: "npm:^0.5.0"
   peerDependencies:
     "@strapi/design-system": ^2.0.0-rc.14
     "@strapi/icons": ^2.0.0-rc.14
     "@strapi/strapi": ^5.0.0
-    "@strapi/utils": ^5.0.0
+    "@strapi/utils": 5.0.0
     react: ^17.0.0 || ^18.0.0
     react-dom: ^17.0.0 || ^18.0.0
     react-router-dom: ^6.0.0
     redux: "*"
     strapi-plugin-webtools: 1.0.0-beta.15
-    styled-components: ^5.2.1
+    styled-components: ^6.0.0
   bin:
     strapi-sitemap: ./bin/strapi-sitemap
   languageName: unknown

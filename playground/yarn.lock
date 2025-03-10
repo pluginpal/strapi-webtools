@@ -1365,18 +1365,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@pluginpal/webtools-addon-sitemap@link:.yalc/@pluginpal/webtools-addon-sitemap::locator=playground-5%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "@pluginpal/webtools-addon-sitemap@link:.yalc/@pluginpal/webtools-addon-sitemap::locator=playground-5%40workspace%3A."
-  languageName: node
-  linkType: soft
-
-"@pluginpal/webtools-core@link:.yalc/@pluginpal/webtools-core::locator=playground-5%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "@pluginpal/webtools-core@link:.yalc/@pluginpal/webtools-core::locator=playground-5%40workspace%3A."
-  languageName: node
-  linkType: soft
-
 "@pmmmwh/react-refresh-webpack-plugin@npm:0.5.15":
   version: 0.5.15
   resolution: "@pmmmwh/react-refresh-webpack-plugin@npm:0.5.15"
@@ -11218,8 +11206,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "playground-5@workspace:."
   dependencies:
-    "@pluginpal/webtools-addon-sitemap": "link:.yalc/@pluginpal/webtools-addon-sitemap"
-    "@pluginpal/webtools-core": "link:.yalc/@pluginpal/webtools-core"
     "@strapi/plugin-cloud": "npm:5.10.4"
     "@strapi/plugin-users-permissions": "npm:5.10.4"
     "@strapi/strapi": "npm:5.10.4"

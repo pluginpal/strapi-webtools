@@ -16,7 +16,9 @@ const EditView = () => {
     id,
   } = context;
 
-  const aliases = useQuery(`aliases-${model}-${id}`, async () => get<UrlAliasEntity[]>(`/webtools/url-alias/findFrom?model=${model}&documentId=${id}`));
+  const urlParams = new URLSearchParams(window.location.search);
+  const locale = urlParams.get('plugins[i18n][locale]');
+  const aliases = useQuery(`aliases-${model}-${id}-${locale}`, async () => get<UrlAliasEntity[]>(`/webtools/url-alias/findFrom?model=${model}&documentId=${id}&locale=${locale}`));
 
   /**
    * Ideally the url_alias field would be hidden, but doing so will cause an issue.
@@ -32,7 +34,7 @@ const EditView = () => {
       let parentDiv = label.closest('div');
       for (let i = 0; i < 3; i++) {
         if (parentDiv) {
-          // @ts-ignore
+          // @ts-expect-error
           parentDiv = parentDiv.parentElement;
         }
       }
@@ -45,7 +47,7 @@ const EditView = () => {
   if (aliases.isLoading) return null;
   if (aliases.error) return null;
 
-  // @ts-ignore
+  // @ts-expect-error
   if (!isContentTypeEnabled(contentType)) return null;
 
   return (

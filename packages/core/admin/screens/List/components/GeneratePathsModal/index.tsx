@@ -62,8 +62,7 @@ const GeneratePathsModal = ({
                 {contentTypes.map((contentType) => (
                   <Checkbox
                     aria-label={`Select ${contentType.name}`}
-                    // @ts-ignore
-                    value={selectedContentTypes.includes(contentType.uid)}
+                    checked={selectedContentTypes.includes(contentType.uid)}
                     onCheckedChange={() => {
                       if (selectedContentTypes.includes(contentType.uid)) {
                         const newContentTypes = selectedContentTypes

@@ -1,26 +1,33 @@
 import React from 'react';
 import { useIntl } from 'react-intl';
+import isEmpty from 'lodash/isEmpty';
 
 import {
   Typography, Grid, Flex, Link,
+  Card,
+  CardBody,
+  CardTitle,
+  CardSubtitle,
+  CardContent,
+  Box,
 } from '@strapi/design-system';
-import { ExternalLink } from '@strapi/icons';
+import { ExternalLink, PuzzlePiece } from '@strapi/icons';
 import { Page, getFetchClient, Layouts } from '@strapi/strapi/admin';
 import { useQuery } from 'react-query';
 
 import pluginPermissions from '../../permissions';
 import { WebtoolsAddonInfo } from '../../types/addons';
 import packageJson from '../../../package.json';
+import Loader from '../../components/Loader';
 
 const List = () => {
   const { get } = getFetchClient();
   const addons = useQuery('addons', async () => get<WebtoolsAddonInfo[]>('/webtools/info/addons'));
   const { formatMessage } = useIntl();
 
-  // TODO: fix loading state
   if (addons.isLoading) {
     return (
-      <div>Loading...</div>
+      <Loader />
     );
   }
   return (
@@ -51,21 +58,21 @@ const List = () => {
             </Typography>
 
             <Grid.Root gap={5}>
-              <Grid.Item col={6} s={12}>
+              <Grid.Item col={6} s={12} direction="column" alignItems="flex-start">
                 <Typography variant="sigma" textColor="neutral600">
                   {formatMessage({
                     id: 'webtools.settings.application.strapiVersion',
-                    defaultMessage: 'strapi version',
+                    defaultMessage: 'Strapi version',
                   })}
                 </Typography>
                 <Flex gap={3} direction="column" alignItems="start">
                   <Typography>v{packageJson.version}</Typography>
                 </Flex>
               </Grid.Item>
-              <Grid.Item col={6} s={12}>
+              <Grid.Item col={6} s={12} direction="column" alignItems="flex-start">
                 <Typography variant="sigma" textColor="neutral600">
                   {formatMessage({
-                    id: 'TODO_REPLACE',
+                    id: 'webtools.settings.links',
                     defaultMessage: 'Links',
                   })}
                 </Typography>
@@ -76,7 +83,7 @@ const List = () => {
                     endIcon={<ExternalLink />}
                   >
                     {formatMessage({
-                      id: 'TODO_REPLACE',
+                      id: 'webtools.settings.website',
                       defaultMessage: 'Website',
                     })}
                   </Link>
@@ -88,7 +95,7 @@ const List = () => {
                     endIcon={<ExternalLink />}
                   >
                     {formatMessage({
-                      id: 'TODO_REPLACE',
+                      id: 'webtools.settings.github',
                       defaultMessage: 'Github',
                     })}
                   </Link>
@@ -97,35 +104,55 @@ const List = () => {
             </Grid.Root>
           </Flex>
         </Flex>
-        {/* <Box
-          hasRadius
-          background="neutral0"
-          shadow="tableShadow"
-          paddingTop={6}
-          paddingBottom={6}
-          paddingRight={7}
-          paddingLeft={7}
-        >
-          <Typography variant="delta" as="h3">
-            {formatMessage({
-              id: 'TODO_REPLACE',
-              defaultMessage: 'Addons',
-            })}
-          </Typography>
-          <Typography variant="pi" textColor="neutral600">
-            {formatMessage(
-              {
-                id: 'TODO_REPLACE',
-                defaultMessage: 'All the installed addons',
-              },
-            )}
-          </Typography>
-          <Flex>
-            {Object.values(addons).map((addon) => (
-              <div>{addon.info.addonName}</div>
-            ))}
+        {!isEmpty(addons.data.data) && (
+          <Flex
+            direction="column"
+            alignItems="stretch"
+            hasRadius
+            background="neutral0"
+            shadow="tableShadow"
+            paddingTop={6}
+            paddingBottom={6}
+            paddingRight={7}
+            paddingLeft={7}
+            marginTop={6}
+          >
+            <Typography variant="delta">
+              {formatMessage({
+                id: 'webtools.settings.addons.title',
+                defaultMessage: 'Addons',
+              })}
+            </Typography>
+            <Typography variant="pi" textColor="neutral600">
+              {formatMessage(
+                {
+                  id: 'webtools.settings.addons.description',
+                  defaultMessage: 'All the installed addons',
+                },
+              )}
+            </Typography>
+            <Flex marginTop={4}>
+              {Object.values(addons.data.data).map((addon) => (
+                <Card
+                  style={{
+                    width: '240px',
+                  }}
+                  id="fourth"
+                >
+                  <CardBody>
+                    <Box padding={2} background="primary100">
+                      <PuzzlePiece />
+                    </Box>
+                    <CardContent paddingLeft={2}>
+                      <CardTitle>{addon.info.addonName}</CardTitle>
+                      <CardSubtitle>{addon.info.description}</CardSubtitle>
+                    </CardContent>
+                  </CardBody>
+                </Card>
+              ))}
+            </Flex>
           </Flex>
-        </Box> */}
+        )}
       </Layouts.Content>
     </Page.Protect>
   );

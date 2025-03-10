@@ -1,5 +1,10 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import {
+  Routes,
+  Route,
+  useLocation,
+  Link,
+} from 'react-router-dom';
 
 import {
   SubNav,
@@ -10,7 +15,6 @@ import {
 } from '@strapi/design-system';
 import { Page, useStrapiApp, Layouts } from '@strapi/strapi/admin';
 
-
 import pluginPermissions from '../../permissions';
 import pluginId from '../../helpers/pluginId';
 import List from '../../screens/List';
@@ -18,17 +22,18 @@ import Overview from '../../screens/Overview';
 import PatternsListPage from '../../screens/Patterns/ListPage';
 import PatternsEditPage from '../../screens/Patterns/EditPage';
 import PatternsCreatePage from '../../screens/Patterns/CreatePage';
+import PageNotFound from '../../screens/404';
+import { InjectedRoute } from '../../types/injection-zones';
 
 const App = () => {
   const getPlugin = useStrapiApp('MyComponent', (state) => state.getPlugin);
 
   const plugin = getPlugin(pluginId);
-  const sidebarComponents = plugin?.getInjectedComponents('webtoolsSidebar', 'link');
-  const routerComponents = plugin?.getInjectedComponents('webtoolsRouter', 'route');
 
-  // if (history.location.pathname === `/plugins/${pluginId}`) {
-  //   history.replace(`/plugins/${pluginId}/overview`);
-  // }
+  const routerComponents = plugin?.getInjectedComponents('webtoolsRouter', 'route') as unknown as InjectedRoute[];
+
+  const location = useLocation();
+  const currentPath = location.pathname;
 
   return (
     <Page.Protect permissions={pluginPermissions['settings.patterns']}>
@@ -38,39 +43,38 @@ const App = () => {
             <SubNavHeader value="" label="Webtools" />
             <SubNavSections>
               <SubNavSection label="Core">
-                <SubNavLink href="/admin/plugins/webtools/overview" key="test">
+                <SubNavLink tag={Link} to="/plugins/webtools" key="test" className={currentPath === '/plugins/webtools' ? 'active' : ''}>
                   Overview
                 </SubNavLink>
-                <SubNavLink href="/admin/plugins/webtools/urls" key="test">
+                <SubNavLink tag={Link} to="/plugins/webtools/urls" key="test" className={currentPath.startsWith('/plugins/webtools/urls') ? 'active' : ''}>
                   All URLs
                 </SubNavLink>
-                <SubNavLink href="/admin/plugins/webtools/patterns" key="test">
+                <SubNavLink tag={Link} to="/plugins/webtools/patterns" key="test" className={currentPath.startsWith('/plugins/webtools/patterns') ? 'active' : ''}>
                   Url Patterns
                 </SubNavLink>
               </SubNavSection>
               <SubNavSection label="Addons">
-                {sidebarComponents.map(({ Component }) => <Component />)}
-                {/* <SubNavLink to="/test" active key="test">
-                  Sitemap
-                </SubNavLink> */}
+                {routerComponents.map(({ path, label }) => (
+                  <SubNavLink tag={Link} to={`/plugins/webtools${path}`} key={path} className={currentPath.startsWith(`/plugins/webtools${path}`) ? 'active' : ''}>
+                    {label}
+                  </SubNavLink>
+                ))}
               </SubNavSection>
             </SubNavSections>
           </SubNav>
         )}
       >
         <Routes>
-          <Route path="/overview" element={<Overview />} />
+          <Route path="/" element={<Overview />} />
           <Route path="/urls" element={<List />} />
           <Route path="/patterns" element={<PatternsListPage />} />
           <Route path="/patterns/new" element={<PatternsCreatePage />} />
           <Route path="/patterns/:id" element={<PatternsEditPage />} />
-          {routerComponents.map((component) => (
-            // @ts-ignore
-            // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-            <Route path={component.path} element={<component.Component />} />
+          {routerComponents.map(({ path, Component }) => (
+            <Route path={path} element={<Component />} />
           ))}
 
-          {/* <Route path="" component={NotFound} /> */}
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Layouts.Root>
     </Page.Protect>

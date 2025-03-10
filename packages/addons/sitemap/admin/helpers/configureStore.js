@@ -18,9 +18,7 @@ const configureStore = () => {
   if (__DEBUG__) {
     devtools = (
       typeof window !== 'undefined'
-      // @ts-ignore
       && typeof window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ === 'function'
-      // @ts-ignore
       && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({ actionsBlacklist: [] })
     );
 
