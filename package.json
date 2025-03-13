@@ -41,9 +41,5 @@
   "engines": {
     "node": ">=14.0.0"
   },
-  "packageManager": "yarn@4.0.2",
-  "dependencies": {
-    "strapi-plugin-webtools": "link:.yalc/strapi-plugin-webtools",
-    "webtools-addon-sitemap": "link:.yalc/webtools-addon-sitemap"
-  }
+  "packageManager": "yarn@4.0.2"
 }
