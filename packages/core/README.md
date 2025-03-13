@@ -22,9 +22,6 @@
 	
 </div>
 
-> [!IMPORTANT]  
-> The Webtools suite is still in BETA
-
 ## ✨ Features
 
 - **Unique URLs** Every page will get their own unique path

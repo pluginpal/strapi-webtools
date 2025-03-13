@@ -1,12 +1,12 @@
 {
   "name": "strapi-plugin-webtools",
   "version": "1.0.0-beta.15",
-  "description": "This is the description of the plugin.",
+  "description": "Everything you need to build a website with Strapi CMS",
   "strapi": {
     "name": "webtools",
     "icon": "list",
     "displayName": "Webtools",
-    "description": "This is the description of the plugin.",
+    "description": "Everything you need to build a website with Strapi CMS",
     "required": false,
     "kind": "plugin"
   },

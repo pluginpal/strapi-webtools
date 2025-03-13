@@ -505,6 +505,7 @@ export interface ApiTestTest extends Struct.CollectionTypeSchema {
   };
   options: {
     draftAndPublish: true;
+    populateCreatorFields: true;
   };
   pluginOptions: {
     i18n: {
@@ -517,8 +518,7 @@ export interface ApiTestTest extends Struct.CollectionTypeSchema {
   attributes: {
     category: Schema.Attribute.Relation<'oneToOne', 'api::category.category'>;
     createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
     header: Schema.Attribute.Component<'core.header', true> &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
@@ -542,8 +542,7 @@ export interface ApiTestTest extends Struct.CollectionTypeSchema {
         };
       }>;
     updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
     url_alias: Schema.Attribute.Relation<
       'oneToMany',
       'plugin::webtools.url-alias'
