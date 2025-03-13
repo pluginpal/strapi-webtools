@@ -48,7 +48,7 @@
     "@strapi/design-system": "^2.0.0-rc.14",
     "@strapi/icons": "^2.0.0-rc.14",
     "@strapi/strapi": "^5.0.0",
-    "@strapi/utils": "5.0.0",
+    "@strapi/utils": "^5.0.0",
     "react": "^17.0.0 || ^18.0.0",
     "react-dom": "^17.0.0 || ^18.0.0",
     "react-router-dom": "^6.0.0",

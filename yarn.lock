@@ -5751,24 +5751,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@strapi/utils@npm:5.0.0":
-  version: 5.0.0
-  resolution: "@strapi/utils@npm:5.0.0"
-  dependencies:
-    "@sindresorhus/slugify": "npm:1.1.0"
-    date-fns: "npm:2.30.0"
-    execa: "npm:5.1.1"
-    http-errors: "npm:2.0.0"
-    lodash: "npm:4.17.21"
-    node-machine-id: "npm:1.1.12"
-    p-map: "npm:4.0.0"
-    preferred-pm: "npm:3.1.2"
-    yup: "npm:0.32.9"
-    zod: "npm:^3.22.4"
-  checksum: 2c6547efd32d8cfab000b8510f0116d23daca00aec6d256fc1fe81e6d64fb6c64f719f741782a381bf36e99a18a699b70c100525d6b3c9ecd371c035f7b8fbeb
-  languageName: node
-  linkType: hard
-
 "@strapi/utils@npm:5.10.3, @strapi/utils@npm:^5.0.0":
   version: 5.10.3
   resolution: "@strapi/utils@npm:5.10.3"
@@ -19791,7 +19773,7 @@ __metadata:
     "@strapi/pack-up": "npm:^5.0.0"
     "@strapi/sdk-plugin": "npm:^5.0.0"
     "@strapi/strapi": "npm:^5.0.0"
-    "@strapi/utils": "npm:5.0.0"
+    "@strapi/utils": "npm:^5.0.0"
     "@types/koa": "npm:^2.15.0"
     "@types/lodash": "npm:^4"
     "@types/react-copy-to-clipboard": "npm:^5.0.7"
@@ -19810,7 +19792,7 @@ __metadata:
     "@strapi/design-system": ^2.0.0-rc.14
     "@strapi/icons": ^2.0.0-rc.14
     "@strapi/strapi": ^5.0.0
-    "@strapi/utils": 5.0.0
+    "@strapi/utils": ^5.0.0
     react: ^17.0.0 || ^18.0.0
     react-dom: ^17.0.0 || ^18.0.0
     react-router-dom: ^6.0.0
@@ -21785,7 +21767,7 @@ __metadata:
     "@strapi/design-system": ^2.0.0-rc.14
     "@strapi/icons": ^2.0.0-rc.14
     "@strapi/strapi": ^5.0.0
-    "@strapi/utils": 5.0.0
+    "@strapi/utils": ^5.0.0
     react: ^17.0.0 || ^18.0.0
     react-dom: ^17.0.0 || ^18.0.0
     react-router-dom: ^6.0.0
