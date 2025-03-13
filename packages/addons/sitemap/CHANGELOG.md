@@ -1,5 +1,16 @@
 # addon-sitemap
 
+## 1.0.0
+
+### Major Changes
+
+- [#204](https://github.com/pluginpal/strapi-webtools/pull/204) [`a70cb10`](https://github.com/pluginpal/strapi-webtools/commit/a70cb106bdf783c2a0f0038bb0165dc0646ffb55) Thanks [@boazpoolman](https://github.com/boazpoolman)! - Strapi 5 support
+
+### Patch Changes
+
+- Updated dependencies [[`a70cb10`](https://github.com/pluginpal/strapi-webtools/commit/a70cb106bdf783c2a0f0038bb0165dc0646ffb55)]:
+  - strapi-plugin-webtools@1.0.0
+
 ## 1.0.0-beta.10
 
 ### Patch Changes
