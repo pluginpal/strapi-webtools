@@ -46,18 +46,14 @@ export default {
       name: string;
       uid: string;
     }[] = [];
-    if (strapi.plugin('i18n')) {
-      const locales = await strapi.documents('plugin::i18n.locale').findMany();
-      locales.forEach((locale) => {
-        formattedLocales.push({
-          name: locale.name,
-          uid: locale.code,
-        });
+    const locales = await strapi.documents('plugin::i18n.locale').findMany();
+    locales.forEach((locale) => {
+      formattedLocales.push({
+        name: locale.name,
+        uid: locale.code,
       });
-      ctx.body = formattedLocales;
-    } else {
-      ctx.body = [];
-    }
+    });
+    ctx.body = formattedLocales;
   },
 
   getAddons: (ctx: Context) => {
@@ -66,7 +62,7 @@ export default {
   },
 
   getConfig: (ctx: Context) => {
-    const config = strapi.config.get('plugin.webtools');
+    const config = strapi.config.get('plugin::webtools');
     ctx.body = config;
   },
 };

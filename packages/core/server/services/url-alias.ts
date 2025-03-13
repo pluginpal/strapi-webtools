@@ -42,7 +42,7 @@ const customServices = () => ({
    * @param {string} path the path.
    * @param {number} id the id to ignore.
    */
-  findByPath: async (path: string, documentId: string = '') => {
+  findByPath: async (path: string, excludeFilters: { [key: string]: any }[] = [{}]) => {
     const locales = await strapi.documents('plugin::i18n.locale').findMany({ fields: 'code' });
 
     let pathEntity: Modules.Documents.Document<'plugin::webtools.url-alias'> | null = null;
@@ -55,8 +55,8 @@ const customServices = () => ({
         locale: locale.code,
         filters: {
           url_path: path,
-          documentId: {
-            $not: documentId,
+          $not: {
+            $and: excludeFilters,
           },
         },
       });
@@ -70,15 +70,15 @@ const customServices = () => ({
    */
   makeUniquePath: async (
     originalPath: string,
-    ignoreId?: string,
+    excludeFilters?: { [key: string]: any }[],
     ext: number = -1,
   ): Promise<string> => {
     const extension = ext >= 0 ? `-${ext}` : '';
     const newPath = originalPath + extension;
-    const pathAlreadyExists = await getPluginService('url-alias').findByPath(newPath, ignoreId);
+    const pathAlreadyExists = await getPluginService('url-alias').findByPath(newPath, excludeFilters);
 
     if (pathAlreadyExists) {
-      return getPluginService('url-alias').makeUniquePath(originalPath, ignoreId, ext + 1);
+      return getPluginService('url-alias').makeUniquePath(originalPath, excludeFilters, ext + 1);
     }
 
     return newPath;

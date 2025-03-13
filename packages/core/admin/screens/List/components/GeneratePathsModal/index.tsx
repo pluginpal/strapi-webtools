@@ -15,7 +15,7 @@ import { EnabledContentType, EnabledContentTypes } from '../../../../types/enabl
 import { GenerationType } from '../../../../../server/types';
 
 type Props = {
-  onSubmit: (types: EnabledContentType['uid'][], generationType?: GenerationType) => void;
+  onSubmit: (types: EnabledContentType['uid'][], generationType?: GenerationType) => Promise<void>;
   contentTypes: EnabledContentTypes;
   children: React.ReactElement<any, string>;
 };
@@ -25,12 +25,13 @@ const GeneratePathsModal = ({
   contentTypes,
   children,
 }: Props) => {
+  const [open, setOpen] = React.useState<boolean>();
   const { formatMessage } = useIntl();
   const [selectedContentTypes, setSelectedContentTypes] = React.useState<EnabledContentType['uid'][]>([]);
   const [selectedGenerationType, setSelectedGenerationType] = React.useState<GenerationType>();
 
   return (
-    <Modal.Root>
+    <Modal.Root open={open} onOpenChange={setOpen}>
       <Modal.Trigger>
         {children}
       </Modal.Trigger>
@@ -131,8 +132,10 @@ const GeneratePathsModal = ({
             </Button>
           </Modal.Close>
           <Button
-            onClick={() => {
-              onSubmit(selectedContentTypes, selectedGenerationType);
+            // eslint-disable-next-line @typescript-eslint/no-misused-promises
+            onClick={async () => {
+              await onSubmit(selectedContentTypes, selectedGenerationType);
+              setOpen(false);
             }}
           >
             {formatMessage({

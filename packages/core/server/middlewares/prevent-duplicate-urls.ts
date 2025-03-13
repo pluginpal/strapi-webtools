@@ -18,7 +18,17 @@ const preventDuplicateUrlsMiddleware: Modules.Documents.Middleware.Middleware = 
   const params = context.params as Modules.Documents.ServiceParams<'plugin::webtools.url-alias'>['create' | 'update' | 'clone'] & { documentId: string };
 
   if (params.data.url_path) {
-    params.data.url_path = await getPluginService('url-alias').makeUniquePath(params.data.url_path, action !== 'clone' && params.documentId);
+    params.data.url_path = await getPluginService('url-alias').makeUniquePath(
+      params.data.url_path,
+      action !== 'clone' && [
+        {
+          documentId: params.documentId,
+        },
+        {
+          locale: params.locale,
+        },
+      ],
+    );
   }
 
   return next();

@@ -24,11 +24,9 @@ const generateUrlAliasMiddleware: Modules.Documents.Middleware.Middleware = asyn
   let languages: string[] = [undefined];
   let urlAliasEntity: Data.ContentType<'plugin::webtools.url-alias'> | undefined;
 
-  if (strapi.plugin('i18n')) {
-    languages = [];
-    const locales = await strapi.entityService.findMany('plugin::i18n.locale', {});
-    languages = locales.map((locale) => locale.code);
-  }
+  languages = [];
+  const locales = await strapi.entityService.findMany('plugin::i18n.locale', {});
+  languages = locales.map((locale) => locale.code);
 
   await Promise.all(languages.map(async (lang) => {
     const urlPatterns = await getPluginService('url-pattern').findByUid(uid, lang);

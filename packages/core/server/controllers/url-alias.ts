@@ -47,10 +47,6 @@ export default factories.createCoreController(contentTypeSlug, ({ strapi }) => (
 
     const generatedCount = await getPluginService('bulk-generate').generateUrlAliases({ types, generationType });
 
-    if (strapi.plugin('i18n')) {
-      await getPluginService('bulk-generate').createLanguageLinksForUrlAliases();
-    }
-
     // Return the amount of generated URL aliases.
     ctx.body = {
       success: true,
@@ -64,8 +60,10 @@ export default factories.createCoreController(contentTypeSlug, ({ strapi }) => (
       locale,
     } = ctx.query as { model: UID.ContentType, documentId: string, locale?: string };
 
-    const entity = await strapi.documents(model as 'api::test.test').findOne({
-      documentId,
+    const isSingleType = strapi.getModel(model)?.kind === 'singleType';
+
+    const entity = await strapi.documents(model as 'api::test.test').findFirst({
+      ...(!isSingleType ? { filters: { documentId } } : {}),
       ...(locale ? { locale } : {}),
       populate: ['url_alias'],
       fields: [],

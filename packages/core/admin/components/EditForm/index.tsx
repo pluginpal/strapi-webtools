@@ -35,8 +35,8 @@ const EditForm = () => {
 
   // Re-fetch the aliases when the modal is opened.
   React.useEffect(() => {
-    if (open) queryClient.invalidateQueries(`aliases-${model}-${id}`);
-  }, [open, queryClient, model, id]);
+    if (open) queryClient.invalidateQueries(`aliases-${model}-${id}-${locale}`);
+  }, [open, queryClient, model, id, locale]);
 
   const { formatMessage } = useIntl();
 

@@ -27,7 +27,7 @@ const customServices = () => ({
     }
 
     if (!patterns.length) {
-      return [strapi.config.get('plugin.webtools.default_pattern')];
+      return [strapi.config.get('plugin::webtools.default_pattern')];
     }
 
     const patternsArray = patterns.map((pattern) => pattern.pattern);
@@ -187,7 +187,7 @@ const customServices = () => ({
     };
 
     if (!urlPattern) {
-      return resolve(strapi.config.get('plugin.webtools.default_pattern'));
+      return resolve(strapi.config.get('plugin::webtools.default_pattern'));
     }
 
     const path = resolve(urlPattern);
