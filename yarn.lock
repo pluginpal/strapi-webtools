@@ -19757,12 +19757,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"strapi-plugin-webtools@link:.yalc/strapi-plugin-webtools::locator=strapi-webtools%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "strapi-plugin-webtools@link:.yalc/strapi-plugin-webtools::locator=strapi-webtools%40workspace%3A."
-  languageName: node
-  linkType: soft
-
 "strapi-plugin-webtools@workspace:packages/core":
   version: 0.0.0-use.local
   resolution: "strapi-plugin-webtools@workspace:packages/core"
@@ -19815,11 +19809,9 @@ __metadata:
     eslint-plugin-jest-dom: "npm:^5.4.0"
     jest: "npm:^29.4.1"
     jest-cli: "npm:^29.2.2"
-    strapi-plugin-webtools: "link:.yalc/strapi-plugin-webtools"
     supertest: "npm:^6.3.3"
     ts-jest: "npm:^29.0.3"
     turbo: "npm:latest"
-    webtools-addon-sitemap: "link:.yalc/webtools-addon-sitemap"
     yalc: "npm:^1.0.0-pre.53"
   languageName: unknown
   linkType: soft
@@ -21731,12 +21723,6 @@ __metadata:
   checksum: bee4fa77f444802f0beafb2ff30eb5454a606163ad7d3cc9a5dcc9d24033c62407bed04601b25dea49ea3969b352c1b530a86c753246f42560a4a084eefb094e
   languageName: node
   linkType: hard
-
-"webtools-addon-sitemap@link:.yalc/webtools-addon-sitemap::locator=strapi-webtools%40workspace%3A.":
-  version: 0.0.0-use.local
-  resolution: "webtools-addon-sitemap@link:.yalc/webtools-addon-sitemap::locator=strapi-webtools%40workspace%3A."
-  languageName: node
-  linkType: soft
 
 "webtools-addon-sitemap@workspace:packages/addons/sitemap":
   version: 0.0.0-use.local
