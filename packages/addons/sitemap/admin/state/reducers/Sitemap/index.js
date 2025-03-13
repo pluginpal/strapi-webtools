@@ -37,7 +37,7 @@ const initialState = fromJS({
   modifiedCustomEntries: Map({}),
 });
 
-// eslint-disable-next-line default-param-last
+// eslint-disable-next-line default-param-last, @typescript-eslint/default-param-last
 export default function sitemapReducer(state = initialState, action) {
   switch (action.type) {
     case GET_SETTINGS_SUCCEEDED:
@@ -58,10 +58,9 @@ export default function sitemapReducer(state = initialState, action) {
       if (action.lang) {
         return state
           .updateIn(['modifiedContentTypes', action.contentType, 'languages', action.lang, action.key], () => action.value);
-      } else {
-        return state
-          .updateIn(['modifiedContentTypes', action.contentType, action.key], () => action.value);
       }
+      return state
+        .updateIn(['modifiedContentTypes', action.contentType, action.key], () => action.value);
     case ON_CHANGE_CUSTOM_ENTRY:
       return state
         .updateIn(['modifiedCustomEntries', action.url, action.key], () => action.value);
@@ -86,11 +85,10 @@ export default function sitemapReducer(state = initialState, action) {
         return state
           .deleteIn(['settings', 'contentTypes', action.key, 'languages', action.lang])
           .deleteIn(['modifiedContentTypes', action.key, 'languages', action.lang]);
-      } else {
-        return state
-          .deleteIn(['settings', 'contentTypes', action.key])
-          .deleteIn(['modifiedContentTypes', action.key]);
       }
+      return state
+        .deleteIn(['settings', 'contentTypes', action.key])
+        .deleteIn(['modifiedContentTypes', action.key]);
     case DELETE_CUSTOM_ENTRY:
       return state
         .deleteIn(['settings', 'customEntries', action.key])

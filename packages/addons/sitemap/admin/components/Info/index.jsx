@@ -4,8 +4,13 @@ import { Map } from 'immutable';
 import { useIntl } from 'react-intl';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { useFetchClient, useNotification } from '@strapi/helper-plugin';
-import { Typography, Box, Button, Link } from '@strapi/design-system';
+import { getFetchClient, useNotification } from '@strapi/strapi/admin';
+import {
+  Typography,
+  Box,
+  Button,
+  Link,
+} from '@strapi/design-system';
 
 import { generateSitemap } from '../../state/actions/Sitemap';
 import { formatTime } from '../../helpers/timeFormat';
@@ -14,8 +19,8 @@ const Info = () => {
   const hasHostname = useSelector((state) => state.getIn(['sitemap', 'initialData', 'hostname'], Map()));
   const sitemapInfo = useSelector((state) => state.getIn(['sitemap', 'info'], Map()));
   const dispatch = useDispatch();
-  const toggleNotification = useNotification();
-  const { get } = useFetchClient();
+  const { toggleNotification } = useNotification();
+  const { get } = getFetchClient();
   const { formatMessage } = useIntl();
 
   const updateDate = new Date(sitemapInfo.get('updateTime'));
@@ -40,7 +45,7 @@ const Info = () => {
             <Button
               onClick={() => {
                 document.getElementById('tabs-2-tab').click();
-                setTimeout(() => document.querySelector('input[name="hostname"]').focus(), 0);
+                setTimeout(() => (document.querySelector('input[name="hostname"]')).focus(), 0);
               }}
               variant="secondary"
               style={{ marginTop: '15px' }}
@@ -50,7 +55,9 @@ const Info = () => {
           </div>
         </div>
       );
-    } else if (sitemapInfo.size === 0) {
+    }
+
+    if (sitemapInfo.size === 0) {
       return (
         <div>
           <Typography variant="delta" style={{ marginBottom: '10px' }}>
@@ -61,7 +68,7 @@ const Info = () => {
               {formatMessage({ id: 'sitemap.Info.NoSitemap.Description', defaultMessage: 'Generate your first sitemap XML with the button below.' })}
             </Typography>
             <Button
-              onClick={() => dispatch(generateSitemap(toggleNotification, get))}
+              onClick={() => dispatch(generateSitemap(toggleNotification, formatMessage, get))}
               variant="secondary"
               style={{ marginTop: '15px' }}
             >
@@ -70,57 +77,57 @@ const Info = () => {
           </div>
         </div>
       );
-    } else {
-      return (
+    }
+
+    return (
+      <div>
+        <Typography variant="delta" style={{ marginBottom: '10px' }}>
+          {formatMessage({ id: 'sitemap.Info.SitemapIsPresent.Title', defaultMessage: 'Sitemap XML is present' })}
+        </Typography>
         <div>
-          <Typography variant="delta" style={{ marginBottom: '10px' }}>
-            {formatMessage({ id: 'sitemap.Info.SitemapIsPresent.Title', defaultMessage: 'Sitemap XML is present' })}
+          <Typography variant="omega">
+            {formatMessage({ id: 'sitemap.Info.SitemapIsPresent.LastUpdatedAt', defaultMessage: 'Last updated at:' })}
           </Typography>
-          <div>
+          <Typography variant="omega" fontWeight="bold" style={{ marginLeft: '5px' }}>
+            {`${month}/${day}/${year} - ${time}`}
+          </Typography>
+        </div>
+        {sitemapInfo.get('sitemaps') === 0 ? (
+          <div style={{ marginBottom: '15px' }}>
             <Typography variant="omega">
-              {formatMessage({ id: 'sitemap.Info.SitemapIsPresent.LastUpdatedAt', defaultMessage: 'Last updated at:' })}
+              {formatMessage({ id: 'sitemap.Info.SitemapIsPresent.AmountOfURLs', defaultMessage: 'Amount of URLs:' })}
             </Typography>
             <Typography variant="omega" fontWeight="bold" style={{ marginLeft: '5px' }}>
-              {`${month}/${day}/${year} - ${time}`}
+              {sitemapInfo.get('urls')}
             </Typography>
           </div>
-          {sitemapInfo.get('sitemaps') === 0 ? (
-            <div style={{ marginBottom: '15px' }}>
-              <Typography variant="omega">
-                {formatMessage({ id: 'sitemap.Info.SitemapIsPresent.AmountOfURLs', defaultMessage: 'Amount of URLs:' })}
-              </Typography>
-              <Typography variant="omega" fontWeight="bold" style={{ marginLeft: '5px' }}>
-                {sitemapInfo.get('urls')}
-              </Typography>
-            </div>
-          ) : (
-            <div style={{ marginBottom: '15px' }}>
-              <Typography variant="omega">
-                {formatMessage({ id: 'sitemap.Info.SitemapIsPresent.AmountOfSitemaps', defaultMessage: 'Amount of URLs:' })}
-              </Typography>
-              <Typography variant="omega" fontWeight="bold" style={{ marginLeft: '5px' }}>
-                {sitemapInfo.get('sitemaps')}
-              </Typography>
-            </div>
-          )}
-          <div style={{ display: 'flex', flexDirection: 'row' }}>
-            <Button
-              onClick={() => dispatch(generateSitemap(toggleNotification, get))}
-              variant="secondary"
-              style={{ marginRight: '10px' }}
-            >
-              {formatMessage({ id: 'sitemap.Header.Button.Generate', defaultMessage: 'Generate sitemap' })}
-            </Button>
-            <Link
-              href={`${strapi.backendURL}${sitemapInfo.get('location')}`}
-              target="_blank"
-            >
-              {formatMessage({ id: 'sitemap.Header.Button.SitemapLink', defaultMessage: 'Go to the sitemap' })}
-            </Link>
+        ) : (
+          <div style={{ marginBottom: '15px' }}>
+            <Typography variant="omega">
+              {formatMessage({ id: 'sitemap.Info.SitemapIsPresent.AmountOfSitemaps', defaultMessage: 'Amount of URLs:' })}
+            </Typography>
+            <Typography variant="omega" fontWeight="bold" style={{ marginLeft: '5px' }}>
+              {sitemapInfo.get('sitemaps')}
+            </Typography>
           </div>
+        )}
+        <div style={{ display: 'flex', flexDirection: 'row' }}>
+          <Button
+            onClick={() => dispatch(generateSitemap(toggleNotification, formatMessage, get))}
+            variant="secondary"
+            style={{ marginRight: '10px' }}
+          >
+            {formatMessage({ id: 'sitemap.Header.Button.Generate', defaultMessage: 'Generate sitemap' })}
+          </Button>
+          <Link
+            href={`${strapi.backendURL}${sitemapInfo.get('location')}`}
+            target="_blank"
+          >
+            {formatMessage({ id: 'sitemap.Header.Button.SitemapLink', defaultMessage: 'Go to the sitemap' })}
+          </Link>
         </div>
-      );
-    }
+      </div>
+    );
   };
 
   return (

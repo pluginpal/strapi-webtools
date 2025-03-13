@@ -2,7 +2,12 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Map } from 'immutable';
 
-import { discardModifiedContentTypes, onChangeCustomEntry, submitModal, deleteCustomEntry } from '../../state/actions/Sitemap';
+import {
+  discardModifiedContentTypes,
+  onChangeCustomEntry,
+  submitModal,
+  deleteCustomEntry,
+} from '../../state/actions/Sitemap';
 import List from '../../components/List/Custom';
 import ModalForm from '../../components/ModalForm';
 

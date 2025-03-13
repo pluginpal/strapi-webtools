@@ -1,100 +1,67 @@
 import React, { useEffect } from 'react';
-import { useIntl } from 'react-intl';
-import { SidebarModal } from '@pluginpal/webtools-helper-plugin';
-import { useCMEditViewDataManager, CheckPermissions } from '@strapi/helper-plugin';
-import getTrad from '../../helpers/getTrad';
+import { useQuery } from 'react-query';
+import { unstable_useContentManagerContext, Page, useFetchClient } from '@strapi/strapi/admin';
 import EditForm from '../EditForm';
 import Permalink from './Permalink';
-import { useCreateUrlAlias, useUpdateUrlAlias } from '../../api/url-alias';
 import { isContentTypeEnabled } from '../../../server/util/enabledContentTypes';
 import { UrlAliasEntity } from '../../types/url-aliases';
 import pluginPermissions from '../../permissions';
 
 const EditView = () => {
-  const { formatMessage } = useIntl();
+  const { get } = useFetchClient();
+  const context = unstable_useContentManagerContext();
   const {
-    allLayoutData,
-    modifiedData,
-    initialData,
-    onChange,
-    slug,
-  } = useCMEditViewDataManager();
+    contentType,
+    model,
+    id,
+  } = context;
 
+  const urlParams = new URLSearchParams(window.location.search);
+  const locale = urlParams.get('plugins[i18n][locale]');
+  const aliases = useQuery(`aliases-${model}-${id}-${locale}`, async () => get<UrlAliasEntity[]>(`/webtools/url-alias/findFrom?model=${model}&documentId=${id}&locale=${locale}`));
 
-  const modifiedDataUrlAliases = modifiedData.url_alias as UrlAliasEntity[];
-  const i18nLang = new URLSearchParams(window.location.search).get('plugins[i18n][locale]');
-
+  /**
+   * Ideally the url_alias field would be hidden, but doing so will cause an issue.
+   * The issue can be prevented by setting the field to visible. To make sure the user
+   * doesn't see the url_alias field, we just remove it from the dom.
+   *
+   * @see https://github.com/strapi/strapi/issues/23039
+   * @see https://github.com/strapi/strapi/issues/22975
+   */
   useEffect(() => {
-    // Early return for when the i18n plugin is not enabled.
-    if (!i18nLang) return;
-
-    // Map through all url_aliases and clear those that do not match the current i18n language
-    // If the URL alias is not the same language as the entity,
-    // we should clear it. This happens when you're copying content
-    // from a different locale.
-    const updatedUrlAliases = modifiedDataUrlAliases?.map((alias) => {
-      if (alias?.locale !== i18nLang) {
-        return { ...alias, locale: null }; // Clear the alias if the locale doesn't match
+    const label = Array.from(document.querySelectorAll('label')).find((l) => l.textContent.startsWith('url_alias'));
+    if (label) {
+      let parentDiv = label.closest('div');
+      for (let i = 0; i < 3; i++) {
+        if (parentDiv) {
+          // @ts-expect-error
+          parentDiv = parentDiv.parentElement;
+        }
       }
-      return alias;
-    });
-
-    // If the URL aliases have changed, update the form data
-    // We fire the onChange here because we don't want unnecessary re-renders
-    if (JSON.stringify(updatedUrlAliases) !== JSON.stringify(modifiedDataUrlAliases)) {
-      onChange({ target: { name: 'url_alias', value: updatedUrlAliases, type: 'array' } });
+      if (parentDiv) {
+        parentDiv.remove();
+      }
     }
-  }, [modifiedDataUrlAliases, onChange, i18nLang]);
+  }, []);
 
-  const { createUrlAlias } = useCreateUrlAlias();
-  const { updateUrlAliases } = useUpdateUrlAlias();
+  if (aliases.isLoading) return null;
+  if (aliases.error) return null;
 
-  if (!allLayoutData.contentType) return null;
-
-  if (!isContentTypeEnabled(allLayoutData.contentType)) return null;
-  const modifiedUrlAliases = modifiedData.url_alias as UrlAliasEntity[];
-  const initialUrlAliases = initialData.url_alias as UrlAliasEntity[];
-
-  const onSubmit = async () => {
-    if (!initialUrlAliases || initialUrlAliases?.length === 0) {
-      // Create new URL aliases
-      const newAliases = await Promise.all(
-        modifiedUrlAliases.map(async (alias) => (await createUrlAlias(alias, slug)).data),
-      );
-
-      onChange({ target: { name: 'url_alias', value: newAliases, type: 'array' } });
-    } else {
-      // Update existing URL aliases
-      await Promise.all(
-        modifiedUrlAliases.map((alias) => updateUrlAliases(alias, slug)),
-      );
-    }
-  };
+  // @ts-expect-error
+  if (!isContentTypeEnabled(contentType)) return null;
 
   return (
-    <CheckPermissions permissions={pluginPermissions['edit-view.sidebar']}>
-      <SidebarModal
-        label={formatMessage({
-          id: getTrad('plugin.name'),
-          defaultMessage: 'URL alias',
-        })}
-        onSubmit={onSubmit}
-        onCancel={() => {
-          if (modifiedUrlAliases?.length > 0) {
-            onChange({ target: { name: 'url_alias', value: modifiedUrlAliases, type: 'array' } });
-          } else if (initialUrlAliases?.length > 0) {
-            onChange({ target: { name: 'url_alias', value: initialUrlAliases, type: 'array' } });
-          } else {
-            onChange({ target: { name: 'url_alias', value: null, type: 'array' } });
-          }
-        }}
-      >
-        <EditForm />
-      </SidebarModal>
-      <Permalink
-        path={modifiedUrlAliases?.length > 0 ? modifiedUrlAliases[0].url_path : ''}
-      />
-    </CheckPermissions>
+    <Page.Protect permissions={pluginPermissions['edit-view.sidebar']}>
+      <EditForm />
+      {aliases.data.data.length === 0 && (
+        <div>Save the form to generate the URL alias</div>
+      )}
+      {aliases.data.data.length > 0 && (
+        <Permalink
+          path={aliases.data.data[0].url_path}
+        />
+      )}
+    </Page.Protect>
   );
 };
 

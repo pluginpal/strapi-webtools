@@ -1,13 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   IconButton, Typography, Flex, Tbody, Tr, Td,
 } from '@strapi/design-system';
 import { Pencil, Trash } from '@strapi/icons';
-import {
-  onRowClick, stopPropagation, request, useNotification,
-} from '@strapi/helper-plugin';
+import { getFetchClient, useNotification } from '@strapi/strapi/admin';
 import { useIntl } from 'react-intl';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useQueryClient } from 'react-query';
 
 import pluginId from '../../../../../helpers/pluginId';
 import { PatternEntity } from '../../../../../types/url-patterns';
@@ -17,59 +16,55 @@ interface Props {
 }
 
 const TableBody: React.FC<Props> = ({ patterns }) => {
-  const [statePatterns, setStatePatterns] = useState(patterns);
   const { formatMessage } = useIntl();
-  const { push } = useHistory();
-  const toggleNotification = useNotification();
+  const navigate = useNavigate();
+  const { toggleNotification } = useNotification();
+  const { get } = getFetchClient();
+  const queryClient = useQueryClient();
 
-  const handleClickDelete = (id: number) => {
-    request(`/webtools/url-pattern/delete/${id}`, {
-      method: 'GET',
-    })
-      .then(() => {
-        const newPatterns = statePatterns.filter((pattern) => pattern.id !== id);
-        setStatePatterns(newPatterns);
-        toggleNotification({ type: 'success', message: { id: 'webtools.settings.success.delete' } });
+  const handleClickDelete = (id: string) => {
+    get(`/webtools/url-pattern/delete/${id}`)
+      .then(async () => {
+        await queryClient.invalidateQueries('url-patterns');
+        toggleNotification({ type: 'success', message: formatMessage({ id: 'webtools.settings.success.delete' }) });
       })
       .catch(() => {
-        toggleNotification({ type: 'warning', message: { id: 'notification.error' } });
+        toggleNotification({ type: 'warning', message: formatMessage({ id: 'notification.error' }) });
       });
   };
 
-  const handleClickEdit = (id: number) => {
-    push(`/plugins/${pluginId}/patterns/${id}`);
+  const handleClickEdit = (id: string) => {
+    navigate(`/plugins/${pluginId}/patterns/${id}`);
   };
 
   return (
     <Tbody>
-      {statePatterns.map((pattern) => (
-        <Tr key={pattern.label} {...onRowClick({ fn: () => handleClickEdit(pattern.id) })}>
-          <Td width="20%">
-            <Typography>{pattern.label}</Typography>
-          </Td>
+      {patterns.map((pattern) => (
+        <Tr key={pattern.id}>
           <Td width="50%">
             <Typography>{pattern.pattern}</Typography>
           </Td>
+          <Td width="50%">
+            <Typography>{pattern.contenttype}</Typography>
+          </Td>
           <Td>
-            <Flex justifyContent="end" {...stopPropagation}>
+            <Flex justifyContent="end">
               <IconButton
-                onClick={() => handleClickEdit(pattern.id)}
-                noBorder
-                icon={<Pencil />}
+                onClick={() => handleClickEdit(pattern.documentId)}
                 label={formatMessage(
-                  { id: 'webtools.settings.page.patterns.table.actions.edit', defaultMessage: 'Edit {target}' },
-                  { target: `${pattern.label}` },
+                  { id: 'webtools.settings.page.patterns.table.actions.edit', defaultMessage: 'Edit' },
                 )}
-              />
+              >
+                <Pencil />
+              </IconButton>
               <IconButton
-                onClick={() => handleClickDelete(pattern.id)}
-                noBorder
-                icon={<Trash />}
+                onClick={() => handleClickDelete(pattern.documentId)}
                 label={formatMessage(
-                  { id: 'webtools.settings.page.patterns.table.actions.delete', defaultMessage: 'Delete {target}' },
-                  { target: `${pattern.label}` },
+                  { id: 'webtools.settings.page.patterns.table.actions.delete', defaultMessage: 'Delete' },
                 )}
-              />
+              >
+                <Trash />
+              </IconButton>
             </Flex>
           </Td>
         </Tr>

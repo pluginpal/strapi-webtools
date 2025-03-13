@@ -1,14 +1,13 @@
-'use strict';
-import { Strapi } from '@strapi/strapi';
+import type { Core } from '@strapi/strapi';
 
-module.exports = {
+export default {
   /**
    * An asynchronous register function that runs before
    * your application is initialized.
    *
    * This gives you an opportunity to extend code.
    */
-  register(/*{ strapi }*/) { },
+  register(/* { strapi }: { strapi: Core.Strapi } */) {},
 
   /**
    * An asynchronous bootstrap function that runs before
@@ -17,7 +16,7 @@ module.exports = {
    * This gives you an opportunity to set up your data model,
    * run jobs, or perform some special logic.
    */
-  async bootstrap({ strapi }: { strapi: Strapi }) {
+  async bootstrap({ strapi }: { strapi: Core.Strapi }) {
     // Seed the database with some test data for the integration tests.
     if (process.env.NODE_ENV === 'test') {
       // Give the public role some permissions to test with
@@ -64,70 +63,72 @@ module.exports = {
           .updateRole(publicRole.id, publicRole);
       }
 
-      await strapi.entityService.create('plugin::webtools.url-pattern', {
+      await strapi.documents('plugin::webtools.url-pattern').create({
         data: {
           pattern: '/page/[title]',
           label: 'Test API pattern',
           code: 'test_api_pattern',
           contenttype: 'api::test.test',
           languages: ['en'],
-        }
+        },
       });
 
-      await strapi.entityService.create('plugin::webtools.url-pattern', {
+      await strapi.documents('plugin::webtools.url-pattern').create({
         data: {
           pattern: '/category/[title]',
           label: 'Category API pattern',
           code: 'category_api_pattern',
           contenttype: 'api::category.category',
           languages: [],
-        }
+        },
       });
 
-      await strapi.entityService.create('plugin::webtools.url-pattern', {
+      await strapi.documents('plugin::webtools.url-pattern').create({
         data: {
           pattern: '/private-category/[title]',
           label: 'Private category API pattern',
           code: 'private_category_api_pattern',
           contenttype: 'api::private-category.private-category',
           languages: [],
-        }
+        },
       });
 
-      const privateCategory = await strapi.entityService.create('api::private-category.private-category', {
+      const privateCategory = await strapi.documents('api::private-category.private-category').create({
         data: {
           title: 'Published',
-          publishedAt: new Date(),
-        }
+        },
+        status: 'published',
       });
 
-      const publishedCategory = await strapi.entityService.create('api::category.category', {
+      const publishedCategory = await strapi.documents('api::category.category').create({
         data: {
           title: 'Published category',
-          publishedAt: new Date(),
-        }
+        },
+        status: 'published',
+        populate: '*',
       });
 
-      const unpublishedCategory = await strapi.entityService.create('api::category.category', {
+      const unpublishedCategory = await strapi.documents('api::category.category').create({
         data: {
           title: 'Unpublished category',
-        }
+        },
       });
 
-      await strapi.entityService.create('api::test.test', {
+      await strapi.documents('api::test.test').create({
         data: {
           title: 'Published test page',
-          publishedAt: new Date(),
-          category: unpublishedCategory.id,
-          private_category: privateCategory.id,
-        }
+          category: unpublishedCategory.documentId,
+          private_category: privateCategory.documentId,
+        },
+        status: 'published',
+        populate: '*',
       });
 
-      await strapi.entityService.create('api::test.test', {
+      await strapi.documents('api::test.test').create({
         data: {
           title: 'Unpublished test page',
-          category: publishedCategory.id,
-        }
+          category: publishedCategory.documentId,
+        },
       });
     }
   },

@@ -3,72 +3,63 @@ import { useIntl } from 'react-intl';
 
 import {
   Dialog,
-  DialogBody,
-  DialogFooter,
   Flex,
   Typography,
-  Stack,
   Button,
 } from '@strapi/design-system';
-import { ExclamationMarkCircle } from '@strapi/icons';
+import { WarningCircle } from '@strapi/icons';
 
 type Props = {
-  isOpen: boolean;
-  onClose: () => void;
   onSubmit: () => void;
+  children: React.ReactElement<any, string>;
 };
 
 const DeleteConfirmModal = (props: Props) => {
   const {
-    isOpen,
-    onClose,
     onSubmit,
+    children,
   } = props;
 
   const { formatMessage } = useIntl();
 
-  if (!isOpen) return null;
-
   return (
-    <Dialog
-      onClose={onClose}
-      title={formatMessage({
-        id: 'webtools.settings.page.list.delete_confirm_modal.title',
-        defaultMessage: 'Delete item',
-      })}
-      isOpen={isOpen}
-    >
-      <DialogBody icon={<ExclamationMarkCircle />}>
-        <Stack size={2}>
-          <Flex justifyContent="center">
-            <Typography variant="omega" id="confirm-description" style={{ textAlign: 'center' }}>
-              {formatMessage({
-                id: 'webtools.settings.page.list.delete_confirm_modal.body',
-                defaultMessage: 'Are you sure you want to delete this item?',
-              })}
-            </Typography>
+    <Dialog.Root>
+      <Dialog.Trigger>
+        {children}
+      </Dialog.Trigger>
+      <Dialog.Content>
+        <Dialog.Header>
+          {formatMessage({
+            id: 'webtools.settings.page.list.delete_confirm_modal.title',
+            defaultMessage: 'Delete item',
+          })}
+        </Dialog.Header>
+        <Dialog.Body icon={<WarningCircle />}>
+          <Flex>
+            <Flex justifyContent="center">
+              <Typography variant="omega" id="confirm-description" style={{ textAlign: 'center' }}>
+                {formatMessage({
+                  id: 'webtools.settings.page.list.delete_confirm_modal.body',
+                  defaultMessage: 'Are you sure you want to delete this item?',
+                })}
+              </Typography>
+            </Flex>
           </Flex>
-        </Stack>
-      </DialogBody>
-      <DialogFooter
-        startAction={(
-          <Button
-            onClick={() => {
-              onClose();
-            }}
-            variant="tertiary"
-          >
-            {formatMessage({
-              id: 'webtools.settings.button.cancel',
-              defaultMessage: 'Cancel',
-            })}
-          </Button>
-        )}
-        endAction={(
+        </Dialog.Body>
+        <Dialog.Footer>
+          <Dialog.Cancel>
+            <Button
+              variant="tertiary"
+            >
+              {formatMessage({
+                id: 'webtools.settings.button.cancel',
+                defaultMessage: 'Cancel',
+              })}
+            </Button>
+          </Dialog.Cancel>
           <Button
             variant="secondary"
             onClick={() => {
-              onClose();
               onSubmit();
             }}
           >
@@ -77,9 +68,9 @@ const DeleteConfirmModal = (props: Props) => {
               defaultMessage: 'Delete',
             })}
           </Button>
-        )}
-      />
-    </Dialog>
+        </Dialog.Footer>
+      </Dialog.Content>
+    </Dialog.Root>
   );
 };
 

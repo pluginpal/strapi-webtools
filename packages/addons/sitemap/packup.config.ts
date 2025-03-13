@@ -3,7 +3,7 @@ import { Config, defineConfig } from '@strapi/pack-up';
 const config: Config = defineConfig({
   bundles: [
     {
-      source: './admin/index.ts',
+      source: './admin/index.js',
       import: './dist/admin/index.mjs',
       require: './dist/admin/index.js',
       runtime: 'web',
@@ -12,6 +12,12 @@ const config: Config = defineConfig({
       source: './server/index.js',
       import: './dist/server/index.mjs',
       require: './dist/server/index.js',
+      runtime: 'node',
+    },
+    {
+      source: './server/cli.js',
+      import: './dist/cli/index.mjs',
+      require: './dist/cli/index.js',
       runtime: 'node',
     },
   ],

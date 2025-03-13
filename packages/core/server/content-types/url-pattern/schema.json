@@ -1,0 +1,35 @@
+{
+  "kind": "collectionType",
+  "collectionName": "wt_url_patterns",
+  "info": {
+    "singularName": "url-pattern",
+    "pluralName": "url-patterns",
+    "displayName": "url-pattern"
+  },
+  "options": {
+    "draftAndPublish": false,
+    "comment": ""
+  },
+  "pluginOptions": {
+    "content-manager": {
+      "visible": false
+    },
+    "content-type-builder": {
+      "visible": false
+    }
+  },
+  "attributes": {
+    "pattern": {
+      "type": "string",
+      "required": true
+    },
+    "contenttype": {
+      "type": "string",
+      "required": true
+    },
+    "languages": {
+      "type": "json",
+      "required": true
+    }
+  }
+}

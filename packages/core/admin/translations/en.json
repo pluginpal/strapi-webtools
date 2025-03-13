@@ -54,8 +54,8 @@
   "settings.page.patterns.table.head.actions": "Actions",
 
   "settings.page.patterns.table.empty": "You don't have any patterns yet.",
-  "settings.page.patterns.table.actions.edit": "Edit {target}",
-  "settings.page.patterns.table.actions.delete": "Delete {target}",
+  "settings.page.patterns.table.actions.edit": "Edit",
+  "settings.page.patterns.table.actions.delete": "Delete",
 
   "settings.page.patterns.edit.title": "Edit pattern",
   "settings.page.patterns.edit.subtitle": "Pattern details",

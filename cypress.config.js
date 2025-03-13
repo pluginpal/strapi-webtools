@@ -8,7 +8,8 @@ module.exports = defineConfig({
       // implement node event listeners here.
       require('cypress-terminal-report/src/installLogsPrinter')(on);
     },
-    video: false,
+    video: true,
     defaultCommandTimeout: 10000,
+    requestTimeout: 10000,
   },
 });

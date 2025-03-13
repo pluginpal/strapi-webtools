@@ -1,43 +1,42 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useIntl } from 'react-intl';
+import isEmpty from 'lodash/isEmpty';
 
 import {
-  ContentLayout, HeaderLayout, Typography, Grid, GridItem, Flex, Link,
+  Typography, Grid, Flex, Link,
+  Card,
+  CardBody,
+  CardTitle,
+  CardSubtitle,
+  CardContent,
+  Box,
 } from '@strapi/design-system';
-import { ExternalLink } from '@strapi/icons';
-import { CheckPagePermissions, request } from '@strapi/helper-plugin';
+import { ExternalLink, PuzzlePiece } from '@strapi/icons';
+import { Page, getFetchClient, Layouts } from '@strapi/strapi/admin';
+import { useQuery } from 'react-query';
 
 import pluginPermissions from '../../permissions';
 import { WebtoolsAddonInfo } from '../../types/addons';
 import packageJson from '../../../package.json';
+import Loader from '../../components/Loader';
 
 const List = () => {
-  const [addons, setAddons] = useState<WebtoolsAddonInfo[]>(null);
+  const { get } = getFetchClient();
+  const addons = useQuery('addons', async () => get<WebtoolsAddonInfo[]>('/webtools/info/addons'));
   const { formatMessage } = useIntl();
 
-  useEffect(() => {
-    request<WebtoolsAddonInfo[]>('/webtools/info/addons', { method: 'GET' })
-      .then((res) => {
-        setAddons(res);
-      })
-      .catch(() => {
-      });
-  }, []);
-
-  // TODO: fix loading state
-  if (!addons) {
+  if (addons.isLoading) {
     return (
-      <div>Loading...</div>
+      <Loader />
     );
   }
   return (
-    <CheckPagePermissions permissions={pluginPermissions['settings.patterns']}>
-      <HeaderLayout
+    <Page.Protect permissions={pluginPermissions['settings.patterns']}>
+      <Layouts.Header
         title={formatMessage({ id: 'webtools.settings.page.overview.title', defaultMessage: 'Overview' })}
         subtitle={formatMessage({ id: 'webtools.settings.page.overview.description', defaultMessage: 'Webtools global information' })}
-        as="h2"
       />
-      <ContentLayout>
+      <Layouts.Content>
         <Flex direction="column" alignItems="stretch" gap={6}>
           <Flex
             direction="column"
@@ -51,29 +50,29 @@ const List = () => {
             paddingRight={7}
             paddingLeft={7}
           >
-            <Typography variant="delta" as="h3">
+            <Typography variant="delta">
               {formatMessage({
                 id: 'global.details',
                 defaultMessage: 'Details',
               })}
             </Typography>
 
-            <Grid gap={5} as="dl">
-              <GridItem col={6} s={12}>
-                <Typography variant="sigma" textColor="neutral600" as="dt">
+            <Grid.Root gap={5}>
+              <Grid.Item col={6} s={12} direction="column" alignItems="flex-start">
+                <Typography variant="sigma" textColor="neutral600">
                   {formatMessage({
                     id: 'webtools.settings.application.strapiVersion',
-                    defaultMessage: 'strapi version',
+                    defaultMessage: 'Strapi version',
                   })}
                 </Typography>
-                <Flex gap={3} direction="column" alignItems="start" as="dd">
+                <Flex gap={3} direction="column" alignItems="start">
                   <Typography>v{packageJson.version}</Typography>
                 </Flex>
-              </GridItem>
-              <GridItem col={6} s={12}>
-                <Typography variant="sigma" textColor="neutral600" as="dt">
+              </Grid.Item>
+              <Grid.Item col={6} s={12} direction="column" alignItems="flex-start">
+                <Typography variant="sigma" textColor="neutral600">
                   {formatMessage({
-                    id: 'TODO_REPLACE',
+                    id: 'webtools.settings.links',
                     defaultMessage: 'Links',
                   })}
                 </Typography>
@@ -84,7 +83,7 @@ const List = () => {
                     endIcon={<ExternalLink />}
                   >
                     {formatMessage({
-                      id: 'TODO_REPLACE',
+                      id: 'webtools.settings.website',
                       defaultMessage: 'Website',
                     })}
                   </Link>
@@ -96,46 +95,66 @@ const List = () => {
                     endIcon={<ExternalLink />}
                   >
                     {formatMessage({
-                      id: 'TODO_REPLACE',
+                      id: 'webtools.settings.github',
                       defaultMessage: 'Github',
                     })}
                   </Link>
                 </Flex>
-              </GridItem>
-            </Grid>
+              </Grid.Item>
+            </Grid.Root>
           </Flex>
         </Flex>
-        {/* <Box
-          hasRadius
-          background="neutral0"
-          shadow="tableShadow"
-          paddingTop={6}
-          paddingBottom={6}
-          paddingRight={7}
-          paddingLeft={7}
-        >
-          <Typography variant="delta" as="h3">
-            {formatMessage({
-              id: 'TODO_REPLACE',
-              defaultMessage: 'Addons',
-            })}
-          </Typography>
-          <Typography variant="pi" textColor="neutral600">
-            {formatMessage(
-              {
-                id: 'TODO_REPLACE',
-                defaultMessage: 'All the installed addons',
-              },
-            )}
-          </Typography>
-          <Flex>
-            {Object.values(addons).map((addon) => (
-              <div>{addon.info.addonName}</div>
-            ))}
+        {!isEmpty(addons.data.data) && (
+          <Flex
+            direction="column"
+            alignItems="stretch"
+            hasRadius
+            background="neutral0"
+            shadow="tableShadow"
+            paddingTop={6}
+            paddingBottom={6}
+            paddingRight={7}
+            paddingLeft={7}
+            marginTop={6}
+          >
+            <Typography variant="delta">
+              {formatMessage({
+                id: 'webtools.settings.addons.title',
+                defaultMessage: 'Addons',
+              })}
+            </Typography>
+            <Typography variant="pi" textColor="neutral600">
+              {formatMessage(
+                {
+                  id: 'webtools.settings.addons.description',
+                  defaultMessage: 'All the installed addons',
+                },
+              )}
+            </Typography>
+            <Flex marginTop={4}>
+              {Object.values(addons.data.data).map((addon) => (
+                <Card
+                  style={{
+                    width: '240px',
+                  }}
+                  id="fourth"
+                >
+                  <CardBody>
+                    <Box padding={2} background="primary100">
+                      <PuzzlePiece />
+                    </Box>
+                    <CardContent paddingLeft={2}>
+                      <CardTitle>{addon.info.addonName}</CardTitle>
+                      <CardSubtitle>{addon.info.description}</CardSubtitle>
+                    </CardContent>
+                  </CardBody>
+                </Card>
+              ))}
+            </Flex>
           </Flex>
-        </Box> */}
-      </ContentLayout>
-    </CheckPagePermissions>
+        )}
+      </Layouts.Content>
+    </Page.Protect>
   );
 };
 

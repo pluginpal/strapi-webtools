@@ -6,9 +6,8 @@ import React from 'react';
  *
  */
 
-import { Link } from '@strapi/icons';
+import { Globe } from '@strapi/icons';
 
-// eslint-disable-next-line jsx-a11y/anchor-is-valid
-const PluginIcon = () => <Link />;
+const PluginIcon = () => <Globe width={20} height={20} />;
 
 export { PluginIcon };

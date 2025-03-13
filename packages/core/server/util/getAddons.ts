@@ -1,6 +1,4 @@
-import { Strapi } from '@strapi/strapi';
-
-const getAddons = (strapi: Strapi) => {
+const getAddons = () => {
   const enabledPlugins = strapi.config.get('enabledPlugins');
 
   const addons: {

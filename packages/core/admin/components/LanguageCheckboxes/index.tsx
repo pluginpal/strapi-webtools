@@ -4,10 +4,10 @@ import {
   Flex,
   Checkbox,
   Field,
-  FieldLabel,
-  FieldError,
 } from '@strapi/design-system';
-import { request } from '@strapi/helper-plugin';
+import { getFetchClient } from '@strapi/strapi/admin';
+import { useQuery } from 'react-query';
+
 import { EnabledContentTypes } from '../../types/enabled-contenttypes';
 
 type Props = {
@@ -21,34 +21,22 @@ const LanguageCheckboxes = ({
   onChange,
   error,
 }: Props) => {
-  const [languages, setLanguages] = React.useState<EnabledContentTypes>([]);
-  const [loading, setLoading] = React.useState<boolean>(false);
+  const { get } = getFetchClient();
+  const languages = useQuery('languages', async () => get<EnabledContentTypes>('/webtools/info/getLanguages'));
 
-  React.useEffect(() => {
-    setLoading(true);
-    request('/webtools/info/getLanguages', { method: 'GET' })
-      .then((res: EnabledContentTypes) => {
-        setLanguages(res);
-        setLoading(false);
-      })
-      .catch(() => {
-        setLoading(false);
-      });
-  }, []);
-
-  if (loading) {
+  if (languages.isLoading) {
     return null;
   }
 
   return (
-    <Field name="password" error={error as string}>
-      <FieldLabel>Select the language</FieldLabel>
+    <Field.Root name="password" error={error as string}>
+      <Field.Label>Select the language</Field.Label>
       <Flex direction="column" alignItems="start" gap="1" marginTop="2">
-        {languages.map((contentType) => (
+        {languages.data.data.map((contentType) => (
           <Checkbox
             aria-label={`Select ${contentType.name}`}
-            value={selectedLanguages.includes(contentType.uid)}
-            onValueChange={() => {
+            checked={selectedLanguages.includes(contentType.uid)}
+            onCheckedChange={() => {
               if (selectedLanguages.includes(contentType.uid)) {
                 const newContentTypes = selectedLanguages
                   .filter((uid) => uid !== contentType.uid);
@@ -63,9 +51,9 @@ const LanguageCheckboxes = ({
             {contentType.name}
           </Checkbox>
         ))}
-        <FieldError />
+        <Field.Error />
       </Flex>
-    </Field>
+    </Field.Root>
   );
 };
 

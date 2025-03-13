@@ -2,9 +2,8 @@ import React from 'react';
 import { useIntl } from 'react-intl';
 
 import {
-  Table, Tr, Thead, Th, VisuallyHidden, Typography,
+  Table, Tr, Thead, Th, VisuallyHidden, Typography, EmptyStateLayout,
 } from '@strapi/design-system';
-import { EmptyStateLayout } from '@strapi/helper-plugin';
 
 import TableBody from '../TableBody';
 import { PatternEntity } from '../../../../../types/url-patterns';
@@ -27,14 +26,17 @@ const TableComponent: React.FC<Props> = ({ patterns }) => {
             <Tr>
               <Th>
                 <Typography variant="sigma" textColor="neutral600">
-                  {formatMessage({ id: 'webtools.settings.page.patterns.table.head.label', defaultMessage: 'Label' })}
+                  {formatMessage({
+                    id: 'webtools.settings.page.patterns.table.head.pattern',
+                    defaultMessage: 'Pattern',
+                  })}
                 </Typography>
               </Th>
               <Th>
                 <Typography variant="sigma" textColor="neutral600">
                   {formatMessage({
-                    id: 'webtools.settings.page.patterns.table.head.pattern',
-                    defaultMessage: 'Pattern',
+                    id: 'webtools.settings.page.patterns.table.head.content-type',
+                    defaultMessage: 'Content Type',
                   })}
                 </Typography>
               </Th>
@@ -55,11 +57,10 @@ const TableComponent: React.FC<Props> = ({ patterns }) => {
         </Table>
       ) : (
         <EmptyStateLayout
-          content={{
+          content={formatMessage({
             id: 'webtools.settings.page.patterns.table.empty',
             defaultMessage: 'You don\'t have any patterns yet.',
-          }}
-          action={() => {}}
+          })}
           shadow="tableShadow"
           hasRadius
         />

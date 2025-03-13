@@ -1,5 +1,5 @@
 import React from 'react';
-import { Tabs, Tab, TabGroup, TabPanels, TabPanel, Box } from '@strapi/design-system';
+import { Tabs, Box } from '@strapi/design-system';
 import { useIntl } from 'react-intl';
 
 import CollectionURLs from '../../tabs/CollectionURLs';
@@ -11,29 +11,24 @@ const SitemapTabs = () => {
 
   return (
     <Box padding={8}>
-      <TabGroup
-        id="tabs"
-        label="Main tabs"
-      >
-        <Tabs>
-          <Tab>{formatMessage({ id: 'sitemap.Settings.CollectionTitle', defaultMessage: 'URL bundles' })}</Tab>
-          <Tab>{formatMessage({ id: 'sitemap.Settings.CustomTitle', defaultMessage: 'Custom URLs' })}</Tab>
-          <Tab>{formatMessage({ id: 'sitemap.Settings.SettingsTitle', defaultMessage: 'Settings' })}</Tab>
-        </Tabs>
-        <TabPanels>
-          <TabPanel>
-            <CollectionURLs />
-          </TabPanel>
-          <TabPanel>
-            <CustomURLs />
-          </TabPanel>
-          <TabPanel>
-            <Box padding={6} background="neutral0" shadow="filterShadow">
-              <Settings />
-            </Box>
-          </TabPanel>
-        </TabPanels>
-      </TabGroup>
+      <Tabs.Root id="tabs" defaultValue="url-bundles">
+        <Tabs.List>
+          <Tabs.Trigger value="url-bundles">{formatMessage({ id: 'sitemap.Settings.CollectionTitle', defaultMessage: 'URL bundles' })}</Tabs.Trigger>
+          <Tabs.Trigger value="custom-urls">{formatMessage({ id: 'sitemap.Settings.CustomTitle', defaultMessage: 'Custom URLs' })}</Tabs.Trigger>
+          <Tabs.Trigger value="settings">{formatMessage({ id: 'sitemap.Settings.SettingsTitle', defaultMessage: 'Settings' })}</Tabs.Trigger>
+        </Tabs.List>
+        <Tabs.Content value="url-bundles">
+          <CollectionURLs />
+        </Tabs.Content>
+        <Tabs.Content value="custom-urls">
+          <CustomURLs />
+        </Tabs.Content>
+        <Tabs.Content value="settings">
+          <Box padding={6} background="neutral0" shadow="filterShadow">
+            <Settings />
+          </Box>
+        </Tabs.Content>
+      </Tabs.Root>
     </Box>
   );
 };

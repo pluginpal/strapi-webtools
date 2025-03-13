@@ -1,37 +1,25 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import { AdminApp } from '@pluginpal/webtools-helper-plugin';
-import { prefixPluginTranslations } from '@strapi/helper-plugin';
+
+import { StrapiApp } from '@strapi/admin/strapi-admin';
 import * as yup from 'yup';
 import pluginPkg from '../package.json';
 import EditView from './components/EditView';
 import pluginId from './helpers/pluginId';
 import getTrad from './helpers/getTrad';
+import { prefixPluginTranslations } from './helpers/prefixPluginTranslations';
 import CheckboxConfirmation from './components/ContentManagerHooks/ConfirmationCheckbox';
 
-import dutchTranslations from './translations/nl.json';
-import englishTranslations from './translations/en.json';
-import spanishTranslations from './translations/es.json';
-import turkishTranslations from './translations/tr.json';
 import { PluginIcon } from './components/PluginIcon';
 
-const pluginDescription = pluginPkg.strapi.description || pluginPkg.description;
 const { name } = pluginPkg.strapi;
 
 export default {
-  register(app: AdminApp) {
+  register(app: StrapiApp) {
     app.registerPlugin({
-      description: pluginDescription,
       id: pluginId,
       isReady: true,
-      isRequired: pluginPkg.strapi.required || false,
       name,
       injectionZones: {
-        webtoolsSidebar: {
-          link: [],
-        },
         webtoolsRouter: {
           route: [],
         },
@@ -41,6 +29,7 @@ export default {
     app.addMenuLink({
       to: '/plugins/webtools',
       icon: PluginIcon,
+      position: 4,
       intlLabel: {
         id: `${pluginId}.settings.title`,
         defaultMessage: 'Webtools',
@@ -55,8 +44,8 @@ export default {
       permissions: [], // permissions to apply to the link
     });
   },
-  bootstrap(app: AdminApp) {
-    app.injectContentManagerComponent('editView', 'right-links', {
+  bootstrap(app: StrapiApp) {
+    app.getPlugin('content-manager')?.injectComponent('editView', 'right-links', {
       name: 'url-alias-edit-view',
       Component: EditView,
     });
@@ -65,8 +54,11 @@ export default {
 
     if (ctbPlugin) {
       const ctbFormsAPI = ctbPlugin.apis.forms;
+      // @ts-expect-error
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
       ctbFormsAPI.components.add({ id: 'webtools.checkboxConfirmation', component: CheckboxConfirmation });
 
+      // @ts-expect-error
       ctbFormsAPI.extendContentType({
         validator: () => ({
           webtools: yup.object().shape({
@@ -94,24 +86,28 @@ export default {
       });
     }
   },
-  async registerTrads() {
-    return Promise.resolve([
-      {
-        data: prefixPluginTranslations(englishTranslations, pluginId),
-        locale: 'en',
-      },
-      {
-        data: prefixPluginTranslations(spanishTranslations, pluginId),
-        locale: 'es',
-      },
-      {
-        data: prefixPluginTranslations(dutchTranslations, pluginId),
-        locale: 'nl',
-      },
-      {
-        data: prefixPluginTranslations(turkishTranslations, pluginId),
-        locale: 'tr',
-      },
-    ]);
+  async registerTrads(app: any) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const { locales } = app;
+
+    const importedTranslations = await Promise.all(
+      (locales as string[]).map((locale) => {
+        return import(`./translations/${locale}.json`)
+          .then(({ default: data }) => {
+            return {
+              data: prefixPluginTranslations(data, pluginId),
+              locale,
+            };
+          })
+          .catch(() => {
+            return {
+              data: {},
+              locale,
+            };
+          });
+      }),
+    );
+
+    return importedTranslations;
   },
 };

@@ -5,9 +5,9 @@ const Loader = () => {
   const style = {
     display: 'flex',
     justifyContent: 'center',
-    position: 'absolute',
     height: '100%',
     width: '100%',
+    position: 'absolute',
     backgroundColor: 'rgba(255,255,255, 0.6)',
     zIndex: 1,
     alignItems: 'center',

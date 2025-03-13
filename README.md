@@ -6,11 +6,11 @@
 <a href="https://docs.pluginpal.io/webtools">Read the documentation</a>
 	
 <p>
-  <a href="https://www.npmjs.org/package/@pluginpal/webtools-core">
-    <img src="https://img.shields.io/npm/v/@pluginpal/webtools-core/latest.svg" alt="NPM Version" />
+  <a href="https://www.npmjs.org/package/strapi-plugin-webtools">
+    <img src="https://img.shields.io/npm/v/strapi-plugin-webtools/latest.svg" alt="NPM Version" />
   </a>
-  <a href="https://www.npmjs.org/package/@pluginpal/webtools-core">
-    <img src="https://img.shields.io/npm/dm/@pluginpal/webtools-core" alt="Monthly download on NPM" />
+  <a href="https://www.npmjs.org/package/strapi-plugin-webtools">
+    <img src="https://img.shields.io/npm/dm/strapi-plugin-webtools" alt="Monthly download on NPM" />
   </a>
   <a href="https://codecov.io/gh/pluginpal/strapi-webtools">
     <img src="https://img.shields.io/github/actions/workflow/status/pluginpal/strapi-webtools/tests.yml?branch=master" alt="CI build status" />
@@ -21,9 +21,6 @@
 </p>
 	
 </div>
-
-> [!IMPORTANT]  
-> The Webtools suite is still in BETA
 
 ## ✨ Features
 
@@ -39,10 +36,10 @@
 
 ```bash
 # using yarn
-yarn add @pluginpal/webtools-core
+yarn add strapi-plugin-webtools
 
 # using npm
-npm install @pluginpal/webtools-core --save
+npm install strapi-plugin-webtools --save
 ```
 
 After successful installation you have to rebuild the admin UI so it'll include this plugin. To rebuild and restart Strapi run:
@@ -72,7 +69,7 @@ Webtools can be extended by installing addons that hook into the core Webtools f
 ## 🔗 Links
 
 - [PluginPal marketplace](https://www.pluginpal.io/plugin/webtools)
-- [NPM package](https://www.npmjs.com/package/@pluginpal/webtools-core)
+- [NPM package](https://www.npmjs.com/package/strapi-plugin-webtools)
 - [GitHub repository](https://github.com/pluginpal/strapi-webtools)
 - [Strapi marketplace](https://market.strapi.io/plugins/@pluginpal-webtools-core)
 

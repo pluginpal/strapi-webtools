@@ -4,12 +4,11 @@ import {
   Button,
   Checkbox,
   Dialog,
-  DialogBody,
-  DialogFooter,
+  Field,
   Flex,
   Typography,
 } from '@strapi/design-system';
-import { ExclamationMarkCircle } from '@strapi/icons';
+import { WarningCircle } from '@strapi/icons';
 import { useIntl } from 'react-intl';
 import styled from 'styled-components';
 import getTrad from '../../../helpers/getTrad';
@@ -82,26 +81,28 @@ const CheckboxConfirmation: FC<Props> = ({
 
   return (
     <>
-      <Checkbox
-        hint={hint}
-        id={name}
-        name={name}
-        onValueChange={handleChange}
-        value={value}
-        type="checkbox"
-      >
-        {label}
-      </Checkbox>
-      {isOpen && (
-        <Dialog onClose={handleToggle} title="Confirmation" isOpen={isOpen}>
-          <DialogBody icon={<ExclamationMarkCircle />}>
+      <Field.Root hint={hint}>
+        <Checkbox
+          id={name}
+          name={name}
+          onCheckedChange={handleChange}
+          checked={value}
+        >
+          {label}
+        </Checkbox>
+        <Field.Hint />
+      </Field.Root>
+      <Dialog.Root open={isOpen}>
+        <Dialog.Trigger />
+        <Dialog.Content>
+          <Dialog.Body icon={<WarningCircle />}>
             <Flex direction="column" alignItems="stretch" gap={2}>
               <Flex justifyContent="center">
                 <TextAlignTypography id="confirm-description">
                   {formatMessage({
                     id: getTrad('webtools.CheckboxConfirmation.Modal.content'),
                     defaultMessage:
-                      'Disabling url alias will engender the deletion of all your paths for this content type',
+                      'Disabling webtools will trigger the deletion of all your paths for this content type',
                   })}
                 </TextAlignTypography>
               </Flex>
@@ -114,31 +115,25 @@ const CheckboxConfirmation: FC<Props> = ({
                 </Typography>
               </Flex>
             </Flex>
-          </DialogBody>
-          <DialogFooter
-            startAction={
-              (
-                <Button onClick={handleToggle} variant="tertiary">
-                  {formatMessage({
-                    id: 'components.popUpWarning.button.cancel',
-                    defaultMessage: 'No, cancel',
-                  })}
-                </Button>
-              )
-            }
-            endAction={
-              (
-                <Button variant="danger-light" onClick={handleConfirm}>
-                  {formatMessage({
-                    id: getTrad('CheckboxConfirmation.Modal.button-confirm'),
-                    defaultMessage: 'Yes, disable',
-                  })}
-                </Button>
-              )
-            }
-          />
-        </Dialog>
-      )}
+          </Dialog.Body>
+          <Dialog.Footer>
+            <Dialog.Cancel>
+              <Button onClick={handleToggle} variant="tertiary">
+                {formatMessage({
+                  id: 'components.popUpWarning.button.cancel',
+                  defaultMessage: 'No, cancel',
+                })}
+              </Button>
+            </Dialog.Cancel>
+            <Button variant="danger-light" onClick={handleConfirm}>
+              {formatMessage({
+                id: getTrad('CheckboxConfirmation.Modal.button-confirm'),
+                defaultMessage: 'Yes, disable',
+              })}
+            </Button>
+          </Dialog.Footer>
+        </Dialog.Content>
+      </Dialog.Root>
     </>
   );
 };

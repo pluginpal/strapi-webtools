@@ -1,28 +1,26 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import React from 'react';
-import { Select, Option } from '@strapi/design-system';
-import { EnabledContentTypes } from '../../../../../types/enabled-contenttypes';
+import { SingleSelect, SingleSelectOption } from '@strapi/design-system';
+import { Filters, useField } from '@strapi/admin/strapi-admin';
 
-type Props = {
-  label: string,
-  onChange: (value: string) => void,
-  value: string,
-  contentTypes: EnabledContentTypes,
-};
+const FilterInput = (props: Filters.ValueInputProps) => {
+  const { name, options } = props;
 
-const FilterInput = ({
-  label = '',
-  onChange,
-  value = '',
-  contentTypes,
-}: Props) => {
+  const field = useField(name);
+
+  const handleChange = (value?: string) => {
+    field.onChange(name, value);
+  };
+
   return (
-    <Select key="type-filter" aria-label={label} onChange={(newValue) => onChange(String(newValue))} value={value}>
-      {contentTypes.map((contentType) => (
-        <Option key={contentType.uid} value={contentType.uid}>
-          {contentType.name}
-        </Option>
+    <SingleSelect key="type-filter" onChange={handleChange} value={field.value}>
+      {options.map((contentType) => (
+        <SingleSelectOption key={contentType.value} value={String(contentType.value)}>
+          {contentType.label}
+        </SingleSelectOption>
       ))}
-    </Select>
+    </SingleSelect>
   );
 };
 

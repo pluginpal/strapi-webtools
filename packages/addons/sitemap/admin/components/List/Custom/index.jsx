@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { NoContent } from '@strapi/helper-plugin';
 import { Plus } from '@strapi/icons';
 import {
   Table,
@@ -12,6 +11,7 @@ import {
   VisuallyHidden,
   Typography,
   Button,
+  EmptyStateLayout,
 } from '@strapi/design-system';
 import { useIntl } from 'react-intl';
 
@@ -26,7 +26,7 @@ const ListComponent = (props) => {
     return null;
   }
 
-  items.map((item, key) => {
+  items.forEach((item, key) => {
     const formattedItem = {};
     formattedItem.name = key;
     formattedItem.priority = item.get('priority');
@@ -38,8 +38,8 @@ const ListComponent = (props) => {
 
   if (items.size === 0) {
     return (
-      <NoContent
-        content={{ id: 'sitemap.Empty.CustomURLs.Description', defaultMessage: 'No custom URLs have been configured yet.' }}
+      <EmptyStateLayout
+        content={formatMessage({ id: 'sitemap.Empty.CustomURLs.Description', defaultMessage: 'No custom URLs have been configured yet.' })}
         action={<Button onClick={() => openModal()}>{formatMessage({ id: 'sitemap.Empty.CustomURLs.Button', defaultMessage: 'Add the first URL' })}</Button>}
       />
     );

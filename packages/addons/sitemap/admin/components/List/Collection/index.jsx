@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { NoContent } from '@strapi/helper-plugin';
 import { Plus } from '@strapi/icons';
 import {
   Table,
@@ -12,6 +11,7 @@ import {
   Typography,
   Button,
   VisuallyHidden,
+  EmptyStateLayout,
 } from '@strapi/design-system';
 import { useIntl } from 'react-intl';
 
@@ -26,8 +26,8 @@ const ListComponent = (props) => {
     return null;
   }
 
-  items.map((item, key) => {
-    item.get('languages').map((langItem, langKey) => {
+  items.forEach((item, key) => {
+    item.get('languages').forEach((langItem, langKey) => {
       const formattedItem = {};
       formattedItem.name = key;
       formattedItem.langcode = langKey;
@@ -40,8 +40,8 @@ const ListComponent = (props) => {
 
   if (items.size === 0) {
     return (
-      <NoContent
-        content={{ id: 'sitemap.Empty.URLBundles.Description', defaultMessage: 'No URL bundles have been configured yet.' }}
+      <EmptyStateLayout
+        content={formatMessage({ id: 'sitemap.Empty.URLBundles.Description', defaultMessage: 'No URL bundles have been configured yet.' })}
         action={<Button onClick={() => openModal()}>{formatMessage({ id: 'sitemap.Empty.URLBundles.Button', defaultMessage: 'Add the first URL bundle' })}</Button>}
       />
     );

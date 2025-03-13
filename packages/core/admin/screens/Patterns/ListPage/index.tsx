@@ -1,48 +1,30 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useIntl } from 'react-intl';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useQuery } from 'react-query';
 import {
   Loader,
-  ContentLayout,
-  HeaderLayout,
   Button,
   Box,
 } from '@strapi/design-system';
 
 import { Plus } from '@strapi/icons';
-import { useFetchClient } from '@strapi/helper-plugin';
+import { getFetchClient, Layouts } from '@strapi/strapi/admin';
 
 import pluginId from '../../../helpers/pluginId';
 import Table from './components/Table';
 import Center from '../../../components/Center';
 import { PatternEntity } from '../../../types/url-patterns';
+import { GenericResponse } from '../../../types/content-api';
 
 const ListPatternPage = () => {
-  const [patterns, setPatterns] = useState<PatternEntity[]>([]);
-  const [loading, setLoading] = useState(false);
+  const { get } = getFetchClient();
+  const items = useQuery(['url-patterns'], async () => get<GenericResponse<PatternEntity[]>>('/webtools/url-pattern/findMany'));
+
   const { formatMessage } = useIntl();
-  const { push } = useHistory();
-  const fetchClient = useFetchClient();
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      try {
-        const response = await fetchClient.get<PatternEntity[]>('/webtools/url-pattern/findMany');
-        setPatterns(response.data);
-      } catch (error) {
-        console.error('Failed to fetch data:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData().catch((error) => {
-      console.error('Failed to fetch data:', error);
-    });
-  }, [fetchClient]);
-
-  if (loading) {
+  if (items.isLoading) {
     return (
       <Center>
         <Loader>{formatMessage({ id: 'webtools.settings.loading', defaultMessage: 'Loading content...' })}</Loader>
@@ -52,22 +34,21 @@ const ListPatternPage = () => {
 
   return (
     <Box>
-      <HeaderLayout
+      <Layouts.Header
         title={formatMessage({ id: 'webtools.settings.page.patterns.title', defaultMessage: 'Patterns' })}
         subtitle={formatMessage({ id: 'webtools.settings.page.patterns.description', defaultMessage: 'A list of all the known URL alias patterns.' })}
-        as="h2"
         primaryAction={(
-          <Button onClick={() => push(`/plugins/${pluginId}/patterns/new`)} startIcon={<Plus />} size="L">
+          <Button onClick={() => navigate(`/plugins/${pluginId}/patterns/new`)} startIcon={<Plus />} size="L">
             {formatMessage({
               id: 'webtools.settings.button.add_pattern',
               defaultMessage: 'Add new pattern',
             })}
           </Button>
-                )}
+        )}
       />
-      <ContentLayout>
-        <Table patterns={patterns} />
-      </ContentLayout>
+      <Layouts.Content>
+        <Table patterns={items.data.data.data} />
+      </Layouts.Content>
     </Box>
   );
 };

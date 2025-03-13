@@ -5,10 +5,10 @@ import { isEmpty } from 'lodash/fp';
 
 import {
   Grid,
-  GridItem,
-  Select,
-  Option,
+  SingleSelect,
   Checkbox,
+  Field,
+  SingleSelectOption,
 } from '@strapi/design-system';
 
 import SelectContentTypes from '../../SelectContentTypes';
@@ -40,53 +40,62 @@ const CollectionForm = (props) => {
 
   return (
     <form>
-      <Grid gap={6}>
-        <GridItem col={6} s={12}>
-          <Grid gap={4}>
-            <GridItem col={12}>
-              <SelectContentTypes
-                contentTypes={contentTypes}
-                onChange={(value) => handleSelectChange(value)}
-                value={uid}
-                disabled={!isEmpty(id)}
-                modifiedContentTypes={modifiedState}
-              />
-            </GridItem>
-          </Grid>
-        </GridItem>
-        <GridItem col={6} s={12}>
-          <Grid gap={4}>
+      <Grid.Root gap={6}>
+        <Grid.Item col={6} s={12} alignItems="flex-start">
+          <SelectContentTypes
+            contentTypes={contentTypes}
+            onChange={(value) => handleSelectChange(value)}
+            value={uid}
+            disabled={!isEmpty(id)}
+            modifiedContentTypes={modifiedState}
+          />
+        </Grid.Item>
+        <Grid.Item col={6} s={12}>
+          <Grid.Root gap={4}>
             {Object.keys(form).map((input) => (
-              <GridItem col={12} key={input}>
-                <Select
-                  name={input}
-                  label={formatMessage({ id: `sitemap.Settings.Field.${input.replace(/^\w/, (c) => c.toUpperCase())}.Label`, defaultMessage: input.replace(/^\w/, (c) => c.toUpperCase()) })}
+              <Grid.Item col={12} key={input}>
+                <Field.Root
+                  width="100%"
                   hint={formatMessage({ id: `sitemap.Settings.Field.${input.replace(/^\w/, (c) => c.toUpperCase())}.Description`, defaultMessage: '' })}
-                  disabled={!uid || (getSelectedContentType(contentTypes, uid).locales && !langcode)}
-                  onChange={(value) => onChange(uid, langcode, input, value)}
-                  value={modifiedState.getIn([uid, 'languages', langcode, input], form[input].value)}
                 >
-                  {form[input].options.map((option) => (
-                    <Option value={option} key={option}>{option}</Option>
-                  ))}
-                </Select>
-              </GridItem>
+                  <Field.Label>{formatMessage({ id: `sitemap.Settings.Field.${input.replace(/^\w/, (c) => c.toUpperCase())}.Label`, defaultMessage: input.replace(/^\w/, (c) => c.toUpperCase()) })}</Field.Label>
+                  <SingleSelect
+                    name={input}
+                    disabled={
+                      !uid || (getSelectedContentType(contentTypes, uid).locales && !langcode)
+                    }
+                    onChange={(value) => onChange(uid, langcode, input, value)}
+                    value={modifiedState.getIn([uid, 'languages', langcode, input], form[input].value)}
+                  >
+                    {form[input].options.map((option) => (
+                      <SingleSelectOption value={option} key={option}>{option}</SingleSelectOption>
+                    ))}
+                  </SingleSelect>
+                  <Field.Hint />
+                </Field.Root>
+              </Grid.Item>
             ))}
-            <GridItem col={12}>
-              <Checkbox
-                onValueChange={(cbValue) => {
-                  onChange(uid, langcode, 'includeLastmod', cbValue);
-                }}
-                value={modifiedState.getIn([uid, 'languages', langcode, 'includeLastmod'], true)}
-                disabled={!uid || (getSelectedContentType(contentTypes, uid).locales && !langcode)}
+            <Grid.Item col={12}>
+              <Field.Root
                 hint={formatMessage({ id: 'sitemap.Settings.Field.IncludeLastmod.Description', defaultMessage: 'Adds a <lastmod> tag to all the URLs of this type.' })}
               >
-                {formatMessage({ id: 'sitemap.Settings.Field.IncludeLastmod.Label', defaultMessage: 'Lastmod' })}
-              </Checkbox>
-            </GridItem>
-          </Grid>
-        </GridItem>
-      </Grid>
+                <Checkbox
+                  onCheckedChange={(cbValue) => {
+                    onChange(uid, langcode, 'includeLastmod', cbValue);
+                  }}
+                  value={modifiedState.getIn([uid, 'languages', langcode, 'includeLastmod'], true)}
+                  disabled={
+                    !uid || (getSelectedContentType(contentTypes, uid).locales && !langcode)
+                  }
+                >
+                  {formatMessage({ id: 'sitemap.Settings.Field.IncludeLastmod.Label', defaultMessage: 'Lastmod' })}
+                </Checkbox>
+                <Field.Hint />
+              </Field.Root>
+            </Grid.Item>
+          </Grid.Root>
+        </Grid.Item>
+      </Grid.Root>
     </form>
   );
 };

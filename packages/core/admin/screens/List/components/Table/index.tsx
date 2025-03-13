@@ -4,7 +4,6 @@ import React, {
   useState,
 } from 'react';
 import { useIntl } from 'react-intl';
-import { Attribute } from '@strapi/strapi';
 
 import {
   Table,
@@ -15,21 +14,19 @@ import {
   Tbody,
   Button,
   Flex,
-} from '@strapi/design-system';
-
-import {
   EmptyStateLayout,
-} from '@strapi/helper-plugin';
+} from '@strapi/design-system';
 
 import TableRow from '../TableRow';
 import PaginationFooter from '../PaginationFooter';
 import type { Pagination } from '../..';
 import Filters from '../Filters';
-import { Config } from '../../../../../server/admin-api/config';
+import { Config } from '../../../../../server/config';
+import { UrlAliasEntity } from '../../../../types/url-aliases';
 
 type Props = {
-  paths: Attribute.GetValues<'plugin::webtools.url-alias'>[],
-  onDelete: () => void,
+  paths: UrlAliasEntity[],
+  onDelete: () => any,
   pagination: Pagination,
   contentTypes: any[],
   config: Config,
@@ -119,11 +116,10 @@ const TableComponent: FC<Props> = (props) => {
         </Table>
       ) : (
         <EmptyStateLayout
-          content={{
+          content={formatMessage({
             id: 'webtools.settings.page.list.table.empty',
             defaultMessage: 'You don\'t have any URL paths yet.',
-          }}
-          action={() => {}}
+          })}
           shadow="tableShadow"
           hasRadius
         />

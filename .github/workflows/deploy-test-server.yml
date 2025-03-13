@@ -8,73 +8,73 @@ on:
       - develop
 
 jobs:
-  # preflight-checks:
-  #   name: Preflight checks
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Check if there are config-sync changes on production
-  #       uses: appleboy/ssh-action@v0.1.10
-  #       with:
-  #         host: ${{ secrets.SSH_HOST }}
-  #         username: ${{ secrets.SSH_CI_USERNAME }}
-  #         password: ${{ secrets.SSH_CI_PASSWORD }}
-  #         script_stop: true
-  #         script: dokku run strapi ../node_modules/.bin/config-sync diff
+  preflight-checks:
+    name: Preflight checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check if there are config-sync changes on production
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_CI_USERNAME }}
+          password: ${{ secrets.SSH_CI_PASSWORD }}
+          script_stop: true
+          script: dokku run strapi ../node_modules/.bin/config-sync diff
   deploy:
     name: Deploy
-    # needs: [preflight-checks]
+    needs: [preflight-checks]
     runs-on: ubuntu-latest
     environment:
       name: Test
       url: https://test.pluginpal.io
-  #   steps:
-  #     - name: Checkout repository
-  #       uses: actions/checkout@v2
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-  #     - name: Set up Docker
-  #       uses: actions/setup-node@v3
-  #       with:
-  #         node-version: 18
-  #         cache: 'yarn'
+      - name: Set up Docker
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'yarn'
 
-  #     - name: Install plugin dependencies
-  #       run: yarn install
+      - name: Install plugin dependencies
+        run: yarn install
 
-  #     - name: Build the packages
-  #       run: yarn run build
+      - name: Build the packages
+        run: yarn run build
 
-  #     - name: Install de playground dependencies
-  #       run: yarn playground:install
+      - name: Install de playground dependencies
+        run: yarn playground:install
 
-  #     - name: Build a Docker image of the playground
-  #       run: |
-  #         cd playground
-  #         docker build \
-  #           --build-arg PUBLIC_URL=${{ secrets.TEST_URL }} \
-  #           -t strapi-playground:latest .
-  #         docker save -o strapi-playground-latest.tar strapi-playground:latest
+      - name: Build a Docker image of the playground
+        run: |
+          cd playground
+          docker build \
+            --build-arg PUBLIC_URL=${{ secrets.TEST_URL }} \
+            -t strapi-playground:latest .
+          docker save -o strapi-playground-latest.tar strapi-playground:latest
 
-  #     - name: Transfer the Docker image to the Dokku server
-  #       uses: appleboy/scp-action@v0.1.3
-  #       with:
-  #         host: ${{ secrets.SSH_HOST }}
-  #         username: ${{ secrets.SSH_CI_USERNAME }}
-  #         password: ${{ secrets.SSH_CI_PASSWORD }}
-  #         source: playground/strapi-playground-latest.tar
-  #         target: /var/lib/dokku/data/storage/strapi/docker-images
+      - name: Transfer the Docker image to the Dokku server
+        uses: appleboy/scp-action@v0.1.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_CI_USERNAME }}
+          password: ${{ secrets.SSH_CI_PASSWORD }}
+          source: playground/strapi-playground-latest.tar
+          target: /var/lib/dokku/data/storage/strapi/docker-images
 
-  #     - name: Deploy the Dokku app based on the Docker image
-  #       uses: appleboy/ssh-action@v0.1.10
-  #       with:
-  #         host: ${{ secrets.SSH_HOST }}
-  #         username: ${{ secrets.SSH_CI_USERNAME }}
-  #         password: ${{ secrets.SSH_CI_PASSWORD }}
-  #         script_stop: true
-  #         script: |
-  #           sudo docker load -i /var/lib/dokku/data/storage/strapi/docker-images/playground/strapi-playground-latest.tar
-  #           STRAPI_LATEST_IMAGE=$(sudo docker images --format "{{.ID}}" strapi-playground:latest)
-  #           sudo docker tag strapi-playground:latest strapi-playground:$STRAPI_LATEST_IMAGE
-  #           dokku git:from-image strapi strapi-playground:$STRAPI_LATEST_IMAGE
-  #           sudo docker system prune --all --force
-  #           sudo rm -rf /var/lib/dokku/data/storage/strapi/docker-images/playground/strapi-playground-latest.tar
+      - name: Deploy the Dokku app based on the Docker image
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_CI_USERNAME }}
+          password: ${{ secrets.SSH_CI_PASSWORD }}
+          script_stop: true
+          script: |
+            sudo docker load -i /var/lib/dokku/data/storage/strapi/docker-images/playground/strapi-playground-latest.tar
+            STRAPI_LATEST_IMAGE=$(sudo docker images --format "{{.ID}}" strapi-playground:latest)
+            sudo docker tag strapi-playground:latest strapi-playground:$STRAPI_LATEST_IMAGE
+            dokku git:from-image strapi strapi-playground:$STRAPI_LATEST_IMAGE
+            sudo docker system prune --all --force
+            sudo rm -rf /var/lib/dokku/data/storage/strapi/docker-images/playground/strapi-playground-latest.tar
 

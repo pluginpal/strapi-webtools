@@ -1,31 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import { useFetchClient } from '@strapi/helper-plugin';
-import { Config } from '../../../../server/admin-api/config';
+import React from 'react';
+import { getFetchClient } from '@strapi/strapi/admin';
+import { useQuery } from 'react-query';
 
 import CopyLinkButton from '../../CopyLinkButton';
+import { Config } from '../../../../server/config';
 
 interface Props {
   path: string
 }
 
 const EditViewRightLinks: React.FC<Props> = ({ path }) => {
-  const [url, setUrl] = useState<string>();
-  const fetchClient = useFetchClient();
+  const { get } = getFetchClient();
+  const config = useQuery('config', async () => get<Config>('/webtools/info/config'));
 
-  useEffect(() => {
-    fetchClient.get<Config>('/webtools/info/config')
-      .then((response) => {
-        const configData = response.data;
-        setUrl(configData.website_url);
-      })
-      .catch((error) => {
-        console.error('Failed to fetch config:', error);
-      });
-  }, [fetchClient]);
+  if (config.isLoading || config.isError || !config.data.data.website_url) return null;
 
-  if (!url) return null;
-
-  return <CopyLinkButton url={`${url}${path}`} />;
+  return <CopyLinkButton url={`${config.data.data.website_url}${path}`} />;
 };
 
 export default EditViewRightLinks;

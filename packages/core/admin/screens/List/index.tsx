@@ -1,23 +1,29 @@
-import React, { useEffect, useState } from 'react';
-import { EntityService, Attribute } from '@strapi/types';
+import React from 'react';
 import { useIntl } from 'react-intl';
-import { useHistory } from 'react-router-dom';
-
-import { ContentLayout, HeaderLayout, Button } from '@strapi/design-system';
 import {
-  CheckPagePermissions,
-  request,
-  useFetchClient,
+  useQuery,
+  useQueryClient,
+} from 'react-query';
+
+import { Button } from '@strapi/design-system';
+
+import {
+  Page,
   useNotification,
-} from '@strapi/helper-plugin';
+  getFetchClient,
+  Layouts,
+} from '@strapi/strapi/admin';
 
 import pluginPermissions from '../../permissions';
 import Table from './components/Table';
-import { Config } from '../../../server/admin-api/config';
 import GeneratePathsModal from './components/GeneratePathsModal';
 import { EnabledContentType, EnabledContentTypes } from '../../types/enabled-contenttypes';
 import { GenerationType } from '../../../server/types';
 import Loader from '../../components/Loader';
+import { GenericResponse } from '../../types/content-api';
+import { Config } from '../../../server/config';
+import { UrlAliasEntity } from '../../types/url-aliases';
+import useQueryParams from '../../hooks/useQueryParams';
 
 export type Pagination = {
   page: number;
@@ -27,105 +33,74 @@ export type Pagination = {
 };
 
 const List = () => {
-  const [queryCount, setQueryCount] = useState<number>(0);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [paths, setPaths] = useState<Attribute.GetValues<'plugin::webtools.url-alias'>[]>(null);
-  const [config, setConfig] = useState<Config>(null);
-  const [pagination, setPagination] = useState<Pagination>(null);
-  const [openModal, setOpenModal] = useState<boolean>(null);
-  const { post } = useFetchClient();
-  const history = useHistory();
+  const { get } = getFetchClient();
+  const params = useQueryParams();
+
+  const items = useQuery(['url-alias', params], async () => get<GenericResponse<UrlAliasEntity[]>>(`/webtools/url-alias/findMany?${params}`));
+  const contentTypes = useQuery('content-types', async () => get<EnabledContentTypes>('/webtools/info/getContentTypes'));
+  const config = useQuery('config', async () => get<Config>('/webtools/info/config'));
+  const queryClient = useQueryClient();
+
+  const { post } = getFetchClient();
+
   const { formatMessage } = useIntl();
-  const { get } = useFetchClient();
-  const [contentTypes, setContentTypes] = useState<EnabledContentTypes>([]);
-  const toggleNotification = useNotification();
-
-  useEffect(() => {
-    get('/webtools/info/getContentTypes')
-      .then((res: { data: EnabledContentTypes }) => {
-        setContentTypes(res.data);
-      })
-      .catch(() => {
-        toggleNotification({ type: 'warning', message: { id: 'notification.error' } });
-      });
-  }, [get, toggleNotification]);
-
-  useEffect(() => {
-    request(`/webtools/url-alias/findMany${history.location.search}`, { method: 'GET' })
-      .then((res: EntityService.PaginatedResult<'plugin::webtools.url-alias'>) => {
-        setPaths(res.results);
-        setPagination(res.pagination);
-      })
-      .catch(() => {
-        toggleNotification({ type: 'warning', message: { id: 'notification.error' } });
-      });
-  }, [history.location.search, queryCount, toggleNotification]);
-
-  useEffect(() => {
-    request('/webtools/info/config', { method: 'GET' })
-      .then((res: Config) => {
-        setConfig(res);
-      })
-      .catch(() => {
-        toggleNotification({ type: 'warning', message: { id: 'notification.error' } });
-      });
-  }, [toggleNotification]);
+  const { toggleNotification } = useNotification();
 
   const handleGeneratePaths = async (types: EnabledContentType['uid'][], generationType: GenerationType) => {
-    setLoading(true);
     await post('/webtools/url-alias/generate', { types, generationType })
       .then((response: { data: { message: string } }) => {
-        toggleNotification({ type: 'success', message: { id: 'webtools.success.url-alias.generate', defaultMessage: response.data.message } });
-        setLoading(false);
+        toggleNotification({ type: 'success', message: formatMessage({ id: 'webtools.success.url-alias.generate', defaultMessage: response.data.message }) });
       })
       .catch(() => {
-        toggleNotification({ type: 'warning', message: { id: 'notification.error' } });
-        setLoading(false);
+        toggleNotification({ type: 'warning', message: formatMessage({ id: 'notification.error' }) });
       });
 
-    setQueryCount(queryCount + 1);
+    await queryClient.invalidateQueries('url-alias');
   };
 
-  if (!paths || !config || !pagination) {
+  if (items.isLoading || config.isLoading || contentTypes.isLoading) {
     return (
       <Loader />
     );
   }
 
+  if (items.isError || config.isError || contentTypes.isError) {
+    return (
+      <div>error</div>
+    );
+  }
+
   return (
-    <CheckPagePermissions permissions={pluginPermissions['settings.patterns']}>
-      {loading && <Loader />}
-      <HeaderLayout
+    <Page.Protect permissions={pluginPermissions['settings.patterns']}>
+      {false && <Loader />}
+      <Layouts.Header
         title={formatMessage({ id: 'webtools.settings.page.list.title', defaultMessage: 'URLs' })}
         subtitle={formatMessage({ id: 'webtools.settings.page.list.description', defaultMessage: 'A list of all the known URL aliases.' })}
-        as="h2"
-        // TODO: Generate all button.
         primaryAction={(
-          <Button onClick={() => setOpenModal(true)} size="L">
-            {formatMessage({
-              id: 'webtools.settings.button.generate_paths',
-              // defaultMessage: 'Generate paths',
-            })}
-          </Button>
+          <GeneratePathsModal
+            // eslint-disable-next-line @typescript-eslint/no-misused-promises
+            onSubmit={handleGeneratePaths}
+            contentTypes={contentTypes.data.data}
+          >
+            <Button size="L">
+              {formatMessage({
+                id: 'webtools.settings.button.generate_paths',
+                defaultMessage: 'Generate paths',
+              })}
+            </Button>
+          </GeneratePathsModal>
         )}
       />
-      <ContentLayout>
+      <Layouts.Content>
         <Table
-          paths={paths}
-          pagination={pagination}
-          onDelete={() => setQueryCount(queryCount + 1)}
-          config={config}
-          contentTypes={contentTypes}
+          paths={items.data.data.data}
+          pagination={items.data.data.meta.pagination}
+          onDelete={() => queryClient.invalidateQueries('url-alias')}
+          config={config.data.data}
+          contentTypes={contentTypes.data.data}
         />
-      </ContentLayout>
-      <GeneratePathsModal
-        isOpen={openModal}
-        // eslint-disable-next-line @typescript-eslint/no-misused-promises
-        onSubmit={handleGeneratePaths}
-        onClose={() => setOpenModal(false)}
-        contentTypes={contentTypes}
-      />
-    </CheckPagePermissions>
+      </Layouts.Content>
+    </Page.Protect>
   );
 };
 
