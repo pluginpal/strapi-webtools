@@ -2,7 +2,7 @@
 
 # Stage 1: Base image.
 ## Start with a base image containing NodeJS so we can build Docusaurus.
-FROM node:lts as base
+FROM node:18-alpine3.18 as base
 ## Disable colour output from yarn to make logs easier to read.
 ENV FORCE_COLOR=0
 ## Enable corepack.
@@ -17,7 +17,7 @@ WORKDIR /opt/docusaurus
 ## Copy over the source code.
 COPY . /opt/docusaurus/
 ## Install dependencies with `--immutable` to ensure reproducibility.
-RUN yarn install --immutable
+RUN yarn install
 ## Build the static site.
 RUN yarn build
 
