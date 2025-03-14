@@ -5,6 +5,10 @@
     { "repo": "pluginpal/strapi-webtools" }
   ],
   "commit": false,
+  "privatePackages": {
+    "version": true,
+    "tag": true
+  },
   "fixed": [],
   "linked": [],
   "access": "public",
