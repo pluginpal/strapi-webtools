@@ -44,7 +44,7 @@ const config: Config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            'https://github.com/pluginpal/docs/tree/main/',
+            'https://github.com/pluginpal/strapi-webtools/tree/master/packages/docs',
           admonitions: {
             keywords: [
               // Admonitions defaults
