@@ -3,7 +3,7 @@ name: Deploy Docs
 on:
   push:
     tags:
-      - "docs@*"
+      - "docs*"
 
 jobs:
   deploy:
