@@ -1,5 +1,11 @@
 # core
 
+## 1.0.1
+
+### Patch Changes
+
+- [#217](https://github.com/pluginpal/strapi-webtools/pull/217) [`36bf8d3`](https://github.com/pluginpal/strapi-webtools/commit/36bf8d38ebd90556a0db5941f62469d0672b67c9) Thanks [@boazpoolman](https://github.com/boazpoolman)! - Fix incorrect duplication prevention for content types without internationalization
+
 ## 1.0.0
 
 ### Major Changes
