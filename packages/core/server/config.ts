@@ -1,6 +1,7 @@
 import deburr from 'lodash/deburr';
 import toLower from 'lodash/toLower';
 import kebabCase from 'lodash/kebabCase';
+
 export interface Config {
   website_url: string;
   default_pattern: string,

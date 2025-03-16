@@ -1,6 +1,7 @@
 import { factories, Schema, UID } from '@strapi/strapi';
 import { getPluginService } from '../util/getPluginService';
 import { typedEntries } from '../util/typeHelpers';
+import { Config } from '../config';
 
 const contentTypeSlug = 'plugin::webtools.url-pattern';
 
@@ -168,7 +169,8 @@ const customServices = () => ({
 
           resolvedPattern = resolvedPattern.replace(`[${field}]`, fieldValue || '');
         } else if (!relationalField) {
-          const fieldValue = strapi.config.get('plugin::webtools.slugify')(String(entity[field]));
+          const { slugify } = strapi.config.get<Config>('plugin::webtools');
+          const fieldValue = slugify(String(entity[field]));
           resolvedPattern = resolvedPattern.replace(`[${field}]`, fieldValue || '');
         } else if (Array.isArray(entity[relationalField[0]])) {
           strapi.log.error('Something went wrong whilst resolving the pattern.');
