@@ -13,4 +13,4 @@ Webtools allows you to create custom URL patterns, specifically tweaked to your 
 | Key | `default_pattern` |
 | Required | false |
 | Type | string |
-| Default | `/[pluralName]/[id]` |
+| Default | `/[pluralName]/[documentId]` |

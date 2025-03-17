@@ -17,7 +17,7 @@ export default ({ env }) => ({
   webtools: {
     enabled: true,
     config: {
-      default_pattern: "/[pluralName]/[id]",
+      default_pattern: "/[pluralName]/[documentId]",
       website_url: null,
       slugify: (fieldValue) => kebabCase(deburr(toLower(fieldValue))),
     },
