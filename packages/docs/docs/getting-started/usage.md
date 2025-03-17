@@ -9,4 +9,4 @@ This plugin is specifically designed for usage in Strapi managed websites. Hence
 
 See below a screenshot of how to enable webtools for a given collection type.
 
-<img src="/img/assets/webtools/enable-webtools.png" alt="Enable webtools" />
+<img src="/webtools/img/assets/enable-webtools.png" alt="Enable webtools" />

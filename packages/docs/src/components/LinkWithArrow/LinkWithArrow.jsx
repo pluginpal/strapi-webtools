@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import React from 'react';
 import Link from '@docusaurus/Link';
-import IconArrow from '@site/static/img/assets/icons/arrow-right.svg';
+import IconArrow from '@site/static/webtools/img/assets/icons/arrow-right.svg';
 import styles from './link-with-arrow.module.scss';
 
 export function LinkWithArrow({
