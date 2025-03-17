@@ -1,5 +1,11 @@
 # docs
 
+## 1.0.1
+
+### Patch Changes
+
+- [`c3506c0`](https://github.com/pluginpal/strapi-webtools/commit/c3506c0d716260fce4731e653e21a1abe22f3a91) Thanks [@boazpoolman](https://github.com/boazpoolman)! - Set the baseUrl for docusaurus
+
 ## 1.0.0
 
 ### Major Changes
