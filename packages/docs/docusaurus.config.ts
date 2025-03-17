@@ -131,11 +131,11 @@ const config: Config = {
       ],
     },
 
-    // algolia: {
-    //   appId: '8VTVGK458K',
-    //   apiKey: '2f311b65edaffdd986645eb42d4afa51',
-    //   indexName: 'pluginpal',
-    // },
+    algolia: {
+      appId: 'IMGKM2XWOF',
+      apiKey: 'b507658da6436aa7fb2c5f8c5b19f043',
+      indexName: 'pluginpal',
+    },
 
     prism: {
       theme: prismThemes.github,
