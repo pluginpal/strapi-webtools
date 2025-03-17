@@ -3,8 +3,8 @@ import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
-  title: 'Pluginpal Documentation',
-  tagline: "All of Pluginpal's plugin documentation in one place",
+  title: 'Strapi Webtools',
+  tagline: "Documentation for the webtools plugin for Strapi",
   favicon: 'img/favicon.jpg',
 
   plugins: [
@@ -86,14 +86,14 @@ const config: Config = {
     // Replace with your project's social card
     // image: 'img/docusaurus-social-card.jpg',
     navbar: {
-      title: 'PluginPal Docs',
+      title: 'Strapi Webtools',
       logo: {
-        alt: 'PluginPal logo',
+        alt: 'Webtools logo',
         src: 'img/logo.png',
       },
       items: [
         {
-          href: 'https://github.com/pluginpal',
+          href: 'https://github.com/pluginpal/strapi-webtools',
           label: 'GitHub',
           position: 'right',
         },
@@ -131,11 +131,11 @@ const config: Config = {
       ],
     },
 
-    algolia: {
-      appId: '8VTVGK458K',
-      apiKey: '2f311b65edaffdd986645eb42d4afa51',
-      indexName: 'pluginpal',
-    },
+    // algolia: {
+    //   appId: '8VTVGK458K',
+    //   apiKey: '2f311b65edaffdd986645eb42d4afa51',
+    //   indexName: 'pluginpal',
+    // },
 
     prism: {
       theme: prismThemes.github,
