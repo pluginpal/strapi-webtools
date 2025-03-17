@@ -1,5 +1,11 @@
 # docs
 
+## 1.0.2
+
+### Patch Changes
+
+- [`97caffe`](https://github.com/pluginpal/strapi-webtools/commit/97caffeccbe70a66319ad9e1d84dca9d8ff1e46e) Thanks [@boazpoolman](https://github.com/boazpoolman)! - Fix baseUrl for docs config
+
 ## 1.0.1
 
 ### Patch Changes
