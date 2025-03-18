@@ -1,5 +1,11 @@
 # core
 
+## 1.1.0
+
+### Minor Changes
+
+- [#230](https://github.com/pluginpal/strapi-webtools/pull/230) [`9b0ecdb`](https://github.com/pluginpal/strapi-webtools/commit/9b0ecdb4a88f6b837e78bca437662d5724809da2) Thanks [@boazpoolman](https://github.com/boazpoolman)! - New config 'slugify' to overwrite the slugify function of the plugin
+
 ## 1.0.1
 
 ### Patch Changes
