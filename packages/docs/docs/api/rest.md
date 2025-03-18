@@ -33,19 +33,16 @@ Other than the path parameter this endpoint should behave just like a native fin
 {
   "data": {
     "id": 2,
-    "attributes": {
-      "title": "Robust Strapi plugins for your project",
-      "createdAt": "2023-11-28T21:06:51.727Z",
-      "updatedAt": "2024-08-10T09:19:43.568Z",
-      "publishedAt": "2023-12-10T12:54:15.699Z",
-      "locale": "en",
-      "body": "Try our open source plugins to enhance your Strapi project for free! For custom solutions please contact our team.",
-      "contentType": "api::home.home"
-    }
+    "documentId": "ke1s1aroaexv8jt03iuxn81g",
+    "title": "Robust Strapi plugins for your project",
+    "createdAt": "2025-03-09T16:45:24.886Z",
+    "updatedAt": "2025-03-13T20:38:43.112Z",
+    "publishedAt": "2025-03-13T17:06:57.578Z",
+    "locale": "en",
+    "body": "Try our open source plugins to enhance your Strapi project for free! For custom solutions please contact our team.",
+    "contentType": "api::home.home"
   },
-  "meta": {
-
-  }
+  "meta": {}
 }
 
 ```
@@ -76,58 +73,53 @@ As it's a native findMany endpoint you can use all the parameters you're used to
   "data": [
     {
       "id": 10,
-      "attributes": {
-        "url_path": "/articles",
-        "generated": true,
-        "contenttype": "api::page.page",
-        "createdAt": "2024-08-10T09:19:43.348Z",
-        "updatedAt": "2024-08-10T09:19:44.581Z",
-        "locale": "en"
-      }
+      "documentId": "ke1s1aroaexv8jt03iuxn81g",
+      "url_path": "/articles",
+      "generated": true,
+      "contenttype": "api::page.page",
+      "createdAt": "2025-03-09T16:45:24.886Z",
+      "updatedAt": "2025-03-13T20:38:43.112Z",
+      "locale": "en"
     },
     {
       "id": 14,
-      "attributes": {
-        "url_path": "/plugins",
-        "generated": true,
-        "contenttype": "api::page.page",
-        "createdAt": "2024-08-10T09:19:43.808Z",
-        "updatedAt": "2024-08-10T09:19:44.611Z",
-        "locale": "en"
-      }
+      "documentId": "f4x8aamrfaec0t5oea408n34",
+      "url_path": "/plugins",
+      "generated": true,
+      "contenttype": "api::page.page",
+      "createdAt": "2025-03-09T16:45:24.886Z",
+      "updatedAt": "2025-03-13T20:38:43.112Z",
+      "locale": "en"
     },
     {
       "id": 18,
-      "attributes": {
-        "url_path": "/privacy-policy",
-        "generated": null,
-        "contenttype": "api::page.page",
-        "createdAt": "2024-09-01T12:55:04.863Z",
-        "updatedAt": "2024-09-01T12:55:29.346Z",
-        "locale": "en"
-      }
+      "documentId": "fdg21vh8i5bzbbwjm50dwk60",
+      "url_path": "/privacy-policy",
+      "generated": null,
+      "contenttype": "api::page.page",
+      "createdAt": "2025-03-09T16:45:24.886Z",
+      "updatedAt": "2025-03-13T20:38:43.112Z",
+      "locale": "en"
     },
     {
       "id": 21,
-      "attributes": {
-        "url_path": "/terms-and-conditions",
-        "generated": null,
-        "contenttype": "api::page.page",
-        "createdAt": "2024-09-01T13:13:14.364Z",
-        "updatedAt": "2024-09-01T13:13:30.147Z",
-        "locale": "en"
-      }
+      "documentId": "so0mehxfna6l3o6i0aul75gr",
+      "url_path": "/terms-and-conditions",
+      "generated": null,
+      "contenttype": "api::page.page",
+      "createdAt": "2025-03-09T16:45:24.886Z",
+      "updatedAt": "2025-03-13T20:38:43.112Z",
+      "locale": "en"
     },
     {
       "id": 11,
-      "attributes": {
-        "url_path": "/",
-        "generated": null,
-        "contenttype": "api::home.home",
-        "createdAt": "2024-08-10T09:19:43.351Z",
-        "updatedAt": "2024-09-01T13:44:57.434Z",
-        "locale": "en"
-      }
+      "documentId": "idrdcm7f9cn3w7iex32t2hh3",
+      "url_path": "/",
+      "generated": null,
+      "contenttype": "api::home.home",
+      "createdAt": "2025-03-09T16:45:24.886Z",
+      "updatedAt": "2025-03-13T20:38:43.112Z",
+      "locale": "en"
     },
   ],
   "meta": {

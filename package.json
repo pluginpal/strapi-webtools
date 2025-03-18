@@ -17,6 +17,8 @@
     "playground:build": "cd playground && yarn build",
     "playground:start": "cd playground && yarn start",
     "playground:develop": "rm -rf playground/node_modules/.strapi/ && cd playground && yarn develop --watch-admin --bundler=vite",
+    "docs:start": "cd packages/docs/ && yarn start",
+    "docs:build": "cd packages/docs/ && yarn build",
     "test:e2e": "cypress open",
     "test:unit": "ENV_PATH=./playground/.env jest --verbose --runInBand --forceExit",
     "test:integration": "ENV_PATH=./playground/.env jest --verbose --runInBand --forceExit --testMatch '**/healthcheck.test.js'"

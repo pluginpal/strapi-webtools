@@ -9,4 +9,4 @@ At the core of the plugin is URL alias. It's the idea that every page of a given
 
 See below a screenshot of the URL alias popup that's used to set the unique path of your page.
 
-<img src="/img/assets/webtools/url-alias.png" alt="URL alias" />
+<img src="/webtools/img/assets/url-alias.png" alt="URL alias" />

@@ -17,10 +17,10 @@ Fields can be injected in the pattern by escaping them with `[]`.
 
 The following field types are allowed in a pattern:
 
-- `id`
+- `documentId`
 - `uid`
 - `string`
 
 See below a screenshot of the URL pattern creation form in Strapi.
 
-<img src="/img/assets/webtools/url-pattern.png" alt="URL pattern" />
+<img src="/webtools/img/assets/url-pattern.png" alt="URL pattern" />

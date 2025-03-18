@@ -58,6 +58,7 @@ const sidebars = {
         "configuration/introduction",
         "configuration/default-pattern",
         "configuration/website-url",
+        "configuration/slugify",
       ],
     },
     // {

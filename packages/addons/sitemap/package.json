@@ -15,8 +15,7 @@
   "files": [
     "dist",
     "xsl",
-    "strapi-admin.js",
-    "strapi-server.js"
+    "bin"
   ],
   "bin": {
     "strapi-sitemap": "./bin/strapi-sitemap"
