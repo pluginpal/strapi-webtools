@@ -17,7 +17,7 @@ Fields can be injected in the pattern by escaping them with `[]`.
 
 The following field types are allowed in a pattern:
 
-- `id`
+- `documentId`
 - `uid`
 - `string`
 
