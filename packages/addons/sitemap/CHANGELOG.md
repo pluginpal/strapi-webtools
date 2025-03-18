@@ -1,5 +1,13 @@
 # addon-sitemap
 
+## 1.0.1
+
+### Patch Changes
+
+- [#230](https://github.com/pluginpal/strapi-webtools/pull/230) [`43f236a`](https://github.com/pluginpal/strapi-webtools/commit/43f236a22ce69ff258cc0c3d7ad984f9a16e1984) Thanks [@boazpoolman](https://github.com/boazpoolman)! - Make sure the strapi-sitemap CLI is actually published to the /bin
+
+- [`89239a9`](https://github.com/pluginpal/strapi-webtools/commit/89239a9081001745cde548bfcc96b20b7f38c9c7) Thanks [@boazpoolman](https://github.com/boazpoolman)! - More graceful versioning constraint of the core plugin
+
 ## 1.0.0
 
 ### Major Changes
