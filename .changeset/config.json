@@ -9,6 +9,9 @@
     "version": true,
     "tag": true
   },
+  "___experimentalUnsafeOptions_WILL_CHANGE_IN_PATCH": {
+    "onlyUpdatePeerDependentsWhenOutOfRange": true
+  },
   "fixed": [],
   "linked": [],
   "access": "public",
