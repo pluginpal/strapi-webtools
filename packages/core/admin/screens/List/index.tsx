@@ -82,7 +82,7 @@ const List = () => {
             onSubmit={handleGeneratePaths}
             contentTypes={contentTypes.data.data}
           >
-            <Button size="L">
+            <Button>
               {formatMessage({
                 id: 'webtools.settings.button.generate_paths',
                 defaultMessage: 'Generate paths',

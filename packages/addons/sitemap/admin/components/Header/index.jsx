@@ -38,7 +38,6 @@ const Header = () => {
             <Button
               onClick={handleCancel}
               disabled={disabled}
-              size="L"
               variant="secondary"
             >
               {formatMessage({ id: 'sitemap.Button.Cancel', defaultMessage: 'Cancel' })}
@@ -49,7 +48,6 @@ const Header = () => {
               disabled={disabled}
               type="submit"
               startIcon={<Check />}
-              size="L"
             >
               {formatMessage({ id: 'sitemap.Button.Save', defaultMessage: 'Save' })}
             </Button>
