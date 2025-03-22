@@ -11,10 +11,10 @@ import { sanitizeOutput } from '../util/sanitizeOutput';
 
 export default {
   router: async (ctx: Context) => {
-    const { path } = ctx.query;
+    const { path, ...searchQuery } = ctx.query;
     const { auth } = ctx.state;
 
-    const { entity, contentType } = await getPluginService('url-alias').findRelatedEntity(path as string, ctx.query);
+    const { entity, contentType } = await getPluginService('url-alias').findRelatedEntity(path as string, searchQuery);
 
     if (!entity) {
       ctx.notFound();
