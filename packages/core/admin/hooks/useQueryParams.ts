@@ -9,21 +9,23 @@ const useQueryParams = () => {
     const searchParams = new URLSearchParams(location.search);
     const page = searchParams.get('page');
     const pageSize = searchParams.get('pageSize');
+    searchParams.delete('page');
+    searchParams.delete('pageSize');
 
-    if (page || pageSize) {
-      if (page) {
-        searchParams.delete('page');
-        searchParams.append('pagination[page]', page);
-      }
 
-      if (pageSize) {
-        searchParams.delete('pageSize');
-        searchParams.append('pagination[pageSize]', pageSize);
-      }
-
-      setParams(searchParams.toString());
+    if (!page && !pageSize) {
+      searchParams.append('pagination[page]', '1');
+      searchParams.append('pagination[pageSize]', '10');
     }
+
+    if (page && pageSize) {
+      searchParams.append('pagination[page]', page);
+      searchParams.append('pagination[pageSize]', pageSize);
+    }
+
+    setParams(searchParams.toString());
   }, [location]);
+
 
   return params;
 };

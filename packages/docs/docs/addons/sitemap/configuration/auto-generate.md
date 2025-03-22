@@ -6,7 +6,7 @@ slug: /addons/sitemap/configuration/auto-generate
 
 # Auto generate
 
-Alternatively to using cron to regenerate your sitemap, this plugin offers an automatic generation feature that will generate the sitemap through lifecycle methods. On `create`, `update` and `delete` this plugin will do a full sitemap regeneration. This way your sitemap will always be up-to-date when making content changes.
+Alternatively to using cron to regenerate your sitemap, this plugin offers an automatic generation feature that will generate the sitemap as a document service middleware. On `create`, `update` and `delete` this plugin will do a full sitemap regeneration. This way your sitemap will always be up-to-date when making content changes.
 
 If you have a large sitemap the regeneration becomes an expensive task. Because of that this setting is disabled by default and it is not recommended to enable it for sitemaps with more than 1000 links.
 

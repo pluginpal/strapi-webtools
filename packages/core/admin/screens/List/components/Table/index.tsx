@@ -23,12 +23,14 @@ import type { Pagination } from '../..';
 import Filters from '../Filters';
 import { Config } from '../../../../../server/config';
 import { UrlAliasEntity } from '../../../../types/url-aliases';
+import { Locales } from '../../../../types/languages';
 
 type Props = {
   paths: UrlAliasEntity[],
   onDelete: () => any,
   pagination: Pagination,
   contentTypes: any[],
+  locales: Locales,
   config: Config,
 };
 
@@ -39,6 +41,7 @@ const TableComponent: FC<Props> = (props) => {
     onDelete,
     config,
     contentTypes,
+    locales,
   } = props;
 
   const { formatMessage } = useIntl();
@@ -60,7 +63,7 @@ const TableComponent: FC<Props> = (props) => {
 
   return (
     <div>
-      <Filters contentTypes={contentTypes} />
+      <Filters contentTypes={contentTypes} locales={locales} />
       {amountChecked > 0 && (
         <Flex marginBottom="6" gap="3">
           <Typography variant="omega" textColor="neutral600">
@@ -93,7 +96,17 @@ const TableComponent: FC<Props> = (props) => {
               </Th> */}
               <Th>
                 <Typography variant="sigma" textColor="neutral600">
-                  {formatMessage({ id: 'webtools.settings.page.patterns.table.head.label', defaultMessage: 'Path' })}
+                  {formatMessage({ id: 'webtools.settings.page.path.table.head.path', defaultMessage: 'Path' })}
+                </Typography>
+              </Th>
+              <Th>
+                <Typography variant="sigma" textColor="neutral600">
+                  {formatMessage({ id: 'webtools.settings.page.path.table.head.content-type', defaultMessage: 'Content-Type' })}
+                </Typography>
+              </Th>
+              <Th>
+                <Typography variant="sigma" textColor="neutral600">
+                  {formatMessage({ id: 'webtools.settings.page.path.table.head.locale', defaultMessage: 'Locale' })}
                 </Typography>
               </Th>
             </Tr>

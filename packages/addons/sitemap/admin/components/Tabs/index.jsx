@@ -1,6 +1,7 @@
 import React from 'react';
 import { Tabs, Box } from '@strapi/design-system';
 import { useIntl } from 'react-intl';
+import { useSearchParams } from 'react-router-dom';
 
 import CollectionURLs from '../../tabs/CollectionURLs';
 import CustomURLs from '../../tabs/CustomURLs';
@@ -8,10 +9,17 @@ import Settings from '../../tabs/Settings';
 
 const SitemapTabs = () => {
   const { formatMessage } = useIntl();
+  let [searchParams, setSearchParams] = useSearchParams();
 
   return (
     <Box padding={8}>
-      <Tabs.Root id="tabs" defaultValue="url-bundles">
+      <Tabs.Root
+        id="tabs"
+        value={searchParams.get('tab') || 'url-bundles'}
+        onValueChange={(newValue) => {
+          setSearchParams({ tab: newValue });
+        }}
+      >
         <Tabs.List>
           <Tabs.Trigger value="url-bundles">{formatMessage({ id: 'sitemap.Settings.CollectionTitle', defaultMessage: 'URL bundles' })}</Tabs.Trigger>
           <Tabs.Trigger value="custom-urls">{formatMessage({ id: 'sitemap.Settings.CustomTitle', defaultMessage: 'Custom URLs' })}</Tabs.Trigger>

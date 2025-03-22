@@ -9,13 +9,15 @@ import {
 
 import { Filters as StrapiFilters, SearchInput } from '@strapi/strapi/admin';
 import FilterInput from './FilterInput';
-import { EnabledContentType, EnabledContentTypes } from '../../../../types/enabled-contenttypes';
+import { EnabledContentTypes } from '../../../../types/enabled-contenttypes';
+import { Locales } from '../../../../types/languages';
 
 type Props = {
   contentTypes: EnabledContentTypes,
+  locales: Locales,
 };
 
-const Filters = ({ contentTypes }: Props) => {
+const Filters = ({ contentTypes, locales }: Props) => {
   const { formatMessage } = useIntl();
 
   const filters = useMemo(() => {
@@ -27,9 +29,19 @@ const Filters = ({ contentTypes }: Props) => {
           input: FilterInput,
           label: 'Content-Type',
           name: 'contenttype',
-          options: contentTypes.map((contenttype: EnabledContentType) => ({
+          options: contentTypes.map((contenttype) => ({
             label: contenttype.name,
             value: contenttype.uid,
+          })),
+          type: 'string',
+        },
+        {
+          input: FilterInput,
+          label: 'Locale',
+          name: 'locale',
+          options: locales.map((locale) => ({
+            label: locale.name,
+            value: locale.uid,
           })),
           type: 'string',
         },
@@ -37,7 +49,7 @@ const Filters = ({ contentTypes }: Props) => {
     }
 
     return newFilters;
-  }, [contentTypes]);
+  }, [contentTypes, locales]);
 
 
   return (

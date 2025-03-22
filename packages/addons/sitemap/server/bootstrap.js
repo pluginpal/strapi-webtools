@@ -37,9 +37,6 @@ export default async () => {
       }
     }
 
-    // Load lifecycle methods for auto generation of sitemap.
-    await sitemap.service('lifecycle').loadAllLifecycleMethods();
-
     // Register permission actions.
     const actions = [
       {

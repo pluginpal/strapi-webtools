@@ -3,6 +3,7 @@
 
 import _ from 'lodash';
 import { isContentTypeEnabled } from './utils/enabledContentTypes';
+import autoGenerateMiddleware from './middlewares/auto-generate';
 
 /**
  * Adds sitemap_exclude field to all the eligable content types.
@@ -30,5 +31,6 @@ const extendContentTypesWithExcludeField = async (strapi) => {
 };
 
 export default ({ strapi }) => {
+  strapi.documents.use(autoGenerateMiddleware);
   extendContentTypesWithExcludeField(strapi);
 };

@@ -1,6 +1,6 @@
-export interface EnabledContentType {
+export interface Locale {
   name: string,
   uid: string,
 }
 
-export type EnabledContentTypes = EnabledContentType[];
+export type Locales = Locale[];
