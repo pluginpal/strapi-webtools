@@ -72,6 +72,16 @@ const TableRow: FC<Props> = ({
         </Box>
       </Td>
       <Td>
+        <Box style={{ marginTop: 5, marginBottom: 5 }}>
+          <Typography>{row.contenttype}</Typography>
+        </Box>
+      </Td>
+      <Td>
+        <Box style={{ marginTop: 5, marginBottom: 5 }}>
+          <Typography>{row.locale}</Typography>
+        </Box>
+      </Td>
+      <Td>
         <Flex justifyContent="end">
           {config.website_url && (
             <IconButton

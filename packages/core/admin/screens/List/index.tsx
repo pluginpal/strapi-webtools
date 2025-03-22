@@ -24,6 +24,7 @@ import { GenericResponse } from '../../types/content-api';
 import { Config } from '../../../server/config';
 import { UrlAliasEntity } from '../../types/url-aliases';
 import useQueryParams from '../../hooks/useQueryParams';
+import { Locales } from '../../types/languages';
 
 export type Pagination = {
   page: number;
@@ -38,6 +39,7 @@ const List = () => {
 
   const items = useQuery(['url-alias', params], async () => get<GenericResponse<UrlAliasEntity[]>>(`/webtools/url-alias/findMany?${params}`));
   const contentTypes = useQuery('content-types', async () => get<EnabledContentTypes>('/webtools/info/getContentTypes'));
+  const locales = useQuery('languages', async () => get<Locales>('/webtools/info/getLanguages'));
   const config = useQuery('config', async () => get<Config>('/webtools/info/config'));
   const queryClient = useQueryClient();
 
@@ -58,13 +60,13 @@ const List = () => {
     await queryClient.invalidateQueries('url-alias');
   };
 
-  if (items.isLoading || config.isLoading || contentTypes.isLoading) {
+  if (items.isLoading || config.isLoading || contentTypes.isLoading || locales.isLoading) {
     return (
       <Loader />
     );
   }
 
-  if (items.isError || config.isError || contentTypes.isError) {
+  if (items.isError || config.isError || contentTypes.isError || locales.isError) {
     return (
       <div>error</div>
     );
@@ -72,7 +74,6 @@ const List = () => {
 
   return (
     <Page.Protect permissions={pluginPermissions['settings.patterns']}>
-      {false && <Loader />}
       <Layouts.Header
         title={formatMessage({ id: 'webtools.settings.page.list.title', defaultMessage: 'URLs' })}
         subtitle={formatMessage({ id: 'webtools.settings.page.list.description', defaultMessage: 'A list of all the known URL aliases.' })}
@@ -97,6 +98,7 @@ const List = () => {
           pagination={items.data.data.meta.pagination}
           onDelete={() => queryClient.invalidateQueries('url-alias')}
           config={config.data.data}
+          locales={locales.data.data}
           contentTypes={contentTypes.data.data}
         />
       </Layouts.Content>
