@@ -107,7 +107,7 @@ const Info = () => {
         ) : (
           <div style={{ marginBottom: '15px' }}>
             <Typography variant="omega">
-              {formatMessage({ id: 'sitemap.Info.SitemapIsPresent.AmountOfSitemaps', defaultMessage: 'Amount of URLs:' })}
+              {formatMessage({ id: 'sitemap.Info.SitemapIsPresent.AmountOfSitemaps', defaultMessage: 'Amount of Sitemaps:' })}
             </Typography>
             <Typography variant="omega" fontWeight="bold" style={{ marginLeft: '5px' }}>
               {sitemapInfo.get('sitemaps')}
