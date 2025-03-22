@@ -83,7 +83,7 @@ const CollectionForm = (props) => {
                   onCheckedChange={(cbValue) => {
                     onChange(uid, langcode, 'includeLastmod', cbValue);
                   }}
-                  value={modifiedState.getIn([uid, 'languages', langcode, 'includeLastmod'], true)}
+                  checked={modifiedState.getIn([uid, 'languages', langcode, 'includeLastmod'], true)}
                   disabled={
                     !uid || (getSelectedContentType(contentTypes, uid).locales && !langcode)
                   }

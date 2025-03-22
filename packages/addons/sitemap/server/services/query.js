@@ -47,13 +47,13 @@ const getPages = async (config, contentType, ids) => {
         } : {},
       },
       ...(isLocalized ? { locale: locale.code } : {}),
-      fields: isLocalized ? 'locale' : undefined,
+      fields: isLocalized ? ['locale', 'updatedAt'] : ['updatedAt'],
       populate: {
         url_alias: {
           populate: '*',
         },
         localizations: {
-          fields: isLocalized ? 'locale' : undefined,
+          fields: isLocalized ? ['locale', 'updatedAt'] : ['updatedAt'],
           filters: {
             $or: [
               {
