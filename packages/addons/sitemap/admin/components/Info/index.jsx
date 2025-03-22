@@ -3,6 +3,7 @@ import React from 'react';
 import { Map } from 'immutable';
 import { useIntl } from 'react-intl';
 import { useSelector, useDispatch } from 'react-redux';
+import { useSearchParams } from 'react-router-dom';
 
 import { getFetchClient, useNotification } from '@strapi/strapi/admin';
 import {
@@ -10,6 +11,7 @@ import {
   Box,
   Button,
   Link,
+  Flex,
 } from '@strapi/design-system';
 
 import { generateSitemap } from '../../state/actions/Sitemap';
@@ -18,6 +20,7 @@ import { formatTime } from '../../helpers/timeFormat';
 const Info = () => {
   const hasHostname = useSelector((state) => state.getIn(['sitemap', 'initialData', 'hostname'], Map()));
   const sitemapInfo = useSelector((state) => state.getIn(['sitemap', 'info'], Map()));
+  let [, setSearchParams] = useSearchParams();
   const dispatch = useDispatch();
   const { toggleNotification } = useNotification();
   const { get } = getFetchClient();
@@ -38,13 +41,13 @@ const Info = () => {
           <Typography variant="delta" style={{ marginBottom: '10px' }}>
             {formatMessage({ id: 'sitemap.Info.NoHostname.Title', defaultMessage: 'Set your hostname' })}
           </Typography>
-          <div>
+          <Flex direction="column" alignItems="flex-start">
             <Typography variant="omega">
               {formatMessage({ id: 'sitemap.Info.NoHostname.Description', defaultMessage: 'Before you can generate the sitemap you have to specify the hostname of your website.' })}
             </Typography>
             <Button
               onClick={() => {
-                document.getElementById('tabs-2-tab').click();
+                setSearchParams({ tab: 'settings' });
                 setTimeout(() => (document.querySelector('input[name="hostname"]')).focus(), 0);
               }}
               variant="secondary"
@@ -52,7 +55,7 @@ const Info = () => {
             >
               {formatMessage({ id: 'sitemap.Header.Button.GoToSettings', defaultMessage: 'Go to settings' })}
             </Button>
-          </div>
+          </Flex>
         </div>
       );
     }
