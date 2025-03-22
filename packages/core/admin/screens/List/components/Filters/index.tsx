@@ -9,7 +9,7 @@ import {
 
 import { Filters as StrapiFilters, SearchInput } from '@strapi/strapi/admin';
 import FilterInput from './FilterInput';
-import { EnabledContentType, EnabledContentTypes } from '../../../../types/enabled-contenttypes';
+import { EnabledContentTypes } from '../../../../types/enabled-contenttypes';
 import { Locales } from '../../../../types/languages';
 
 type Props = {
@@ -49,7 +49,7 @@ const Filters = ({ contentTypes, locales }: Props) => {
     }
 
     return newFilters;
-  }, [contentTypes]);
+  }, [contentTypes, locales]);
 
 
   return (
