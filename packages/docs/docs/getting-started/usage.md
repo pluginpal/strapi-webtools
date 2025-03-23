@@ -10,3 +10,17 @@ This plugin is specifically designed for usage in Strapi managed websites. Hence
 See below a screenshot of how to enable webtools for a given collection type.
 
 <img src="/webtools/img/assets/enable-webtools.png" alt="Enable webtools" />
+
+<br />
+<br />  
+
+:::tip
+Enabling Webtools will write the following to your schema file. You can also add this change manually to enable Webtools without using the content-type builder.
+
+```md title="schema.json"
+pluginOptions: {
+  webtools: {
+    enabled: true,
+  },
+},
+:::

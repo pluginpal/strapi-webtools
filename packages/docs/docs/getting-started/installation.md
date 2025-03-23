@@ -8,15 +8,13 @@ slug: /
 
 :::prerequisites
 Complete installation requirements are the exact same as for Strapi itself and can be found in the Strapi documentation.
-
-
-**Supported Strapi versions:**
-
-Strapi v5 use `strapi-plugin-webtools@^1`
-
-Strapi v4 use `@pluginpal/webtools-core@^1.0.0-beta`
-
 :::
+
+### Supported versions
+
+- Strapi v5
+
+### Installation
 
 Install the plugin in your Strapi project.
 
@@ -50,4 +48,6 @@ After successful installation you have to rebuild the admin UI so it'll include 
   </TabItem>
 </Tabs>
 
-Enjoy 🎉
+### Enabling
+
+After successful installation you now need to enable Webtools for the content-types of your choice. Read more about how to do that in the [usage documentation](/webtools/usage).
