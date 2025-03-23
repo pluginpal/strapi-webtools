@@ -9,13 +9,15 @@ slug: /addons/sitemap/installation
 :::prerequisites
 Complete installation requirements are the exact same as for Strapi itself and can be found in the Strapi documentation.
 
-**Supported Strapi versions:**
-
-Strapi v5 use `webtools-addon-sitemap@^1`
-
-Strapi v4 use `@pluginpal/webtools-addon-sitemap@^1.0.0-beta`
-
+Additionally, this plugin requires you to have the **Strapi Webtools plugin** installed.
 :::
+
+### Supported versions
+
+- Strapi v5
+- Strapi Webtools v1
+
+### Installation
 
 Install the plugin in your Strapi project.
 

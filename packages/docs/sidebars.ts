@@ -99,14 +99,6 @@ const sidebars = {
         {
           type: "category",
           collapsed: false,
-          label: "📦 API",
-          items: [
-            "addons/sitemap/api/rest",
-          ],
-        },
-        {
-          type: "category",
-          collapsed: false,
           label: "⚙️ Settings",
           items: [
             "addons/sitemap/settings/introduction",
