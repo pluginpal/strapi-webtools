@@ -23,13 +23,14 @@
 
 ## ✨ Features
 
-- **Multilingual** (Implements `rel="alternate"` with `@strapi/plugin-i18n`)
+- **Multilingual** (Implements `rel="alternate"` using the [official i18n Strapi patterns](https://docs.strapi.io/dev-docs/i18n))
+- **Admin UI** (Easily configure your sitemaps using the admin UI)
 - **URL bundles** (Bundle URLs by type and add them to the sitemap XML)
+- **Custom URLs** (URLs of pages which are not managed in Strapi)
 - **Virtual sitemap** (Sitemaps served from the database)
 - **Cron regeneration** (Automatically scheduled cron job for regeneration)
 - **Sitemap indexes** (Paginated sitemap indexes for large URL sets)
 - **Exclude URLs** (Exclude specified URLs from the sitemap)
-- **Custom URLs** (URLs of pages which are not managed in Strapi)
 - **CLI** (CLI for sitemap generation)
 - **Styled with XSL** (Human readable XML styling)
 
@@ -57,15 +58,19 @@ npm run build
 npm run develop
 ```
 
-The **Sitemap** plugin should now appear in the **Settings** section of your Strapi app.
+The **Sitemap** plugin should now appear in the **Webtools** section of your Strapi app.
 
 Enjoy 🎉
 
 ## 📓 Documentation
 
-See our dedicated [repository](https://github.com/pluginpal/docs) for all of PluginPal's documentation, or view the Webtools Sitemap add-on documentation live:
+The full documentation of this plugin can be found on it's dedicated documentation website.
 
-- [Webtools Sitemap add-on documentation](https://docs.pluginpal.io/webtools/addons/sitemap)
+- [Webtools documentation](https://docs.pluginpal.io/webtools)
+
+## 🔌 Addons
+
+Webtools can be extended by installing addons that hook into the core Webtools functionality. Read more about how addons work and how to install them in the [addons documentation](https://docs.pluginpal.io/webtools/addons).
 
 ## 🤝 Contributing
 

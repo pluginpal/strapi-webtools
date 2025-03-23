@@ -56,11 +56,17 @@ npm run develop
 
 Enjoy 🎉
 
+## Enabling
+
+After successful installation you now need to enable Webtools for the content-types of your choice. Read more about how to do that in the [usage documentation](https://docs.pluginpal.io/webtools/usage).
+
 ## 📓 Documentation
 
-See our dedicated [repository](https://github.com/pluginpal/docs) for all of PluginPal's documentation, or view the Webtools documentation live:
+The full documentation of this plugin can be found on it's dedicated documentation website.
 
-- [Webtools documentation](https://docs.pluginpal.io/webtools)
+- [Webtools core plugin](https://docs.pluginpal.io/webtools)
+- [Webtools sitemap addon](https://docs.pluginpal.io/webtools/addons/sitemap)
+
 
 ## 🔌 Addons
 

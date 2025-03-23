@@ -56,15 +56,27 @@ npm run develop
 
 Enjoy 🎉
 
+## Enabling
+
+After successful installation you now need to enable Webtools for the content-types of your choice. Read more about how to do that in the [usage documentation](https://docs.pluginpal.io/webtools/usage).
+
 ## 📓 Documentation
 
-See our dedicated [repository](https://github.com/pluginpal/docs) for all of PluginPal's documentation, or view the Webtools documentation live:
+The full documentation of this plugin can be found on it's dedicated documentation website.
 
 - [Webtools documentation](https://docs.pluginpal.io/webtools)
 
 ## 🔌 Addons
 
 Webtools can be extended by installing addons that hook into the core Webtools functionality. Read more about how addons work and how to install them in the [addons documentation](https://docs.pluginpal.io/webtools/addons).
+
+## 🤝 Contributing
+
+Feel free to fork and make a pull request of this plugin. All the input is welcome!
+
+## ⭐️ Show your support
+
+Give a star if this project helped you.
 
 ## 🔗 Links
 

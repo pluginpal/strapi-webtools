@@ -96,6 +96,10 @@
     "url": "https://github.com/pluginpal/strapi-webtools/issues"
   },
   "homepage": "https://github.com/pluginpal/strapi-webtools",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/pluginpal/strapi-webtools.git"
+  },
   "engines": {
     "node": ">=18.x.x <=20.x.x",
     "npm": ">=6.0.0"
