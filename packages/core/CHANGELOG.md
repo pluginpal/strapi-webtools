@@ -1,5 +1,21 @@
 # core
 
+## 1.2.0
+
+### Minor Changes
+
+- [#231](https://github.com/pluginpal/strapi-webtools/pull/231) [`196ad05`](https://github.com/pluginpal/strapi-webtools/commit/196ad056e772c30647dafde660765da8f47b1e9b) Thanks [@boazpoolman](https://github.com/boazpoolman)! - feat: enhance the URL alias overview (locale filters & locale and contenttype in the table)
+
+### Patch Changes
+
+- [#231](https://github.com/pluginpal/strapi-webtools/pull/231) [`bb3b4df`](https://github.com/pluginpal/strapi-webtools/commit/bb3b4dffb5ce60b40132cc38ba8e0da2bda09697) Thanks [@boazpoolman](https://github.com/boazpoolman)! - fix: make sure the 'path' parameter from the router endoint doesn't end up on the document service query params
+
+- [#231](https://github.com/pluginpal/strapi-webtools/pull/231) [`454584d`](https://github.com/pluginpal/strapi-webtools/commit/454584db45d4f6e77da90ea3665a5f0f0f7b5e19) Thanks [@boazpoolman](https://github.com/boazpoolman)! - fix: make the header button(s) smaller to align with the rest of the admin panel
+
+- [#233](https://github.com/pluginpal/strapi-webtools/pull/233) [`d1e769d`](https://github.com/pluginpal/strapi-webtools/commit/d1e769d7e396c26c4679ba10ec255a39acae2ab4) Thanks [@boazpoolman](https://github.com/boazpoolman)! - docs: update the README and package.json with the latest information
+
+- [#231](https://github.com/pluginpal/strapi-webtools/pull/231) [`73128f9`](https://github.com/pluginpal/strapi-webtools/commit/73128f91057d985105c4386ab40f2fe478802ac6) Thanks [@boazpoolman](https://github.com/boazpoolman)! - fix: issue with pagination when simulteously using the filter options
+
 ## 1.1.0
 
 ### Minor Changes

@@ -1,5 +1,13 @@
 # docs
 
+## 1.1.0
+
+### Minor Changes
+
+- [#231](https://github.com/pluginpal/strapi-webtools/pull/231) [`ff69358`](https://github.com/pluginpal/strapi-webtools/commit/ff693580b238ae9ab8bcdf9c7f931dcf8636ccce) Thanks [@boazpoolman](https://github.com/boazpoolman)! - refactor: replace the auto-generate lifecycle methods with a document service middleware
+
+- [#233](https://github.com/pluginpal/strapi-webtools/pull/233) [`871dbc4`](https://github.com/pluginpal/strapi-webtools/commit/871dbc455c65da752da5396841329e3a139d9f62) Thanks [@boazpoolman](https://github.com/boazpoolman)! - docs: enhance the documentation website (fill in blank pages, add images and overall fixes)
+
 ## 1.0.3
 
 ### Patch Changes

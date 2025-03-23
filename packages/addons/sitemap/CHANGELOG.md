@@ -1,5 +1,23 @@
 # addon-sitemap
 
+## 1.1.0
+
+### Minor Changes
+
+- [#231](https://github.com/pluginpal/strapi-webtools/pull/231) [`ff69358`](https://github.com/pluginpal/strapi-webtools/commit/ff693580b238ae9ab8bcdf9c7f931dcf8636ccce) Thanks [@boazpoolman](https://github.com/boazpoolman)! - refactor: replace the auto-generate lifecycle methods with a document service middleware
+
+### Patch Changes
+
+- [#231](https://github.com/pluginpal/strapi-webtools/pull/231) [`454584d`](https://github.com/pluginpal/strapi-webtools/commit/454584db45d4f6e77da90ea3665a5f0f0f7b5e19) Thanks [@boazpoolman](https://github.com/boazpoolman)! - fix: make the header button(s) smaller to align with the rest of the admin panel
+
+- [#231](https://github.com/pluginpal/strapi-webtools/pull/231) [`c47d7e9`](https://github.com/pluginpal/strapi-webtools/commit/c47d7e972b986d73750e5097ad32febed7aaa7fb) Thanks [@boazpoolman](https://github.com/boazpoolman)! - fix: the 'go to settings' button by making the tab state controlled through URL params
+
+- [#233](https://github.com/pluginpal/strapi-webtools/pull/233) [`d1e769d`](https://github.com/pluginpal/strapi-webtools/commit/d1e769d7e396c26c4679ba10ec255a39acae2ab4) Thanks [@boazpoolman](https://github.com/boazpoolman)! - docs: update the README and package.json with the latest information
+
+- [#231](https://github.com/pluginpal/strapi-webtools/pull/231) [`01d0a7b`](https://github.com/pluginpal/strapi-webtools/commit/01d0a7be57cf8b9591087141d485b850582d29c9) Thanks [@boazpoolman](https://github.com/boazpoolman)! - fix: fallback translation for the sitemap index info in the admin panel
+
+- [#231](https://github.com/pluginpal/strapi-webtools/pull/231) [`0a8e308`](https://github.com/pluginpal/strapi-webtools/commit/0a8e308cff830b10925bc9e31789fceee1b7bd1e) Thanks [@boazpoolman](https://github.com/boazpoolman)! - fix: issue with the lastmod date for localized documents
+
 ## 1.0.1
 
 ### Patch Changes
