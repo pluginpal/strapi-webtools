@@ -6,6 +6,12 @@ export default ({ strapi }: { strapi: Core.Strapi }) => {
     const actions = [
       {
         section: 'plugins',
+        displayName: 'Access the overview page',
+        uid: 'settings.overview',
+        pluginName: 'webtools',
+      },
+      {
+        section: 'plugins',
         displayName: 'Access the URL alias list',
         uid: 'settings.list',
         pluginName: 'webtools',

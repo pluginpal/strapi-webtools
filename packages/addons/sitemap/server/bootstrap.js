@@ -2,7 +2,6 @@ import { logMessage } from './utils';
 import { getPluginService } from './utils/getPluginService';
 
 export default async () => {
-  const sitemap = strapi.plugin('webtools-addon-sitemap');
   const cron = strapi.config.get('plugin::webtools-addon-sitemap.cron');
 
   try {
