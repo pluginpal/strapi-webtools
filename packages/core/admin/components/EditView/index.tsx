@@ -18,7 +18,7 @@ const EditView = () => {
 
   const urlParams = new URLSearchParams(window.location.search);
   const locale = urlParams.get('plugins[i18n][locale]');
-  const aliases = useQuery(`aliases-${model}-${id}-${locale}`, async () => get<UrlAliasEntity[]>(`/webtools/url-alias/findFrom?model=${model}&documentId=${id}&locale=${locale}`));
+  const aliases = useQuery(`aliases-${model}-${id}-${locale}`, async () => get<UrlAliasEntity[]>(`/webtools/url-alias/findFrom?model=${model}&documentId=${id}&locale=${locale}`), { enabled: false });
 
   /**
    * Ideally the url_alias field would be hidden, but doing so will cause an issue.
@@ -44,11 +44,19 @@ const EditView = () => {
     }
   }, []);
 
+  // @ts-expect-error
+  // Early return if the content type is not enabled.
+  if (!isContentTypeEnabled(contentType)) return null;
+
+  // Fetch the aliases
+  if (aliases.isIdle) {
+    // eslint-disable-next-line @typescript-eslint/no-floating-promises
+    aliases.refetch();
+  }
+
+  // Early return for loading and error states.
   if (aliases.isLoading) return null;
   if (aliases.error) return null;
-
-  // @ts-expect-error
-  if (!isContentTypeEnabled(contentType)) return null;
 
   return (
     <Page.Protect permissions={pluginPermissions['edit-view.sidebar']}>
