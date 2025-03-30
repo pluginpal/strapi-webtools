@@ -1,5 +1,29 @@
 # core
 
+## 1.3.0
+
+### Minor Changes
+
+- [#243](https://github.com/pluginpal/strapi-webtools/pull/243) [`6787412`](https://github.com/pluginpal/strapi-webtools/commit/6787412add7e68cabae8c89e2b8177f909a539bb) Thanks [@boazpoolman](https://github.com/boazpoolman)! - feat: introduce a new rbac permission 'overview'
+
+### Patch Changes
+
+- [#243](https://github.com/pluginpal/strapi-webtools/pull/243) [`b36a457`](https://github.com/pluginpal/strapi-webtools/commit/b36a457fb57b2bb8a365030cc7d42863de270f6f) Thanks [@boazpoolman](https://github.com/boazpoolman)! - fix: use RBAC hook instead of <Page.Protect> for the permission check of the sidebar view
+
+- [#240](https://github.com/pluginpal/strapi-webtools/pull/240) [`9d4d596`](https://github.com/pluginpal/strapi-webtools/commit/9d4d596b61b89c7d001f1c633ef44aa111de9130) Thanks [@boazpoolman](https://github.com/boazpoolman)! - fix: incorrect 'modified' status by preventing the updated_at value to be changed when linking the url_alias relation
+
+- [#241](https://github.com/pluginpal/strapi-webtools/pull/241) [`bb50837`](https://github.com/pluginpal/strapi-webtools/commit/bb5083711732f7e0aa54fb82e6286f2eb1e67b6a) Thanks [@boazpoolman](https://github.com/boazpoolman)! - fix: prevent unnecessary network requests for content types that have Webtools disabled
+
+- [#244](https://github.com/pluginpal/strapi-webtools/pull/244) [`2b1d22e`](https://github.com/pluginpal/strapi-webtools/commit/2b1d22ee1233dc49ac4706b4d42bcde497cdb5b4) Thanks [@boazpoolman](https://github.com/boazpoolman)! - fix: make the locale filter actually work by rewriting the URL params
+
+- [#243](https://github.com/pluginpal/strapi-webtools/pull/243) [`acf283c`](https://github.com/pluginpal/strapi-webtools/commit/acf283c0476eb5d38a49c0518c79f7d7ddd9d892) Thanks [@boazpoolman](https://github.com/boazpoolman)! - fix: cleanup rbac permission usage
+
+- [#244](https://github.com/pluginpal/strapi-webtools/pull/244) [`d2f52ac`](https://github.com/pluginpal/strapi-webtools/commit/d2f52acecca7a9766a982e74409086827352eb16) Thanks [@boazpoolman](https://github.com/boazpoolman)! - fix: make sure the edit URL respects the alias locale
+
+- [#243](https://github.com/pluginpal/strapi-webtools/pull/243) [`ed9dea9`](https://github.com/pluginpal/strapi-webtools/commit/ed9dea99ec363f094c147d1bc8a98b5bf0e05568) Thanks [@boazpoolman](https://github.com/boazpoolman)! - fix: prevent the whole form from being removed when a user doesn't have url_alias permissions
+
+- [#244](https://github.com/pluginpal/strapi-webtools/pull/244) [`ad1bb85`](https://github.com/pluginpal/strapi-webtools/commit/ad1bb852675ca8532da670e53fb91950bf780f04) Thanks [@boazpoolman](https://github.com/boazpoolman)! - fix: actually return the localized entity in the router endpoint
+
 ## 1.2.0
 
 ### Minor Changes
