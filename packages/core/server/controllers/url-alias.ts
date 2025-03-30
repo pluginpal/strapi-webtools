@@ -26,8 +26,13 @@ export default factories.createCoreController(contentTypeSlug, ({ strapi }) => (
     const contentTypeObj = strapi.contentTypes[contentType];
     const contentTypeUrlPartial = contentTypeObj.kind === 'singleType' ? 'single-types' : 'collection-types';
 
+    const model = strapi.getModel(contentType);
+    // @ts-expect-error
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    const isLocalized = model.pluginOptions.i18n?.localized as boolean;
+
     ctx.body = {
-      link: `/content-manager/${contentTypeUrlPartial}/${contentType}/${contentTypeObj.kind === 'collectionType' ? entity.documentId : ''}`,
+      link: `/content-manager/${contentTypeUrlPartial}/${contentType}/${contentTypeObj.kind === 'collectionType' ? entity.documentId : ''}${isLocalized ? `?plugins[i18n][locale]=${entity.locale}` : ''}`,
     };
   },
   generate: async (

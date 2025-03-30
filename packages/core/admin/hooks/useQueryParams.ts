@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import qs from 'qs';
 import { useLocation } from 'react-router-dom';
 
 const useQueryParams = () => {
@@ -23,9 +24,22 @@ const useQueryParams = () => {
       searchParams.append('pagination[pageSize]', pageSize);
     }
 
-    setParams(searchParams.toString());
-  }, [location]);
+    const paramsObj = qs.parse(searchParams.toString());
+    // @ts-expect-error
+    const filters = paramsObj?.filters?.$and as Array<{ [key: string]: any }>;
+    const localeFilterIndex = filters?.findIndex((filter) => filter.locale !== undefined);
+    const localeFilter = filters?.[localeFilterIndex];
 
+    if (localeFilter) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      paramsObj.locale = localeFilter.locale.$eq as string;
+      filters.splice(localeFilterIndex, 1);
+      // @ts-expect-error
+      paramsObj.filters.$and = filters;
+    }
+
+    setParams(qs.stringify(paramsObj));
+  }, [location]);
 
   return params;
 };
