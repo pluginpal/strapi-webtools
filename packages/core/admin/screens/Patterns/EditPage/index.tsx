@@ -12,7 +12,12 @@ import {
   Grid,
   Loader,
 } from '@strapi/design-system';
-import { useNotification, getFetchClient, Layouts } from '@strapi/strapi/admin';
+import {
+  useNotification,
+  getFetchClient,
+  Layouts,
+  Page,
+} from '@strapi/strapi/admin';
 import { ArrowLeft, Check } from '@strapi/icons';
 import { ErrorResponse } from '../../../types/error-response';
 import schema from './utils/schema';
@@ -25,6 +30,7 @@ import { EnabledContentTypes } from '../../../types/enabled-contenttypes';
 import HiddenLocalizedField from '../../../components/HiddenLocalizedField';
 import LanguageCheckboxes from '../../../components/LanguageCheckboxes';
 import { GenericResponse } from '../../../types/content-api';
+import pluginPermissions from '../../../permissions';
 
 const EditPatternPage = () => {
   const navigate = useNavigate();
@@ -106,139 +112,141 @@ const EditPatternPage = () => {
   };
 
   return (
-    <Formik<PatternFormValues>
-      enableReinitialize
-      initialValues={{
-        pattern: pattern.data.data.data.pattern,
-        contenttype: pattern.data.data.data.contenttype,
-        languages: pattern.data.data.data.languages,
-        localized: false,
-      }}
-      onSubmit={handleEditSubmit}
-      validationSchema={schema}
-      validate={validatePattern}
-    >
-      {({
-        handleSubmit,
-        values,
-        errors,
-        touched,
-        isSubmitting,
-        setFieldValue,
-      }) => (
-        <Form noValidate onSubmit={handleSubmit}>
-          <Layouts.Header
-            title={formatMessage({
-              id: 'webtools.settings.page.patterns.edit.title',
-              defaultMessage: 'Edit pattern',
-            })}
-            subtitle={formatMessage({
-              id: 'webtools.settings.page.patterns.edit.description',
-              defaultMessage:
-                'Edit this pattern for automatic URL alias generation.',
-            })}
-            navigationAction={(
-              <DsLink
-                tag={Link}
-                startIcon={<ArrowLeft />}
-                to={`/plugins/${pluginId}/patterns`}
-              >
-                {formatMessage({
-                  id: 'global.back',
-                  defaultMessage: 'Back',
-                })}
-              </DsLink>
-            )}
-            primaryAction={(
-              <Button
-                type="submit"
-                loading={isSubmitting}
-                startIcon={<Check />}
-              >
-                {formatMessage({
-                  id: 'global.save',
-                  defaultMessage: 'Save',
-                })}
-              </Button>
-            )}
-          />
-          <Layouts.Content>
-            <Flex>
-              <Box
-                background="neutral0"
-                hasRadius
-                shadow="filterShadow"
-                paddingTop={6}
-                paddingBottom={6}
-                paddingLeft={7}
-                paddingRight={7}
-              >
-                <Typography variant="delta">
+    <Page.Protect permissions={pluginPermissions['settings.patterns']}>
+      <Formik<PatternFormValues>
+        enableReinitialize
+        initialValues={{
+          pattern: pattern.data.data.data.pattern,
+          contenttype: pattern.data.data.data.contenttype,
+          languages: pattern.data.data.data.languages,
+          localized: false,
+        }}
+        onSubmit={handleEditSubmit}
+        validationSchema={schema}
+        validate={validatePattern}
+      >
+        {({
+          handleSubmit,
+          values,
+          errors,
+          touched,
+          isSubmitting,
+          setFieldValue,
+        }) => (
+          <Form noValidate onSubmit={handleSubmit}>
+            <Layouts.Header
+              title={formatMessage({
+                id: 'webtools.settings.page.patterns.edit.title',
+                defaultMessage: 'Edit pattern',
+              })}
+              subtitle={formatMessage({
+                id: 'webtools.settings.page.patterns.edit.description',
+                defaultMessage:
+                  'Edit this pattern for automatic URL alias generation.',
+              })}
+              navigationAction={(
+                <DsLink
+                  tag={Link}
+                  startIcon={<ArrowLeft />}
+                  to={`/plugins/${pluginId}/patterns`}
+                >
                   {formatMessage({
-                    id: 'webtools.settings.page.patterns.edit.subtitle',
-                    defaultMessage: 'Pattern details',
+                    id: 'global.back',
+                    defaultMessage: 'Back',
                   })}
-                </Typography>
-                <Grid.Root gap={4} marginTop="4">
-                  <Grid.Item col={6} gap="4" alignItems="flex-start" direction="column">
-                    <Select
-                      name="contenttype"
-                      list={contentTypes.data.data}
-                      value={values.contenttype || ''}
-                      setFieldValue={setFieldValue}
-                      label={formatMessage({
-                        id: 'webtools.settings.form.contenttype.label',
-                        defaultMessage: 'Content type',
-                      })}
-                      error={
-                        errors.contenttype && touched.contenttype
-                          ? formatMessage({
-                            id:
-                              typeof errors.contenttype === 'string'
-                                ? errors.contenttype
-                                : undefined,
-                            defaultMessage: 'Invalid value',
-                          })
-                          : null
-                      }
-                    />
-                    {values.contenttype !== '' && (
-                      <PatternField
-                        values={values}
-                        uid={values.contenttype}
+                </DsLink>
+              )}
+              primaryAction={(
+                <Button
+                  type="submit"
+                  loading={isSubmitting}
+                  startIcon={<Check />}
+                >
+                  {formatMessage({
+                    id: 'global.save',
+                    defaultMessage: 'Save',
+                  })}
+                </Button>
+              )}
+            />
+            <Layouts.Content>
+              <Flex>
+                <Box
+                  background="neutral0"
+                  hasRadius
+                  shadow="filterShadow"
+                  paddingTop={6}
+                  paddingBottom={6}
+                  paddingLeft={7}
+                  paddingRight={7}
+                >
+                  <Typography variant="delta">
+                    {formatMessage({
+                      id: 'webtools.settings.page.patterns.edit.subtitle',
+                      defaultMessage: 'Pattern details',
+                    })}
+                  </Typography>
+                  <Grid.Root gap={4} marginTop="4">
+                    <Grid.Item col={6} gap="4" alignItems="flex-start" direction="column">
+                      <Select
+                        name="contenttype"
+                        list={contentTypes.data.data}
+                        value={values.contenttype || ''}
                         setFieldValue={setFieldValue}
+                        label={formatMessage({
+                          id: 'webtools.settings.form.contenttype.label',
+                          defaultMessage: 'Content type',
+                        })}
                         error={
-                            errors.pattern
-                            && touched.pattern
-                            && typeof errors.pattern === 'string'
-                              ? errors.pattern
-                              : null
-                          }
-                      />
-                    )}
-                    <HiddenLocalizedField
-                      localized={getSelectedContentType(values.contenttype)?.localized}
-                      setFieldValue={setFieldValue}
-                    />
-                    {values.localized && (
-                      <LanguageCheckboxes
-                        onChange={(newLanguages) => setFieldValue('languages', newLanguages)}
-                        selectedLanguages={values.languages}
-                        error={
-                          errors.languages && touched.languages
-                            ? errors.languages
+                          errors.contenttype && touched.contenttype
+                            ? formatMessage({
+                              id:
+                                typeof errors.contenttype === 'string'
+                                  ? errors.contenttype
+                                  : undefined,
+                              defaultMessage: 'Invalid value',
+                            })
                             : null
                         }
                       />
-                    )}
-                  </Grid.Item>
-                </Grid.Root>
-              </Box>
-            </Flex>
-          </Layouts.Content>
-        </Form>
-      )}
-    </Formik>
+                      {values.contenttype !== '' && (
+                        <PatternField
+                          values={values}
+                          uid={values.contenttype}
+                          setFieldValue={setFieldValue}
+                          error={
+                              errors.pattern
+                              && touched.pattern
+                              && typeof errors.pattern === 'string'
+                                ? errors.pattern
+                                : null
+                            }
+                        />
+                      )}
+                      <HiddenLocalizedField
+                        localized={getSelectedContentType(values.contenttype)?.localized}
+                        setFieldValue={setFieldValue}
+                      />
+                      {values.localized && (
+                        <LanguageCheckboxes
+                          onChange={(newLanguages) => setFieldValue('languages', newLanguages)}
+                          selectedLanguages={values.languages}
+                          error={
+                            errors.languages && touched.languages
+                              ? errors.languages
+                              : null
+                          }
+                        />
+                      )}
+                    </Grid.Item>
+                  </Grid.Root>
+                </Box>
+              </Flex>
+            </Layouts.Content>
+          </Form>
+        )}
+      </Formik>
+    </Page.Protect>
   );
 };
 

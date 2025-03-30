@@ -9,13 +9,14 @@ import {
 } from '@strapi/design-system';
 
 import { Plus } from '@strapi/icons';
-import { getFetchClient, Layouts } from '@strapi/strapi/admin';
+import { getFetchClient, Layouts, Page } from '@strapi/strapi/admin';
 
 import pluginId from '../../../helpers/pluginId';
 import Table from './components/Table';
 import Center from '../../../components/Center';
 import { PatternEntity } from '../../../types/url-patterns';
 import { GenericResponse } from '../../../types/content-api';
+import pluginPermissions from '../../../permissions';
 
 const ListPatternPage = () => {
   const { get } = getFetchClient();
@@ -33,23 +34,25 @@ const ListPatternPage = () => {
   }
 
   return (
-    <Box>
-      <Layouts.Header
-        title={formatMessage({ id: 'webtools.settings.page.patterns.title', defaultMessage: 'Patterns' })}
-        subtitle={formatMessage({ id: 'webtools.settings.page.patterns.description', defaultMessage: 'A list of all the known URL alias patterns.' })}
-        primaryAction={(
-          <Button onClick={() => navigate(`/plugins/${pluginId}/patterns/new`)} startIcon={<Plus />}>
-            {formatMessage({
-              id: 'webtools.settings.button.add_pattern',
-              defaultMessage: 'Add new pattern',
-            })}
-          </Button>
-        )}
-      />
-      <Layouts.Content>
-        <Table patterns={items.data.data.data} />
-      </Layouts.Content>
-    </Box>
+    <Page.Protect permissions={pluginPermissions['settings.patterns']}>
+      <Box>
+        <Layouts.Header
+          title={formatMessage({ id: 'webtools.settings.page.patterns.title', defaultMessage: 'Patterns' })}
+          subtitle={formatMessage({ id: 'webtools.settings.page.patterns.description', defaultMessage: 'A list of all the known URL alias patterns.' })}
+          primaryAction={(
+            <Button onClick={() => navigate(`/plugins/${pluginId}/patterns/new`)} startIcon={<Plus />}>
+              {formatMessage({
+                id: 'webtools.settings.button.add_pattern',
+                defaultMessage: 'Add new pattern',
+              })}
+            </Button>
+          )}
+        />
+        <Layouts.Content>
+          <Table patterns={items.data.data.data} />
+        </Layouts.Content>
+      </Box>
+    </Page.Protect>
   );
 };
 

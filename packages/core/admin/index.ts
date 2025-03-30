@@ -10,6 +10,7 @@ import { prefixPluginTranslations } from './helpers/prefixPluginTranslations';
 import CheckboxConfirmation from './components/ContentManagerHooks/ConfirmationCheckbox';
 
 import { PluginIcon } from './components/PluginIcon';
+import pluginPermissions from './permissions';
 
 const { name } = pluginPkg.strapi;
 
@@ -41,7 +42,11 @@ export default {
 
         return component;
       },
-      permissions: [], // permissions to apply to the link
+      permissions: [
+        pluginPermissions['settings.overview'][0],
+        pluginPermissions['settings.list'][0],
+        pluginPermissions['settings.patterns'][0],
+      ],
     });
   },
   bootstrap(app: StrapiApp) {

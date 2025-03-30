@@ -31,7 +31,7 @@ const List = () => {
     );
   }
   return (
-    <Page.Protect permissions={pluginPermissions['settings.patterns']}>
+    <Page.Protect permissions={pluginPermissions['settings.overview']}>
       <Layouts.Header
         title={formatMessage({ id: 'webtools.settings.page.overview.title', defaultMessage: 'Overview' })}
         subtitle={formatMessage({ id: 'webtools.settings.page.overview.description', defaultMessage: 'Webtools global information' })}
