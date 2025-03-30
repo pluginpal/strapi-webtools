@@ -31,16 +31,7 @@ const EditView = () => {
   useEffect(() => {
     const label = Array.from(document.querySelectorAll('label')).find((l) => l.textContent.startsWith('url_alias'));
     if (label) {
-      let parentDiv = label.closest('div');
-      for (let i = 0; i < 3; i++) {
-        if (parentDiv) {
-          // @ts-expect-error
-          parentDiv = parentDiv.parentElement;
-        }
-      }
-      if (parentDiv) {
-        parentDiv.remove();
-      }
+      label.closest('div').remove();
     }
   }, []);
 
@@ -54,9 +45,12 @@ const EditView = () => {
     aliases.refetch();
   }
 
-  // Early return for loading and error states.
+  // Early return for loading, error and empty states.
   if (aliases.isLoading) return null;
   if (aliases.error) return null;
+  if (!aliases.data) return null;
+
+  console.log(aliases);
 
   return (
     <Page.Protect permissions={pluginPermissions['edit-view.sidebar']}>
