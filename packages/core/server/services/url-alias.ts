@@ -16,10 +16,15 @@ const customServices = () => ({
     }
 
     const contentTypeUid = urlAliasEntity.contenttype as UID.ContentType;
+    const model = strapi.getModel(contentTypeUid);
+    // @ts-expect-error
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    const isLocalized = model.pluginOptions.i18n?.localized as boolean;
 
     const entity = await strapi.documents(contentTypeUid as 'api::test.test').findFirst({
       status: 'published',
       ...query,
+      ...(isLocalized ? { locale: urlAliasEntity.locale } : {}),
       filters: {
         ...query?.filters,
         url_alias: { documentId: urlAliasEntity.documentId },
