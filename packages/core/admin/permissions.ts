@@ -1,3 +1,8 @@
+/**
+ * @todo
+ * Change the permission keys to be single words.
+ * That way the permissions work better wit the useRBAC hook.
+ */
 const pluginPermissions = {
   // This permission regards the main component (App) and is used to tell
   // If the plugin link should be displayed in the menu

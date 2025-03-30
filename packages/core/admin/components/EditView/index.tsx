@@ -1,6 +1,10 @@
 import React, { useEffect } from 'react';
 import { useQuery } from 'react-query';
-import { unstable_useContentManagerContext, Page, useFetchClient } from '@strapi/strapi/admin';
+import {
+  unstable_useContentManagerContext,
+  useFetchClient,
+  useRBAC,
+} from '@strapi/strapi/admin';
 import EditForm from '../EditForm';
 import Permalink from './Permalink';
 import { isContentTypeEnabled } from '../../../server/util/enabledContentTypes';
@@ -9,6 +13,9 @@ import pluginPermissions from '../../permissions';
 
 const EditView = () => {
   const { get } = useFetchClient();
+  const {
+    allowedActions: { canSidebar },
+  } = useRBAC(pluginPermissions);
   const context = unstable_useContentManagerContext();
   const {
     contentType,
@@ -35,6 +42,9 @@ const EditView = () => {
     }
   }, []);
 
+  // Early return if the user has no permissions to view the sidebar.
+  if (!canSidebar) return null;
+
   // @ts-expect-error
   // Early return if the content type is not enabled.
   if (!isContentTypeEnabled(contentType)) return null;
@@ -50,10 +60,8 @@ const EditView = () => {
   if (aliases.error) return null;
   if (!aliases.data) return null;
 
-  console.log(aliases);
-
   return (
-    <Page.Protect permissions={pluginPermissions['edit-view.sidebar']}>
+    <>
       <EditForm />
       {aliases.data.data.length === 0 && (
         <div>Save the form to generate the URL alias</div>
@@ -63,7 +71,7 @@ const EditView = () => {
           path={aliases.data.data[0].url_path}
         />
       )}
-    </Page.Protect>
+    </>
   );
 };
 
