@@ -14,7 +14,6 @@ import {
   SubNavLink,
 } from '@strapi/design-system';
 import {
-  Page,
   useStrapiApp,
   Layouts,
   useRBAC,
