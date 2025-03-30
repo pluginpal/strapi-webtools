@@ -141,14 +141,9 @@ const generateUrlAliasMiddleware: Modules.Documents.Middleware.Middleware = asyn
   });
 
   await Promise.all(all.map(async (doc) => {
-    await strapi.db.query(uid as 'api::test.test').update({
-      where: {
-        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-        id: doc.id as string,
-      },
-      data: {
-        url_alias: [urlAliasEntity?.id],
-      },
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+    await strapi.db.query(uid as 'api::test.test').updateRelations(doc.id as string, {
+      url_alias: [urlAliasEntity?.id],
     });
   }));
 
