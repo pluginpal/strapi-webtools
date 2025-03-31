@@ -1,5 +1,13 @@
 # core
 
+## 1.3.1
+
+### Patch Changes
+
+- [`4d8c704`](https://github.com/pluginpal/strapi-webtools/commit/4d8c704a0f25154e38dcca3fa4c2aff7f606e532) Thanks [@boazpoolman](https://github.com/boazpoolman)! - fix: prevent packup from bundling the 'qs' package by listing it as a dependency
+
+- [`4904ac1`](https://github.com/pluginpal/strapi-webtools/commit/4904ac1c49e96c7c61b71ea5a5c76ced8977da35) Thanks [@boazpoolman](https://github.com/boazpoolman)! - fix: updated logic for removing the url_alias field from the edit form
+
 ## 1.3.0
 
 ### Minor Changes
