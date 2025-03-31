@@ -38,7 +38,16 @@ const EditView = () => {
   useEffect(() => {
     const label = Array.from(document.querySelectorAll('label')).find((l) => l.textContent.startsWith('url_alias'));
     if (label) {
-      label.closest('div').remove();
+      let parentDiv = label.closest('div');
+      for (let i = 0; i < 2; i++) {
+        if (parentDiv) {
+          // @ts-expect-error
+          parentDiv = parentDiv.parentElement;
+        }
+      }
+      if (parentDiv) {
+        parentDiv.remove();
+      }
     }
   }, []);
 
