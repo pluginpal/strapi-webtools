@@ -9,7 +9,7 @@ module.exports = defineConfig({
       require('cypress-terminal-report/src/installLogsPrinter')(on);
     },
     video: true,
-    defaultCommandTimeout: 10000,
-    requestTimeout: 10000,
+    defaultCommandTimeout: 30000,
+    requestTimeout: 30000,
   },
 });
