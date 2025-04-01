@@ -67,7 +67,7 @@ const App = () => {
             </SubNavSection>
             {routerComponents.length > 0 && (
               <SubNavSection label="Addons">
-                {routerComponents.map(({ path, label }) => (
+                {routerComponents.map(({ path, label }) => label && (
                   <SubNavLink tag={Link} to={`/plugins/webtools${path}`} key={path} className={currentPath.startsWith(`/plugins/webtools${path}`) ? 'active' : ''}>
                     {label}
                   </SubNavLink>
