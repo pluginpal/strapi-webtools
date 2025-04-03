@@ -1,0 +1,36 @@
+{
+  "kind": "collectionType",
+  "collectionName": "wt_redirect",
+  "info": {
+    "singularName": "redirect",
+    "pluralName": "redirects",
+    "displayName": "Redirect"
+  },
+  "options": {
+    "draftAndPublish": false,
+    "comment": ""
+  },
+  "pluginOptions": {
+    "content-manager": {
+      "visible": true
+    },
+    "content-type-builder": {
+      "visible": true
+    }
+  },
+  "attributes": {
+    "from": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "to": {
+      "type": "string",
+      "required": true
+    },
+    "status_code": {
+      "type": "integer",
+      "required": true
+    }
+  }
+}
