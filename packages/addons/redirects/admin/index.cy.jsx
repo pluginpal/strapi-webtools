@@ -8,11 +8,7 @@ describe('Redirects', () => {
 
     // Create a redirect.
     cy.get('button').contains('Add new redirect').click();
-    cy.intercept({
-      method: 'GET',
-      url: '/webtools/redirects/config',
-    }).as('getConfig');
-    cy.wait('@getConfig').its('response.statusCode').should('equal', 200);
+    cy.contains('307');
     cy.get('input[name="from"]').type('/old-url');
     cy.get('input[name="to"]').type('/new-url');
     cy.get('button').contains('Save redirect').click();
