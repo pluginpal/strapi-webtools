@@ -12,4 +12,5 @@ To enhance Webtools in a modular way, the core plugin allows addons to be regist
 
 <CustomDocCardsWrapper>
 <CustomDocCard emoji="🔀" title="Sitemap" description="The Sitemap addon can be used to generate a customizable sitemap using all your Webtools URL aliases" link="/webtools/addons/sitemap" />
+<CustomDocCard emoji="🔁" title="Redirects" description="The Redirects addon can be used to automatically generate redirects when ever you change an URL alias" link="/webtools/addons/redirects" />
 </CustomDocCardsWrapper>
