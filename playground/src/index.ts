@@ -42,6 +42,14 @@ export default {
           },
         };
 
+        publicRole.permissions['plugin::webtools-addon-redirects'] = {
+          controllers: {
+            redirect: {
+              find: { enabled: true },
+            },
+          },
+        };
+
         publicRole.permissions['api::test'] = {
           controllers: {
             test: {

@@ -66,7 +66,7 @@ The full documentation of this plugin can be found on it's dedicated documentati
 
 - [Webtools core plugin](https://docs.pluginpal.io/webtools)
 - [Webtools sitemap addon](https://docs.pluginpal.io/webtools/addons/sitemap)
-
+- [Webtools redirects addon](https://docs.pluginpal.io/webtools/addons/redirects)
 
 ## 🔌 Addons
 

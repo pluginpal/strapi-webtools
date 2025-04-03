@@ -11221,6 +11221,7 @@ __metadata:
     strapi-plugin-webtools: "link:.yalc/strapi-plugin-webtools"
     styled-components: "npm:^6.0.0"
     typescript: "npm:^5"
+    webtools-addon-redirects: "link:.yalc/webtools-addon-redirects"
     webtools-addon-sitemap: "link:.yalc/webtools-addon-sitemap"
   languageName: unknown
   linkType: soft
@@ -14361,6 +14362,12 @@ __metadata:
   checksum: ae6052fde9a546f79f14987b65823ba4024c6642a8489339ecfee7a351dff93325842aad453295bbdc6b65fb1690e4ef07529db63aa84ece55c7869e991a0039
   languageName: node
   linkType: hard
+
+"webtools-addon-redirects@link:.yalc/webtools-addon-redirects::locator=playground-5%40workspace%3A.":
+  version: 0.0.0-use.local
+  resolution: "webtools-addon-redirects@link:.yalc/webtools-addon-redirects::locator=playground-5%40workspace%3A."
+  languageName: node
+  linkType: soft
 
 "webtools-addon-sitemap@link:.yalc/webtools-addon-sitemap::locator=playground-5%40workspace%3A.":
   version: 0.0.0-use.local
