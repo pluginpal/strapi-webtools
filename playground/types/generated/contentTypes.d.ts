@@ -1050,6 +1050,48 @@ export interface PluginUsersPermissionsUser
   };
 }
 
+export interface PluginWebtoolsAddonRedirectsRedirect
+  extends Struct.CollectionTypeSchema {
+  collectionName: 'wt_redirect';
+  info: {
+    displayName: 'Redirect';
+    pluralName: 'redirects';
+    singularName: 'redirect';
+  };
+  options: {
+    comment: '';
+    draftAndPublish: false;
+  };
+  pluginOptions: {
+    'content-manager': {
+      visible: true;
+    };
+    'content-type-builder': {
+      visible: true;
+    };
+  };
+  attributes: {
+    createdAt: Schema.Attribute.DateTime;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+    from: Schema.Attribute.String &
+      Schema.Attribute.Required &
+      Schema.Attribute.Unique;
+    locale: Schema.Attribute.String & Schema.Attribute.Private;
+    localizations: Schema.Attribute.Relation<
+      'oneToMany',
+      'plugin::webtools-addon-redirects.redirect'
+    > &
+      Schema.Attribute.Private;
+    publishedAt: Schema.Attribute.DateTime;
+    status_code: Schema.Attribute.Integer & Schema.Attribute.Required;
+    to: Schema.Attribute.String & Schema.Attribute.Required;
+    updatedAt: Schema.Attribute.DateTime;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
+  };
+}
+
 export interface PluginWebtoolsAddonSitemapSitemap
   extends Struct.CollectionTypeSchema {
   collectionName: 'wt_sitemap';
@@ -1211,6 +1253,7 @@ declare module '@strapi/strapi' {
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
+      'plugin::webtools-addon-redirects.redirect': PluginWebtoolsAddonRedirectsRedirect;
       'plugin::webtools-addon-sitemap.sitemap': PluginWebtoolsAddonSitemapSitemap;
       'plugin::webtools.url-alias': PluginWebtoolsUrlAlias;
       'plugin::webtools.url-pattern': PluginWebtoolsUrlPattern;
