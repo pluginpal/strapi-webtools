@@ -97,7 +97,7 @@
     "url": "git://github.com/pluginpal/strapi-webtools.git"
   },
   "engines": {
-    "node": ">=18.x.x <=20.x.x",
+    "node": ">=18.x.x <=22.x.x",
     "npm": ">=6.0.0"
   },
   "license": "MIT"
