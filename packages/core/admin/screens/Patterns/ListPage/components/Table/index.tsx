@@ -7,12 +7,14 @@ import {
 
 import TableBody from '../TableBody';
 import { PatternEntity } from '../../../../../types/url-patterns';
+import { EnabledContentType } from '../../../../../types/enabled-contenttypes';
 
 interface Props {
   patterns: PatternEntity[]
+  contentTypes: EnabledContentType[]
 }
 
-const TableComponent: React.FC<Props> = ({ patterns }) => {
+const TableComponent: React.FC<Props> = ({ patterns, contentTypes }) => {
   const { formatMessage } = useIntl();
 
   const colCount = 3;
@@ -52,6 +54,7 @@ const TableComponent: React.FC<Props> = ({ patterns }) => {
           </Thead>
           <TableBody
             patterns={patterns}
+            contentTypes={contentTypes}
           />
           {/* TODO: Pagination */}
         </Table>

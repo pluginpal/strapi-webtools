@@ -10,12 +10,14 @@ import { useQueryClient } from 'react-query';
 
 import pluginId from '../../../../../helpers/pluginId';
 import { PatternEntity } from '../../../../../types/url-patterns';
+import { EnabledContentType } from '../../../../../types/enabled-contenttypes';
 
 interface Props {
   patterns: PatternEntity[]
+  contentTypes: EnabledContentType[]
 }
 
-const TableBody: React.FC<Props> = ({ patterns }) => {
+const TableBody: React.FC<Props> = ({ patterns, contentTypes }) => {
   const { formatMessage } = useIntl();
   const navigate = useNavigate();
   const { toggleNotification } = useNotification();
@@ -37,6 +39,11 @@ const TableBody: React.FC<Props> = ({ patterns }) => {
     navigate(`/plugins/${pluginId}/patterns/${id}`);
   };
 
+  const getContentTypeName = (uid: string): string | undefined => {
+    const contentType = contentTypes.find((type) => type.uid === uid);
+    return contentType?.name;
+  };
+
   return (
     <Tbody>
       {patterns.map((pattern) => (
@@ -45,7 +52,7 @@ const TableBody: React.FC<Props> = ({ patterns }) => {
             <Typography>{pattern.pattern}</Typography>
           </Td>
           <Td width="50%">
-            <Typography>{pattern.contenttype}</Typography>
+            <Typography>{getContentTypeName(pattern.contenttype)}</Typography>
           </Td>
           <Td>
             <Flex justifyContent="end">

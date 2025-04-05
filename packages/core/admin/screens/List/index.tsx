@@ -62,13 +62,13 @@ const List = () => {
 
   if (items.isLoading || config.isLoading || contentTypes.isLoading || locales.isLoading) {
     return (
-      <Loader />
+      <Page.Loading />
     );
   }
 
   if (items.isError || config.isError || contentTypes.isError || locales.isError) {
     return (
-      <div>error</div>
+      <Page.Error />
     );
   }
 

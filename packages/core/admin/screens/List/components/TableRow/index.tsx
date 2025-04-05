@@ -14,10 +14,12 @@ import { useNavigate } from 'react-router-dom';
 import DeleteConfirmModal from '../DeleteConfirmModal';
 import { Config } from '../../../../../server/config';
 import { UrlAliasEntity } from '../../../../types/url-aliases';
+import { EnabledContentType } from '../../../../types/enabled-contenttypes';
 
 type Props = {
   row: UrlAliasEntity;
   checked?: boolean;
+  contentTypes: EnabledContentType[];
   onDelete?: () => void;
   updateValue: () => any;
   config: Config;
@@ -30,6 +32,7 @@ const TableRow: FC<Props> = ({
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   updateValue,
   config,
+  contentTypes,
   onDelete,
 }) => {
   const { toggleNotification } = useNotification();
@@ -57,6 +60,11 @@ const TableRow: FC<Props> = ({
       });
   };
 
+  const getContentTypeName = (uid: string): string | undefined => {
+    const contentType = contentTypes.find((type) => type.uid === uid);
+    return contentType?.name;
+  };
+
   return (
     <Tr>
       {/* <Td>
@@ -73,7 +81,7 @@ const TableRow: FC<Props> = ({
       </Td>
       <Td>
         <Box style={{ marginTop: 5, marginBottom: 5 }}>
-          <Typography>{row.contenttype}</Typography>
+          <Typography>{getContentTypeName(row.contenttype)}</Typography>
         </Box>
       </Td>
       <Td>

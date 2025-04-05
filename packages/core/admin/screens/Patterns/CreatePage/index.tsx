@@ -93,11 +93,7 @@ const CreatePatternPage = () => {
   };
 
   if (contentTypes.isLoading || !contentTypes.data) {
-    return (
-      <Center>
-        <Loader>{formatMessage({ id: 'webtools.settings.loading', defaultMessage: 'Loading content...' })}</Loader>
-      </Center>
-    );
+    return <Page.Loading />;
   }
 
   const getSelectedContentType = (uid: string) => {

@@ -13,23 +13,28 @@ import { getFetchClient, Layouts, Page } from '@strapi/strapi/admin';
 
 import pluginId from '../../../helpers/pluginId';
 import Table from './components/Table';
-import Center from '../../../components/Center';
 import { PatternEntity } from '../../../types/url-patterns';
 import { GenericResponse } from '../../../types/content-api';
 import pluginPermissions from '../../../permissions';
+import { EnabledContentTypes } from '../../../types/enabled-contenttypes';
 
 const ListPatternPage = () => {
   const { get } = getFetchClient();
   const items = useQuery(['url-patterns'], async () => get<GenericResponse<PatternEntity[]>>('/webtools/url-pattern/findMany'));
+  const contentTypes = useQuery('content-types', async () => get<EnabledContentTypes>('/webtools/info/getContentTypes'));
 
   const { formatMessage } = useIntl();
   const navigate = useNavigate();
 
-  if (items.isLoading) {
+  if (items.isLoading || contentTypes.isLoading) {
     return (
-      <Center>
-        <Loader>{formatMessage({ id: 'webtools.settings.loading', defaultMessage: 'Loading content...' })}</Loader>
-      </Center>
+      <Page.Loading />
+    );
+  }
+
+  if (items.error || contentTypes.error) {
+    return (
+      <Page.Error />
     );
   }
 
@@ -49,7 +54,10 @@ const ListPatternPage = () => {
           )}
         />
         <Layouts.Content>
-          <Table patterns={items.data.data.data} />
+          <Table
+            patterns={items.data.data.data}
+            contentTypes={contentTypes.data.data}
+          />
         </Layouts.Content>
       </Box>
     </Page.Protect>

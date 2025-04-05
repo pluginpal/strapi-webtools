@@ -31,7 +31,7 @@ export default {
       ]) as boolean;
       if (isInContentManager === true) {
         contentTypes.push({
-          name: contentType.globalId,
+          name: contentType.info.displayName,
           uid: contentType.uid,
           localized: isLocalized || false,
         });

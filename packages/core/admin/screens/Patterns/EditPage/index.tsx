@@ -92,14 +92,7 @@ const EditPatternPage = () => {
 
   if (pattern.isLoading || contentTypes.isLoading) {
     return (
-      <Center>
-        <Loader>
-          {formatMessage({
-            id: 'webtools.settings.loading',
-            defaultMessage: 'Loading content...',
-          })}
-        </Loader>
-      </Center>
+      <Page.Loading />
     );
   }
 
