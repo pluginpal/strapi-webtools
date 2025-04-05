@@ -19,7 +19,6 @@ import Table from './components/Table';
 import GeneratePathsModal from './components/GeneratePathsModal';
 import { EnabledContentType, EnabledContentTypes } from '../../types/enabled-contenttypes';
 import { GenerationType } from '../../../server/types';
-import Loader from '../../components/Loader';
 import { GenericResponse } from '../../types/content-api';
 import { Config } from '../../../server/config';
 import { UrlAliasEntity } from '../../types/url-aliases';

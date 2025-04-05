@@ -10,7 +10,6 @@ import {
   Flex,
   Typography,
   Grid,
-  Loader,
 } from '@strapi/design-system';
 import {
   useNotification,
@@ -22,7 +21,6 @@ import { ArrowLeft, Check } from '@strapi/icons';
 import { ErrorResponse } from '../../../types/error-response';
 import schema from './utils/schema';
 import pluginId from '../../../helpers/pluginId';
-import Center from '../../../components/Center';
 import Select from '../../../components/Select';
 import PatternField from '../../../components/PatternField';
 import { PatternEntity, PatternFormValues, ValidatePatternResponse } from '../../../types/url-patterns';

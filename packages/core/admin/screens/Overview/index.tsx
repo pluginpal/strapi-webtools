@@ -18,18 +18,27 @@ import { useQuery } from 'react-query';
 import pluginPermissions from '../../permissions';
 import { WebtoolsAddonInfo } from '../../types/addons';
 import packageJson from '../../../package.json';
-import Loader from '../../components/Loader';
+import { EnabledContentTypes } from '../../types/enabled-contenttypes';
+import ContentTypesList from './components/ContentTypesList';
 
 const List = () => {
   const { get } = getFetchClient();
   const addons = useQuery('addons', async () => get<WebtoolsAddonInfo[]>('/webtools/info/addons'));
+  const contentTypes = useQuery('content-types', async () => get<EnabledContentTypes>('/webtools/info/getContentTypes'));
   const { formatMessage } = useIntl();
 
-  if (addons.isLoading) {
+  if (addons.isLoading || contentTypes.isLoading) {
     return (
-      <Loader />
+      <Page.Loading />
     );
   }
+
+  if (addons.error || contentTypes.error) {
+    return (
+      <Page.Error />
+    );
+  }
+
   return (
     <Page.Protect permissions={pluginPermissions['settings.overview']}>
       <Layouts.Header
@@ -61,8 +70,8 @@ const List = () => {
               <Grid.Item col={6} s={12} direction="column" alignItems="flex-start">
                 <Typography variant="sigma" textColor="neutral600">
                   {formatMessage({
-                    id: 'webtools.settings.application.strapiVersion',
-                    defaultMessage: 'Strapi version',
+                    id: 'webtools.settings.application.version',
+                    defaultMessage: 'Webtools version',
                   })}
                 </Typography>
                 <Flex gap={3} direction="column" alignItems="start">
@@ -104,6 +113,15 @@ const List = () => {
             </Grid.Root>
           </Flex>
         </Flex>
+        <Typography variant="delta" marginTop={6} marginBottom={3} display="block">
+          {formatMessage({
+            id: 'global.enabled_contenttypes',
+            defaultMessage: 'Enabled content types',
+          })}
+        </Typography>
+        <Box width="100%">
+          <ContentTypesList contentTypes={contentTypes.data.data} />
+        </Box>
         {!isEmpty(addons.data.data) && (
           <Flex
             direction="column"

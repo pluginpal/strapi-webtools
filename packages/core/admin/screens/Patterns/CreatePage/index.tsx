@@ -14,7 +14,7 @@ import {
   Button,
   Typography,
   Grid,
-  Loader,
+  EmptyStateLayout,
 } from '@strapi/design-system';
 import {
   useNotification,
@@ -22,11 +22,10 @@ import {
   Layouts,
   Page,
 } from '@strapi/strapi/admin';
-import { ArrowLeft, Check } from '@strapi/icons';
+import { ArrowLeft, Check, ExternalLink } from '@strapi/icons';
 import schema from './utils/schema';
 import { ErrorResponse } from '../../../types/error-response';
 import pluginId from '../../../helpers/pluginId';
-import Center from '../../../components/Center';
 import Select from '../../../components/Select';
 import PatternField from '../../../components/PatternField';
 import { PatternFormValues, ValidatePatternResponse } from '../../../types/url-patterns';
@@ -149,68 +148,93 @@ const CreatePatternPage = () => {
               )}
             />
             <Layouts.Content>
-              <Box
-                background="neutral0"
-                hasRadius
-                shadow="filterShadow"
-                paddingTop={6}
-                paddingBottom={6}
-                paddingLeft={7}
-                paddingRight={7}
-              >
-                <Typography variant="delta">
-                  {formatMessage({
-                    id: 'webtools.settings.page.patterns.create.subtitle',
-                    defaultMessage: 'Pattern details',
-                  })}
-                </Typography>
-                <Grid.Root gap={4} marginTop={4}>
-                  <Grid.Item col={6} direction="column" alignItems="flex-start" gap="4">
-                    <Select
-                      name="contenttype"
-                      list={contentTypes.data.data}
-                      value={values.contenttype || ''}
-                      setFieldValue={setFieldValue}
-                      label={formatMessage({
-                        id: 'webtools.settings.form.contenttype.label',
-                        defaultMessage: 'Content type',
-                      })}
-                      error={
-                        errors.contenttype && touched.contenttype
-                          ? formatMessage({ id: String(errors.contenttype), defaultMessage: 'Invalid value' })
-                          : null
-                      }
-                    />
-                    {(values.contenttype !== '') && (
-                      <PatternField
-                        values={values}
-                        uid={values.contenttype}
+              {contentTypes.data.data.length > 0 ? (
+                <Box
+                  background="neutral0"
+                  hasRadius
+                  shadow="filterShadow"
+                  paddingTop={6}
+                  paddingBottom={6}
+                  paddingLeft={7}
+                  paddingRight={7}
+                >
+                  <Typography variant="delta">
+                    {formatMessage({
+                      id: 'webtools.settings.page.patterns.create.subtitle',
+                      defaultMessage: 'Pattern details',
+                    })}
+                  </Typography>
+                  <Grid.Root gap={4} marginTop={4}>
+                    <Grid.Item col={6} direction="column" alignItems="flex-start" gap="4">
+                      <Select
+                        name="contenttype"
+                        list={contentTypes.data.data}
+                        value={values.contenttype || ''}
                         setFieldValue={setFieldValue}
+                        label={formatMessage({
+                          id: 'webtools.settings.form.contenttype.label',
+                          defaultMessage: 'Content type',
+                        })}
                         error={
-                          errors.pattern && touched.pattern
-                            ? errors.pattern
+                          errors.contenttype && touched.contenttype
+                            ? formatMessage({ id: String(errors.contenttype), defaultMessage: 'Invalid value' })
                             : null
                         }
                       />
-                    )}
-                    <HiddenLocalizedField
-                      localized={getSelectedContentType(values.contenttype)?.localized}
-                      setFieldValue={setFieldValue}
-                    />
-                    {values.localized && (
-                      <LanguageCheckboxes
-                        onChange={(newLanguages) => setFieldValue('languages', newLanguages)}
-                        selectedLanguages={values.languages}
-                        error={
-                          errors.languages && touched.languages
-                            ? errors.languages
-                            : null
-                        }
+                      {(values.contenttype !== '') && (
+                        <PatternField
+                          values={values}
+                          uid={values.contenttype}
+                          setFieldValue={setFieldValue}
+                          error={
+                            errors.pattern && touched.pattern
+                              ? errors.pattern
+                              : null
+                          }
+                        />
+                      )}
+                      <HiddenLocalizedField
+                        localized={getSelectedContentType(values.contenttype)?.localized}
+                        setFieldValue={setFieldValue}
                       />
-                    )}
-                  </Grid.Item>
-                </Grid.Root>
-              </Box>
+                      {values.localized && (
+                        <LanguageCheckboxes
+                          onChange={(newLanguages) => setFieldValue('languages', newLanguages)}
+                          selectedLanguages={values.languages}
+                          error={
+                            errors.languages && touched.languages
+                              ? errors.languages
+                              : null
+                          }
+                        />
+                      )}
+                    </Grid.Item>
+                  </Grid.Root>
+                </Box>
+              ) : (
+                <EmptyStateLayout
+                  content={formatMessage({
+                    id: 'webtools.create.page.contenttypes.empty',
+                    defaultMessage: 'Before you can create a pattern, you need to enable Webtools for at least one content type.',
+                  })}
+                  action={(
+                    <Button
+                      variant="secondary"
+                      tag={Link}
+                      to="https://docs.pluginpal.io/webtools/usage"
+                      startIcon={<ExternalLink />}
+                      target="_blank"
+                    >
+                      {formatMessage({
+                        id: 'webtools.create.button.read_docs',
+                        defaultMessage: 'Learn how to enable Webtools',
+                      })}
+                    </Button>
+                  )}
+                  shadow="tableShadow"
+                  hasRadius
+                />
+              )}
             </Layouts.Content>
           </Form>
         )}

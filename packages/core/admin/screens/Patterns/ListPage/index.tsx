@@ -3,7 +3,6 @@ import { useIntl } from 'react-intl';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import {
-  Loader,
   Button,
   Box,
 } from '@strapi/design-system';
