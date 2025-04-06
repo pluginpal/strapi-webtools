@@ -44,8 +44,8 @@
     "eslint:fix": "../../../node_modules/.bin/eslint --fix './**/*.{js,jsx,ts,tsx}'"
   },
   "peerDependencies": {
-    "@strapi/design-system": "^2.0.0-rc.14",
-    "@strapi/icons": "^2.0.0-rc.14",
+    "@strapi/design-system": "^2.0.0-rc",
+    "@strapi/icons": "^2.0.0-rc",
     "@strapi/strapi": "^5.0.0",
     "@strapi/utils": "^5.0.0",
     "react": "^17.0.0 || ^18.0.0",
@@ -56,8 +56,8 @@
     "styled-components": "^6.0.0"
   },
   "devDependencies": {
-    "@strapi/design-system": "^2.0.0-rc.14",
-    "@strapi/icons": "^2.0.0-rc.14",
+    "@strapi/design-system": "^2.0.0-rc",
+    "@strapi/icons": "^2.0.0-rc",
     "@strapi/sdk-plugin": "^5.0.0",
     "@strapi/strapi": "^5.0.0",
     "@strapi/utils": "^5.0.0",
