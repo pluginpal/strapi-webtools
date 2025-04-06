@@ -41,8 +41,8 @@
   },
   "peerDependencies": {
     "@strapi/admin": "^5.0.0",
-    "@strapi/design-system": "^2.0.0-rc.14",
-    "@strapi/icons": "^2.0.0-rc.14",
+    "@strapi/design-system": "^2.0.0-rc",
+    "@strapi/icons": "^2.0.0-rc",
     "@strapi/strapi": "^5.0.0",
     "@strapi/utils": "^5.0.0",
     "react": "^17.0.0 || ^18.0.0",
@@ -52,8 +52,8 @@
   },
   "devDependencies": {
     "@strapi/admin": "^5.0.0",
-    "@strapi/design-system": "^2.0.0-rc.14",
-    "@strapi/icons": "^2.0.0-rc.14",
+    "@strapi/design-system": "^2.0.0-rc",
+    "@strapi/icons": "^2.0.0-rc",
     "@strapi/pack-up": "^5.0.0",
     "@strapi/sdk-plugin": "^5.0.0",
     "@strapi/strapi": "^5.0.0",
@@ -97,7 +97,7 @@
     "url": "git://github.com/pluginpal/strapi-webtools.git"
   },
   "engines": {
-    "node": ">=18.x.x <=20.x.x",
+    "node": ">=18.x.x <=22.x.x",
     "npm": ">=6.0.0"
   },
   "license": "MIT"

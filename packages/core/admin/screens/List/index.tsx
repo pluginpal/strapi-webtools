@@ -19,7 +19,6 @@ import Table from './components/Table';
 import GeneratePathsModal from './components/GeneratePathsModal';
 import { EnabledContentType, EnabledContentTypes } from '../../types/enabled-contenttypes';
 import { GenerationType } from '../../../server/types';
-import Loader from '../../components/Loader';
 import { GenericResponse } from '../../types/content-api';
 import { Config } from '../../../server/config';
 import { UrlAliasEntity } from '../../types/url-aliases';
@@ -62,13 +61,13 @@ const List = () => {
 
   if (items.isLoading || config.isLoading || contentTypes.isLoading || locales.isLoading) {
     return (
-      <Loader />
+      <Page.Loading />
     );
   }
 
   if (items.isError || config.isError || contentTypes.isError || locales.isError) {
     return (
-      <div>error</div>
+      <Page.Error />
     );
   }
 

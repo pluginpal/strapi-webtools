@@ -1,18 +1,23 @@
 import React, { useEffect } from 'react';
 import { useQuery } from 'react-query';
+import type { PanelComponent } from '@strapi/content-manager/strapi-admin';
 import {
   unstable_useContentManagerContext,
   useFetchClient,
   useRBAC,
+  useStrapiApp,
 } from '@strapi/strapi/admin';
 import EditForm from '../EditForm';
 import Permalink from './Permalink';
 import { isContentTypeEnabled } from '../../../server/util/enabledContentTypes';
 import { UrlAliasEntity } from '../../types/url-aliases';
 import pluginPermissions from '../../permissions';
+import pluginId from '../../helpers/pluginId';
+import { InjectedRoute } from '../../types/injection-zones';
 
-const EditView = () => {
+const WebtoolsPanel: PanelComponent = () => {
   const { get } = useFetchClient();
+  const getPlugin = useStrapiApp('MyComponent', (state) => state.getPlugin);
   const {
     allowedActions: { canSidebar },
   } = useRBAC(pluginPermissions);
@@ -22,6 +27,10 @@ const EditView = () => {
     model,
     id,
   } = context;
+
+  const plugin = getPlugin(pluginId);
+
+  const injectedLinks = plugin?.getInjectedComponents('webtoolsSidePanel', 'link') as unknown as InjectedRoute[];
 
   const urlParams = new URLSearchParams(window.location.search);
   const locale = urlParams.get('plugins[i18n][locale]');
@@ -69,19 +78,25 @@ const EditView = () => {
   if (aliases.error) return null;
   if (!aliases.data) return null;
 
-  return (
-    <>
-      <EditForm />
-      {aliases.data.data.length === 0 && (
-        <div>Save the form to generate the URL alias</div>
-      )}
-      {aliases.data.data.length > 0 && (
-        <Permalink
-          path={aliases.data.data[0].url_path}
-        />
-      )}
-    </>
-  );
+  return {
+    title: 'Webtools',
+    content: (
+      <>
+        <EditForm />
+        {aliases.data.data.length === 0 && (
+          <div>Save the form to generate the URL alias</div>
+        )}
+        {aliases.data.data.length > 0 && (
+          <Permalink
+            path={aliases.data.data[0].url_path}
+          />
+        )}
+        {injectedLinks.map(({ Component }) => (
+          <Component />
+        ))}
+      </>
+    ),
+  };
 };
 
-export default EditView;
+export default WebtoolsPanel;

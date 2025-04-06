@@ -8,5 +8,8 @@ export default (config: UserConfig) => {
         '@': '/src',
       },
     },
+    optimizeDeps: {
+      exclude: [],
+    },
   });
 };

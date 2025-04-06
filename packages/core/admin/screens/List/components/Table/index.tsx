@@ -117,6 +117,7 @@ const TableComponent: FC<Props> = (props) => {
                 key={path.url_path}
                 row={path}
                 checked={checkedItems[index]}
+                contentTypes={contentTypes}
                 onDelete={onDelete}
                 config={config}
                 updateValue={() => {

@@ -18,8 +18,7 @@ export default {
     });
   },
   bootstrap(app) {
-    app.getPlugin('content-manager').injectComponent('editView', 'right-links', {
-      name: 'sitemap-edit-view',
+    app.getPlugin('webtools').injectComponent('webtoolsSidePanel', 'link', {
       Component: EditView,
     });
 
