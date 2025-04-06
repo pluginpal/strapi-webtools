@@ -1,5 +1,25 @@
 # core
 
+## 1.4.0
+
+### Minor Changes
+
+- [#248](https://github.com/pluginpal/strapi-webtools/pull/248) [`6d4669f`](https://github.com/pluginpal/strapi-webtools/commit/6d4669f8709f6e6f30883f679062ba50801fab02) Thanks [@boazpoolman](https://github.com/boazpoolman)! - feat: show the pattern languages in the patterns list
+
+- [#248](https://github.com/pluginpal/strapi-webtools/pull/248) [`38ba66c`](https://github.com/pluginpal/strapi-webtools/commit/38ba66c7747f80caecef7ea97cc4a2157bbff4ae) Thanks [@boazpoolman](https://github.com/boazpoolman)! - feat: create a custom side panel for all Webtools related links
+
+### Patch Changes
+
+- [#248](https://github.com/pluginpal/strapi-webtools/pull/248) [`486cf5c`](https://github.com/pluginpal/strapi-webtools/commit/486cf5cc8cd722077ecbae35d2279cf54f668145) Thanks [@boazpoolman](https://github.com/boazpoolman)! - fix: use generic design-system 'rc' version constraint
+
+- [#248](https://github.com/pluginpal/strapi-webtools/pull/248) [`2b74f3a`](https://github.com/pluginpal/strapi-webtools/commit/2b74f3aa1f05c88671eddc7595e33c15901f6bc6) Thanks [@boazpoolman](https://github.com/boazpoolman)! - fix: show the content type displayName instead of globalId
+
+- [#248](https://github.com/pluginpal/strapi-webtools/pull/248) [`9f3c9ad`](https://github.com/pluginpal/strapi-webtools/commit/9f3c9adfefcbaa95cabeabfb358b4c7e51e03b24) Thanks [@boazpoolman](https://github.com/boazpoolman)! - fix: allow & test for node 22
+
+- [#248](https://github.com/pluginpal/strapi-webtools/pull/248) [`213dac9`](https://github.com/pluginpal/strapi-webtools/commit/213dac9dae03a6b5832e069dc5602e09b21a2244) Thanks [@boazpoolman](https://github.com/boazpoolman)! - fix: add some spacing between the table row actions
+
+- [#248](https://github.com/pluginpal/strapi-webtools/pull/248) [`d659485`](https://github.com/pluginpal/strapi-webtools/commit/d6594854035df8d88856dd3493c45b6ccf90ef0a) Thanks [@boazpoolman](https://github.com/boazpoolman)! - feat: give more feedback about the enabled content types, and add links to the documentation in case no content types have been enabled
+
 ## 1.3.1
 
 ### Patch Changes
