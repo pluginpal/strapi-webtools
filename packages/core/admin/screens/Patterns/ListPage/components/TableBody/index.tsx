@@ -10,12 +10,14 @@ import { useQueryClient } from 'react-query';
 
 import pluginId from '../../../../../helpers/pluginId';
 import { PatternEntity } from '../../../../../types/url-patterns';
+import { EnabledContentType } from '../../../../../types/enabled-contenttypes';
 
 interface Props {
   patterns: PatternEntity[]
+  contentTypes: EnabledContentType[]
 }
 
-const TableBody: React.FC<Props> = ({ patterns }) => {
+const TableBody: React.FC<Props> = ({ patterns, contentTypes }) => {
   const { formatMessage } = useIntl();
   const navigate = useNavigate();
   const { toggleNotification } = useNotification();
@@ -37,18 +39,26 @@ const TableBody: React.FC<Props> = ({ patterns }) => {
     navigate(`/plugins/${pluginId}/patterns/${id}`);
   };
 
+  const getContentTypeName = (uid: string): string | undefined => {
+    const contentType = contentTypes.find((type) => type.uid === uid);
+    return contentType?.name;
+  };
+
   return (
     <Tbody>
       {patterns.map((pattern) => (
         <Tr key={pattern.id}>
-          <Td width="50%">
+          <Td>
             <Typography>{pattern.pattern}</Typography>
           </Td>
-          <Td width="50%">
-            <Typography>{pattern.contenttype}</Typography>
+          <Td>
+            <Typography>{getContentTypeName(pattern.contenttype)}</Typography>
           </Td>
           <Td>
-            <Flex justifyContent="end">
+            <Typography>{pattern.languages.join(', ')}</Typography>
+          </Td>
+          <Td>
+            <Flex justifyContent="end" gap={2}>
               <IconButton
                 onClick={() => handleClickEdit(pattern.documentId)}
                 label={formatMessage(

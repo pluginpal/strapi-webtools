@@ -3,7 +3,7 @@
 import { StrapiApp } from '@strapi/admin/strapi-admin';
 import * as yup from 'yup';
 import pluginPkg from '../package.json';
-import EditView from './components/EditView';
+import WebtoolsPanel from './components/WebtoolsPanel';
 import pluginId from './helpers/pluginId';
 import getTrad from './helpers/getTrad';
 import { prefixPluginTranslations } from './helpers/prefixPluginTranslations';
@@ -23,6 +23,9 @@ export default {
       injectionZones: {
         webtoolsRouter: {
           route: [],
+        },
+        webtoolsSidePanel: {
+          link: [],
         },
       },
     });
@@ -50,10 +53,8 @@ export default {
     });
   },
   bootstrap(app: StrapiApp) {
-    app.getPlugin('content-manager')?.injectComponent('editView', 'right-links', {
-      name: 'url-alias-edit-view',
-      Component: EditView,
-    });
+    // @ts-expect-error
+    app.getPlugin('content-manager').apis.addEditViewSidePanel([WebtoolsPanel]);
 
     const ctbPlugin = app.getPlugin('content-type-builder');
 
