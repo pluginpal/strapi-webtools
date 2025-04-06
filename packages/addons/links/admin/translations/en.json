@@ -1,0 +1,69 @@
+{
+  "settings.title": "Webtools",
+  "settings.loading": "Loading content...",
+
+  "settings.success.create": "The pattern has been created.",
+  "settings.success.edit": "The pattern has been updated.",
+  "settings.success.delete": "The pattern has been deleted.",
+  "settings.success.url_alias.generate": "{{ count }} URL aliases have been generated.",
+  "settings.success.url_alias.delete": "The URL alias has been deleted.",
+
+  "settings.button.add_pattern": "Add new pattern",
+  "settings.button.generate_paths": "Bulk generate",
+  "settings.button.delete": "Delete",
+  "settings.button.cancel": "Cancel",
+  "settings.button.filters": "Filters",
+  "settings.button.copy_permalink": "Copy permalink",
+
+  "settings.form.label.label": "Label",
+  "settings.form.pattern.label": "Pattern",
+  "settings.form.pattern.description_1": "Create a URL alias pattern",
+  "settings.form.pattern.description_2": "using",
+  "settings.form.pattern.description_3": "or",
+  "settings.form.contenttype.label": "Content type",
+
+  "settings.page.list.title": "All URLs",
+  "settings.page.list.description": "A list of all the known URL aliases.",
+  "settings.page.list.body": "List all URL aliases",
+
+  "settings.page.list.delete_confirm_modal.title": "Delete item",
+  "settings.page.list.delete_confirm_modal.body": "Are you sure you want to delete this item?",
+
+  "settings.page.list.generate_paths_modal.title": "Generate URL aliases",
+  "settings.page.list.generate_paths_modal.types.title": "Content types",
+  "settings.page.list.generate_paths_modal.types.body": "Select the content types you want to generate the URLs for.",
+  "settings.page.list.generate_paths_modal.generation_type.title": "Generation type",
+  "settings.page.list.generate_paths_modal.generation_type.body": "Select how you would like to generate the URLs.",
+  "settings.page.list.generate_paths_modal.generation_type.only_without_alias": "Generate only for pages without an URL alias",
+  "settings.page.list.generate_paths_modal.generation_type.only_generated": "Re-generate only URL alias that were auto-generated",
+  "settings.page.list.generate_paths_modal.generation_type.all": "Re-generate all URL aliases",
+
+  "settings.page.list.filters.label": "Search",
+  "settings.page.list.filters.placeholder": "Search...",
+
+  "settings.page.list.table.empty": "You don't have any URL paths yet.",
+
+  "settings.page.list.table.actions.delete": "Delete {target}",
+  "settings.page.list.table.actions.goTo": "Go to corresponding entity of {target}",
+
+  "settings.page.patterns.title": "URL patterns",
+  "settings.page.patterns.description": "A list of all the known URL alias patterns.",
+
+  "settings.page.patterns.table.head.label": "Label",
+  "settings.page.patterns.table.head.pattern": "Pattern",
+  "settings.page.patterns.table.head.actions": "Actions",
+
+  "settings.page.patterns.table.empty": "You don't have any patterns yet.",
+  "settings.page.patterns.table.actions.edit": "Edit",
+  "settings.page.patterns.table.actions.delete": "Delete",
+
+  "settings.page.patterns.edit.title": "Edit pattern",
+  "settings.page.patterns.edit.subtitle": "Pattern details",
+  "settings.page.patterns.edit.description": "Edit this pattern for automatic URL alias generation.",
+
+  "settings.page.patterns.create.title": "Add new pattern",
+  "settings.page.patterns.create.subtitle": "Pattern details",
+  "settings.page.patterns.create.description": "Add a pattern for automatic URL alias generation.",
+
+  "notification.success.permalink_copied": "Permalinkk copied to the clipboard"
+}

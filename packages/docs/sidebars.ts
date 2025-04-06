@@ -48,6 +48,11 @@ const sidebars = {
           label: "Sitemap addon",
           href: '/addons/sitemap',
         },
+        {
+          type: "link",
+          label: "Redirects addon",
+          href: '/addons/redirects',
+        },
       ],
     },
     {
@@ -80,7 +85,7 @@ const sidebars = {
     {
       type: "category",
       collapsed: false,
-      label: "🔌 Sitemap addon",
+      label: "Sitemap addon",
       items: [
         {
           type: "category",
@@ -119,6 +124,50 @@ const sidebars = {
             "addons/sitemap/configuration/limit",
             "addons/sitemap/configuration/xsl",
             "addons/sitemap/configuration/auto-generate",
+          ],
+        },
+      ],
+    },
+  ],
+
+  webtoolsRedirectsSidebar: [
+    {
+      type: "link",
+      label: "⬅️ Back to Webtools Core docs",
+      href: "/addons",
+    },
+    {
+      type: "category",
+      collapsed: false,
+      label: "Redirects addon",
+      items: [
+        {
+          type: "category",
+          collapsed: false,
+          label: "🚀 Getting Started",
+          items: [
+            "addons/redirects/getting-started/introduction",
+            "addons/redirects/getting-started/installation",
+            "addons/redirects/getting-started/usage",
+          ],
+        },
+        {
+          type: "category",
+          collapsed: false,
+          label: "📦 API",
+          items: [
+            "addons/redirects/api/rest",
+            "addons/redirects/api/document-service",
+          ],
+        },
+        {
+          type: "category",
+          collapsed: false,
+          label: "🔧 Configuration",
+          items: [
+            "addons/redirects/configuration/introduction",
+            "addons/redirects/configuration/auto-generate",
+            "addons/redirects/configuration/default-status-code",
           ],
         },
       ],
