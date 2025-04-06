@@ -7670,7 +7670,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@strapi/design-system@npm:^2.0.0-rc":
+"@strapi/design-system@npm:^2.0.0-rc, @strapi/design-system@npm:^2.0.0-rc.14":
   version: 2.0.0-rc.21
   resolution: "@strapi/design-system@npm:2.0.0-rc.21"
   dependencies:
@@ -7784,7 +7784,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@strapi/icons@npm:^2.0.0-rc":
+"@strapi/icons@npm:^2.0.0-rc, @strapi/icons@npm:^2.0.0-rc.14":
   version: 2.0.0-rc.21
   resolution: "@strapi/icons@npm:2.0.0-rc.21"
   peerDependencies:
