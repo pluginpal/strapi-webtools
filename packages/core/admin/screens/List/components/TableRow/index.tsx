@@ -90,7 +90,7 @@ const TableRow: FC<Props> = ({
         </Box>
       </Td>
       <Td>
-        <Flex justifyContent="end">
+        <Flex justifyContent="end" gap={2}>
           {config.website_url && (
             <IconButton
               onClick={() => window.open(`${config.website_url}${row.url_path}`, '_blank')}

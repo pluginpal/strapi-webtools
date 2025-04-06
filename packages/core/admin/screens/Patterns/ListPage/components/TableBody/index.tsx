@@ -58,7 +58,7 @@ const TableBody: React.FC<Props> = ({ patterns, contentTypes }) => {
             <Typography>{pattern.languages.join(', ')}</Typography>
           </Td>
           <Td>
-            <Flex justifyContent="end">
+            <Flex justifyContent="end" gap={2}>
               <IconButton
                 onClick={() => handleClickEdit(pattern.documentId)}
                 label={formatMessage(
