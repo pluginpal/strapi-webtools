@@ -1,5 +1,19 @@
 # addon-sitemap
 
+## 1.2.0
+
+### Minor Changes
+
+- [#248](https://github.com/pluginpal/strapi-webtools/pull/248) [`38ba66c`](https://github.com/pluginpal/strapi-webtools/commit/38ba66c7747f80caecef7ea97cc4a2157bbff4ae) Thanks [@boazpoolman](https://github.com/boazpoolman)! - feat: create a custom side panel for all Webtools related links
+
+### Patch Changes
+
+- [#248](https://github.com/pluginpal/strapi-webtools/pull/248) [`486cf5c`](https://github.com/pluginpal/strapi-webtools/commit/486cf5cc8cd722077ecbae35d2279cf54f668145) Thanks [@boazpoolman](https://github.com/boazpoolman)! - fix: use generic design-system 'rc' version constraint
+
+- [#248](https://github.com/pluginpal/strapi-webtools/pull/248) [`9f3c9ad`](https://github.com/pluginpal/strapi-webtools/commit/9f3c9adfefcbaa95cabeabfb358b4c7e51e03b24) Thanks [@boazpoolman](https://github.com/boazpoolman)! - fix: allow & test for node 22
+
+- [#248](https://github.com/pluginpal/strapi-webtools/pull/248) [`d659485`](https://github.com/pluginpal/strapi-webtools/commit/d6594854035df8d88856dd3493c45b6ccf90ef0a) Thanks [@boazpoolman](https://github.com/boazpoolman)! - feat: give more feedback about the enabled content types, and add links to the documentation in case no content types have been enabled
+
 ## 1.1.0
 
 ### Minor Changes
