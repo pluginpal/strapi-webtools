@@ -1,0 +1,69 @@
+{
+  "settings.title": "Herramientas Web",
+  "settings.loading": "Cargando contenido...",
+
+  "settings.success.create": "El patrón ha sido creado.",
+  "settings.success.edit": "El patrón ha sido actualizado.",
+  "settings.success.delete": "El patrón ha sido eliminado.",
+  "settings.success.url_alias.generate": "{{ count }} alias de URL han sido generados.",
+  "settings.success.url_alias.delete": "El alias de URL ha sido eliminado.",
+
+  "settings.button.add_pattern": "Agregar nuevo patrón",
+  "settings.button.generate_paths": "Generar en masa",
+  "settings.button.delete": "Eliminar",
+  "settings.button.cancel": "Cancelar",
+  "settings.button.filters": "Filtros",
+  "settings.button.copy_permalink": "Copiar enlace permanente",
+
+  "settings.form.label.label": "Etiqueta",
+  "settings.form.pattern.label": "Patrón",
+  "settings.form.pattern.description_1": "Crear un patrón de alias de URL",
+  "settings.form.pattern.description_2": "usando",
+  "settings.form.pattern.description_3": "o",
+  "settings.form.contenttype.label": "Tipo de contenido",
+
+  "settings.page.list.title": "Todas las URLs",
+  "settings.page.list.description": "Una lista de todos los alias de URL conocidos.",
+  "settings.page.list.body": "Listar todos los alias de URL",
+
+  "settings.page.list.delete_confirm_modal.title": "Eliminar elemento",
+  "settings.page.list.delete_confirm_modal.body": "¿Estás seguro de que deseas eliminar este elemento?",
+
+  "settings.page.list.generate_paths_modal.title": "Generar alias de URL",
+  "settings.page.list.generate_paths_modal.types.title": "Tipos de contenido",
+  "settings.page.list.generate_paths_modal.types.body": "Selecciona los tipos de contenido para los que deseas generar las URLs.",
+  "settings.page.list.generate_paths_modal.generation_type.title": "Tipo de generación",
+  "settings.page.list.generate_paths_modal.generation_type.body": "Selecciona cómo te gustaría generar las URLs.",
+  "settings.page.list.generate_paths_modal.generation_type.only_without_alias": "Generar solo para páginas sin un alias de URL",
+  "settings.page.list.generate_paths_modal.generation_type.only_generated": "Regenerar solo alias de URL que fueron auto-generados",
+  "settings.page.list.generate_paths_modal.generation_type.all": "Regenerar todos los alias de URL",
+
+  "settings.page.list.filters.label": "Buscar",
+  "settings.page.list.filters.placeholder": "Buscar...",
+
+  "settings.page.list.table.empty": "Aún no tienes ningún camino de URL.",
+
+  "settings.page.list.table.actions.delete": "Eliminar {target}",
+  "settings.page.list.table.actions.goTo": "Ir a la entidad correspondiente de {target}",
+
+  "settings.page.patterns.title": "Patrones de URL",
+  "settings.page.patterns.description": "Una lista de todos los patrones de alias de URL conocidos.",
+
+  "settings.page.patterns.table.head.label": "Etiqueta",
+  "settings.page.patterns.table.head.pattern": "Patrón",
+  "settings.page.patterns.table.head.actions": "Acciones",
+
+  "settings.page.patterns.table.empty": "Aún no tienes ningún patrón.",
+  "settings.page.patterns.table.actions.edit": "Editar {target}",
+  "settings.page.patterns.table.actions.delete": "Eliminar {target}",
+
+  "settings.page.patterns.edit.title": "Editar patrón",
+  "settings.page.patterns.edit.subtitle": "Detalles del patrón",
+  "settings.page.patterns.edit.description": "Editar este patrón para la generación automática de alias de URL.",
+
+  "settings.page.patterns.create.title": "Agregar nuevo patrón",
+  "settings.page.patterns.create.subtitle": "Detalles del patrón",
+  "settings.page.patterns.create.description": "Agregar un patrón para la generación automática de alias de URL.",
+
+  "notification.success.permalink_copied": "Enlace permanente copiado al portapapeles"
+}
