@@ -48,11 +48,14 @@ const TableBody: React.FC<Props> = ({ patterns, contentTypes }) => {
     <Tbody>
       {patterns.map((pattern) => (
         <Tr key={pattern.id}>
-          <Td width="50%">
+          <Td>
             <Typography>{pattern.pattern}</Typography>
           </Td>
-          <Td width="50%">
+          <Td>
             <Typography>{getContentTypeName(pattern.contenttype)}</Typography>
+          </Td>
+          <Td>
+            <Typography>{pattern.languages.join(', ')}</Typography>
           </Td>
           <Td>
             <Flex justifyContent="end">

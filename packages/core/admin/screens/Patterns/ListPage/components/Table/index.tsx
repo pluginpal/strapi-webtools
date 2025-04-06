@@ -43,6 +43,14 @@ const TableComponent: React.FC<Props> = ({ patterns, contentTypes }) => {
                 </Typography>
               </Th>
               <Th>
+                <Typography variant="sigma" textColor="neutral600">
+                  {formatMessage({
+                    id: 'webtools.settings.page.patterns.table.head.languages',
+                    defaultMessage: 'Languages',
+                  })}
+                </Typography>
+              </Th>
+              <Th>
                 <VisuallyHidden>
                   {formatMessage({
                     id: 'webtools.settings.page.patterns.table.head.actions',
