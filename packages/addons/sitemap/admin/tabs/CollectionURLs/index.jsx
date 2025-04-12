@@ -49,7 +49,10 @@ const CollectionURLs = () => {
     return null;
   }
 
-  if (state.get('contentTypes').size === 0) {
+  if (
+    state.get('contentTypes').size === 0 ||
+    state.get('contentTypes').length === 0
+  ) {
     return (
       <EmptyStateLayout
         content={formatMessage({
