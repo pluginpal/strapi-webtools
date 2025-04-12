@@ -1,0 +1,69 @@
+{
+  "name": "webtools-cli",
+  "version": "0.0.1",
+  "description": "CLI installer for Strapi Webtools",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs",
+      "source": "./src/index.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "check": "pack-up check",
+    "build": "pack-up build && ../../node_modules/.bin/yalc push --publish",
+    "watch": "pack-up watch",
+    "eslint": "../../node_modules/.bin/eslint --max-warnings=0 './**/*.{js,jsx,ts,tsx}'",
+    "eslint:fix": "../../node_modules/.bin/eslint --fix './**/*.{js,jsx,ts,tsx}'"
+  },
+  "bin": {
+    "strapi-webtools": "./dist/index.js"
+  },
+  "dependencies": {
+    "@inquirer/prompts": "^3.3.0",
+    "chalk": "^4.1.2",
+    "commander": "^11.1.0",
+    "fs-extra": "^11.2.0",
+    "glob": "^10.3.10"
+  },
+  "devDependencies": {
+    "@strapi/pack-up": "^5.0.0",
+    "@types/fs-extra": "^11.0.4",
+    "@types/glob": "^8.1.0",
+    "@types/node": "^20.11.19",
+    "typescript": "^5.3.3"
+  },
+  "author": {
+    "name": "Boaz Poolman",
+    "email": "boaz@pluginpal.io",
+    "url": "https://github.com/boazpoolman"
+  },
+  "maintainers": [
+    {
+      "name": "Boaz Poolman",
+      "email": "boaz@pluginpal.io",
+      "url": "https://github.com/boazpoolman"
+    }
+  ],
+  "bugs": {
+    "url": "https://github.com/pluginpal/strapi-webtools/issues"
+  },
+  "homepage": "https://www.pluginpal.io/plugin/webtools",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/pluginpal/strapi-webtools.git"
+  },
+  "engines": {
+    "node": ">=18.x.x <=22.x.x",
+    "npm": ">=6.0.0"
+  },
+  "license": "MIT"
+}

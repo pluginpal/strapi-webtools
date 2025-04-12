@@ -16,20 +16,17 @@ Complete installation requirements are the exact same as for Strapi itself and c
 
 ### Installation
 
-Install the plugin in your Strapi project.
+To install the plugin run the following command.
 
-<Tabs groupId="yarn-npm">
-  <TabItem value="yarn" label="Yarn">
-    ```
-    yarn add strapi-plugin-webtools
-    ```
-  </TabItem>
-  <TabItem value="npm" label="NPM">
-    ```
-    npm install strapi-plugin-webtools --save
-    ```
-  </TabItem>
-</Tabs>
+```
+npx webtools-cli install
+```
+
+### Enabling
+
+The installer wizard will ask you which content-types you want to enable. Select the content types that you consider to be web-pages in your website front-end. Each content-type you select will get it's own unique URL which can be used on the front-end. Read more about enabling content-types in the [usage documentation](/webtools/usage).
+
+### Building
 
 After successful installation you have to rebuild the admin UI so it'll include this plugin. To rebuild and restart Strapi run:
 
@@ -48,6 +45,3 @@ After successful installation you have to rebuild the admin UI so it'll include 
   </TabItem>
 </Tabs>
 
-### Enabling
-
-After successful installation you now need to enable Webtools for the content-types of your choice. Read more about how to do that in the [usage documentation](/webtools/usage).
