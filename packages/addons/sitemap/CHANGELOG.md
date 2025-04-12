@@ -1,5 +1,11 @@
 # addon-sitemap
 
+## 1.2.1
+
+### Patch Changes
+
+- [`7800cc9`](https://github.com/pluginpal/strapi-webtools/commit/7800cc918bba46886bfbc5fc02e401ccd7dda801) Thanks [@boazpoolman](https://github.com/boazpoolman)! - fix: logic for showing the empty webtools state
+
 ## 1.2.0
 
 ### Minor Changes

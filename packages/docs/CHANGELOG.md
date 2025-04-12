@@ -1,5 +1,11 @@
 # docs
 
+## 1.1.1
+
+### Patch Changes
+
+- [#253](https://github.com/pluginpal/strapi-webtools/pull/253) [`6a2568e`](https://github.com/pluginpal/strapi-webtools/commit/6a2568edf3df13b43855a2864bca15a634618502) Thanks [@boazpoolman](https://github.com/boazpoolman)! - docs: add the webtools-cli commands to the docs
+
 ## 1.1.0
 
 ### Minor Changes
