@@ -1,6 +1,6 @@
 {
   "name": "webtools-addon-sitemap",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Generate a highly customizable sitemap XML in Strapi CMS.",
   "strapi": {
     "name": "webtools-addon-sitemap",

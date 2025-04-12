@@ -1,5 +1,11 @@
 # core
 
+## 1.4.1
+
+### Patch Changes
+
+- [#253](https://github.com/pluginpal/strapi-webtools/pull/253) [`59c059c`](https://github.com/pluginpal/strapi-webtools/commit/59c059ce78586d64c0e3c2e912dfab73e5ef0b1a) Thanks [@boazpoolman](https://github.com/boazpoolman)! - docs: update the install command in the readme
+
 ## 1.4.0
 
 ### Minor Changes
