@@ -29,7 +29,7 @@ interface SchemaFile {
   };
 }
 
-export function enableWebToolsForContentType(contentType: string): boolean {
+export function enableWebtoolsForContentType(contentType: string): boolean {
   try {
     // Find the schema file for this content type
     const schemaFiles = glob.sync(`src/api/**/content-types/${contentType}/schema.json`, {
@@ -53,7 +53,7 @@ export function enableWebToolsForContentType(contentType: string): boolean {
       schema.pluginOptions.webtools = {};
     }
 
-    // Enable WebTools for this content type
+    // Enable Webtools for this content type
     schema.pluginOptions.webtools.enabled = true;
 
     // Write the updated schema back to the file
@@ -61,7 +61,7 @@ export function enableWebToolsForContentType(contentType: string): boolean {
 
     return true;
   } catch (error) {
-    console.error(`Error enabling WebTools for content type ${contentType}:`, error);
+    console.error(`Error enabling Webtools for content type ${contentType}:`, error);
     return false;
   }
 }
