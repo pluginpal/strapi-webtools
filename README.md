@@ -34,13 +34,19 @@
 
 [Read the Getting Started tutorial](https://docs.pluginpal.io/webtools) or follow the steps below:
 
-```bash
-# using yarn
-yarn add strapi-plugin-webtools
+### Installer wizard
 
-# using npm
-npm install strapi-plugin-webtools --save
+To provide easy installation, this plugin comes with it's own installer wizard. It let's you interactively select which content types you want to enable and which addons you want to install. Making it easy to get started with Webtools!
+
+```bash
+npx webtools-cli install
 ```
+
+### Enabling
+
+Using the installer wizard you can easily enable Webtools for your content types. If there are still more content-types you want to enable, you can do that manually through the admin panel. Read more about how to do that in the [usage documentation](https://docs.pluginpal.io/webtools/usage).
+
+### Building
 
 After successful installation you have to rebuild the admin UI so it'll include this plugin. To rebuild and restart Strapi run:
 
@@ -55,10 +61,6 @@ npm run develop
 ```
 
 Enjoy 🎉
-
-## Enabling
-
-After successful installation you now need to enable Webtools for the content-types of your choice. Read more about how to do that in the [usage documentation](https://docs.pluginpal.io/webtools/usage).
 
 ## 📓 Documentation
 
