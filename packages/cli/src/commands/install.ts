@@ -25,19 +25,6 @@ export async function install() {
     })),
   });
 
-  // Get available addons
-  const availableAddons = getAvailableAddons();
-
-  // Let user select addons
-  const selectedAddons = await checkbox({
-    message: 'Select addons to install:',
-    choices: availableAddons.map((addon) => ({
-      name: addon.name,
-      value: addon.name,
-      description: addon.description,
-    })),
-  });
-
   // Enable WebTools for selected content types
   if (selectedContentTypes.length > 0) {
     console.log(chalk.blue('\nEnabling WebTools for selected content types...'));
@@ -57,29 +44,41 @@ export async function install() {
     console.log(chalk.blue(`\nEnabled WebTools for ${successCount} of ${selectedContentTypes.length} content types.`));
   }
 
-  // Install selected addons
-  if (selectedAddons.length > 0) {
-    console.log(chalk.blue('\nInstalling selected addons...'));
+  // Get available addons
+  const availableAddons = getAvailableAddons();
 
-    const results = selectedAddons.map((addonName) => {
-      const addon = availableAddons.find((a) => a.name === addonName);
-      if (!addon) {
-        console.log(chalk.red(`✗ Addon ${addonName} not found`));
-        return false;
-      }
+  // Let user select addons
+  const selectedAddons = await checkbox({
+    message: 'Select addons to install:',
+    choices: availableAddons.map((addon) => ({
+      name: addon.name,
+      value: addon.name,
+      description: addon.description,
+    })),
+  });
 
-      const success = installPackage(addon.packageName);
-      if (success) {
-        console.log(chalk.green(`✓ Installed ${addon.name} addon`));
-        return true;
-      }
+  // Install the main plugin and selected addons in a single step
+  const packagesToInstall = ['strapi-plugin-webtools'];
 
-      console.log(chalk.red(`✗ Failed to install ${addon.name} addon`));
-      return false;
-    });
+  // Add selected addons to the installation list
+  selectedAddons.forEach((addonName) => {
+    const addon = availableAddons.find((a) => a.name === addonName);
+    if (addon) {
+      packagesToInstall.push(addon.packageName);
+    }
+  });
 
-    const successCount = results.filter(Boolean).length;
-    console.log(chalk.blue(`\nInstalled ${successCount} of ${selectedAddons.length} addons.`));
+  // Install all packages at once
+  if (packagesToInstall.length > 0) {
+    console.log(chalk.blue('\nInstalling packages...'));
+
+    const success = installPackage(packagesToInstall.join(' '));
+    if (success) {
+      console.log(chalk.green(`✓ Installed ${packagesToInstall.length} packages successfully`));
+    } else {
+      console.log(chalk.red('✗ Failed to install packages. Aborting installation.'));
+      return;
+    }
   }
 
   console.log(chalk.green('\nInstallation complete!'));
