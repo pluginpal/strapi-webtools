@@ -5,7 +5,8 @@ import kebabCase from 'lodash/kebabCase';
 export interface Config {
   website_url: string;
   default_pattern: string,
-  slugify: (fieldValue: string) => string
+  unique_per_locale: boolean,
+  slugify: (fieldValue: string) => string,
 }
 
 const config: {
@@ -16,6 +17,7 @@ const config: {
     website_url: null,
     default_pattern: '/[pluralName]/[documentId]',
     slugify: (fieldValue) => kebabCase(deburr(toLower(fieldValue))),
+    unique_per_locale: false,
   },
   validator() {},
 };
