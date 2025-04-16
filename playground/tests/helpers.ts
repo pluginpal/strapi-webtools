@@ -1,7 +1,9 @@
+import fs from 'node:fs';
+import assert from 'node:assert';
 import { createStrapi } from '@strapi/strapi';
-import fs, { PathLike } from 'fs';
+import type { Core } from '@strapi/types';
 
-let instance;
+let instance: Core.Strapi | undefined;
 
 /**
  * Setups strapi for futher testing
@@ -12,12 +14,10 @@ export async function setupStrapi() {
       appDir: './playground',
       distDir: './playground/dist',
     }).load();
+    strapi.server.mount();
 
     instance = strapi; // strapi is global now
-
-    await instance.server.mount();
   }
-  return instance;
 }
 
 /**
@@ -25,16 +25,20 @@ export async function setupStrapi() {
  */
 export async function stopStrapi() {
   if (instance) {
-    await instance.server.httpServer.close();
-    await instance.db.connection.destroy();
-    instance.destroy();
-    const tmpDbFile = strapi.config.get(
+    const tmpDbFile = instance.config.get(
       'database.connection.connection.filename',
     );
 
-    if (fs.existsSync(tmpDbFile as PathLike)) {
-      fs.unlinkSync(tmpDbFile as PathLike);
+    assert(typeof tmpDbFile === 'string');
+
+    instance.server.httpServer.close();
+    await instance.db.connection.destroy();
+    await instance.destroy();
+
+    if (fs.existsSync(tmpDbFile)) {
+      fs.unlinkSync(tmpDbFile);
     }
+
+    instance = undefined;
   }
-  return instance;
 }
