@@ -35,9 +35,9 @@
   "scripts": {
     "build": "pack-up build && yalc push --publish",
     "watch": "pack-up watch",
-    "watch:link": "../../node_modules/.bin/strapi-plugin watch:link",
-    "eslint": "../../node_modules/.bin/eslint --max-warnings=0 './**/*.{js,jsx,ts,tsx}'",
-    "eslint:fix": "../../node_modules/.bin/eslint --fix './**/*.{js,jsx,ts,tsx}'"
+    "watch:link": "strapi-plugin watch:link",
+    "eslint": "eslint --max-warnings=0 './**/*.{js,jsx,ts,tsx}'",
+    "eslint:fix": "eslint --fix './**/*.{js,jsx,ts,tsx}'"
   },
   "peerDependencies": {
     "@strapi/admin": "^5.0.0",
@@ -62,10 +62,12 @@
     "@types/lodash": "^4",
     "@types/qs": "^6",
     "@types/react-copy-to-clipboard": "^5.0.7",
+    "eslint": "^8.57.1",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-router-dom": "^6.0.0",
-    "styled-components": "^6.0.0"
+    "styled-components": "^6.0.0",
+    "yalc": "^1.0.0-pre.53"
   },
   "dependencies": {
     "formik": "^2.4.0",
