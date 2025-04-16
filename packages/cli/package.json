@@ -19,10 +19,10 @@
   ],
   "scripts": {
     "check": "pack-up check",
-    "build": "pack-up build && ../../node_modules/.bin/yalc push --publish",
+    "build": "pack-up build && yalc push --publish",
     "watch": "pack-up watch",
-    "eslint": "../../node_modules/.bin/eslint --max-warnings=0 './**/*.{js,jsx,ts,tsx}'",
-    "eslint:fix": "../../node_modules/.bin/eslint --fix './**/*.{js,jsx,ts,tsx}'"
+    "eslint": "eslint --max-warnings=0 './**/*.{js,jsx,ts,tsx}'",
+    "eslint:fix": "eslint --fix './**/*.{js,jsx,ts,tsx}'"
   },
   "bin": {
     "strapi-webtools": "./dist/index.js"
@@ -39,7 +39,9 @@
     "@types/fs-extra": "^11.0.4",
     "@types/glob": "^8.1.0",
     "@types/node": "^20.11.19",
-    "typescript": "^5.3.3"
+    "eslint": "^8.57.1",
+    "typescript": "^5.3.3",
+    "yalc": "^1.0.0-pre.53"
   },
   "author": {
     "name": "Boaz Poolman",
