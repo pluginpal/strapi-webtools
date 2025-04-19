@@ -1,5 +1,13 @@
 # core
 
+## 1.4.2
+
+### Patch Changes
+
+- [#262](https://github.com/pluginpal/strapi-webtools/pull/262) [`9be555a`](https://github.com/pluginpal/strapi-webtools/commit/9be555a65e8eb7c5291c0210ce58115a847d3297) Thanks [@jorrit](https://github.com/jorrit)! - fix: simplify scripts by adding devDependencies
+
+- [`534bace`](https://github.com/pluginpal/strapi-webtools/commit/534baceb172de0cf3a53228e292f3444cce48594) Thanks [@boazpoolman](https://github.com/boazpoolman)! - fix: remove test title in URL alias modal
+
 ## 1.4.1
 
 ### Patch Changes
