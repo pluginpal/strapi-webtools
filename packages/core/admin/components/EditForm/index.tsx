@@ -67,7 +67,7 @@ const EditForm = () => {
           <Modal.Content>
             <Modal.Header>
               <Typography fontWeight="bold" textColor="neutral800" id="title">
-                test
+                URL alias
               </Typography>
             </Modal.Header>
             <Modal.Body>
