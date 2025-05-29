@@ -16,32 +16,36 @@ export async function install() {
   // Get available content types
   const contentTypes = getContentTypes();
 
-  // Let user select content types
-  const selectedContentTypes = await checkbox({
-    message: 'Select content types to enable Webtools for:',
-    choices: contentTypes.map((type) => ({
-      name: type,
-      value: type,
-    })),
-  });
-
-  // Enable Webtools for selected content types
-  if (selectedContentTypes.length > 0) {
-    console.log(chalk.blue('\nEnabling Webtools for selected content types...'));
-
-    const results = selectedContentTypes.map((contentType) => {
-      const success = enableWebtoolsForContentType(contentType);
-      if (success) {
-        console.log(chalk.green(`✓ Enabled Webtools for ${contentType}`));
-        return true;
-      }
-
-      console.log(chalk.red(`✗ Failed to enable Webtools for ${contentType}`));
-      return false;
+  if (contentTypes.length === 0) {
+    console.log(chalk.yellow('No content types found in your Strapi project, skipping Webtools setup step. You can enable Webtools later using the "enable" command.'));
+  } else {
+    // Let user select content types
+    const selectedContentTypes = await checkbox({
+      message: 'Select content types to enable Webtools for:',
+      choices: contentTypes.map((type) => ({
+        name: type,
+        value: type,
+      })),
     });
 
-    const successCount = results.filter(Boolean).length;
-    console.log(chalk.blue(`\nEnabled Webtools for ${successCount} of ${selectedContentTypes.length} content types.`));
+    // Enable Webtools for selected content types
+    if (selectedContentTypes.length > 0) {
+      console.log(chalk.blue('\nEnabling Webtools for selected content types...'));
+
+      const results = selectedContentTypes.map((contentType) => {
+        const success = enableWebtoolsForContentType(contentType);
+        if (success) {
+          console.log(chalk.green(`✓ Enabled Webtools for ${contentType}`));
+          return true;
+        }
+
+        console.log(chalk.red(`✗ Failed to enable Webtools for ${contentType}`));
+        return false;
+      });
+
+      const successCount = results.filter(Boolean).length;
+      console.log(chalk.blue(`\nEnabled Webtools for ${successCount} of ${selectedContentTypes.length} content types.`));
+    }
   }
 
   // Get available addons
