@@ -1,6 +1,6 @@
 {
   "name": "strapi-plugin-webtools",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "Everything you need to build a website with Strapi CMS",
   "strapi": {
     "name": "webtools",

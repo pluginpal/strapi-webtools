@@ -1,6 +1,6 @@
 {
   "name": "webtools-cli",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "CLI installer for Strapi Webtools",
   "exports": {
     ".": {
