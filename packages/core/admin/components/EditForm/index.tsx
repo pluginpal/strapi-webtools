@@ -29,7 +29,7 @@ const EditForm = () => {
   const urlParams = new URLSearchParams(window.location.search);
   const locale = urlParams.get('plugins[i18n][locale]');
   const aliases = useQuery(`aliases-${model}-${id}-${locale}`, async () => get<UrlAliasEntity[]>(`/webtools/url-alias/findFrom?model=${model}&documentId=${id}&locale=${locale}`));
-  const mutation = useMutation((updatedAlias: Partial<UrlAliasEntity>) => put(`/webtools/url-alias/update/${aliases.data.data[0].documentId}`, {
+  const mutation = useMutation((updatedAlias: Partial<UrlAliasEntity>) => put(`/webtools/url-alias/update/${aliases.data.data[0].documentId}${locale ? `?locale=${locale}` : ''}`, {
     data: updatedAlias,
   }));
 
