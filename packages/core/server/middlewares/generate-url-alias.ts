@@ -154,6 +154,13 @@ const generateUrlAliasMiddleware: Modules.Documents.Middleware.Middleware = asyn
     populate: params.populate,
   });
 
+  if (action === 'clone') {
+    return {
+      documentId: entity.documentId,
+      entries: [finalEntity],
+    };
+  }
+
   return finalEntity;
 };
 
