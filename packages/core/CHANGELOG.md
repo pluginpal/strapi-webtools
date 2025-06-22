@@ -1,5 +1,13 @@
 # core
 
+## 1.4.3
+
+### Patch Changes
+
+- [#276](https://github.com/pluginpal/strapi-webtools/pull/276) [`56de963`](https://github.com/pluginpal/strapi-webtools/commit/56de9638c15032a622e3affee4b00e55e92779ea) Thanks [@boazpoolman](https://github.com/boazpoolman)! - fix: response structure for cloned content to prevent issues
+
+- [#277](https://github.com/pluginpal/strapi-webtools/pull/277) [`7171604`](https://github.com/pluginpal/strapi-webtools/commit/7171604a970295ca50416fb62bcd05f7e7f089fd) Thanks [@boazpoolman](https://github.com/boazpoolman)! - fix: pass the locale to the URL alias update request to prevent issues
+
 ## 1.4.2
 
 ### Patch Changes
