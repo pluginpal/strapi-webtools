@@ -29,11 +29,11 @@ describe('Query layer decorator', () => {
     expect(clonedPage).not.toBeNull();
 
     const newUrlAliasPath = `${page.url_alias[0].url_path}-0`;
-    expect(clonedPage).toHaveProperty('url_alias[0].url_path', newUrlAliasPath);
-    expect(clonedPage).toHaveProperty('url_alias[0].generated', true);
-    expect(clonedPage).toHaveProperty('url_alias[0].contenttype', 'api::test.test');
+    expect(clonedPage).toHaveProperty('entries[0].url_alias[0].url_path', newUrlAliasPath);
+    expect(clonedPage).toHaveProperty('entries[0].url_alias[0].generated', true);
+    expect(clonedPage).toHaveProperty('entries[0].url_alias[0].contenttype', 'api::test.test');
     expect(clonedPage.documentId).not.toBe(page.documentId);
-    expect(clonedPage.url_alias[0].documentId).not.toBe(page.url_alias[0].documentId);
+    expect(clonedPage.entries[0].url_alias[0].documentId).not.toBe(page.url_alias[0].documentId);
   });
 
   it('Create - Should generate a new URL alias', async () => {
