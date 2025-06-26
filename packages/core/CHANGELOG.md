@@ -1,5 +1,11 @@
 # core
 
+## 1.4.4
+
+### Patch Changes
+
+- [#287](https://github.com/pluginpal/strapi-webtools/pull/287) [`b917017`](https://github.com/pluginpal/strapi-webtools/commit/b9170170316d6e5dd93580aaa67ce4587338be52) Thanks [@jorrit](https://github.com/jorrit)! - Fixes several Typescript issues and adds lint check
+
 ## 1.4.3
 
 ### Patch Changes
