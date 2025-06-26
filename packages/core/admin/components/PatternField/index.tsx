@@ -31,8 +31,8 @@ const PatternField: FC<Props> = ({
   const { get } = getFetchClient();
   const fields = useQuery('fields', async () => get<Record<string, string[]>>('/webtools/url-pattern/allowed-fields'));
   const { formatMessage } = useIntl();
-  const inputRef = useRef<HTMLInputElement>();
-  const popoverRef = useRef();
+  const inputRef = useRef<HTMLInputElement>(undefined);
+  const popoverRef = useRef(undefined);
 
   const HoverBox = styled(Box)`
     cursor: pointer;

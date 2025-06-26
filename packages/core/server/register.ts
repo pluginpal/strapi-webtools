@@ -22,7 +22,7 @@ export default ({ strapi }: { strapi: Core.Strapi }) => {
 
     // Add a relation field to the url_alias content type, only
     // when webtools is explicitly enabled using pluginOptions.
-    if (isContentTypeEnabled(contentType.uid)) {
+    if (isContentTypeEnabled(contentType)) {
       set(attributes, 'url_alias', {
         writable: true,
         private: false,

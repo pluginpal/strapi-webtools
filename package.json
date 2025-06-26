@@ -11,6 +11,7 @@
     "develop": "FORCE_COLOR=1 turbo run watch:link",
     "eslint": "turbo run eslint",
     "eslint:fix": "turbo run eslint:fix",
+    "tscheck": "tsc --noEmit",
     "release:publish": "turbo run build && changeset publish",
     "release:prepare": "changeset version && YARN_ENABLE_IMMUTABLE_INSTALLS=false yarn install",
     "playground:install": "cd playground && yarn dlx yalc add --link strapi-plugin-webtools webtools-addon-sitemap && yarn install",
