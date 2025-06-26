@@ -2,8 +2,10 @@ import { Modules } from '@strapi/strapi';
 import { isContentTypeEnabled } from '../util/enabledContentTypes';
 
 const deleteUrlAliasMiddleware: Modules.Documents.Middleware.Middleware = async (context, next) => {
-  const { uid, action, params } = context;
-  const hasWT = isContentTypeEnabled(uid);
+  const {
+    uid, action, params, contentType,
+  } = context;
+  const hasWT = isContentTypeEnabled(contentType);
 
   // If Webtools isn't enabled, do nothing.
   if (!hasWT) {

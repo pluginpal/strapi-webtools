@@ -4,8 +4,8 @@ import { getPluginService } from '../util/getPluginService';
 
 // eslint-disable-next-line max-len
 const generateUrlAliasMiddleware: Modules.Documents.Middleware.Middleware = async (context, next) => {
-  const { uid, action } = context;
-  const hasWT = isContentTypeEnabled(uid);
+  const { uid, action, contentType } = context;
+  const hasWT = isContentTypeEnabled(contentType);
 
   // If Webtools isn't enabled, do nothing.
   if (!hasWT) {

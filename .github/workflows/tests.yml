@@ -37,6 +37,8 @@ jobs:
         run: yarn run build
       - name: Run eslint
         run: yarn run eslint
+      - name: Run Typescript checks
+        run: yarn run tscheck
   test:
     name: 'test'
     needs: [lint]
