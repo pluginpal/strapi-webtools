@@ -179,7 +179,7 @@ const customServices = () => ({
         }
       });
 
-      resolvedPattern = resolvedPattern.replace(/([^:]\/)\/+/g, '$1'); // Remove duplicate forward slashes.
+      resolvedPattern = resolvedPattern.replace(/\/+/g, '/'); // Remove duplicate forward slashes.
       resolvedPattern = resolvedPattern.startsWith('/') ? resolvedPattern : `/${resolvedPattern}`; // Add a starting slash.
       return resolvedPattern;
     };
