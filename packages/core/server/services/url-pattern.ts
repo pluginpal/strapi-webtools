@@ -159,6 +159,7 @@ const customServices = () => ({
 
       fields.forEach((field) => {
         const relationalField = field.split('.').length > 1 ? field.split('.') : null;
+        const { slugify } = strapi.config.get<Config>('plugin::webtools');
 
         if (field === 'pluralName') {
           const fieldValue = strapi.contentTypes[uid].info.pluralName;
@@ -169,17 +170,16 @@ const customServices = () => ({
 
           resolvedPattern = resolvedPattern.replace(`[${field}]`, fieldValue || '');
         } else if (!relationalField) {
-          const { slugify } = strapi.config.get<Config>('plugin::webtools');
           const fieldValue = slugify(String(entity[field]));
           resolvedPattern = resolvedPattern.replace(`[${field}]`, fieldValue || '');
         } else if (Array.isArray(entity[relationalField[0]])) {
           strapi.log.error('Something went wrong whilst resolving the pattern.');
         } else if (typeof entity[relationalField[0]] === 'object') {
-          resolvedPattern = resolvedPattern.replace(`[${field}]`, entity[relationalField[0]] && String((entity[relationalField[0]] as any[])[relationalField[1]]) ? String((entity[relationalField[0]] as any[])[relationalField[1]]) : '');
+          resolvedPattern = resolvedPattern.replace(`[${field}]`, entity[relationalField[0]] && String((entity[relationalField[0]] as any[])[relationalField[1]]) ? slugify(String((entity[relationalField[0]] as any[])[relationalField[1]])) : '');
         }
       });
 
-      resolvedPattern = resolvedPattern.replace(/([^:]\/)\/+/g, '$1'); // Remove duplicate forward slashes.
+      resolvedPattern = resolvedPattern.replace(/\/+/g, '/'); // Remove duplicate forward slashes.
       resolvedPattern = resolvedPattern.startsWith('/') ? resolvedPattern : `/${resolvedPattern}`; // Add a starting slash.
       return resolvedPattern;
     };
