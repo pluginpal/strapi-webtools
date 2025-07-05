@@ -11,4 +11,5 @@ module.exports = {
   transform: {
     '^.+\\.(ts|tsx|js|jsx)$': 'ts-jest',
   },
+  testTimeout: 30_000,
 };

@@ -63,13 +63,20 @@ export default {
           .updateRole(publicRole.id, publicRole);
       }
 
+      await strapi.documents('plugin::i18n.locale').create({
+        data: {
+          code: 'nl',
+          name: 'Dutch (nl)',
+        },
+      });
+
       await strapi.documents('plugin::webtools.url-pattern').create({
         data: {
           pattern: '/page/[title]',
           label: 'Test API pattern',
           code: 'test_api_pattern',
           contenttype: 'api::test.test',
-          languages: ['en'],
+          languages: ['en', 'nl'],
         },
       });
 

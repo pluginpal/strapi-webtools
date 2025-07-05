@@ -14,7 +14,8 @@ export async function setupStrapi() {
       appDir: './playground',
       distDir: './playground/dist',
     }).load();
-    strapi.server.mount();
+
+    await strapi.start();
 
     instance = strapi; // strapi is global now
   }
@@ -31,8 +32,6 @@ export async function stopStrapi() {
 
     assert(typeof tmpDbFile === 'string');
 
-    instance.server.httpServer.close();
-    await instance.db.connection.destroy();
     await instance.destroy();
 
     if (fs.existsSync(tmpDbFile)) {

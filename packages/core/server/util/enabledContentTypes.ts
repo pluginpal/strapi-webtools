@@ -13,9 +13,6 @@ export const isContentTypeEnabled = (ct: Schema.ContentType) => {
   }
 
   const { pluginOptions } = contentType;
-  const enabled = get(pluginOptions, [pluginId, 'enabled'], false) as boolean;
 
-  if (!enabled) return false;
-
-  return true;
+  return get(pluginOptions, [pluginId, 'enabled'], false) as boolean;
 };
