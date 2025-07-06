@@ -1,5 +1,15 @@
 # core
 
+## 1.4.4
+
+### Patch Changes
+
+- [#292](https://github.com/pluginpal/strapi-webtools/pull/292) [`2456afc`](https://github.com/pluginpal/strapi-webtools/commit/2456afc9f2359b32b26a2067dabf2158579bf477) Thanks [@boazpoolman](https://github.com/boazpoolman)! - fix: duplicate forward slash removal
+
+- [#287](https://github.com/pluginpal/strapi-webtools/pull/287) [`b917017`](https://github.com/pluginpal/strapi-webtools/commit/b9170170316d6e5dd93580aaa67ce4587338be52) Thanks [@jorrit](https://github.com/jorrit)! - Fixes several Typescript issues and adds lint check
+
+- [#292](https://github.com/pluginpal/strapi-webtools/pull/292) [`49f6fb0`](https://github.com/pluginpal/strapi-webtools/commit/49f6fb0bb631ddcfebf1bf7738957eab462e5a80) Thanks [@boazpoolman](https://github.com/boazpoolman)! - fix: actually slugify relational fields in the pattern
+
 ## 1.4.3
 
 ### Patch Changes
