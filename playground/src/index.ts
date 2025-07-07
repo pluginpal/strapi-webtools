@@ -19,6 +19,9 @@ export default {
   async bootstrap({ strapi }: { strapi: Core.Strapi }) {
     // Seed the database with some test data for the integration tests.
     if (process.env.NODE_ENV === 'test') {
+      // Hide repeated startup messages while running tests.
+      strapi.config.set('server.logger.startup.enabled', false);
+
       // Give the public role some permissions to test with
       const roles = await strapi
         .service('plugin::users-permissions.role')
