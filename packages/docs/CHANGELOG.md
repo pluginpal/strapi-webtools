@@ -1,5 +1,11 @@
 # docs
 
+## 1.1.2
+
+### Patch Changes
+
+- [#291](https://github.com/pluginpal/strapi-webtools/pull/291) [`fce4edd`](https://github.com/pluginpal/strapi-webtools/commit/fce4edd0fecb5d1bf9c4aba43d1b7c61a34ca2b9) Thanks [@jorrit](https://github.com/jorrit)! - feat: unique aliases per locale
+
 ## 1.1.1
 
 ### Patch Changes
