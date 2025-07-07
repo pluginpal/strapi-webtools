@@ -1,5 +1,11 @@
 # docs
 
+## 1.1.3
+
+### Patch Changes
+
+- [`9da7ee6`](https://github.com/pluginpal/strapi-webtools/commit/9da7ee641f6efcd7dcb39b177714c04c87e9692c) Thanks [@boazpoolman](https://github.com/boazpoolman)! - docs: add unique_per_locale config page to the sidebar
+
 ## 1.1.2
 
 ### Patch Changes
