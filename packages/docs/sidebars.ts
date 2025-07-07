@@ -59,6 +59,7 @@ const sidebars = {
         "configuration/default-pattern",
         "configuration/website-url",
         "configuration/slugify",
+        "configuration/unique-per-locale",
       ],
     },
     // {
