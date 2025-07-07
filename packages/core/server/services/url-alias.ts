@@ -44,8 +44,8 @@ const customServices = () => ({
   /**
    * findByPath.
    *
-   * @param {string} path the path.
-   * @param {number} id the id to ignore.
+   * @param path the path.
+   * @param excludeFilters the id to ignore.
    */
   findByPath: async (path: string, excludeFilters: { [key: string]: any }[] = [{}]) => {
     const locales = await strapi.documents('plugin::i18n.locale').findMany({ fields: 'code' });
@@ -72,18 +72,56 @@ const customServices = () => ({
 
   /**
    * Finds a path from the original path that is unique
+   *
+   * @param originalPath The path as generated from the pattern and document
+   * @param currentDocumentId If generating for an existing document, its document id
+   * @param currentLocale If generating for an existing document, its locale code
    */
   makeUniquePath: async (
     originalPath: string,
-    excludeFilters?: { [key: string]: any }[],
-    ext: number = -1,
+    currentDocumentId?: string,
+    currentLocale?: string,
   ): Promise<string> => {
-    const extension = ext >= 0 ? `-${ext}` : '';
-    const newPath = originalPath + extension;
-    const pathAlreadyExists = await getPluginService('url-alias').findByPath(newPath, excludeFilters);
+    const uniquePerLocale = strapi.config.get('plugin::webtools.unique_per_locale', false);
+    let newPath = originalPath;
 
-    if (pathAlreadyExists) {
-      return getPluginService('url-alias').makeUniquePath(originalPath, excludeFilters, ext + 1);
+    // FIXME: limit number of iterations to prevent overloading the server?
+    for (let iteration = -1; ; ++iteration) {
+      if (iteration >= 0) {
+        newPath = `${originalPath}-${iteration}`;
+      }
+
+      const filters: { $and: unknown[] } = {
+        $and: [
+          { url_path: newPath },
+        ],
+      };
+
+      if (currentDocumentId) {
+        filters.$and.push({
+          $not: {
+            $and: [
+              {
+                documentId: { $eq: currentDocumentId },
+              },
+              {
+                locale: { $eq: currentLocale },
+              },
+            ],
+          },
+        });
+      }
+
+      // This loop can't be parallelized as the iteration is increased between each step.
+      // eslint-disable-next-line no-await-in-loop
+      const existingPathEntity = await strapi.documents('plugin::webtools.url-alias').findFirst({
+        locale: uniquePerLocale ? currentLocale : undefined,
+        filters,
+      });
+
+      if (!existingPathEntity) {
+        break;
+      }
     }
 
     return newPath;

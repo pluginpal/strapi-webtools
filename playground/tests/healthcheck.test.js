@@ -1,4 +1,4 @@
-const { setupStrapi, stopStrapi } = require("./helpers");
+const { setupStrapi, stopStrapi } = require('./helpers');
 
 jest.setTimeout(50000);
 
@@ -10,8 +10,8 @@ afterAll(async () => {
   await stopStrapi();
 });
 
-describe("Strapi is defined", () => {
-  it("just works", () => {
+describe('Strapi is defined', () => {
+  it('just works', () => {
     expect(strapi).toBeDefined();
   });
 });

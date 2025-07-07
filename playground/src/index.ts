@@ -19,6 +19,9 @@ export default {
   async bootstrap({ strapi }: { strapi: Core.Strapi }) {
     // Seed the database with some test data for the integration tests.
     if (process.env.NODE_ENV === 'test') {
+      // Hide repeated startup messages while running tests.
+      strapi.config.set('server.logger.startup.enabled', false);
+
       // Give the public role some permissions to test with
       const roles = await strapi
         .service('plugin::users-permissions.role')
@@ -63,13 +66,20 @@ export default {
           .updateRole(publicRole.id, publicRole);
       }
 
+      await strapi.documents('plugin::i18n.locale').create({
+        data: {
+          code: 'nl',
+          name: 'Dutch (nl)',
+        },
+      });
+
       await strapi.documents('plugin::webtools.url-pattern').create({
         data: {
           pattern: '/page/[title]',
           label: 'Test API pattern',
           code: 'test_api_pattern',
           contenttype: 'api::test.test',
-          languages: ['en'],
+          languages: ['en', 'nl'],
         },
       });
 
