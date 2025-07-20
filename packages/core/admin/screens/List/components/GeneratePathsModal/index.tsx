@@ -140,7 +140,7 @@ const GeneratePathsModal = ({
           >
             {formatMessage({
               id: 'webtools.settings.button.generate_paths',
-              defaultMessage: 'Generate paths',
+              defaultMessage: 'Bulk generate',
             })}
           </Button>
         </Modal.Footer>
