@@ -25,7 +25,8 @@ const GeneratePathsModal = ({
   contentTypes,
   children,
 }: Props) => {
-  const [open, setOpen] = React.useState<boolean>();
+  const [open, setOpen] = React.useState<boolean>(false);
+  const [submitting, setSubmitting] = React.useState<boolean>(false);
   const { formatMessage } = useIntl();
   const [selectedContentTypes, setSelectedContentTypes] = React.useState<EnabledContentType['uid'][]>([]);
   const [selectedGenerationType, setSelectedGenerationType] = React.useState<GenerationType>();
@@ -135,9 +136,15 @@ const GeneratePathsModal = ({
           <Button
             // eslint-disable-next-line @typescript-eslint/no-misused-promises
             onClick={async () => {
-              await onSubmit(selectedContentTypes, selectedGenerationType);
-              setOpen(false);
+              try {
+                setSubmitting(true);
+                await onSubmit(selectedContentTypes, selectedGenerationType);
+                setOpen(false);
+              } finally {
+                setSubmitting(false);
+              }
             }}
+            loading={submitting}
           >
             {formatMessage({
               id: 'webtools.settings.button.generate_paths',
