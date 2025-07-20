@@ -53,7 +53,7 @@ const ContentTypesList = (props: Props) => {
           </Thead>
           <Tbody>
             {contentTypes.map((contenttype) => (
-              <Tr>
+              <Tr key={contenttype.uid}>
                 <Td width="50%">
                   <Typography>{contenttype.name}</Typography>
                 </Td>

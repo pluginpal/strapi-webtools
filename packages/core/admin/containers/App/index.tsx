@@ -85,7 +85,7 @@ const App = () => {
         <Route path="/patterns/new" element={<PatternsCreatePage />} />
         <Route path="/patterns/:id" element={<PatternsEditPage />} />
         {routerComponents.map(({ path, Component }) => (
-          <Route path={path} element={<Component />} />
+          <Route key={path} path={path} element={<Component />} />
         ))}
 
         <Route path="*" element={<PageNotFound />} />

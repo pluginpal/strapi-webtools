@@ -62,6 +62,7 @@ const GeneratePathsModal = ({
               <Flex direction="column" alignItems="start" gap="1" marginTop="2">
                 {contentTypes.map((contentType) => (
                   <Checkbox
+                    key={contentType.uid}
                     aria-label={`Select ${contentType.name}`}
                     checked={selectedContentTypes.includes(contentType.uid)}
                     onCheckedChange={() => {

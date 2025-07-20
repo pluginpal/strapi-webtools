@@ -156,6 +156,7 @@ const List = () => {
                     width: '240px',
                   }}
                   id="fourth"
+                  key={addon.info.name}
                 >
                   <CardBody>
                     <Box padding={2} background="primary100">
