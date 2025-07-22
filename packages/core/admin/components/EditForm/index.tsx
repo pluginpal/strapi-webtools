@@ -59,7 +59,7 @@ const EditForm = () => {
               size="S"
               variant="secondary"
               style={{ width: '100%' }}
-              disabled={aliases.data.data.length === 0}
+              disabled={aliases.data?.data.length === 0}
             >
               Edit URL alias
             </Button>
