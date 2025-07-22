@@ -1,5 +1,13 @@
 # core
 
+## 1.5.1
+
+### Patch Changes
+
+- [#296](https://github.com/pluginpal/strapi-webtools/pull/296) [`0dfc272`](https://github.com/pluginpal/strapi-webtools/commit/0dfc2724818438586278428080d7a2919edc7387) Thanks [@jorrit](https://github.com/jorrit)! - show spinner when bulk generating aliases
+
+- [#300](https://github.com/pluginpal/strapi-webtools/pull/300) [`6e34ecb`](https://github.com/pluginpal/strapi-webtools/commit/6e34ecbe3f3a8296a3f40b5d8bf9bb9729f2c475) Thanks [@boazpoolman](https://github.com/boazpoolman)! - fix: issue when switching to another locale on the content manager create page (#295)
+
 ## 1.5.0
 
 ### Minor Changes
