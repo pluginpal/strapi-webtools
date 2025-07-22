@@ -35,11 +35,9 @@ const generateUrlAliases = async (params: GenerateParams): Promise<number> => {
     }
 
     let relations: string[] = [];
-    let languages: string[] = [undefined];
 
-    languages = [];
     const locales = await strapi.documents('plugin::i18n.locale').findMany({});
-    languages = locales.map((locale) => locale.code);
+    const languages = locales.map((locale) => locale.code);
 
     // Get all relations for the type
     await Promise.all(languages.map(async (lang) => {

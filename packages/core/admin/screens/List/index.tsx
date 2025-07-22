@@ -85,7 +85,7 @@ const List = () => {
             <Button>
               {formatMessage({
                 id: 'webtools.settings.button.generate_paths',
-                defaultMessage: 'Generate paths',
+                defaultMessage: 'Bulk generate',
               })}
             </Button>
           </GeneratePathsModal>
