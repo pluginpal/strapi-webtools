@@ -65,5 +65,5 @@
   "settings.page.patterns.create.subtitle": "Pattern details",
   "settings.page.patterns.create.description": "Add a pattern for automatic URL alias generation.",
 
-  "notification.success.permalink_copied": "Permalinkk copied to the clipboard"
+  "notification.success.permalink_copied": "Permalink copied to the clipboard"
 }
