@@ -36,17 +36,12 @@ const generateUrlAliases = async (params: GenerateParams): Promise<number> => {
 
     let relations: string[] = [];
 
-    const locales = await strapi.documents('plugin::i18n.locale').findMany({});
-    const languages = locales.map((locale) => locale.code);
-
-    // Get all relations for the type
-    await Promise.all(languages.map(async (lang) => {
-      const urlPatterns = await getPluginService('url-pattern').findByUid(type, lang);
-      urlPatterns.forEach((urlPattern) => {
-        const languageRelations = getPluginService('url-pattern').getRelationsFromPattern(urlPattern);
-        relations = [...relations, ...languageRelations];
-      });
-    }));
+    // Get all relations for the type from all patterns for all languages.
+    const urlPatterns = await getPluginService('url-pattern').findByUid(type);
+    urlPatterns.forEach((urlPattern) => {
+      const languageRelations = getPluginService('url-pattern').getRelationsFromPattern(urlPattern);
+      relations = [...relations, ...languageRelations];
+    });
 
     // Query all the entities of the type that do not have a corresponding URL alias.
     const entities = await strapi.documents(type as 'api::test.test').findMany({
@@ -70,9 +65,10 @@ const generateUrlAliases = async (params: GenerateParams): Promise<number> => {
      */
     // eslint-disable-next-line no-restricted-syntax
     for (const entity of entities) {
+      // FIXME: just filter the `urlPatterns` we already have.
       // eslint-disable-next-line no-await-in-loop
-      const urlPatterns = await getPluginService('url-pattern').findByUid(type, entity.locale);
-      const resolvedPath = getPluginService('url-pattern').resolvePattern(type, entity, urlPatterns[0]);
+      const entityUrlPatterns = await getPluginService('url-pattern').findByUid(type, entity.locale);
+      const resolvedPath = getPluginService('url-pattern').resolvePattern(type, entity, entityUrlPatterns[0]);
 
       // eslint-disable-next-line no-await-in-loop
       const newUrlAlias = await strapi.documents('plugin::webtools.url-alias').create({
