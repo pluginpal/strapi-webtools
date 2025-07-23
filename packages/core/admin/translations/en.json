@@ -22,6 +22,9 @@
   "settings.form.pattern.description_3": "or",
   "settings.form.contenttype.label": "Content type",
 
+  "settings.page.overview.title": "Overview",
+  "settings.page.overview.description": "Webtools global information",
+
   "settings.page.list.title": "All URLs",
   "settings.page.list.description": "A list of all the known URL aliases.",
   "settings.page.list.body": "List all URL aliases",

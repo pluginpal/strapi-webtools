@@ -41,7 +41,7 @@ const ListPatternPage = () => {
     <Page.Protect permissions={pluginPermissions['settings.patterns']}>
       <Box>
         <Layouts.Header
-          title={formatMessage({ id: 'webtools.settings.page.patterns.title', defaultMessage: 'Patterns' })}
+          title={formatMessage({ id: 'webtools.settings.page.patterns.title', defaultMessage: 'URL patterns' })}
           subtitle={formatMessage({ id: 'webtools.settings.page.patterns.description', defaultMessage: 'A list of all the known URL alias patterns.' })}
           primaryAction={(
             <Button onClick={() => navigate(`/plugins/${pluginId}/patterns/new`)} startIcon={<Plus />}>

@@ -6,6 +6,7 @@ import {
   Link,
 } from 'react-router-dom';
 
+import { useIntl } from 'react-intl';
 import {
   SubNav,
   SubNavHeader,
@@ -34,6 +35,7 @@ const App = () => {
   const {
     allowedActions: { canList, canPatterns, canOverview },
   } = useRBAC(pluginPermissions);
+  const { formatMessage } = useIntl();
 
   const plugin = getPlugin(pluginId);
 
@@ -50,18 +52,18 @@ const App = () => {
           <SubNavSections>
             <SubNavSection label="Core">
               {canOverview && (
-                <SubNavLink tag={Link} to="/plugins/webtools" key="test" className={currentPath === '/plugins/webtools' ? 'active' : ''}>
-                  Overview
+                <SubNavLink tag={Link} to="/plugins/webtools" key="overview" className={currentPath === '/plugins/webtools' ? 'active' : ''}>
+                  {formatMessage({ id: 'webtools.settings.page.overview.title', defaultMessage: 'Overview' })}
                 </SubNavLink>
               )}
               {canList && (
-                <SubNavLink tag={Link} to="/plugins/webtools/urls" key="test" className={currentPath.startsWith('/plugins/webtools/urls') ? 'active' : ''}>
-                  All URLs
+                <SubNavLink tag={Link} to="/plugins/webtools/urls" key="list" className={currentPath.startsWith('/plugins/webtools/urls') ? 'active' : ''}>
+                  {formatMessage({ id: 'webtools.settings.page.list.title', defaultMessage: 'All URLs' })}
                 </SubNavLink>
               )}
               {canPatterns && (
-                <SubNavLink tag={Link} to="/plugins/webtools/patterns" key="test" className={currentPath.startsWith('/plugins/webtools/patterns') ? 'active' : ''}>
-                  Url Patterns
+                <SubNavLink tag={Link} to="/plugins/webtools/patterns" key="patterns" className={currentPath.startsWith('/plugins/webtools/patterns') ? 'active' : ''}>
+                  {formatMessage({ id: 'webtools.settings.page.patterns.title', defaultMessage: 'URL patterns' })}
                 </SubNavLink>
               )}
             </SubNavSection>

@@ -74,7 +74,7 @@ const List = () => {
   return (
     <Page.Protect permissions={pluginPermissions['settings.list']}>
       <Layouts.Header
-        title={formatMessage({ id: 'webtools.settings.page.list.title', defaultMessage: 'URLs' })}
+        title={formatMessage({ id: 'webtools.settings.page.list.title', defaultMessage: 'All URLs' })}
         subtitle={formatMessage({ id: 'webtools.settings.page.list.description', defaultMessage: 'A list of all the known URL aliases.' })}
         primaryAction={(
           <GeneratePathsModal
