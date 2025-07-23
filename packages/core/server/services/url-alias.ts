@@ -75,7 +75,7 @@ const customServices = () => ({
    *
    * @param originalPath The path as generated from the pattern and document
    * @param currentDocumentId If generating for an existing document, its document id
-   * @param currentLocale If generating for an existing document, its locale code
+   * @param currentLocale If generating for an existing i18n document, its locale code
    */
   makeUniquePath: async (
     originalPath: string,
@@ -98,16 +98,19 @@ const customServices = () => ({
       };
 
       if (currentDocumentId) {
+        const documentFilters: unknown[] = [{
+          documentId: { $eq: currentDocumentId },
+        }];
+
+        if (currentLocale) {
+          documentFilters.push({
+            locale: { $eq: currentLocale },
+          });
+        }
+
         filters.$and.push({
           $not: {
-            $and: [
-              {
-                documentId: { $eq: currentDocumentId },
-              },
-              {
-                locale: { $eq: currentLocale },
-              },
-            ],
+            $and: documentFilters,
           },
         });
       }

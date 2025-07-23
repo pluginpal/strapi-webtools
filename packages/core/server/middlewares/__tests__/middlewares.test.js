@@ -296,6 +296,28 @@ describe('Query layer decorator', () => {
     expect(updatedPage).toHaveProperty('url_alias[0].url_path', url);
   });
 
+  it('Update - Should not duplicate check the same entry when updated - no i18n', async () => {
+    const category = await strapi.documents('api::category.category').create({
+      data: {
+        title: 'A category',
+      },
+      populate: ['url_alias'],
+    });
+
+    console.log(category);
+    expect(category).toHaveProperty('url_alias[0].url_path', '/category/a-category');
+
+    const updatedCategory = await strapi.documents('api::category.category').update({
+      documentId: category.documentId,
+      data: {
+        published_at: new Date(),
+      },
+      populate: ['url_alias'],
+    });
+
+    expect(updatedCategory).toHaveProperty('url_alias[0].url_path', '/category/a-category');
+  });
+
   it('Delete - Should delete the corresponding URL alias as well', async () => {
     const page = await strapi.documents('api::test.test').create({
       data: {
