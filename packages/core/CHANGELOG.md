@@ -1,5 +1,11 @@
 # core
 
+## 1.5.2
+
+### Patch Changes
+
+- [#302](https://github.com/pluginpal/strapi-webtools/pull/302) [`aa5ccce`](https://github.com/pluginpal/strapi-webtools/commit/aa5ccce050ad1ac8a84f91ddde7b937492e9c746) Thanks [@jorrit](https://github.com/jorrit)! - fix: alias gets -0 suffix when updating non-i18n document
+
 ## 1.5.1
 
 ### Patch Changes
