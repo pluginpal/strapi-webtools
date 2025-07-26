@@ -21,12 +21,13 @@ const generateUrlAliasMiddleware: Modules.Documents.Middleware.Middleware = asyn
 
   // Fetch the URL pattern for this content type.
   let relations: string[] = [];
-  let languages: string[] = [undefined];
   let urlAliasEntity: Data.ContentType<'plugin::webtools.url-alias'> | undefined;
 
-  languages = [];
-  const locales = await strapi.entityService.findMany('plugin::i18n.locale', {});
-  languages = locales.map((locale) => locale.code);
+  let languages: (string | undefined)[] = [undefined];
+  if (params.locale) {
+    const locales = await strapi.entityService.findMany('plugin::i18n.locale', {});
+    languages = locales.map((locale) => locale.code);
+  }
 
   await Promise.all(languages.map(async (lang) => {
     const urlPatterns = await getPluginService('url-pattern').findByUid(uid, lang);

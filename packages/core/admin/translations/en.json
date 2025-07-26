@@ -22,6 +22,9 @@
   "settings.form.pattern.description_3": "or",
   "settings.form.contenttype.label": "Content type",
 
+  "settings.page.overview.title": "Overview",
+  "settings.page.overview.description": "Webtools global information",
+
   "settings.page.list.title": "All URLs",
   "settings.page.list.description": "A list of all the known URL aliases.",
   "settings.page.list.body": "List all URL aliases",
@@ -65,5 +68,5 @@
   "settings.page.patterns.create.subtitle": "Pattern details",
   "settings.page.patterns.create.description": "Add a pattern for automatic URL alias generation.",
 
-  "notification.success.permalink_copied": "Permalinkk copied to the clipboard"
+  "notification.success.permalink_copied": "Permalink copied to the clipboard"
 }

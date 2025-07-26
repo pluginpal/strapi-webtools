@@ -101,10 +101,10 @@ const customServices = () => ({
   /**
    * Get all fields from a pattern.
    *
-   * @param {string[]} patterns - The patterns to extract fields from.
+   * @param {string} pattern - The patterns to extract fields from.
    * @returns {string[]} The extracted fields.
    */
-  getFieldsFromPattern: (pattern: string) => {
+  getFieldsFromPattern: (pattern: string): string[] => {
     const fields = pattern.match(/[[\w\d.]+]/g); // Get all substrings between [] as array.
 
     if (!fields) {
@@ -119,10 +119,10 @@ const customServices = () => ({
   /**
    * Get all relations from a pattern.
    *
-   * @param {string[]} patterns - The patterns to extract relations from.
+   * @param {string} pattern - The patterns to extract relations from.
    * @returns {string[]} The extracted relations.
    */
-  getRelationsFromPattern: (pattern: string) => {
+  getRelationsFromPattern: (pattern: string): string[] => {
     // Get fields from the pattern (assuming they are inside square brackets)
     let fields = getPluginService('url-pattern').getFieldsFromPattern(pattern);
 
@@ -152,7 +152,6 @@ const customServices = () => ({
     const resolve = (pattern: string) => {
       let resolvedPattern: string = pattern;
 
-      // Ensure pattern is an array before sending it to getFieldsFromPattern
       const fields = getPluginService('url-pattern').getFieldsFromPattern(
         pattern,
       );

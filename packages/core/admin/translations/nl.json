@@ -20,6 +20,9 @@
   "settings.form.pattern.description_3": "of",
   "settings.form.contenttype.label": "Inhoudstype",
 
+  "settings.page.overview.title": "Overzicht",
+  "settings.page.overview.description": "Algemene Webtools informatie",
+
   "settings.page.list.title": "Alle URL's",
   "settings.page.list.description": "Een lijst met alle bekende URL-aliassen.",
   "settings.page.list.body": "Laat alle URL-aliassen zien",
