@@ -1,38 +1,28 @@
 import React from 'react';
 
 import { Map } from 'immutable';
-import { useIntl } from 'react-intl';
-import { useSelector, useDispatch } from 'react-redux';
+import { FormattedDate, FormattedTime, useIntl } from 'react-intl';
+import { useDispatch, useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 
 import { getFetchClient, useNotification } from '@strapi/strapi/admin';
-import {
-  Typography,
-  Box,
-  Button,
-  Link,
-  Flex,
-} from '@strapi/design-system';
+import { Box, Button, Flex, Link, Typography } from '@strapi/design-system';
 
 import { generateSitemap } from '../../state/actions/Sitemap';
-import { formatTime } from '../../helpers/timeFormat';
+
+const emptyMap = new Map();
 
 const Info = () => {
-  const hasHostname = useSelector((state) => state.getIn(['sitemap', 'initialData', 'hostname'], Map()));
-  const sitemapInfo = useSelector((state) => state.getIn(['sitemap', 'info'], Map()));
+  const hasHostname = useSelector((state) => state.getIn(['sitemap', 'initialData', 'hostname'], emptyMap));
+  const sitemapInfo = useSelector((state) => state.getIn(['sitemap', 'info'], emptyMap));
   let [, setSearchParams] = useSearchParams();
   const dispatch = useDispatch();
   const { toggleNotification } = useNotification();
   const { get } = getFetchClient();
   const { formatMessage } = useIntl();
 
-  const updateDate = new Date(sitemapInfo.get('updateTime'));
-
-  // Format month, day and time.
-  const month = updateDate.toLocaleString('en', { month: 'numeric' });
-  const day = updateDate.toLocaleString('en', { day: 'numeric' });
-  const year = updateDate.getFullYear().toString().slice(2);
-  const time = formatTime(updateDate, true);
+  const updateTime = sitemapInfo.get('updateTime') ? new Date(sitemapInfo.get('updateTime')) : undefined;
+  const numberOfSitemaps = sitemapInfo.get('sitemaps') ?? 0;
 
   const content = () => {
     if (!hasHostname) {
@@ -60,7 +50,7 @@ const Info = () => {
       );
     }
 
-    if (sitemapInfo.size === 0) {
+    if (!updateTime) {
       return (
         <div>
           <Typography variant="delta" style={{ marginBottom: '10px' }}>
@@ -70,10 +60,11 @@ const Info = () => {
             <Typography variant="omega">
               {formatMessage({ id: 'sitemap.Info.NoSitemap.Description', defaultMessage: 'Generate your first sitemap XML with the button below.' })}
             </Typography>
+          </div>
+          <div style={{ marginTop: '15px' }}>
             <Button
               onClick={() => dispatch(generateSitemap(toggleNotification, formatMessage, get))}
               variant="secondary"
-              style={{ marginTop: '15px' }}
             >
               {formatMessage({ id: 'sitemap.Header.Button.Generate', defaultMessage: 'Generate sitemap' })}
             </Button>
@@ -87,16 +78,17 @@ const Info = () => {
         <Typography variant="delta" style={{ marginBottom: '10px' }}>
           {formatMessage({ id: 'sitemap.Info.SitemapIsPresent.Title', defaultMessage: 'Sitemap XML is present' })}
         </Typography>
+
         <div>
           <Typography variant="omega">
             {formatMessage({ id: 'sitemap.Info.SitemapIsPresent.LastUpdatedAt', defaultMessage: 'Last updated at:' })}
           </Typography>
           <Typography variant="omega" fontWeight="bold" style={{ marginLeft: '5px' }}>
-            {`${month}/${day}/${year} - ${time}`}
+            <FormattedDate value={updateTime} /> <FormattedTime value={updateTime} />
           </Typography>
         </div>
-        {sitemapInfo.get('sitemaps') === 0 ? (
-          <div style={{ marginBottom: '15px' }}>
+        {numberOfSitemaps === 0 ? (
+          <div>
             <Typography variant="omega">
               {formatMessage({ id: 'sitemap.Info.SitemapIsPresent.AmountOfURLs', defaultMessage: 'Amount of URLs:' })}
             </Typography>
@@ -105,16 +97,16 @@ const Info = () => {
             </Typography>
           </div>
         ) : (
-          <div style={{ marginBottom: '15px' }}>
+          <div>
             <Typography variant="omega">
-              {formatMessage({ id: 'sitemap.Info.SitemapIsPresent.AmountOfSitemaps', defaultMessage: 'Amount of Sitemaps:' })}
+              {formatMessage({ id: 'sitemap.Info.SitemapIsPresent.AmountOfSitemaps', defaultMessage: 'Amount of sitemaps:' })}
             </Typography>
             <Typography variant="omega" fontWeight="bold" style={{ marginLeft: '5px' }}>
-              {sitemapInfo.get('sitemaps')}
+              {numberOfSitemaps}
             </Typography>
           </div>
         )}
-        <div style={{ display: 'flex', flexDirection: 'row' }}>
+        <div style={{ display: 'flex', flexDirection: 'row', marginTop: '15px' }}>
           <Button
             onClick={() => dispatch(generateSitemap(toggleNotification, formatMessage, get))}
             variant="secondary"
