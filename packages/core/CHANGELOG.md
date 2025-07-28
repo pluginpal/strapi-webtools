@@ -1,5 +1,11 @@
 # core
 
+## 1.5.3
+
+### Patch Changes
+
+- [`0f919df`](https://github.com/pluginpal/strapi-webtools/commit/0f919dfd785e4f19bfdf4c598f8acce1e5db31fa) Thanks [@boazpoolman](https://github.com/boazpoolman)! - fix: don't render a menu item for injected routes that have no label
+
 ## 1.5.2
 
 ### Patch Changes

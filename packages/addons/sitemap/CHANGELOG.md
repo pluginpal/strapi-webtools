@@ -1,5 +1,13 @@
 # addon-sitemap
 
+## 1.2.3
+
+### Patch Changes
+
+- [#305](https://github.com/pluginpal/strapi-webtools/pull/305) [`491c72d`](https://github.com/pluginpal/strapi-webtools/commit/491c72db7916e2c14d116067a6a6be98c89e3a4d) Thanks [@jorrit](https://github.com/jorrit)! - fix: warning about uncontrolled to controlled input
+
+- [#305](https://github.com/pluginpal/strapi-webtools/pull/305) [`cdbfa0c`](https://github.com/pluginpal/strapi-webtools/commit/cdbfa0c494fd89d1748fe96203c0e7b88ad9d09a) Thanks [@jorrit](https://github.com/jorrit)! - fix: improve first use experience of sitemap addon
+
 ## 1.2.2
 
 ### Patch Changes
