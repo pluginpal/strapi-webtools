@@ -50,7 +50,7 @@ const Settings = () => {
           <TextInput
             placeholder="https://www.strapi.io"
             name="hostname"
-            value={settings.get('hostname')}
+            value={settings.get('hostname') || ''}
             onChange={(e) => dispatch(onChangeSettings('hostname', e.target.value))}
           />
         </Field.Root>
