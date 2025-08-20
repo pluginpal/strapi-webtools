@@ -1,56 +1,51 @@
 import { Context } from 'koa';
 import { UID } from '@strapi/strapi';
 import { isContentTypeEnabled } from '../util/enabledContentTypes';
+import { getMainField } from '../services/get-main-field';
 
 /**
  * Search controller
  */
-
 export default {
   search: async (ctx: Context & { params: { id: number } }) => {
     const { q } = ctx.query;
     const { id } = ctx.params;
     let results = [];
 
-    await Promise.all(Object.entries(strapi.contentTypes)
-      .map(async ([uid, config]: [UID.CollectionType, any]) => {
-        const hasWT = isContentTypeEnabled(uid);
+    const qStr = typeof q === 'string' ? q.trim() : '';
+    if (!qStr) {
+      ctx.throw(400, 'Missing or invalid query parameter "?q=" (must be a non-empty strin4g)');
+      return;
+    }
 
+    await Promise.all(
+      Object.entries(strapi.contentTypes).map(async ([uid, config]: [UID.CollectionType, any]) => {
+        const hasWT = isContentTypeEnabled(config);
         if (!hasWT) return;
 
-        const coreStoreSettings = await strapi.query('strapi::core-store').findMany({
-          where: {
-            key: `plugin_content_manager_configuration_content_types::${uid}`,
-          },
-        });
+        const mainField = await getMainField(uid);
+        if (!mainField) return;
 
-        if (!coreStoreSettings[0]) return;
-
-        const value = JSON.parse(coreStoreSettings[0].value);
-        const { mainField } = value.settings;
-
-        const entries = await strapi.entityService.findMany(uid, {
+        const entries = await (strapi as any).documents(uid).findMany({
           filters: {
-            [mainField]: {
-              $containsi: q,
-            },
+            [mainField]: { $containsi: qStr },
           },
-          fields: [mainField],
+          fields: [mainField, 'documentId'],
           populate: {
-            url_alias: {
-              fields: ['id'],
-            },
+            url_alias: { fields: ['id'] },
           },
         });
 
-        const entriesWithContentType = entries?.map((entry) => ({
+        if (!entries || entries.length === 0) return;
+
+        const entriesWithContentType = entries.map((entry: any) => ({
           ...entry,
           contentType: uid,
         }));
 
-        // eslint-disable-next-line max-len
-        results = [...results, ...(Array.isArray(entriesWithContentType) ? entriesWithContentType : [])];
-      }));
+        results.push(...entriesWithContentType);
+      }),
+    );
 
     // @ts-ignore
     ctx.body = results;
@@ -58,11 +53,16 @@ export default {
   reverseSearch: async (ctx: Context & { params: { contentType: string; documentId: string } }) => {
     const { contentType, documentId } = ctx.params;
 
-    // Zoek met filters via findMany omdat documentId geen primaire ID is
-    const [entry] = await strapi.entityService.findMany(contentType as UID, {
-      filters: { documentId },
-      fields: ['id', 'title', 'documentId'],
-      limit: 1,
+    if (typeof contentType !== 'string' || !(contentType in strapi.contentTypes)) {
+      ctx.throw(400, `Unknown or invalid content type: ${contentType}`);
+      return;
+    }
+
+    const mainField = await getMainField(contentType as UID.CollectionType);
+
+    const entry = await (strapi as any).documents(contentType as UID.CollectionType).findOne({
+      documentId,
+      fields: ['id', 'documentId', ...(mainField ? [mainField] : [])],
     });
 
     if (!entry) {
@@ -72,9 +72,8 @@ export default {
 
     ctx.body = {
       id: entry.id,
-      title: entry.title,
-      slug: entry.slug,
       documentId: entry.documentId,
+      ...(mainField ? { [mainField]: entry[mainField] } : {}),
     };
   },
 };
