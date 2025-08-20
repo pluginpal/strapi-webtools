@@ -6,8 +6,6 @@ export async function getMainField(uid: UID.CollectionType): Promise<string | nu
   });
   if (!coreStoreSettings?.[0]) return null;
 
-  console.log('Core store settings:', coreStoreSettings);
-
   const value = JSON.parse(coreStoreSettings[0].value);
   return value?.settings?.mainField ?? null;
 }
