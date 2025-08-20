@@ -9,6 +9,16 @@ Hello 👋 Thank you for submitting an issue.
 
 ## Bug report
 
+### Addon
+
+Please select the addon related to this issue:
+
+- [ ] No specific addon – This bug report is related to Webtools Core
+- [ ] Webtools Pro: Redirects Addon  
+- [ ] Webtools Pro: Links Addon  
+
+---
+
 ### Describe the bug
 
 A clear and concise description of what the bug is.
