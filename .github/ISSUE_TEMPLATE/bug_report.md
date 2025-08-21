@@ -14,6 +14,7 @@ Hello 👋 Thank you for submitting an issue.
 Please select the addon related to this issue:
 
 - [ ] No specific addon – This bug report is related to Webtools Core
+- [ ] Webtools Core: Sitemap Addon  
 - [ ] Webtools Pro: Redirects Addon  
 - [ ] Webtools Pro: Links Addon  
 

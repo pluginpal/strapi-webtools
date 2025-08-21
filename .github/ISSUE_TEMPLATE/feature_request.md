@@ -14,6 +14,7 @@ Hello 👋 Thank you for submitting a feature request.
 Please select the addon related to this request:
 
 - [ ] No specific addon – This feature request is related to Webtools Core
+- [ ] Webtools Core: Sitemap Addon  
 - [ ] Webtools Pro: Redirects Addon  
 - [ ] Webtools Pro: Links Addon  
 
