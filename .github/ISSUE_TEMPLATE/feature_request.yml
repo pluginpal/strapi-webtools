@@ -1,0 +1,56 @@
+name: 🚀 Feature Request
+description: Suggest an idea to help make this plugin even better!
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Hello 👋 Thank you for submitting a feature request.
+
+  - type: dropdown
+    id: addon
+    attributes:
+      label: Addon
+      description: Please select the addon related to this request
+      options:
+        - No specific addon – This feature request is related to Webtools Core
+        - Webtools Core: Sitemap Addon
+        - Webtools Pro: Redirects Addon
+        - Webtools Pro: Links Addon
+    validations:
+      required: true
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: Quick summary what's this feature request about.
+      placeholder: Briefly describe the feature you'd like to see
+    validations:
+      required: true
+
+  - type: textarea
+    id: why-needed
+    attributes:
+      label: Why is it needed?
+      description: A clear and concise description of what the problem is.
+      placeholder: Ex. I'm always frustrated when [...]
+    validations:
+      required: true
+
+  - type: textarea
+    id: suggested-solution
+    attributes:
+      label: Suggested solution(s)
+      description: A clear and concise description of what you want to happen.
+      placeholder: Describe your ideal solution
+    validations:
+      required: true
+
+  - type: textarea
+    id: related-issues
+    attributes:
+      label: Related issue(s)/PR(s)
+      description: Let us know if this is related to any issue/pull request.
+      placeholder: "#123, #456, or links to related issues/PRs"
