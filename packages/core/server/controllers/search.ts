@@ -1,7 +1,8 @@
 import { Context } from 'koa';
 import { UID } from '@strapi/strapi';
+import { errors } from '@strapi/utils';
 import { isContentTypeEnabled } from '../util/enabledContentTypes';
-import { getMainField } from '../services/get-main-field';
+import { getPluginService } from '../util/getPluginService';
 
 /**
  * Search controller
@@ -9,13 +10,11 @@ import { getMainField } from '../services/get-main-field';
 export default {
   search: async (ctx: Context & { params: { id: number } }) => {
     const { q } = ctx.query;
-    const { id } = ctx.params;
-    let results = [];
+    const results = [];
 
     const qStr = typeof q === 'string' ? q.trim() : '';
     if (!qStr) {
-      ctx.throw(400, 'Missing or invalid query parameter "?q=" (must be a non-empty strin4g)');
-      return;
+      throw new errors.ValidationError('Missing or invalid query parameter "?q=" (must be a non-empty string)');
     }
 
     await Promise.all(
@@ -23,7 +22,7 @@ export default {
         const hasWT = isContentTypeEnabled(config);
         if (!hasWT) return;
 
-        const mainField = await getMainField(uid);
+        const mainField = await getPluginService('get-main-field').getMainField(uid);
         if (!mainField) return;
 
         const entries = await (strapi as any).documents(uid).findMany({
@@ -54,20 +53,17 @@ export default {
     const { contentType, documentId } = ctx.params;
 
     if (typeof contentType !== 'string' || !(contentType in strapi.contentTypes)) {
-      ctx.throw(400, `Unknown or invalid content type: ${contentType}`);
-      return;
+      throw new errors.ValidationError(`Unknown or invalid content type: ${contentType}`);
     }
 
-    const mainField = await getMainField(contentType as UID.CollectionType);
-
+    const mainField = await getPluginService('get-main-field').getMainField(contentType as UID.CollectionType);
     const entry = await (strapi as any).documents(contentType as UID.CollectionType).findOne({
       documentId,
       fields: ['id', 'documentId', ...(mainField ? [mainField] : [])],
     });
 
     if (!entry) {
-      ctx.throw(404, 'Entry not found');
-      return;
+      throw new errors.ValidationError('Entry not found');
     }
 
     ctx.body = {
