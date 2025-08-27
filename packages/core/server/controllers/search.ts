@@ -4,13 +4,27 @@ import { errors } from '@strapi/utils';
 import { isContentTypeEnabled } from '../util/enabledContentTypes';
 import { getPluginService } from '../util/getPluginService';
 
+interface ContentTypeConfig {
+  [key: string]: any; // We only pass this to isContentTypeEnabled, so any is fine here
+}
+
+interface DocumentEntry {
+  id: number;
+  documentId: string;
+  [key: string]: unknown; // Dynamic fields like title, etc.
+}
+
+interface SearchResult extends DocumentEntry {
+  contentType: string;
+}
+
 /**
  * Search controller
  */
 export default {
   search: async (ctx: Context & { params: { id: number } }) => {
     const { q } = ctx.query;
-    const results = [];
+    const results: SearchResult[] = [];
 
     const qStr = typeof q === 'string' ? q.trim() : '';
     if (!qStr) {
@@ -18,35 +32,36 @@ export default {
     }
 
     await Promise.all(
-      Object.entries(strapi.contentTypes).map(async ([uid, config]: [UID.CollectionType, any]) => {
-        const hasWT = isContentTypeEnabled(config);
-        if (!hasWT) return;
+      Object.entries(strapi.contentTypes).map(
+        async ([uid, config]: [UID.CollectionType, ContentTypeConfig]) => {
+          const hasWT = isContentTypeEnabled(config);
+          if (!hasWT) return;
 
-        const mainField = await getPluginService('get-main-field').getMainField(uid);
-        if (!mainField) return;
+          const mainField = await getPluginService('get-main-field').getMainField(uid);
+          if (!mainField) return;
 
-        const entries = await (strapi as any).documents(uid).findMany({
-          filters: {
-            [mainField]: { $containsi: qStr },
-          },
-          fields: [mainField, 'documentId'],
-          populate: {
-            url_alias: { fields: ['id'] },
-          },
-        });
+          const entries: DocumentEntry[] = await strapi.documents(uid).findMany({
+            filters: {
+              [mainField]: { $containsi: qStr },
+            },
+            fields: [mainField, 'documentId'],
+            populate: {
+              url_alias: { fields: ['id'] },
+            },
+          });
 
-        if (!entries || entries.length === 0) return;
+          if (!entries || entries.length === 0) return;
 
-        const entriesWithContentType = entries.map((entry: any) => ({
-          ...entry,
-          contentType: uid,
-        }));
+          const entriesWithContentType: SearchResult[] = entries.map((entry: DocumentEntry) => ({
+            ...entry,
+            contentType: uid,
+          }));
 
-        results.push(...entriesWithContentType);
-      }),
+          results.push(...entriesWithContentType);
+        },
+      ),
     );
 
-    // @ts-ignore
     ctx.body = results;
   },
   reverseSearch: async (ctx: Context & { params: { contentType: string; documentId: string } }) => {
@@ -56,14 +71,17 @@ export default {
       throw new errors.ValidationError(`Unknown or invalid content type: ${contentType}`);
     }
 
-    const mainField = await getPluginService('get-main-field').getMainField(contentType as UID.CollectionType);
-    const entry = await (strapi as any).documents(contentType as UID.CollectionType).findOne({
+    const mainField = await getPluginService('get-main-field').getMainField(
+      contentType as UID.CollectionType,
+    );
+    // eslint-disable-next-line max-len
+    const entry: DocumentEntry | null = await strapi.documents(contentType as UID.CollectionType).findOne({
       documentId,
       fields: ['id', 'documentId', ...(mainField ? [mainField] : [])],
     });
 
     if (!entry) {
-      throw new errors.ValidationError('Entry not found');
+      throw new errors.NotFoundError('Entry not found');
     }
 
     ctx.body = {
