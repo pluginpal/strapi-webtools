@@ -1,12 +1,8 @@
 import { Context } from 'koa';
-import { UID } from '@strapi/strapi';
+import { UID, Schema } from '@strapi/strapi';
 import { errors } from '@strapi/utils';
 import { isContentTypeEnabled } from '../util/enabledContentTypes';
 import { getPluginService } from '../util/getPluginService';
-
-interface ContentTypeConfig {
-  [key: string]: any; // We only pass this to isContentTypeEnabled, so any is fine here
-}
 
 interface DocumentEntry {
   id: number;
@@ -33,22 +29,21 @@ export default {
 
     await Promise.all(
       Object.entries(strapi.contentTypes).map(
-        async ([uid, config]: [UID.CollectionType, ContentTypeConfig]) => {
+        async ([uid, config]: [UID.ContentType, Schema.ContentType]) => {
           const hasWT = isContentTypeEnabled(config);
           if (!hasWT) return;
 
           const mainField = await getPluginService('get-main-field').getMainField(uid);
           if (!mainField) return;
 
-          const entries: DocumentEntry[] = await strapi.documents(uid).findMany({
+          const fieldsArr: string[] = ['documentId', ...(mainField ? [mainField] : [])];
+
+          const entries = (await strapi.documents(uid).findMany({
             filters: {
               [mainField]: { $containsi: qStr },
             },
-            fields: [mainField, 'documentId'],
-            populate: {
-              url_alias: { fields: ['id'] },
-            },
-          });
+            fields: fieldsArr,
+          } as any)) as unknown as DocumentEntry[];
 
           if (!entries || entries.length === 0) return;
 
@@ -72,13 +67,17 @@ export default {
     }
 
     const mainField = await getPluginService('get-main-field').getMainField(
-      contentType as UID.CollectionType,
+      contentType as UID.ContentType,
     );
     // eslint-disable-next-line max-len
-    const entry: DocumentEntry | null = await strapi.documents(contentType as UID.CollectionType).findOne({
-      documentId,
-      fields: ['id', 'documentId', ...(mainField ? [mainField] : [])],
-    });
+    const fieldsArr: string[] = ['id', 'documentId', ...(mainField ? [mainField] : [])];
+
+    const entry = (await strapi
+      .documents(contentType as UID.ContentType)
+      .findOne({
+        documentId,
+        fields: fieldsArr,
+      } as any)) as unknown as DocumentEntry | null;
 
     if (!entry) {
       throw new errors.NotFoundError('Entry not found');
