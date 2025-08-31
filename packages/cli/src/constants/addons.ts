@@ -11,3 +11,16 @@ export const AVAILABLE_ADDONS: Addon[] = [
     packageName: 'webtools-addon-sitemap',
   },
 ];
+
+export const PREMIUM_ADDONS: Addon[] = [
+  {
+    name: 'redirects',
+    description: 'Manage redirects for your Strapi content',
+    packageName: '@pluginpal/webtools-addon-redirects',
+  },
+  {
+    name: 'links',
+    description: 'Advanced link management for your Strapi content',
+    packageName: '@pluginpal/webtools-addon-links',
+  },
+];

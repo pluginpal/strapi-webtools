@@ -1,9 +1,10 @@
 import chalk from 'chalk';
-import { checkbox } from '@inquirer/prompts';
+import { checkbox, confirm, input } from '@inquirer/prompts';
 import { checkStrapiProject } from '../utils/strapi';
 import { getContentTypes, enableWebtoolsForContentType } from '../utils/content-types';
-import { getAvailableAddons } from '../utils/addons';
+import { getAvailableAddons, getPremiumAddons } from '../utils/addons';
 import { installPackage } from '../utils/package-manager';
+import { createLicenseFiles } from '../utils/license';
 
 export async function install() {
   // Check if we're in a Strapi project
@@ -11,6 +12,33 @@ export async function install() {
   if (!isStrapiProject) {
     console.log(chalk.red('Error: This command must be run in a Strapi project directory.'));
     return;
+  }
+
+  // Ask about license key
+  const hasLicense = await confirm({
+    message: 'Do you have a license key for Webtools?',
+    default: false,
+  });
+
+  let licenseKey: string | null = null;
+  if (hasLicense) {
+    licenseKey = await input({
+      message: 'Please enter your license key:',
+      validate: (value) => {
+        if (!value || value.trim().length === 0) {
+          return 'License key cannot be empty';
+        }
+        return true;
+      },
+    });
+
+    // Create license files
+    console.log(chalk.blue('\nSetting up license configuration...'));
+    const success = await createLicenseFiles(licenseKey);
+    if (!success) {
+      console.log(chalk.red('Failed to setup license configuration. Continuing without the license.'));
+      licenseKey = null;
+    }
   }
 
   // Get available content types
@@ -50,12 +78,19 @@ export async function install() {
 
   // Get available addons
   const availableAddons = getAvailableAddons();
+  let allAddons = [...availableAddons];
+
+  // Add premium addons if user has license
+  if (licenseKey) {
+    const premiumAddons = getPremiumAddons();
+    allAddons = [...availableAddons, ...premiumAddons];
+  }
 
   // Let user select addons
   const selectedAddons = await checkbox({
     message: 'Select addons to install:',
-    choices: availableAddons.map((addon) => ({
-      name: addon.name,
+    choices: allAddons.map((addon) => ({
+      name: `${addon.name}${licenseKey && getPremiumAddons().some((p) => p.name === addon.name) ? ' (premium)' : ''}`,
       value: addon.name,
       description: addon.description,
     })),
@@ -66,7 +101,7 @@ export async function install() {
 
   // Add selected addons to the installation list
   selectedAddons.forEach((addonName) => {
-    const addon = availableAddons.find((a) => a.name === addonName);
+    const addon = allAddons.find((a) => a.name === addonName);
     if (addon) {
       packagesToInstall.push(addon.packageName);
     }
