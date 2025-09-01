@@ -37,13 +37,13 @@ export default {
           if (!mainField) return;
 
           const fieldsArr: string[] = ['documentId', ...(mainField ? [mainField] : [])];
-
           const entries = (await strapi.documents(uid).findMany({
             filters: {
               [mainField]: { $containsi: qStr },
             },
+            // @ts-expect-error
             fields: fieldsArr,
-          } as any)) as unknown as DocumentEntry[];
+          }));
 
           if (!entries || entries.length === 0) return;
 
@@ -76,8 +76,9 @@ export default {
       .documents(contentType as UID.ContentType)
       .findOne({
         documentId,
+        // @ts-expect-error
         fields: fieldsArr,
-      } as any)) as unknown as DocumentEntry | null;
+      }));
 
     if (!entry) {
       throw new errors.NotFoundError('Entry not found');
@@ -86,6 +87,7 @@ export default {
     ctx.body = {
       id: entry.id,
       documentId: entry.documentId,
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       ...(mainField ? { [mainField]: entry[mainField] } : {}),
     };
   },

@@ -8,7 +8,8 @@ interface ContentManagerConfig {
 
 export const getMainField = async (uid: UID.ContentType): Promise<string | null> => {
   const coreStoreSettings = (await strapi
-    .query('strapi::core-store' as unknown as UID.Schema)
+    // TODO use documents service instead of any
+    .query('strapi::core-store' as UID.Schema)
     .findMany({
       where: { key: `plugin_content_manager_configuration_content_types::${uid}` },
     })) as Array<{ value: string }>;
