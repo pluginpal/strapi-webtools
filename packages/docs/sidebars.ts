@@ -26,6 +26,8 @@ const sidebars = {
         "getting-started/usage",
         "getting-started/url-alias",
         "getting-started/url-pattern",
+        "getting-started/use-cases",
+        "getting-started/permissions",
       ],
     },
     {

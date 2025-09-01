@@ -137,3 +137,7 @@ As it's a native findMany endpoint you can use all the parameters you're used to
 </Response>
 
 </ApiCall>
+
+## Permissions
+
+Before you can use the router and url-alias endpoints publicly, you need to configure the *find* permissions. See [Permissions](/permissions) for a complete explanation of all three permission levels that need to be configured.
