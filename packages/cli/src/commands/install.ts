@@ -1,10 +1,11 @@
 import chalk from 'chalk';
-import { checkbox, confirm, input } from '@inquirer/prompts';
+import { checkbox, input, select } from '@inquirer/prompts';
 import { checkStrapiProject } from '../utils/strapi';
 import { getContentTypes, enableWebtoolsForContentType } from '../utils/content-types';
 import { getAvailableAddons, getPremiumAddons } from '../utils/addons';
 import { installPackage } from '../utils/package-manager';
 import { createLicenseFiles } from '../utils/license';
+import { logger } from '../utils/logger';
 
 export async function install() {
   // Check if we're in a Strapi project
@@ -14,14 +15,30 @@ export async function install() {
     return;
   }
 
-  // Ask about license key
-  const hasLicense = await confirm({
-    message: 'Do you have a license key for Webtools?',
-    default: false,
+  logger.title(
+    'Webtools',
+    `${chalk.bold('🚀 Let\'s build your new website with Strapi')}\n`,
+  );
+
+  console.log('🚀 Get more out of Webtools with premium add-ons!\n');
+
+  console.log('Start your free trial and get:');
+  console.log('✨ 30 days of access to the Essential plan, which includes:');
+  console.log('✅ Automated Redirects');
+  console.log('✅ Internal Links\n');
+
+  const selectedPlan = await select({
+    message: 'Do you have a license?',
+    choices: [
+      { name: 'Yes, use my license', value: 'license' },
+      { name: 'Get me a trial', value: 'trial' },
+      { name: 'Skip', value: 'skip' },
+    ],
   });
 
   let licenseKey: string | null = null;
-  if (hasLicense) {
+
+  if (selectedPlan === 'license') {
     licenseKey = await input({
       message: 'Please enter your license key:',
       validate: (value) => {
@@ -33,11 +50,50 @@ export async function install() {
     });
 
     // Create license files
-    console.log(chalk.blue('\nSetting up license configuration...'));
+    console.log(`\n${chalk.cyan('●')} Setting up license configuration...`);
     const success = await createLicenseFiles(licenseKey);
     if (!success) {
-      console.log(chalk.red('Failed to setup license configuration. Continuing without the license.'));
+      console.log(chalk.red('\nFailed to setup license configuration. Continuing without a license.'));
       licenseKey = null;
+    }
+  }
+
+  if (selectedPlan === 'trial') {
+    logger.title(
+      'Trial',
+      `${chalk.bold('🚀 Get your free trial license!')}\n`,
+    );
+    console.log('You can start your free trial by visiting the following link:');
+    console.log(chalk.underline('https://polar.sh/checkout/polar_c_4NUnsZ24PTLPhbSux9STPqeLL7ptZlcz003Yy15MArc'));
+    console.log('\n✨ Enjoy 30 days of access to the Essential plan completely free!');
+    console.log('💡 Remember: You can cancel within the 30 days to ensure your trial remains free.\n');
+
+    const trialPlan = await select({
+      message: 'Got your license key?',
+      choices: [
+        { name: 'Yes', value: 'yes' },
+        { name: 'Skip', value: 'skip' },
+      ],
+    });
+
+    if (trialPlan === 'yes') {
+      licenseKey = await input({
+        message: 'Please enter your license key:',
+        validate: (value) => {
+          if (!value || value.trim().length === 0) {
+            return 'License key cannot be empty';
+          }
+          return true;
+        },
+      });
+
+      // Create license files
+      console.log(`\n${chalk.cyan('●')} Setting up license configuration...`);
+      const success = await createLicenseFiles(licenseKey);
+      if (!success) {
+        console.log(chalk.red('\nFailed to setup license configuration. Continuing without a license.'));
+        licenseKey = null;
+      }
     }
   }
 
@@ -58,9 +114,9 @@ export async function install() {
 
     // Enable Webtools for selected content types
     if (selectedContentTypes.length > 0) {
-      console.log(chalk.blue('\nEnabling Webtools for selected content types...'));
+      console.log(`\n${chalk.cyan('●')} Enabling Webtools for selected content types...`);
 
-      const results = selectedContentTypes.map((contentType) => {
+      selectedContentTypes.map((contentType) => {
         const success = enableWebtoolsForContentType(contentType);
         if (success) {
           console.log(chalk.green(`✓ Enabled Webtools for ${contentType}`));
@@ -70,9 +126,6 @@ export async function install() {
         console.log(chalk.red(`✗ Failed to enable Webtools for ${contentType}`));
         return false;
       });
-
-      const successCount = results.filter(Boolean).length;
-      console.log(chalk.blue(`\nEnabled Webtools for ${successCount} of ${selectedContentTypes.length} content types.`));
     }
   }
 
@@ -85,6 +138,9 @@ export async function install() {
     const premiumAddons = getPremiumAddons();
     allAddons = [...availableAddons, ...premiumAddons];
   }
+
+  // New line
+  console.log('');
 
   // Let user select addons
   const selectedAddons = await checkbox({
@@ -109,13 +165,13 @@ export async function install() {
 
   // Install all packages at once
   if (packagesToInstall.length > 0) {
-    console.log(chalk.blue('\nInstalling packages...'));
+    console.log(`\n${chalk.cyan('●')} Installing packages...\n`);
 
     const success = installPackage(packagesToInstall.join(' '));
     if (success) {
-      console.log(chalk.green(`✓ Installed ${packagesToInstall.length} packages successfully`));
+      console.log(chalk.green(`\n✓ Installed ${packagesToInstall.length} packages successfully`));
     } else {
-      console.log(chalk.red('✗ Failed to install packages. Aborting installation.'));
+      console.log(chalk.red('\n✗ Failed to install packages. Aborting installation.'));
       return;
     }
   }

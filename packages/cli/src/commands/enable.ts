@@ -30,9 +30,9 @@ export async function enable() {
 
   // Enable Webtools for selected content types
   if (selectedContentTypes.length > 0) {
-    console.log(chalk.blue('\nEnabling Webtools for selected content types...'));
+    console.log(`\n${chalk.cyan('●')} Enabling Webtools for selected content types...`);
 
-    const results = selectedContentTypes.map((contentType) => {
+    selectedContentTypes.map((contentType) => {
       const success = enableWebtoolsForContentType(contentType);
       if (success) {
         console.log(chalk.green(`✓ Enabled Webtools for ${contentType}`));
@@ -42,9 +42,6 @@ export async function enable() {
       console.log(chalk.red(`✗ Failed to enable Webtools for ${contentType}`));
       return false;
     });
-
-    const successCount = results.filter(Boolean).length;
-    console.log(chalk.blue(`\nEnabled Webtools for ${successCount} of ${selectedContentTypes.length} content types.`));
   } else {
     console.log(chalk.yellow('No content types selected. Nothing to do.'));
   }
