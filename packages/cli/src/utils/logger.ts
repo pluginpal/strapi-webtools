@@ -14,7 +14,7 @@ const badge = (text: string, bgColor: ChalkFunction, textColor: ChalkFunction = 
 const textIndent = (
   text: string | string[],
   indentFirst = true,
-  indent: number = MAX_PREFIX_LENGTH + 2
+  indent: number = MAX_PREFIX_LENGTH + 2,
 ) => {
   const parts = Array.isArray(text) ? text : [text];
 

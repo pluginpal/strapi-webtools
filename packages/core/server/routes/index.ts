@@ -186,6 +186,28 @@ export default {
           policies: [],
         },
       },
+      /**
+       * Search routes
+       */
+      {
+        method: 'GET',
+        path: '/search',
+        handler: 'search.search',
+        config: {
+          policies: [],
+        },
+      },
+      /**
+       * Reverse Search routes for a title or slug
+       */
+      {
+        method: 'GET',
+        path: '/search/reverse/:contentType/:documentId',
+        handler: 'search.reverseSearch',
+        config: {
+          policies: [],
+        },
+      },
     ],
   },
 };
