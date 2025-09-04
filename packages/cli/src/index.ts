@@ -4,6 +4,7 @@ import { Command } from 'commander';
 import chalk from 'chalk';
 import { install } from './commands/install';
 import { enable } from './commands/enable';
+import { setupLicense } from './commands/license-setup';
 
 const program = new Command();
 
@@ -30,6 +31,18 @@ program
   .action(async () => {
     try {
       await enable();
+    } catch (error) {
+      console.error(chalk.red('Error:'), error instanceof Error ? error.message : 'An unknown error occurred');
+      process.exit(1);
+    }
+  });
+
+program
+  .command('setup-license')
+  .description('Set up your Webtools license in your Strapi project')
+  .action(async () => {
+    try {
+      await setupLicense();
     } catch (error) {
       console.error(chalk.red('Error:'), error instanceof Error ? error.message : 'An unknown error occurred');
       process.exit(1);
