@@ -35,7 +35,7 @@ export default {
 
     // Format response.
     const sanitizedEntity = await sanitizeOutput(responseEntity, contentTypeObj, auth);
-    ctx.body = strapi.controller(contentType as UID.Controller)
+    ctx.body = await strapi.controller(contentType as UID.Controller)
       // @ts-expect-error
       // The strapi object is typed in a way that the following is expected to be a controller.
       // In fact that is not true, as this also exposes the helper functions of the controller.
