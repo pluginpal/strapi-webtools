@@ -1,5 +1,17 @@
 # core
 
+## 1.6.0
+
+### Minor Changes
+
+- [`0c19c49`](https://github.com/pluginpal/strapi-webtools/commit/0c19c497845f0320967a9353cc819cbdca16c2ca) Thanks [@boazpoolman](https://github.com/boazpoolman)! - feat: add a new 'search' controller for the admin interface
+
+### Patch Changes
+
+- [#320](https://github.com/pluginpal/strapi-webtools/pull/320) [`bec4f55`](https://github.com/pluginpal/strapi-webtools/commit/bec4f55c35b4676bd929de63d5671a41069985c6) Thanks [@cayblood](https://github.com/cayblood)! - Fix async handling in router controller
+
+  Add await keyword before transformResponse call to properly handle the Promise returned by the method. This resolves the issue where the router endpoint returns empty objects instead of the expected content.
+
 ## 1.5.3
 
 ### Patch Changes
