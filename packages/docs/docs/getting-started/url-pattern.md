@@ -9,6 +9,8 @@ To create dynamic URLs this plugin uses **URL patterns**. The URL pattern will b
 
 You can add URL patterns in the settings section of the plugin. For configuration details and fallbacks, see [Default pattern](/webtools/configuration/default-pattern) and [Slugify](/webtools/configuration/slugify).
 
+<img src="/webtools/img/assets/url_patterns.png" alt="URL patterns overview" />
+
 ```
 /pages/[my-title-field]
 ```
@@ -27,4 +29,4 @@ The following field types are allowed in a pattern:
 
 See below a screenshot of the URL pattern creation form in Strapi.
 
-<img src="/webtools/img/assets/url-pattern.png" alt="URL pattern" />
+<img src="/webtools/img/assets/add_new_pattern.png" alt="Add new pattern with field suggestions" />
