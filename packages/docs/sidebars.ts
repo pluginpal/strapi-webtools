@@ -28,6 +28,7 @@ const sidebars = {
         "getting-started/url-pattern",
         "getting-started/use-cases",
         "getting-started/permissions",
+        "getting-started/troubleshooting",
       ],
     },
     {

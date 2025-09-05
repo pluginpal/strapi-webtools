@@ -8,6 +8,17 @@ slug: /
 
 :::prerequisites
 Complete installation requirements are the exact same as for Strapi itself and can be found in the Strapi documentation.
+
+**Additional Requirements:**
+- **Node.js**: Version 18.17 or higher
+- **Strapi**: Version 5.x
+
+:::tip Node Version Manager
+Create a `.nvmrc` file with `18.17` for consistent versions across your team:
+```bash
+echo "18.17" > .nvmrc
+nvm use
+```
 :::
 
 ### Supported versions
@@ -18,7 +29,7 @@ Complete installation requirements are the exact same as for Strapi itself and c
 
 To install the plugin run the following command.
 
-```
+```bash
 npx webtools-cli install
 ```
 
@@ -44,4 +55,23 @@ After successful installation you have to rebuild the admin UI so it'll include 
     ```
   </TabItem>
 </Tabs>
+
+### CORS Configuration (Development)
+
+For frontend integration during development, add your development origins to `config/middlewares.ts`:
+
+```js
+{
+  name: 'strapi::cors',
+  config: {
+    origin: [
+      'http://localhost:3000',
+      'http://localhost:8080', 
+      'file://',
+      'null'
+    ],
+    // ... other CORS settings
+  }
+}
+```
 

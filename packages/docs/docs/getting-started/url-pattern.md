@@ -15,6 +15,10 @@ You can add URL patterns in the settings section of the plugin.
 
 Fields can be injected in the pattern by escaping them with `[]`.
 
+:::tip Pattern discovery
+Type `[` in the pattern field to see all available fields from your content type.
+:::
+
 The following field types are allowed in a pattern:
 
 - `documentId`

@@ -47,10 +47,11 @@ Enable the Webtools endpoints for your front-end:
 Want your editors/admins to manage Webtools settings? Configure:
 
 1. Go to **Strapi Admin → Settings → Administration Panel → Roles**.
-2. Choose the role (e.g., **Editor**).
-3. Under **Webtools** (or plugin group) enable:
-   - **Read**
-   - **Update**
+2. Choose the role (e.g., **Author**).
+3. Under **Plugins** → **Webtools** enable the permissions you need:
+   - **Access the URL alias list**
+   - **Access the URL alias patterns**
+   - **Access the URL alias sidebar**
 4. Click **Save**.
 
 <img src="/webtools/img/assets/permissions-admin-roles.png" alt="Admin Panel Webtools access rights" />

@@ -6,51 +6,46 @@ slug: /use-cases
 
 # 💼 Use Cases
 
-This section describes three real-world scenarios where Strapi Webtools significantly improves content workflow and management.
+Real-world scenarios where Strapi Webtools improves content workflow and management.
 
-## 1. Corporate Website (Private Sector)
+## 1. Personal knowledge base
 
-A marketing website for a product line:
+A content management system for tracking life aspects:
 
-- **SEO-friendly URLs** automatically generated (e.g., `/products/super-widget-2025`).
-- **Auto-generated slugs** based on the title, without manual work.
-- **Front-end routing** via:
-  ```bash
-  GET /api/webtools/router?path=/products/super-widget-2025
-  ```
-- **Single source of truth** for URLs, ideal for multilingual content.
+- **Activities tracking** with URLs like `/activities/morning-workout` or `/activities/team-meeting`
+- **People management** with clean URLs like `/people/john-doe` or `/people/sarah-smith`  
+- **Location references** such as `/places/home-office` or `/places/local-gym`
+- **Learning documentation** with paths like `/lessons/time-management` or `/lessons/cooking-basics`
 
-**Key benefits:**
-- Unique, consistent URL aliases
-- Automatic slug generation
-- Easy integration with Next.js/Gatsby
-- Improved SEO and less manual work
+**Benefits:**
+- Clean, memorable URLs for personal content
+- Easy navigation between related content
+- Automatic URL generation from titles
 
-## 2. Government Portal (Public Sector)
+## 2. Business website
 
-A municipal website with news, events, and information in multiple languages:
+A company website with products, team, and content:
 
-- **Multilingual URL structure** (e.g., `/nl/nieuws/stadsfestival-2025` & `/en/news/city-festival-2025`).
-- **Unique registry** prevents duplicate paths.
-- **User-friendly interface** for non-technical editors.
+- **Product pages** with SEO-friendly URLs like `/products/web-hosting-pro`
+- **Team member profiles** such as `/team/marketing-director` 
+- **Blog articles** with readable paths like `/blog/website-security-tips`
+- **Service pages** like `/services/custom-development`
 
-**Key benefits:**
-- Fully automated URL registry
-- Integration with Strapi locale settings
-- No overlapping or duplicate URLs
+**Benefits:**
+- Professional URL structure
+- Better search engine optimization
+- Consistent navigation experience
 
-## 3. NGO Blog (Non-profit)
+## 3. Community platform
 
-An NGO organization blogging about campaigns and events:
+A platform for sharing knowledge and connecting people:
 
-- **Consistent paths** like `/blog/charity-run-2025`.
-- **URL alias endpoint** for sitemap or index pages:
-  ```bash
-  GET /api/webtools/url-alias
-  ```
-- **Internal link references** in rich-text always point to the correct alias.
+- **User profiles** with clean URLs like `/members/tech-enthusiast-mike`
+- **Discussion topics** such as `/discussions/best-coding-practices`
+- **Resource sharing** with paths like `/resources/free-design-tools`
+- **Event listings** like `/events/monthly-meetup-march`
 
-**Key benefits:**
-- Human-friendly, uniform URLs
-- Overview of all routes for static builds or sitemaps
-- Suitable for both dynamic and static front-ends
+**Benefits:**
+- User-friendly URLs for sharing
+- Organized content structure  
+- Easy content discovery

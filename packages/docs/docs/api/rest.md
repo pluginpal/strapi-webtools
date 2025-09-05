@@ -58,6 +58,18 @@ This endpoint is just a native findMany endpoint exposed to query multiple URL a
 
 As it's a native findMany endpoint you can use all the parameters you're used to like `populate`, `filters` and `fields`.
 
+### Lookup Single URL
+
+To find a specific URL alias, use Strapi's filter syntax:
+
+```bash
+GET http://localhost:1337/api/webtools/url-alias?filters[url_path][$eq]=/your-path
+```
+
+:::warning Filter Syntax
+The query parameter `?url_path=` does not work correctly. Always use the full filter syntax: `?filters[url_path][$eq]=` to lookup specific URLs.
+:::
+
 <ApiCall>
 
 <Request>
@@ -140,4 +152,15 @@ As it's a native findMany endpoint you can use all the parameters you're used to
 
 ## Permissions
 
-Before you can use the router and url-alias endpoints publicly, you need to configure the *find* permissions. See [Permissions](/permissions) for a complete explanation of all three permission levels that need to be configured.
+Before you can use the router and url-alias endpoints publicly, you need to configure the *find* permissions. 
+
+### Quick Setup
+
+Enable in **Settings > Users & Permissions > Roles > Public**:
+- `webtools.url-alias.find`
+- `webtools.router.find`
+
+For each enabled content type, also enable:
+- `[content-type].find`
+
+See [Permissions](/permissions) for a complete explanation of all three permission levels that need to be configured.

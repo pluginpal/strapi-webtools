@@ -5,6 +5,7 @@ slug: /usage
 ---
 
 # 💡 Usage
+
 This plugin is specifically designed for usage in Strapi managed websites. Hence the name **web**tools. The plugin offers a variety of functionalities which you'll have to manually enable.
 
 ## Enabling Webtools
@@ -36,4 +37,31 @@ pluginOptions: {
     enabled: true,
   },
 },
+```
+:::
+
+## Workflow
+
+After enabling Webtools for your content types:
+
+1. **Create URL patterns** - See [URL pattern](/url-pattern) documentation
+2. **Bulk generate URLs** - Go to Webtools > All URLs to create aliases for existing content  
+3. **Generate sitemap** - Configure and generate XML sitemap with your URLs
+
+:::tip Pattern discovery
+Type `[` in the pattern field to see available fields from your content type.
+:::
+
+## Sitemap setup
+
+After enabling content types and creating patterns:
+
+1. Go to **Webtools > Sitemap > Settings**
+2. Set hostname with `http://` prefix (e.g., `http://localhost:1337` for development)
+3. Add URL bundles for each content type you want in the sitemap
+4. Configure change frequency and priority per bundle
+5. Click **Generate sitemap**
+
+:::warning Hostname format
+Always include the protocol (`http://` or `https://`) in your hostname setting to avoid sitemap generation errors.
 :::
