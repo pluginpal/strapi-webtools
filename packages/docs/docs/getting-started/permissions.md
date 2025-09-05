@@ -6,6 +6,8 @@ slug: /permissions
 
 # 🔐 Role-Based Access Control (RBAC)
 
+After installation, review Webtools permissions per role in Settings so your front-end can access the required endpoints.
+
 Without the proper permissions, you'll get a **403 Forbidden** error when calling:
 - `GET /api/webtools/router?path=…`
 - `GET /api/webtools/url-alias`

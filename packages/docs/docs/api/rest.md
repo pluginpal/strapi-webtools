@@ -6,7 +6,13 @@ slug: /api/rest
 
 # REST API
 
+## Overview
+
 The plugin exposes a couple of REST API endpoints that you can use to implement Webtools in your front-end of choice.
+
+### Authentication
+
+Use Public role or API Tokens as per Strapi defaults.
 
 ## Router
 

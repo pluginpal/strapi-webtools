@@ -8,6 +8,10 @@ slug: /usage
 
 This plugin is specifically designed for usage in Strapi managed websites. Hence the name **web**tools. The plugin offers a variety of functionalities which you'll have to manually enable.
 
+:::note
+Webtools needs to be enabled per content type. This is typically done during installation using the CLI selector, but can also be enabled later via the Admin interface or manually in the schema.
+:::
+
 ## Enabling Webtools
 
 Once you enable Webtools for a content-type each entry of that type will get it's own unique URL alias. That alias can be used as the slug of your page in the front-end. To enable Webtools, you have a few options.
@@ -60,14 +64,8 @@ Type `[` in the pattern field to see available fields from your content type.
 
 ## Sitemap setup
 
-After enabling content types and creating patterns:
+For setting up and generating your XML sitemap, see Addons > Sitemap:
+- Getting Started and Settings: /addons/sitemap/getting-started/introduction and /addons/sitemap/settings/introduction
+- CLI usage: /addons/sitemap/cli
 
-1. Go to **Webtools > Sitemap > Settings**
-2. Set hostname with `http://` prefix (e.g., `http://localhost:1337` for development)
-3. Add URL bundles for each content type you want in the sitemap
-4. Configure change frequency and priority per bundle
-5. Click **Generate sitemap**
-
-:::warning Hostname format
-Always include the protocol (`http://` or `https://`) in your hostname setting to avoid sitemap generation errors.
-:::
+This keeps sitemap-specific steps within the Addons documentation.

@@ -27,7 +27,7 @@ nvm use
 
 ### Installation
 
-To install the plugin run the following command. This invokes the core Webtools CLI.
+To install the plugin run the following command in your Strapi project directory. This invokes the core Webtools CLI (webtools-cli).
 
 ```bash
 npx webtools-cli install
@@ -67,6 +67,11 @@ After successful installation you have to rebuild the admin UI so it'll include 
     ```
   </TabItem>
 </Tabs>
+
+### Post-install checklist
+
+- Enable Webtools per content type → see [Usage](/webtools/usage)
+- Review Roles & Permissions → see [Permissions](/webtools/permissions)
 
 ### CORS Configuration (Development)
 

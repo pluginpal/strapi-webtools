@@ -1,54 +1,59 @@
 <div align="center">
-<h1>Strapi Webtools</h1>
-	
-<p style="margin-top: 0;">Everything you need to build a website with Strapi CMS</p>
+  <h1>Strapi Webtools</h1>
+  <p style="margin-top: 0;">Everything you need to build a website with Strapi CMS</p>
+  
+  <p>
+    <a href="https://docs.pluginpal.io/webtools"><strong>Read the documentation →</strong></a>
+  </p>
 
-<a href="https://docs.pluginpal.io/webtools">Read the documentation</a>
-	
-<p>
-  <a href="https://www.npmjs.org/package/strapi-plugin-webtools">
-    <img src="https://img.shields.io/npm/v/strapi-plugin-webtools/latest.svg" alt="NPM Version" />
-  </a>
-  <a href="https://www.npmjs.org/package/strapi-plugin-webtools">
-    <img src="https://img.shields.io/npm/dm/strapi-plugin-webtools" alt="Monthly download on NPM" />
-  </a>
-  <a href="https://codecov.io/gh/pluginpal/strapi-webtools">
-    <img src="https://img.shields.io/github/actions/workflow/status/pluginpal/strapi-webtools/tests.yml?branch=master" alt="CI build status" />
-  </a>
-  <a href="https://codecov.io/gh/pluginpal/strapi-webtools">
-    <img src="https://codecov.io/gh/pluginpal/strapi-webtools/coverage.svg?branch=master" alt="codecov.io" />
-  </a>
-</p>
-	
+  <p>
+    <a href="https://www.npmjs.org/package/strapi-plugin-webtools">
+      <img src="https://img.shields.io/npm/v/strapi-plugin-webtools/latest.svg" alt="NPM Version" />
+    </a>
+    <a href="https://www.npmjs.org/package/strapi-plugin-webtools">
+      <img src="https://img.shields.io/npm/dm/strapi-plugin-webtools" alt="Monthly download on NPM" />
+    </a>
+    <a href="https://img.shields.io/github/actions/workflow/status/pluginpal/strapi-webtools/tests.yml?branch=master">
+      <img src="https://img.shields.io/github/actions/workflow/status/pluginpal/strapi-webtools/tests.yml?branch=master" alt="CI build status" />
+    </a>
+    <a href="https://codecov.io/gh/pluginpal/strapi-webtools">
+      <img src="https://codecov.io/gh/pluginpal/strapi-webtools/coverage.svg?branch=master" alt="codecov.io" />
+    </a>
+  </p>
 </div>
+
+---
 
 ## ✨ Features
 
-- **Unique URLs** Every page will get their own unique path
-- **Auto generated** Automatically generated based on a pattern
-- **Flexible** Overwrite single URLs
-- **Frontend router** Get any page by it's unique path from the public API
-- **Auto slugify** The URLs will automatically be slugified to ensure valid paths
+- Unique URLs – Every page gets its own unique path
+- Auto-generated – Based on a configurable URL pattern
+- Flexible – Override individual URLs when needed
+- Frontend router – Fetch any page by its unique path via the public API
+- Auto-slugify – Ensures valid, clean URL paths
+
+## ✅ Requirements
+
+- Node.js: >= 18.17
+- Strapi: v5.x
 
 ## ⏳ Installation
 
-[Read the Getting Started tutorial](https://docs.pluginpal.io/webtools) or follow the steps below:
-
-### Installer wizard
-
-To provide easy installation, this plugin comes with it's own installer wizard. It let's you interactively select which content types you want to enable and which addons you want to install. Making it easy to get started with Webtools!
+Read the full Getting Started guide in the docs, or run the installer. The command below executes the Webtools installer (webtools-cli) in your current project directory:
 
 ```bash
 npx webtools-cli install
 ```
 
-### Enabling
+The installer lets you:
+- Enable Webtools for selected content types
+- Optionally install addons (e.g. Sitemap)
 
-Using the installer wizard you can easily enable Webtools for your content types. If there are still more content-types you want to enable, you can do that manually through the admin panel. Read more about how to do that in the [usage documentation](https://docs.pluginpal.io/webtools/usage).
+> Keyboard shortcuts: Space (toggle), a (all), i (invert), Enter (confirm)
 
-### Building
+### Build the admin
 
-After successful installation you have to rebuild the admin UI so it'll include this plugin. To rebuild and restart Strapi run:
+After installation, rebuild the Strapi admin so it includes the plugin:
 
 ```bash
 # using yarn
@@ -60,32 +65,36 @@ npm run build
 npm run develop
 ```
 
+## 🚀 Quick start
+
+1) Enable Webtools for your content types (via the installer or Admin → Content-Type Builder)
+2) Create URL patterns (Webtools → Patterns)
+3) Bulk generate aliases (Webtools → All URLs)
+4) Optionally set up the Sitemap addon (see docs)
+
 Enjoy 🎉
 
 ## 📓 Documentation
 
-The full documentation of this plugin can be found on it's dedicated documentation website.
-
-- [Webtools core plugin](https://docs.pluginpal.io/webtools)
-- [Webtools sitemap addon](https://docs.pluginpal.io/webtools/addons/sitemap)
-
+- Core plugin: https://docs.pluginpal.io/webtools
+- Sitemap addon: https://docs.pluginpal.io/webtools/addons/sitemap
 
 ## 🔌 Addons
 
-Webtools can be extended by installing addons that hook into the core Webtools functionality. Read more about how addons work and how to install them in the [addons documentation](https://docs.pluginpal.io/webtools/addons).
+Webtools can be extended with addons that hook into the core. Learn more: https://docs.pluginpal.io/webtools/addons
 
 ## 🔗 Links
 
-- [PluginPal marketplace](https://www.pluginpal.io/plugin/webtools)
-- [NPM package](https://www.npmjs.com/package/strapi-plugin-webtools)
-- [GitHub repository](https://github.com/pluginpal/strapi-webtools)
-- [Strapi marketplace](https://market.strapi.io/plugins/@pluginpal-webtools-core)
+- PluginPal marketplace: https://www.pluginpal.io/plugin/webtools
+- NPM package: https://www.npmjs.com/package/strapi-plugin-webtools
+- GitHub repository: https://github.com/pluginpal/strapi-webtools
+- Strapi marketplace: https://market.strapi.io/plugins/@pluginpal-webtools-core
 
 ## 🌎 Community support
 
-- For general help using Strapi, please refer to [the official Strapi documentation](https://strapi.io/documentation/).
-- You can contact me on the Strapi Discord [channel](https://discord.strapi.io/).
+- For Strapi usage questions, see the official docs: https://strapi.io/documentation/
+- Chat on Strapi Discord: https://discord.strapi.io/
 
-## 📝 Resources
+## 📝 License
 
-- [MIT License](https://github.com/pluginpal/strapi-webtools/blob/master/LICENSE.md)
+MIT — https://github.com/pluginpal/strapi-webtools/blob/master/LICENSE.md
