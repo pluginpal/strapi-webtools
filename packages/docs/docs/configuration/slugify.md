@@ -8,6 +8,8 @@ slug: /configuration/slugify
 
 This config can be used to overwrite the function that is used to slugify your URLs. The function takes a single parameter which is the path before being slugified. It expects the return value to be the slugified URL.
 
+For an introduction to patterns and how slugs are derived, see [URL pattern](/webtools/url-pattern). For the fallback behavior, see [Default pattern](/webtools/configuration/default-pattern).
+
 ### Example:
 
 ```md title="config/plugins.js"

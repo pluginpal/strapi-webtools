@@ -6,7 +6,13 @@ slug: /api/rest
 
 # REST API
 
+## Overview
+
 The plugin exposes a couple of REST API endpoints that you can use to implement Webtools in your front-end of choice.
+
+### Authentication
+
+Use Public role or API Tokens as per Strapi defaults.
 
 ## Router
 
@@ -57,6 +63,18 @@ Other than the path parameter this endpoint should behave just like a native fin
 This endpoint is just a native findMany endpoint exposed to query multiple URL aliases. This can be handy if you want to get a list of all the URLs in your website to build your (static) front-end.
 
 As it's a native findMany endpoint you can use all the parameters you're used to like `populate`, `filters` and `fields`.
+
+### Lookup Single URL
+
+To find a specific URL alias, use Strapi's filter syntax:
+
+```bash
+GET http://localhost:1337/api/webtools/url-alias?filters[url_path][$eq]=/your-path
+```
+
+:::warning Filter Syntax
+The query parameter `?url_path=` does not work correctly. Always use the full filter syntax: `?filters[url_path][$eq]=` to lookup specific URLs.
+:::
 
 <ApiCall>
 
@@ -137,3 +155,18 @@ As it's a native findMany endpoint you can use all the parameters you're used to
 </Response>
 
 </ApiCall>
+
+## Permissions
+
+Before you can use the router and url-alias endpoints publicly, you need to configure the *find* permissions. 
+
+### Quick Setup
+
+Enable in **Settings > Users & Permissions > Roles > Public**:
+- `webtools.url-alias.find`
+- `webtools.router.find`
+
+For each enabled content type, also enable:
+- `[content-type].find`
+
+See [Permissions](/permissions) for a complete explanation of all three permission levels that need to be configured.

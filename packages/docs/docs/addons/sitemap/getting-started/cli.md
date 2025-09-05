@@ -6,7 +6,8 @@ slug: /addons/sitemap/cli
 
 # 📺 CLI
 
-This plugin comes with it's own `strapi-sitemap` CLI.
+This addon includes its own `strapi-sitemap` CLI. This is separate from the core Webtools CLI used during installation/enabling. For core Webtools installation and enabling content types, see the [Installation guide](/webtools/).
+
 You can add it to your project like so:
 
 ```
