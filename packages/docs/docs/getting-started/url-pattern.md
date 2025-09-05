@@ -7,7 +7,7 @@ slug: /url-pattern
 # 🔌 URL pattern
 To create dynamic URLs this plugin uses **URL patterns**. The URL pattern will be used to generate unique URLs based on the data available.
 
-You can add URL patterns in the settings section of the plugin.
+You can add URL patterns in the settings section of the plugin. For configuration details and fallbacks, see [Default pattern](/webtools/configuration/default-pattern) and [Slugify](/webtools/configuration/slugify).
 
 ```
 /pages/[my-title-field]

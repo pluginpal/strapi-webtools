@@ -27,15 +27,27 @@ nvm use
 
 ### Installation
 
-To install the plugin run the following command.
+To install the plugin run the following command. This invokes the core Webtools CLI.
 
 ```bash
 npx webtools-cli install
 ```
 
+### Command Line Interface (installer)
+
+During installation the Webtools CLI guides you through a short wizard:
+- Select content types to enable Webtools for
+- Optionally select addons to install (e.g. Sitemap)
+
+Keyboard shortcuts in the selector:
+- Space: toggle selection
+- a: toggle all
+- i: invert selection
+- Enter: proceed
+
 ### Enabling
 
-The installer wizard will ask you which content-types you want to enable. Select the content types that you consider to be web-pages in your website front-end. Each content-type you select will get it's own unique URL which can be used on the front-end. Read more about enabling content-types in the [usage documentation](/webtools/usage).
+The installer wizard will ask you which content types you want to enable. Select the content types that you consider to be web pages in your website front-end. Each content type you select will get its own unique URL which can be used on the front-end. Read more about enabling content types in the [usage documentation](/webtools/usage).
 
 ### Building
 

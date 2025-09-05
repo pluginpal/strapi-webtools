@@ -26,6 +26,12 @@ You can also use the Webtools CLI to enable Webtools for your content types. Thi
 npx webtools-cli enable
 ```
 
+The CLI presents a selector where you can:
+- Choose content types to enable Webtools for
+- Optionally select addons to install (e.g. Sitemap)
+
+Keyboard shortcuts: Space (toggle), a (all), i (invert), Enter (confirm).
+
 ### Manually
 
 :::tip
