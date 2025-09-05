@@ -39,11 +39,18 @@ During installation the Webtools CLI guides you through a short wizard:
 - Select content types to enable Webtools for
 - Optionally select addons to install (e.g. Sitemap)
 
-Keyboard shortcuts in the selector:
-- Space: toggle selection
-- a: toggle all
-- i: invert selection
-- Enter: proceed
+<img src="/webtools/img/assets/install/cli-select-content-types.png" alt="CLI: select content types" />
+
+<img src="/webtools/img/assets/install/cli-select-addons.png" alt="CLI: select addons to install" />
+
+:::tip Keyboard shortcuts
+In the selector you can use:
+
+- <kbd>Space</kbd> — toggle selection
+- <kbd>a</kbd> — toggle all
+- <kbd>i</kbd> — invert selection
+- <kbd>Enter</kbd> — proceed
+:::
 
 ### Enabling
 
