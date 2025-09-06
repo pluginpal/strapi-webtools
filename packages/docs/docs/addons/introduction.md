@@ -12,4 +12,5 @@ To enhance Webtools in a modular way, the core plugin allows addons to be regist
 
 <CustomDocCardsWrapper>
 <CustomDocCard emoji="🔀" title="Sitemap" description="The Sitemap addon can be used to generate a customizable sitemap using all your Webtools URL aliases" link="/webtools/addons/sitemap" />
+<CustomDocCard emoji="🔗" title="LinkField" description="The LinkField addon can be used create a link based on internal documents or create a external link" link="/webtools/addons/linkfield" />
 </CustomDocCardsWrapper>

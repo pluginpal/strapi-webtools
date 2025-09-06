@@ -48,6 +48,11 @@ const sidebars = {
           label: "Sitemap addon",
           href: '/addons/sitemap',
         },
+        {
+          type: "link",
+          label: "LinkField addon",
+          href: '/addons/linkfield',
+        },
       ],
     },
     {
@@ -120,6 +125,38 @@ const sidebars = {
             "addons/sitemap/configuration/limit",
             "addons/sitemap/configuration/xsl",
             "addons/sitemap/configuration/auto-generate",
+          ],
+        },
+      ],
+    },
+  ],
+  webtoolsLinkfieldSidebar: [
+    {
+      type: "link",
+      label: "⬅️ Back to Webtools Core docs",
+      href: "/addons",
+    },
+    {
+      type: "category",
+      collapsed: false,
+      label: "🔌 LinkField addon",
+      items: [
+        {
+          type: "category",
+          collapsed: false,
+          label: "🚀 Getting Started",
+          items: [
+            "addons/linkfield/getting-started/introduction",
+            "addons/linkfield/getting-started/installation",
+            "addons/linkfield/getting-started/usage",
+          ],
+        },
+        {
+          type: "category",
+          collapsed: false,
+          label: "🔧 Configuration",
+          items: [
+            "addons/linkfield/configuration/introduction",
           ],
         },
       ],
