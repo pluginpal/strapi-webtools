@@ -46,7 +46,7 @@ export async function licenseSetup() {
       `${chalk.bold('🚀 Get your free trial license!')}\n`,
     );
     console.log('You can start your free trial by visiting the following link:');
-    console.log(chalk.underline('https://polar.sh/checkout/polar_c_4NUnsZ24PTLPhbSux9STPqeLL7ptZlcz003Yy15MArc'));
+    console.log(chalk.underline('https://buy.polar.sh/polar_cl_MDnGQGPNocWRwmvdMVOjC5712dhAAyNErEeNt10tllv'));
     console.log('\n✨ Enjoy 30 days of access to the Essential plan completely free!');
     console.log('💡 Remember: You can cancel within the 30 days to ensure your trial remains free.\n');
 
