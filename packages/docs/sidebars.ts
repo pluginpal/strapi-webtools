@@ -42,6 +42,16 @@ const sidebars = {
     {
       type: "category",
       collapsed: false,
+      label: "📟 CLI",
+      items: [
+        "cli/install",
+        "cli/enable",
+        "cli/setup-license",
+      ],
+    },
+    {
+      type: "category",
+      collapsed: false,
       label: "🔌 Addons",
       items: [
         "addons/introduction",
