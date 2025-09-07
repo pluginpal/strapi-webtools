@@ -24,9 +24,8 @@ const sidebars = {
       items: [
         "getting-started/installation",
         "getting-started/usage",
-        "getting-started/url-alias",
         "getting-started/url-pattern",
-        "getting-started/use-cases",
+        "getting-started/url-alias",
         "getting-started/permissions",
         "getting-started/troubleshooting",
       ],

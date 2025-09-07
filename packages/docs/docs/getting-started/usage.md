@@ -62,10 +62,3 @@ After enabling Webtools for your content types:
 Type `[` in the pattern field to see available fields from your content type.
 :::
 
-## Sitemap setup
-
-For setting up and generating your XML sitemap, see Addons > Sitemap:
-- Getting Started and Settings: /addons/sitemap/getting-started/introduction and /addons/sitemap/settings/introduction
-- CLI usage: /addons/sitemap/cli
-
-This keeps sitemap-specific steps within the Addons documentation.

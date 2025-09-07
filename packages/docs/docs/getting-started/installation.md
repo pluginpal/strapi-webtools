@@ -10,20 +10,10 @@ slug: /
 Complete installation requirements are the exact same as for Strapi itself and can be found in the Strapi documentation.
 
 **Additional Requirements:**
-- **Node.js**: Version 18.17 or higher
+- **Node.js**: Version 18 or higher
 - **Strapi**: Version 5.x
 
-:::tip Node Version Manager
-Create a `.nvmrc` file with `18.17` for consistent versions across your team:
-```bash
-echo "18.17" > .nvmrc
-nvm use
-```
 :::
-
-### Supported versions
-
-- Strapi v5
 
 ### Installation
 

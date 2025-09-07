@@ -12,13 +12,13 @@ Common issues and solutions when working with Strapi Webtools.
 
 ### Node.js version error
 ```
-The engine "node" is incompatible with this module. Expected version ">=18.17"
+The engine "node" is incompatible with this module. Expected version ">=18"
 ```
 
-**Solution:** Update Node.js to version 18.17 or higher:
+**Solution:** Update Node.js to version 18 or higher:
 ```bash
-nvm install 18.17
-nvm use 18.17
+nvm install 18
+nvm use 18
 ```
 
 ### Peer dependency warnings
@@ -27,6 +27,11 @@ Multiple warnings about unmet peer dependencies during installation.
 **Solution:** These warnings are normal and won't affect functionality. The plugin will work correctly despite these warnings.
 
 ## Pattern & URL Issues
+
+### URL is incorrect
+The Webtools plugin applies it's own slugify function to your URLs. That means that if you have already have a slugified field, which you then use in an URL pattern, it will be slugified again, potentially causing incorrect URLs. If you want you can disable the slugify function of Webtools by updating the slugify configuration.
+
+See [slugify configuration docs](/configuration/slugify)
 
 ### Can't select field in pattern
 When creating URL patterns, some content types don't show field options.
