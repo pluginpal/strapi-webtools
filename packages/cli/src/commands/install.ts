@@ -21,9 +21,11 @@ export async function install() {
     `${chalk.bold('🚀 Let\'s build your new website with Strapi')}\n`,
   );
 
-  console.log('🚀 Get more out of Webtools with premium add-ons!\n');
+  // console.log('🚀 Get more out of Webtools with premium add-ons!\n');
 
-  const { licenseKey } = await licenseSetup();
+  // const { licenseKey } = await licenseSetup();
+
+  const licenseKey = null;
 
   // Get available content types
   const contentTypes = getContentTypes();
