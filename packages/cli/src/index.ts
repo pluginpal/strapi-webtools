@@ -4,7 +4,6 @@ import { Command } from 'commander';
 import chalk from 'chalk';
 import { install } from './commands/install';
 import { enable } from './commands/enable';
-import { setupLicense } from './commands/license-setup';
 
 const program = new Command();
 
@@ -44,6 +43,7 @@ program
 //     try {
 //       await setupLicense();
 //     } catch (error) {
+// eslint-disable-next-line max-len
 //       console.error(chalk.red('Error:'), error instanceof Error ? error.message : 'An unknown error occurred');
 //       process.exit(1);
 //     }

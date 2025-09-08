@@ -5,7 +5,6 @@ import { getContentTypes } from '../utils/content-types';
 import { getAvailableAddons, getPremiumAddons } from '../utils/addons';
 import { installPackage } from '../utils/package-manager';
 import { logger } from '../utils/logger';
-import { licenseSetup } from './subcommands/license-setup';
 import { enableContentTypes } from './subcommands/enable-content-types';
 
 export async function install() {
