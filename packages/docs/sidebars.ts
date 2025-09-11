@@ -60,6 +60,16 @@ const sidebars = {
           label: "Sitemap addon",
           href: '/addons/sitemap',
         },
+        {
+          type: "link",
+          label: "Redirects addon",
+          href: '/addons/redirects',
+        },
+        {
+          type: "link",
+          label: "Links addon",
+          href: '/addons/links',
+        },
       ],
     },
     {
@@ -132,6 +142,83 @@ const sidebars = {
             "addons/sitemap/configuration/limit",
             "addons/sitemap/configuration/xsl",
             "addons/sitemap/configuration/auto-generate",
+          ],
+        },
+      ],
+    },
+  ],
+
+  webtoolsRedirectsSidebar: [
+    {
+      type: "link",
+      label: "⬅️ Back to Webtools Core docs",
+      href: "/addons",
+    },
+    {
+      type: "category",
+      collapsed: false,
+      label: "🔀 Redirects addon",
+      items: [
+        {
+          type: "category",
+          collapsed: false,
+          label: "🚀 Getting Started",
+          items: [
+            "addons/redirects/getting-started/introduction",
+            "addons/redirects/getting-started/installation",
+            "addons/redirects/getting-started/usage",
+          ],
+        },
+        {
+          type: "category",
+          collapsed: false,
+          label: "📦 API",
+          items: [
+            "addons/redirects/api/rest",
+          ],
+        },
+        {
+          type: "category",
+          collapsed: false,
+          label: "🔧 Configuration",
+          items: [
+            "addons/redirects/configuration/introduction",
+            "addons/redirects/configuration/auto-generate",
+            "addons/redirects/configuration/default-status-code",
+          ],
+        },
+      ],
+    },
+  ],
+
+  webtoolsLinksSidebar: [
+    {
+      type: "link",
+      label: "⬅️ Back to Webtools Core docs",
+      href: "/addons",
+    },
+    {
+      type: "category",
+      collapsed: false,
+      label: "🔗 Links addon",
+      items: [
+        {
+          type: "category",
+          collapsed: false,
+          label: "🚀 Getting Started",
+          items: [
+            "addons/links/getting-started/introduction",
+            "addons/links/getting-started/installation",
+            "addons/links/getting-started/custom-field",
+            "addons/links/getting-started/ckeditor",
+          ],
+        },
+        {
+          type: "category",
+          collapsed: false,
+          label: "📦 API",
+          items: [
+            "addons/links/api/links-format",
           ],
         },
       ],
