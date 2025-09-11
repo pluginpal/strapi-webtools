@@ -1,5 +1,11 @@
 # webtools-cli
 
+## 1.1.1
+
+### Patch Changes
+
+- [`7ff239e`](https://github.com/pluginpal/strapi-webtools/commit/7ff239e78c7102e375afc711fb9b9af52c674c1e) Thanks [@boazpoolman](https://github.com/boazpoolman)! - chore: enable the license setup in the cli
+
 ## 1.1.0
 
 ### Minor Changes
