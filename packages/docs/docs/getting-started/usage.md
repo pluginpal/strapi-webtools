@@ -5,7 +5,12 @@ slug: /usage
 ---
 
 # 💡 Usage
+
 This plugin is specifically designed for usage in Strapi managed websites. Hence the name **web**tools. The plugin offers a variety of functionalities which you'll have to manually enable.
+
+:::note
+Webtools needs to be enabled per content type. This is typically done during installation using the CLI selector, but can also be enabled later via the Admin interface or manually in the schema.
+:::
 
 ## Enabling Webtools
 
@@ -25,6 +30,12 @@ You can also use the Webtools CLI to enable Webtools for your content types. Thi
 npx webtools-cli enable
 ```
 
+The CLI presents a selector where you can:
+- Choose content types to enable Webtools for
+- Optionally select addons to install (e.g. Sitemap)
+
+Keyboard shortcuts: Space (toggle), a (all), i (invert), Enter (confirm).
+
 ### Manually
 
 :::tip
@@ -36,4 +47,18 @@ pluginOptions: {
     enabled: true,
   },
 },
+```
 :::
+
+## Workflow
+
+After enabling Webtools for your content types:
+
+1. **Create URL patterns** - See [URL pattern](/url-pattern) documentation
+2. **Bulk generate URLs** - Go to Webtools > All URLs to create aliases for existing content  
+3. **Generate sitemap** - Configure and generate XML sitemap with your URLs
+
+:::tip Pattern discovery
+Type `[` in the pattern field to see available fields from your content type.
+:::
+
