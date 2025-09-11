@@ -1,10 +1,11 @@
 import chalk from 'chalk';
-import { checkbox, confirm, input } from '@inquirer/prompts';
+import { checkbox } from '@inquirer/prompts';
 import { checkStrapiProject } from '../utils/strapi';
-import { getContentTypes, enableWebtoolsForContentType } from '../utils/content-types';
+import { getContentTypes } from '../utils/content-types';
 import { getAvailableAddons, getPremiumAddons } from '../utils/addons';
 import { installPackage } from '../utils/package-manager';
-import { createLicenseFiles } from '../utils/license';
+import { logger } from '../utils/logger';
+import { enableContentTypes } from './subcommands/enable-content-types';
 
 export async function install() {
   // Check if we're in a Strapi project
@@ -14,67 +15,22 @@ export async function install() {
     return;
   }
 
-  // Ask about license key
-  const hasLicense = await confirm({
-    message: 'Do you have a license key for Webtools?',
-    default: false,
-  });
+  logger.title(
+    'Webtools',
+    `${chalk.bold('🚀 Let\'s build your new website with Strapi')}\n`,
+  );
 
-  let licenseKey: string | null = null;
-  if (hasLicense) {
-    licenseKey = await input({
-      message: 'Please enter your license key:',
-      validate: (value) => {
-        if (!value || value.trim().length === 0) {
-          return 'License key cannot be empty';
-        }
-        return true;
-      },
-    });
+  // console.log('🚀 Get more out of Webtools with premium add-ons!\n');
 
-    // Create license files
-    console.log(chalk.blue('\nSetting up license configuration...'));
-    const success = await createLicenseFiles(licenseKey);
-    if (!success) {
-      console.log(chalk.red('Failed to setup license configuration. Continuing without the license.'));
-      licenseKey = null;
-    }
-  }
+  // const { licenseKey } = await licenseSetup();
+
+  const licenseKey = null;
 
   // Get available content types
   const contentTypes = getContentTypes();
 
-  if (contentTypes.length === 0) {
-    console.log(chalk.yellow('No content types found in your Strapi project, skipping Webtools setup step. You can enable Webtools later using the "enable" command.'));
-  } else {
-    // Let user select content types
-    const selectedContentTypes = await checkbox({
-      message: 'Select content types to enable Webtools for:',
-      choices: contentTypes.map((type) => ({
-        name: type,
-        value: type,
-      })),
-    });
-
-    // Enable Webtools for selected content types
-    if (selectedContentTypes.length > 0) {
-      console.log(chalk.blue('\nEnabling Webtools for selected content types...'));
-
-      const results = selectedContentTypes.map((contentType) => {
-        const success = enableWebtoolsForContentType(contentType);
-        if (success) {
-          console.log(chalk.green(`✓ Enabled Webtools for ${contentType}`));
-          return true;
-        }
-
-        console.log(chalk.red(`✗ Failed to enable Webtools for ${contentType}`));
-        return false;
-      });
-
-      const successCount = results.filter(Boolean).length;
-      console.log(chalk.blue(`\nEnabled Webtools for ${successCount} of ${selectedContentTypes.length} content types.`));
-    }
-  }
+  // Enable Webtools for content types
+  await enableContentTypes(contentTypes);
 
   // Get available addons
   const availableAddons = getAvailableAddons();
@@ -85,6 +41,9 @@ export async function install() {
     const premiumAddons = getPremiumAddons();
     allAddons = [...availableAddons, ...premiumAddons];
   }
+
+  // New line
+  console.log('');
 
   // Let user select addons
   const selectedAddons = await checkbox({
@@ -109,13 +68,13 @@ export async function install() {
 
   // Install all packages at once
   if (packagesToInstall.length > 0) {
-    console.log(chalk.blue('\nInstalling packages...'));
+    console.log(`\n${chalk.cyan('●')} Installing packages...\n`);
 
     const success = installPackage(packagesToInstall.join(' '));
     if (success) {
-      console.log(chalk.green(`✓ Installed ${packagesToInstall.length} packages successfully`));
+      console.log(chalk.green(`\n✓ Installed ${packagesToInstall.length} packages successfully`));
     } else {
-      console.log(chalk.red('✗ Failed to install packages. Aborting installation.'));
+      console.log(chalk.red('\n✗ Failed to install packages. Aborting installation.'));
       return;
     }
   }

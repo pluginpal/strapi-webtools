@@ -65,7 +65,7 @@ export async function createLicenseFiles(licenseKey: string): Promise<boolean> {
 `;
 
       await fs.writeFile(yarnrcPath, yarnrcContent);
-      console.log(chalk.green('✓ Created .yarnrc.yml file with registry configuration'));
+      console.log(chalk.green('✓ Created .yarnrc.yml file with registry configuration \n'));
     } else {
       // Create .npmrc file for npm/pnpm/yarn v1
       const npmrcPath = path.join(currentDir, '.npmrc');
@@ -75,12 +75,12 @@ always-auth=true
 `;
 
       await fs.writeFile(npmrcPath, npmrcContent);
-      console.log(chalk.green('✓ Created .npmrc file with registry configuration'));
+      console.log(chalk.green('✓ Created .npmrc file with registry configuration \n'));
     }
 
     return true;
   } catch (error) {
-    console.error(chalk.red('Error creating license files:'), error);
+    console.error(chalk.red('Error creating license files:'), error, '\n');
     return false;
   }
 }

@@ -1,6 +1,6 @@
 name: 🚀 Feature Request
 description: Suggest an idea to help make this plugin even better!
-title: "[Feature]: "
+title: "[Feature] "
 labels: ["enhancement"]
 body:
   - type: markdown
@@ -14,10 +14,10 @@ body:
       label: Addon
       description: Please select the addon related to this request
       options:
-        - No specific addon – This feature request is related to Webtools Core
-        - Webtools Core: Sitemap Addon
-        - Webtools Pro: Redirects Addon
-        - Webtools Pro: Links Addon
+        - "No specific addon – This feature request is related to Webtools Core"
+        - "Webtools Core - Sitemap Addon"
+        - "Webtools Pro - Redirects Addon"
+        - "Webtools Pro - Links Addon"
     validations:
       required: true
 
