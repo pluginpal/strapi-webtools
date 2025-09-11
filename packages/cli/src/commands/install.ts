@@ -6,6 +6,7 @@ import { getAvailableAddons, getPremiumAddons } from '../utils/addons';
 import { installPackage } from '../utils/package-manager';
 import { logger } from '../utils/logger';
 import { enableContentTypes } from './subcommands/enable-content-types';
+import { licenseSetup } from './subcommands/license-setup';
 
 export async function install() {
   // Check if we're in a Strapi project
@@ -20,11 +21,9 @@ export async function install() {
     `${chalk.bold('🚀 Let\'s build your new website with Strapi')}\n`,
   );
 
-  // console.log('🚀 Get more out of Webtools with premium add-ons!\n');
+  console.log('🚀 Get more out of Webtools with premium add-ons!\n');
 
-  // const { licenseKey } = await licenseSetup();
-
-  const licenseKey = null;
+  const { licenseKey } = await licenseSetup();
 
   // Get available content types
   const contentTypes = getContentTypes();
