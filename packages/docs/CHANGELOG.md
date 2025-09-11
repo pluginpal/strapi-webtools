@@ -1,5 +1,13 @@
 # docs
 
+## 1.2.0
+
+### Minor Changes
+
+- [#321](https://github.com/pluginpal/strapi-webtools/pull/321) [`1244f7d`](https://github.com/pluginpal/strapi-webtools/commit/1244f7d1e6ea61d2c72e0fa656fa6a438bd8f017) Thanks [@MSACC](https://github.com/MSACC)! - docs: add docs for the cli specifically
+
+- [#321](https://github.com/pluginpal/strapi-webtools/pull/321) [`07ca757`](https://github.com/pluginpal/strapi-webtools/commit/07ca757d513d73d45f9bc3b21c9cff59e4193eb6) Thanks [@MSACC](https://github.com/MSACC)! - docs: add docs for the Links addon, Redirects addon and enhance the docs in general
+
 ## 1.1.3
 
 ### Patch Changes
