@@ -1,5 +1,11 @@
 # core
 
+## 1.6.1
+
+### Patch Changes
+
+- [`6c39f04`](https://github.com/pluginpal/strapi-webtools/commit/6c39f04b59d7773922f5b0dd9ee26444ac49ae97) Thanks [@TMSchipper](https://github.com/TMSchipper)! - Update webtools search with mainField as key
+
 ## 1.6.0
 
 ### Minor Changes
