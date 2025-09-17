@@ -49,6 +49,7 @@ export default {
 
           const entriesWithContentType: SearchResult[] = entries.map((entry: DocumentEntry) => ({
             ...entry,
+            mainField: entry[mainField],
             contentType: uid,
           }));
 
@@ -88,7 +89,7 @@ export default {
       id: entry.id,
       documentId: entry.documentId,
       // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-      ...(mainField ? { [mainField]: entry[mainField] } : {}),
+      ...(mainField ? { mainField: entry[mainField] } : {}),
     };
   },
 };
