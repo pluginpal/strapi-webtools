@@ -10,7 +10,7 @@ slug: /addons/links/installation
 Complete installation requirements are the exact same as for Strapi itself and can be found in the Strapi documentation.
 
 **Additional Requirements:**
-- **Node.js**: Version 18 or higher
+- **Node.js**: Version 18.18.2 or higher
 - **Strapi**: Version 5.x
 - **Webtools**: Version 1.x
 :::
