@@ -1,5 +1,11 @@
 # core
 
+## 1.7.0
+
+### Minor Changes
+
+- [#331](https://github.com/pluginpal/strapi-webtools/pull/331) [`85fabf6`](https://github.com/pluginpal/strapi-webtools/commit/85fabf6a45e9982e479a5823b66cefe31e1d267f) Thanks [@boazpoolman](https://github.com/boazpoolman)! - feat: expose the URL alias crud endpoints to the content-api to allow for URL alias management from external systems
+
 ## 1.6.1
 
 ### Patch Changes
