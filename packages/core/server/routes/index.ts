@@ -12,6 +12,38 @@ export default {
       },
       {
         method: 'GET',
+        path: '/url-alias/:id',
+        handler: 'url-alias.findOne',
+        config: {
+          policies: [],
+        },
+      },
+      {
+        method: 'DELETE',
+        path: '/url-alias/:id',
+        handler: 'url-alias.delete',
+        config: {
+          policies: [],
+        },
+      },
+      {
+        method: 'PUT',
+        path: '/url-alias/:id',
+        handler: 'url-alias.update',
+        config: {
+          policies: [],
+        },
+      },
+      {
+        method: 'POST',
+        path: '/url-alias',
+        handler: 'url-alias.create',
+        config: {
+          policies: [],
+        },
+      },
+      {
+        method: 'GET',
         path: '/router',
         handler: 'core.router',
         config: {
