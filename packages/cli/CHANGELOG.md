@@ -1,5 +1,11 @@
 # webtools-cli
 
+## 1.1.2
+
+### Patch Changes
+
+- [`de9cd59`](https://github.com/pluginpal/strapi-webtools/commit/de9cd59ad2aefcd6910032e7e7f6f3877fd841f8) Thanks [@boazpoolman](https://github.com/boazpoolman)! - fix: update polar trial link
+
 ## 1.1.1
 
 ### Patch Changes
