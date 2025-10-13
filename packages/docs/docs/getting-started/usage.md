@@ -68,6 +68,11 @@ Type `[` in the pattern field to see available fields from your content type.
 Disabling Webtools for a content type will permanently delete all URL aliases associated with that content type. This action cannot be undone.
 :::
 
+When you disable Webtools:
+
+- `pluginOptions.webtools.enabled` is set to `false` in the schema
+- All URL aliases for this content type are deleted from the database
+
 To disable Webtools for a content type:
 
 1. Go to **Content-Type Builder**
