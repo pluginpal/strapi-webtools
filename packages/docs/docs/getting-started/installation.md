@@ -74,3 +74,43 @@ After successful installation you have to rebuild the admin UI so it'll include 
 
 - Enable Webtools per content type → see [Usage](/webtools/usage)
 - Review Roles & Permissions → see [Permissions](/webtools/permissions)
+
+## Updating Webtools
+
+### Update to latest version
+
+To update Webtools to the latest version, use your package manager:
+
+<Tabs groupId="yarn-npm">
+  <TabItem value="yarn" label="Yarn">
+    ```
+    yarn upgrade strapi-plugin-webtools
+    ```
+  </TabItem>
+  <TabItem value="npm" label="NPM">
+    ```
+    npm update strapi-plugin-webtools
+    ```
+  </TabItem>
+</Tabs>
+
+After updating, rebuild the admin UI:
+
+<Tabs groupId="yarn-npm">
+  <TabItem value="yarn" label="Yarn">
+    ```
+    yarn build
+    yarn develop
+    ```
+  </TabItem>
+  <TabItem value="npm" label="NPM">
+    ```
+    npm run build
+    npm run develop
+    ```
+  </TabItem>
+</Tabs>
+
+:::tip Enable additional content types
+To enable Webtools for additional content types after installation, see the [Usage documentation](/webtools/usage#enabling-webtools).
+:::
