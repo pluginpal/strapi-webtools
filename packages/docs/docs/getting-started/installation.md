@@ -23,6 +23,11 @@ To install the plugin run the following command in your Strapi project directory
 npx webtools-cli install
 ```
 
+:::note Package names
+- **webtools-cli** - Interactive installer that sets up Webtools
+- **strapi-plugin-webtools** - The actual Strapi plugin (installed by the CLI)
+:::
+
 ### Command Line Interface (installer)
 
 During installation the Webtools CLI guides you through a short wizard:
