@@ -55,10 +55,27 @@ pluginOptions: {
 After enabling Webtools for your content types:
 
 1. **Create URL patterns** - See [URL pattern](/url-pattern) documentation
-2. **Bulk generate URLs** - Go to Webtools > All URLs to create aliases for existing content  
+2. **Bulk generate URLs** - Go to Webtools > All URLs to create aliases for existing content
 3. **Generate sitemap** - Configure and generate XML sitemap with your URLs
 
 :::tip Pattern discovery
 Type `[` in the pattern field to see available fields from your content type.
 :::
+
+## Disabling Webtools
+
+:::warning Data Loss Warning
+Disabling Webtools for a content type will permanently delete all URL aliases associated with that content type. This action cannot be undone.
+:::
+
+To disable Webtools for a content type:
+
+1. Go to **Content-Type Builder**
+2. Select the content type
+3. Click **Edit**
+4. Go to **Advanced Settings** tab
+5. Uncheck **Webtools**
+6. Confirm the deletion warning
+
+The system will prompt you to confirm before deleting all paths.
 
