@@ -26,6 +26,63 @@ Multiple warnings about unmet peer dependencies during installation.
 
 **Solution:** These warnings are normal and won't affect functionality. The plugin will work correctly despite these warnings.
 
+## License Issues
+
+### License key activation is not valid
+```
+error: [webtools]: License key activation is not valid. Remove the activation_id from your package.json to issue a new activation for this project.
+```
+
+This error occurs when the stored license activation is no longer valid. This can happen when:
+
+- You moved the project to a different machine
+- You reinstalled dependencies or changed the project structure
+- Your license has expired or been deactivated
+- You've reached the maximum number of activations for your license
+
+**Solution:** Remove the activation ID and restart Strapi to trigger a new activation:
+
+1. Open your `package.json` file
+2. Look for a field named `activation_id` (usually near the top level)
+3. Remove the entire `activation_id` field and its value
+4. Save the file
+5. Restart your Strapi server
+
+The plugin will automatically create a new activation on the next startup.
+
+**Example:**
+
+Before:
+```json
+{
+  "name": "my-strapi-project",
+  "activation_id": "abc123...",
+  "version": "1.0.0",
+  ...
+}
+```
+
+After:
+```json
+{
+  "name": "my-strapi-project",
+  "version": "1.0.0",
+  ...
+}
+```
+
+:::tip
+If you continue to experience activation issues after removing the `activation_id`, ensure your license key is correctly set in the `.env` file:
+```
+WEBTOOLS_LICENSE_KEY=your-license-key-here
+```
+
+You can also re-run the license setup:
+```bash
+npx webtools-cli setup-license
+```
+:::
+
 ## Pattern & URL Issues
 
 ### URL is incorrect
