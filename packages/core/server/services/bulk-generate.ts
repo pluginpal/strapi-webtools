@@ -82,6 +82,7 @@ const generateUrlAliases = async (params: GenerateParams): Promise<number> => {
 
       // eslint-disable-next-line no-await-in-loop
       await strapi.documents(type as 'api::test.test').update({
+        locale: entity.locale,
         documentId: entity.documentId,
         data: {
           url_alias: [newUrlAlias.documentId],
