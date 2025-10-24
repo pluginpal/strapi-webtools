@@ -46,6 +46,11 @@ const generateUrlAliasMiddleware: Modules.Documents.Middleware.Middleware = asyn
   // Fire the action.
   const entity = await next() as Modules.Documents.AnyDocument;
 
+  // Abort if no entity was created/updated.
+  if (!entity) {
+    return entity;
+  }
+
   // Fetch the full entity.
   const fullEntity = await strapi.documents(uid as 'api::test.test').findOne({
     documentId: entity.documentId,
