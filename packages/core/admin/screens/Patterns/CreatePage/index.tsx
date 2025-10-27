@@ -63,7 +63,7 @@ const CreatePatternPage = () => {
       setSubmitting(false);
     } catch (err) {
       toggleNotification({
-        type: 'warning',
+        type: 'danger',
         message: formatMessage({ id: 'notification.error' }),
       });
       setSubmitting(false);

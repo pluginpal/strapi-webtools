@@ -56,7 +56,7 @@ const TableRow: FC<Props> = ({
       })
       .catch(() => {
         if (onDelete) onDelete();
-        toggleNotification({ type: 'warning', message: formatMessage({ id: 'notification.error' }) });
+        toggleNotification({ type: 'danger', message: formatMessage({ id: 'notification.error' }) });
       });
   };
 

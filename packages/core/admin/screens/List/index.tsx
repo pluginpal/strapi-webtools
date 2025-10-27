@@ -53,7 +53,7 @@ const List = () => {
         toggleNotification({ type: 'success', message: formatMessage({ id: 'webtools.success.url-alias.generate', defaultMessage: response.data.message }) });
       })
       .catch(() => {
-        toggleNotification({ type: 'warning', message: formatMessage({ id: 'notification.error' }) });
+        toggleNotification({ type: 'danger', message: formatMessage({ id: 'notification.error' }) });
       });
 
     await queryClient.invalidateQueries('url-alias');
