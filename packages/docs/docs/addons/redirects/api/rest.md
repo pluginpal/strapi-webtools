@@ -14,6 +14,15 @@ The plugin exposes a REST API endpoint that you can use to implement the redirec
 
 Use Public role or API Tokens as per Strapi defaults.
 
+### Permissions
+
+:::danger Permissions Required
+Before you can use the redirects endpoint publicly, you need to configure the **find** permission. Without proper permissions, you'll get a **403 Forbidden** error.
+
+**Quick Setup in Settings > Users & Permissions > Roles > Public:**
+- `webtools-addon-redirects.redirect.find`
+:::
+
 <ApiCall>
 
 <Request>
@@ -71,11 +80,3 @@ Use Public role or API Tokens as per Strapi defaults.
 
 </ApiCall>
 
-## Permissions
-
-Before you can use the redirects endpoint publicly, you need to configure the *find* permission. 
-
-### Quick Setup
-
-Enable in **Settings > Users & Permissions > Roles > Public**:
-- `webtools-addon-redirects.redirect.find`

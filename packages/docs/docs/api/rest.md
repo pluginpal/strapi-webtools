@@ -14,6 +14,19 @@ The plugin exposes a couple of REST API endpoints that you can use to implement 
 
 Use Public role or API Tokens as per Strapi defaults.
 
+### Permissions
+
+:::danger Permissions Required
+Before you can use the router and url-alias endpoints publicly, you need to configure the **find** permissions. Without proper permissions, you'll get a **403 Forbidden** error.
+
+**Quick Setup in Settings > Users & Permissions > Roles > Public:**
+- `webtools.url-alias.find`
+- `webtools.router.find`
+- For each enabled content type: `[content-type].find`
+
+See the complete [Permissions Guide](/permissions) for detailed instructions on all three permission levels.
+:::
+
 ## Router
 
 Probably the most important endpoint of the plugin is it's router endpoint.
@@ -156,17 +169,3 @@ The query parameter `?url_path=` does not work correctly. Always use the full fi
 
 </ApiCall>
 
-## Permissions
-
-Before you can use the router and url-alias endpoints publicly, you need to configure the *find* permissions. 
-
-### Quick Setup
-
-Enable in **Settings > Users & Permissions > Roles > Public**:
-- `webtools.url-alias.find`
-- `webtools.router.find`
-
-For each enabled content type, also enable:
-- `[content-type].find`
-
-See [Permissions](/permissions) for a complete explanation of all three permission levels that need to be configured.
