@@ -64,6 +64,50 @@ Choose the appropriate HTTP status code for your redirect:
 Be careful with 301 redirects as they are heavily cached by browsers. If you need to change a 301 redirect, users may not see the change immediately due to browser caching.
 :::
 
+## Access
+After you've followed the steps above you can now access your redirects through the REST API of Strapi. It will be available at:
+
+http://localhost:1337/api/webtools/redirects.
+
+:::caution
+You need to setup permissions for this endpoint to be accessible. See the [REST API documentation](/webtools/addons/redirects/api/rest#permissions) for details.
+:::
+
+## Frontend Implementation
+
+Now that you have access to the redirects API, you need to implement the redirects in your frontend. There are two approaches:
+
+### Option 1: Framework Redirects Configuration
+
+Most modern frameworks have built-in redirect features (Next.js, Nuxt, etc.). You can fetch redirects from the Strapi API and configure them in your framework's configuration file.
+
+**Note:** This approach is framework-specific and requires different setup for each framework. Consult your framework's documentation for redirect configuration.
+
+### Option 2: API Check Before Router (Recommended)
+
+The recommended approach is to check for redirects **before** calling the Webtools router endpoint. This works consistently across all frameworks and tech stacks.
+
+**Flow:**
+1. User navigates to a URL (e.g., `/old-page`)
+2. Your frontend calls the redirects API: `GET /api/webtools/redirects`
+3. Check if the current path matches any redirect's `from` field
+4. **If redirect exists:** Navigate to the `to` URL with the appropriate status code
+5. **If no redirect:** Proceed to call the Webtools router endpoint: `GET /api/webtools/router?path=/old-page`
+
+**Why this works:**
+- Framework-agnostic solution
+- Works with the [Webtools router endpoint](/api/rest#router) pattern you're already using
+- Ensures redirects are checked before attempting to fetch content
+- No need for complex server middleware or build-time configuration
+
+**Performance tip:** Cache the redirects list in memory for 1-5 minutes to avoid fetching on every request.
+
+:::tip Integration with Webtools Router
+This approach integrates seamlessly with the Webtools router workflow. See the [REST API Router documentation](/api/rest#router) for details on how to fetch content by path.
+:::
+
+**No Cron Needed:** Unlike the [sitemap addon](/addons/sitemap/configuration/cron) which uses cron jobs to generate files, redirects are immediately available via the API after creation in the admin panel.
+
 ## Redirect Chains and Loops
 
 The Webtools Redirects addon includes built-in protection against redirect chains and loops, which can harm user experience and SEO.
@@ -161,12 +205,3 @@ Solution:
   3. Auto-generate creates: /current  →  /new
   4. Result: /old → /new and /current → /new ✓
 ```
-
-## Access
-After you've followed the steps above you can now access your redirects through the REST API of Strapi. It will be available at:
-
-http://localhost:1337/api/webtools/redirects.
-
-:::caution
-You need to setup permissions for this endpoint to be accessible. See the [REST API documentation](/webtools/addons/redirects/api/rest#permissions) for details.
-:::
