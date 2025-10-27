@@ -56,6 +56,44 @@ You might want to disable auto-generate if:
 Keep this enabled for production sites. It's a safety net that prevents broken links automatically.
 :::
 
+## Multiple URL Changes
+
+When you change the same URL multiple times, the addon intelligently manages redirects to prevent chains:
+
+**Scenario 1: First URL change**
+```
+Original URL:  /my-article
+New URL:       /my-article-updated
+
+Result: Creates redirect /my-article → /my-article-updated ✓
+```
+
+**Scenario 2: Second URL change (updates existing redirect)**
+```
+Current URL:   /my-article-updated
+New URL:       /my-article-final
+
+Result:
+- Updates existing redirect to: /my-article → /my-article-final ✓
+- Creates new redirect: /my-article-updated → /my-article-final ✓
+```
+
+This strategy prevents redirect chains and ensures all old URLs point directly to the current URL. Both `/my-article` and `/my-article-updated` will redirect straight to `/my-article-final` without intermediate hops.
+
+:::tip Smart Redirect Management
+The addon automatically updates existing redirects that point to the old URL, ensuring no chains are created. This means you can freely change URLs multiple times without worrying about redirect performance.
+:::
+
+## Chain Prevention
+
+Auto-generate includes built-in protection against [redirect chains and loops](/addons/redirects/usage#redirect-chains-and-loops). If a URL change would create a chain or loop, the system will:
+
+1. **Log an error** in your server console
+2. **Skip creating the redirect** automatically
+3. **Allow you to manually resolve** the conflict
+
+Check your server logs if you suspect redirects aren't being created as expected.
+
 ## Difference from sitemap cron
 
 Unlike the sitemap addon which uses a cron job to periodically regenerate files, redirects are created **instantly** when you change a URL. There's no delay and no need for scheduled tasks - redirects are event-driven and created the moment you save your changes.
