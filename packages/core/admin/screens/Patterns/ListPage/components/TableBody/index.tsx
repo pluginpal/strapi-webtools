@@ -31,7 +31,7 @@ const TableBody: React.FC<Props> = ({ patterns, contentTypes }) => {
         toggleNotification({ type: 'success', message: formatMessage({ id: 'webtools.settings.success.delete' }) });
       })
       .catch(() => {
-        toggleNotification({ type: 'warning', message: formatMessage({ id: 'notification.error' }) });
+        toggleNotification({ type: 'danger', message: formatMessage({ id: 'notification.error' }) });
       });
   };
 
