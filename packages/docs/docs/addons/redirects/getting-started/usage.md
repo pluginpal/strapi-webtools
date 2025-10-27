@@ -65,10 +65,10 @@ Be careful with 301 redirects as they are heavily cached by browsers. If you nee
 :::
 
 ## Access
-After you've followed the steps above you can now access your sitemap through the REST api of strapi. It will be available at:
+After you've followed the steps above you can now access your redirects through the REST API of Strapi. It will be available at:
 
 http://localhost:1337/api/webtools/redirects.
 
 :::caution
-You might have to setup permissions for this endpoint to be accessible.
+You need to setup permissions for this endpoint to be accessible. See the [REST API documentation](/webtools/addons/redirects/api/rest#permissions) for details.
 :::
