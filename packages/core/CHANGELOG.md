@@ -1,5 +1,17 @@
 # core
 
+## 1.7.1
+
+### Patch Changes
+
+- [#341](https://github.com/pluginpal/strapi-webtools/pull/341) [`87d94e2`](https://github.com/pluginpal/strapi-webtools/commit/87d94e28a96aa5537b0915fbbf8903bba35495b9) Thanks [@boazpoolman](https://github.com/boazpoolman)! - fix: wrap the bulk generate service in a db transaction to prevent #280
+
+- [#337](https://github.com/pluginpal/strapi-webtools/pull/337) [`4beacc2`](https://github.com/pluginpal/strapi-webtools/commit/4beacc232757fce11c9646569b03e3bf9aa8413c) Thanks [@boazpoolman](https://github.com/boazpoolman)! - fix: issue with bulk generate when having DP and i18n enabled
+
+- [#339](https://github.com/pluginpal/strapi-webtools/pull/339) [`36c4a04`](https://github.com/pluginpal/strapi-webtools/commit/36c4a04e87cd2c0d018d1b6ccf645def774c6d0a) Thanks [@boazpoolman](https://github.com/boazpoolman)! - fix: prevent an error when the user tries to update a non-existing entry
+
+- [#341](https://github.com/pluginpal/strapi-webtools/pull/341) [`ac2aac7`](https://github.com/pluginpal/strapi-webtools/commit/ac2aac7dedcd55a27c2f988c6edb03837a16c391) Thanks [@boazpoolman](https://github.com/boazpoolman)! - fix: make sure error notifications are shown with type 'danger' instead of 'warning'
+
 ## 1.7.0
 
 ### Minor Changes
