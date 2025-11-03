@@ -21,6 +21,8 @@ Before you can use the redirects endpoint publicly, you need to configure the **
 
 **Quick Setup in Settings > Users & Permissions > Roles > Public:**
 - `webtools-addon-redirects.redirect.find`
+
+For detailed permission configuration including admin panel access, see the [Permissions documentation](/webtools/addons/redirects/permissions).
 :::
 
 <ApiCall>

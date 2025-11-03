@@ -117,6 +117,7 @@ const sidebars = {
             "addons/sitemap/getting-started/sitemap-index",
             "addons/sitemap/getting-started/robots-txt",
             "addons/sitemap/getting-started/cli",
+            "addons/sitemap/getting-started/permissions",
           ],
         },
         {
@@ -167,6 +168,7 @@ const sidebars = {
             "addons/redirects/getting-started/introduction",
             "addons/redirects/getting-started/installation",
             "addons/redirects/getting-started/usage",
+            "addons/redirects/getting-started/permissions",
           ],
         },
         {
