@@ -4,6 +4,9 @@ displayed_sidebar: webtoolsSidebar
 slug: /permissions
 ---
 
+import ThemedImage from '@theme/ThemedImage';
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
 # 🔐 Role-Based Access Control (RBAC)
 
 After installation, review Webtools permissions per role in Settings so your front-end can access the required endpoints.
@@ -26,7 +29,13 @@ For each content-type where you've enabled Webtools, you need to open up the sta
 4. Check **Find** (and **Find One** if desired).
 5. Click **Save**.
 
-<img src="/webtools/img/assets/permissions-ct-find.png" alt="Content Type Find permissions" />
+<ThemedImage
+  alt="Content Type Find permissions"
+  sources={{
+    light: useBaseUrl('/webtools/img/assets/permissions-ct-find-dark.png'),
+    dark: useBaseUrl('/webtools/img/assets/permissions-ct-find-dark.png'),
+  }}
+/>
 
 ---
 
@@ -40,7 +49,13 @@ Enable the Webtools endpoints for your front-end:
    - **URL Alias: find**
 3. Click **Save**.
 
-<img src="/webtools/img/assets/permissions-webtools-find.png" alt="Webtools Router & URL Alias find permissions" />
+<ThemedImage
+  alt="Webtools Router & URL Alias find permissions"
+  sources={{
+    light: useBaseUrl('/webtools/img/assets/permissions-webtools-find-dark.png'),
+    dark: useBaseUrl('/webtools/img/assets/permissions-webtools-find-dark.png'),
+  }}
+/>
 
 ---
 
@@ -55,7 +70,13 @@ Want your editors/admins to manage Webtools settings? Configure admin panel perm
 3. Under **Plugins** → **Webtools** enable the permissions you need.
 4. Click **Save**.
 
-<img src="/webtools/img/assets/permissions-admin-roles.png" alt="Admin Panel Webtools access rights" />
+<ThemedImage
+  alt="Admin Panel Webtools access rights"
+  sources={{
+    light: useBaseUrl('/webtools/img/assets/permissions-admin-roles-dark.png'),
+    dark: useBaseUrl('/webtools/img/assets/permissions-admin-roles-dark.png'),
+  }}
+/>
 
 ### Available Permissions
 

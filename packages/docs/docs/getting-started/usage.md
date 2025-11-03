@@ -4,6 +4,9 @@ displayed_sidebar: webtoolsSidebar
 slug: /usage
 ---
 
+import ThemedImage from '@theme/ThemedImage';
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
 # 💡 Usage
 
 This plugin is specifically designed for usage in Strapi managed websites. Hence the name **web**tools. The plugin offers a variety of functionalities which you'll have to manually enable.
@@ -20,7 +23,13 @@ Once you enable Webtools for a content-type each entry of that type will get it'
 
 See below a screenshot of how to enable webtools for a given collection type.
 
-<img src="/webtools/img/assets/enable-webtools.png" alt="Enable webtools" />
+<ThemedImage
+  alt="Enable webtools"
+  sources={{
+    light: useBaseUrl('/webtools/img/assets/enable-webtools-light.png'),
+    dark: useBaseUrl('/webtools/img/assets/enable-webtools-light.png'),
+  }}
+/>
 
 ### Using the CLI
 

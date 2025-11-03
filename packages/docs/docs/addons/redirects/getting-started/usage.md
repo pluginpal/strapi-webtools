@@ -4,6 +4,9 @@ displayed_sidebar: webtoolsRedirectsSidebar
 slug: /addons/redirects/usage
 ---
 
+import ThemedImage from '@theme/ThemedImage';
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
 # 💡 Usage
 With this plugin you have full control over which redirects should be active for your front-end. You can create, update and delete redirects right from the Strapi admin panel.
 
@@ -11,13 +14,25 @@ With this plugin you have full control over which redirects should be active for
 
 On the redirects overview you can see all the redirects on your site.
 
-<img src="/webtools/img/assets/addons/redirects/redirects-overview.png" alt="Redirects overview" />
+<ThemedImage
+  alt="Redirects overview"
+  sources={{
+    light: useBaseUrl('/webtools/img/assets/addons/redirects/redirects-overview-light.png'),
+    dark: useBaseUrl('/webtools/img/assets/addons/redirects/redirects-overview-light.png'),
+  }}
+/>
 
 ## Create redirects
 
 With the button in the top right you can create new redirects.
 
-<img src="/webtools/img/assets/addons/redirects/create-redirects.png" alt="Create redirects" />
+<ThemedImage
+  alt="Create redirects"
+  sources={{
+    light: useBaseUrl('/webtools/img/assets/addons/redirects/create-redirects-light.png'),
+    dark: useBaseUrl('/webtools/img/assets/addons/redirects/create-redirects-light.png'),
+  }}
+/>
 
 ### URL Format
 
