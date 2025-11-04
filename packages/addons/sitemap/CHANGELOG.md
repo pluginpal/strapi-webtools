@@ -1,5 +1,11 @@
 # addon-sitemap
 
+## 1.2.4
+
+### Patch Changes
+
+- [#342](https://github.com/pluginpal/strapi-webtools/pull/342) [`758e029`](https://github.com/pluginpal/strapi-webtools/commit/758e02992ee3840c40c9808e5655b64276db4cd2) Thanks [@boazpoolman](https://github.com/boazpoolman)! - fix: filter duplicate URLs from the sitemap XML
+
 ## 1.2.3
 
 ### Patch Changes
