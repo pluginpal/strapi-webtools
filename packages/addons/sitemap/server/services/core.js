@@ -193,7 +193,17 @@ const createSitemapEntries = async () => {
     }
   }
 
-  return sitemapEntries;
+  // Filter out duplicates.
+  const allSitemapUrls = new Set();
+  const uniqueSitemapEntries = sitemapEntries.filter((entry) => {
+    if (allSitemapUrls.has(entry.url)) {
+      return false;
+    }
+    allSitemapUrls.add(entry.url);
+    return true;
+  });
+
+  return uniqueSitemapEntries;
 };
 
 /**
