@@ -36,8 +36,8 @@ export default {
 
         publicRole.permissions['plugin::webtools'] = {
           controllers: {
-            core: {
-              router: { enabled: true },
+            router: {
+              findOne: { enabled: true },
             },
             'url-alias': {
               find: { enabled: true },
