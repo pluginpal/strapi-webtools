@@ -4,6 +4,9 @@ displayed_sidebar: webtoolsLinksSidebar
 slug: /addons/links/custom-field
 ---
 
+import ThemedImage from '@theme/ThemedImage';
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
 # Custom field
 This addon introduces a new custom field which you can add to your content types. This field can be used in your content types to accommodate internal linking from one page to another.
 
