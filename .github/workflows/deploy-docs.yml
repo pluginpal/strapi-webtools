@@ -20,7 +20,7 @@ jobs:
       - name: Set up Docker
         uses: actions/setup-node@v4
         with:
-          node-version: '14'
+          node-version: '20'
 
       - name: Build a Docker image
         run: |

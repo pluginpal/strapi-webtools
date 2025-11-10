@@ -42,7 +42,7 @@
     "yalc": "^1.0.0-pre.53"
   },
   "engines": {
-    "node": ">=14.0.0"
+    "node": ">=20.0.0"
   },
   "packageManager": "yarn@4.11.0"
 }
