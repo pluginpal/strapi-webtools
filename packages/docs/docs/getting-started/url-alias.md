@@ -16,6 +16,6 @@ See below a screenshot of the URL alias popup that's used to set the unique path
   alt="URL alias"
   sources={{
     light: useBaseUrl('/webtools/img/assets/url-alias-light.png'),
-    dark: useBaseUrl('/webtools/img/assets/url-alias-light.png'),
+    dark: useBaseUrl('/webtools/img/assets/url-alias-dark.png'),
   }}
 />

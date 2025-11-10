@@ -27,7 +27,7 @@ See below a screenshot of how to enable webtools for a given collection type.
   alt="Enable webtools"
   sources={{
     light: useBaseUrl('/webtools/img/assets/enable-webtools-light.png'),
-    dark: useBaseUrl('/webtools/img/assets/enable-webtools-light.png'),
+    dark: useBaseUrl('/webtools/img/assets/enable-webtools-dark.png'),
   }}
 />
 
