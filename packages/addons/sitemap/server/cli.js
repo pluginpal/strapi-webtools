@@ -42,7 +42,7 @@ program
     const sitemaps = [];
 
     if (!sitemap) {
-      const config = await app.plugin('webtools-addon-sitemap').service('setting').getConfig();
+      const config = await app.plugin('webtools-addon-sitemap').service('settings').getConfig();
       Object.keys(config.sitemaps).forEach((sitemapId) => {
         sitemaps.push(sitemapId);
       });
