@@ -5,7 +5,7 @@
  *
  */
 
-import { fromJS, Map } from 'immutable';
+import { fromJS } from 'immutable';
 
 import {
   SUBMIT_MODAL,
@@ -26,7 +26,6 @@ import {
   SET_LOADING_STATE,
   GET_SITEMAPS_SUCCEEDED,
   PREPARE_SETTINGS_FORM,
-  DELETE_SITEMAP,
 } from '../../config/constants';
 
 import getTrad from '../../helpers/getTrad';

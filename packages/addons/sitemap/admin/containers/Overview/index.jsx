@@ -1,13 +1,12 @@
 import { Box, Button } from '@strapi/design-system';
 import { Plus } from '@strapi/icons';
-import { List } from 'immutable';
 import { getFetchClient, Layouts, useNotification } from '@strapi/strapi/admin';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import React, { useEffect } from 'react';
 import { useIntl } from 'react-intl';
 import { useNavigate } from 'react-router-dom';
 import TableComponent from './components/Table';
-import { getSettings, getSitemaps } from '../../state/actions/Sitemap';
+import { getSettings } from '../../state/actions/Sitemap';
 import NewSitemapModal from '../../components/NewSitemapModal';
 
 const Overview = () => {
@@ -24,6 +23,7 @@ const Overview = () => {
     get('/webtools/sitemap/init')
       .then(() => setReady(true))
       .catch(() => navigate('/plugins/webtools/sitemap/default', { state: { backButton: false } }));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

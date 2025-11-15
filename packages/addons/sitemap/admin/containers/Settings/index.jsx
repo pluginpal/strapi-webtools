@@ -36,6 +36,7 @@ const Settings = ({ id }) => {
     get('/webtools/sitemap/init')
       .then(() => setBackButton(true))
       .catch(() => setBackButton(false));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
