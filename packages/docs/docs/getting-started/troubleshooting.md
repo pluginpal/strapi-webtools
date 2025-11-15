@@ -93,7 +93,15 @@ npx webtools-cli setup-license
 ## Pattern & URL Issues
 
 ### URL is incorrect
-The Webtools plugin applies it's own slugify function to your URLs. That means that if you have already have a slugified field, which you then use in an URL pattern, it will be slugified again, potentially causing incorrect URLs. If you want you can disable the slugify function of Webtools by updating the slugify configuration.
+
+Webtools applies its own slugify function to URL patterns. If you're using an already-slugified field in your pattern, it will be slugified twice, resulting in incorrect URLs.
+
+**Example problem:**
+- Field value: `my-blog-post` (already slugified)
+- Pattern: `/blog/[title]`
+- Result: `/blog/my--blog--post` (double slugified)
+
+**Solution:** Disable the slugify function in your Webtools configuration if you're using pre-slugified fields.
 
 See [slugify configuration docs](/configuration/slugify)
 
