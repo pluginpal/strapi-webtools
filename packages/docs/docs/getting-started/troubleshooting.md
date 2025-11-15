@@ -118,33 +118,6 @@ Some content types require locale selection when creating patterns.
 
 **Explanation:** Multi-language content types need locale-specific patterns. This is normal behavior for internationalized content.
 
-### Multiple content type bundles
-Content types can be selected multiple times in sitemap bundles.
-
-**Use case:** Each bundle can have different settings (change frequency, priority, locale-specific configurations).
-
-## Sitemap Issues
-
-### Invalid URL error (500)
-```
-TypeError [ERR_INVALID_URL]: Invalid URL
-```
-
-**Solution:** Ensure hostname includes protocol prefix:
-- ✅ Correct: `http://localhost:1337`
-- ❌ Wrong: `localhost:1337`
-
-### Generate sitemap button stuck
-UI becomes unresponsive after sitemap generation error (usually caused by incorrect hostname format).
-
-**Solution:** Hard refresh browser (Ctrl+R) to reset the interface state.
-
-### Router permissions error
-500 error when generating sitemap, even with correct URL format.
-
-**Solution:** Enable router permissions in **Settings > Users & Permissions > Public**:
-- `webtools.router.find`
-
 ## API Issues
 
 ### Returns all URLs instead of one
@@ -185,40 +158,6 @@ Origin null is not allowed by Access-Control-Allow-Origin
   }
 }
 ```
-
-## Configuration Issues
-
-### Confused about "Default Language URL Type"?
-
-This sitemap setting controls whether your default language appears in URLs.
-
-**Problem:** Not sure which option to choose in the sitemap settings.
-
-**Options explained:**
-
-| Option | Default Language URL | Other Language URL | Use When |
-|--------|---------------------|-------------------|----------|
-| **Disabled** | `/about` | `/about` | Single language site, or all locales use same URL format |
-| **Default language URL of bundles** | `/en/about` | `/nl/about` | You want all languages (including default) to have locale prefixes |
-| **Other** | `/about` | `/nl/about` | Only non-default languages should have locale prefixes |
-
-**Example:**
-If your default language is English and you choose "Other":
-- English page: `https://example.com/about`
-- Dutch page: `https://example.com/nl/about`
-
-### Multiple sitemap bundles for same content type?
-
-You can add the same content type multiple times to sitemap bundles.
-
-**Why would you do this?**
-
-Each bundle can have different settings for different locales or priorities:
-
-- **Bundle 1**: English articles with `changefreq: daily` and `priority: 0.8`
-- **Bundle 2**: Dutch articles with `changefreq: weekly` and `priority: 0.6`
-
-This allows fine-grained control over how different content and locales appear in your sitemap.
 
 ## Still Having Issues?
 

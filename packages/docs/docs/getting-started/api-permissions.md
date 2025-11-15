@@ -71,7 +71,7 @@ Enable the Webtools API endpoints for your frontend application.
 | Permission | Endpoint | Description |
 |------------|----------|-------------|
 | **Router: find** | `GET /api/webtools/router?path=...` | Allows to fetch content by URL path for routing in frontend applications |
-| **URL Alias: find** | `GET /api/webtools/url-alias` | Allows to fetch all URL aliases for generating static routes or sitemaps |
+| **URL Alias: find** | `GET /api/webtools/url-alias` | Allows to fetch all URL aliases for generating static routes |
 
 ---
 

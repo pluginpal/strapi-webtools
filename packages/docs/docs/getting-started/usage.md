@@ -65,7 +65,7 @@ After enabling Webtools for your content types:
 
 1. **Create URL patterns** - See [URL pattern](/url-pattern) documentation
 2. **Bulk generate URLs** - Go to Webtools > All URLs to create aliases for existing content
-3. **Generate sitemap** - Configure and generate XML sitemap with your URLs
+3. **[Optional] Install addons** - Add extra features like [Sitemap](/addons/sitemap), [Redirects](/addons/redirects), or [Links](/addons/links)
 
 :::tip Pattern discovery
 Type `[` in the pattern field to see available fields from your content type.
