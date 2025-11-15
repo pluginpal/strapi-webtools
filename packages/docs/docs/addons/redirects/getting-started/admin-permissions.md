@@ -6,15 +6,13 @@ slug: /addons/redirects/admin-permissions
 
 # 🔐 Admin Panel Permissions
 
-The Redirects addon provides granular permissions for controlling what admin users can do in the Strapi admin panel.
+Configure granular permissions to control what administrators can do with redirects in the Strapi admin panel.
 
 ---
 
-## Setting up Admin Panel Permissions
+## Configuration
 
-For admin users to manage redirects in the Strapi admin panel.
-
-### Configuration Steps
+To configure permissions for a role:
 
 1. Go to **Strapi Admin → Settings → Administration Panel → Roles**.
 2. Choose the role (e.g., **Editor**, **Author**).
@@ -26,50 +24,33 @@ For admin users to manage redirects in the Strapi admin panel.
 
 ## Available Permissions
 
-### Access the overview page
-- **What it does:** Allows access to the redirects list page
-- **Use case:** View all configured redirects
-- **Required for:** Seeing the redirects overview in Webtools
-- **UI Location:** `/plugins/webtools/redirects`
+The following table lists all available permissions for the Redirects addon in the admin panel:
 
-### Create new redirects
-- **What it does:** Shows the "Create" button and allows access to the create page
-- **Use case:** Let editors add new redirect rules
-- **Required for:** Creating redirects via `/plugins/webtools/redirects/new`
-
-### Edit existing redirects
-- **What it does:** Allows access to the edit page for individual redirects
-- **Use case:** Let editors modify existing redirect rules
-- **Required for:** Updating redirects via `/plugins/webtools/redirects/:id`
-
-### Delete existing redirects
-- **What it does:** Shows the delete button and allows deletion of redirects
-- **Use case:** Let editors remove outdated redirects
-- **Required for:** Removing redirects from the system
+| Permission | Description |
+|------------|-------------|
+| **Access the redirects plugin** | Gives access to the redirects overview page at `/plugins/webtools/redirects` |
+| **Create** | Allows to create new redirect rules |
+| **Read** | Allows to view existing redirect configurations |
+| **Update** | Allows to edit existing redirect rules |
+| **Delete** | Allows to remove redirect rules from the system |
 
 ---
 
 ## Permission Combinations
 
-Here are some common permission setups based on different roles:
+Common permission setups for different roles:
 
-### For Content Editors
-- ✅ Access the overview page
-- ✅ Create new redirects
-- ✅ Edit existing redirects
-- ❌ Delete existing redirects (prevent accidental deletions)
+| Role | Access | Create | Read | Update | Delete |
+|------|--------|--------|------|--------|--------|
+| **Content Editor** | ✅ | ✅ | ✅ | ✅ | ❌ |
+| **Senior Editor** | ✅ | ✅ | ✅ | ✅ | ✅ |
+| **Viewer** | ✅ | ❌ | ✅ | ❌ | ❌ |
 
-**Use case:** Content editors who need to manage redirects but shouldn't be able to delete them without approval.
+**Content Editor** - Can manage redirects but cannot delete them to prevent accidental data loss.
 
-### For Senior Editors
-- ✅ All permissions
+**Senior Editor** - Has full access to all redirect management features.
 
-**Use case:** Trusted users who can fully manage redirects including deletions.
-
-### For Viewers (read-only)
-- ✅ Access the overview page only
-
-**Use case:** Stakeholders or reviewers who need to see redirects but not modify them.
+**Viewer** - Can view redirects in read-only mode without making changes.
 
 ---
 
@@ -83,61 +64,35 @@ The **Settings** button visible in the permissions UI is for configuring RBAC co
 
 ---
 
-## Testing Admin Panel Access
+## Testing Permissions
 
-### Test Workflow
+To verify permissions are configured correctly:
 
 1. Create a test user with the configured role
 2. Log in as that user
 3. Navigate to **Webtools → Redirects**
-4. Verify you can see/create/edit/delete according to permissions
-
-### Expected Behavior
-
-**With "Access the overview page" only:**
-- Can see the redirects list
-- No "Create" button visible
-- Cannot access edit or delete actions
-
-**With all permissions:**
-- Can see the redirects list
-- "Create" button is visible
-- Can click on redirects to edit
-- Delete button/action is available
+4. Verify the available actions match the configured permissions
 
 :::tip
-Restart Strapi after making permission changes and clear your browser cache if needed.
+Restart Strapi and clear your browser cache after making permission changes.
 :::
 
 ---
 
 ## Troubleshooting
 
-### User cannot access Webtools plugin
-
-**Problem:** The Webtools menu item is not visible in the sidebar.
-
-**Solutions:**
-- Verify the user has at least "Access the overview page" permission
-- Check that the user's role is not disabled
+**Webtools menu not visible:**
+- Verify the role has at least "Access the redirects plugin" permission enabled
 - Log out and log back in
 - Clear browser cache
 
-### Create/Edit/Delete buttons not showing
+**Action buttons missing:**
+- Check that Create/Update/Delete permissions are enabled for the role
+- Refresh the page
+- Check browser console for errors
 
-**Problem:** User can see redirects but action buttons are missing.
-
-**Solutions:**
-- Verify the specific permissions (create/edit/delete) are enabled for the user's role
-- Refresh the page after permission changes
-- Check browser console for permission errors
-
-### Permission changes not taking effect
-
-**Problem:** After updating permissions, user still has old access level.
-
-**Solutions:**
-- Ask the user to log out and log back in
+**Permission changes not applying:**
+- Verify you clicked "Save" after modifying permissions
 - Restart Strapi server
+- Have the user log out and log back in
 - Clear browser cache and cookies
-- Verify you clicked "Save" after changing permissions
