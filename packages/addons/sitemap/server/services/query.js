@@ -106,6 +106,21 @@ const getSitemap = async (name, delta, fields = ['sitemap_string']) => {
 };
 
 /**
+ * Get all sitemaps from the database
+ *
+ * @param {object} query - The query object
+ *
+ * @returns {void}
+ */
+const getAllSitemaps = async (query) => {
+  const sitemaps = await strapi.documents('plugin::webtools-addon-sitemap.sitemap').findMany({
+    ...query,
+  });
+
+  return sitemaps;
+};
+
+/**
  * Delete a sitemap from the database
  *
  * @param {string} name - The name of the sitemap
@@ -169,6 +184,7 @@ const createSitemap = async (data) => {
 };
 
 export default () => ({
+  getAllSitemaps,
   getPages,
   createSitemap,
   getSitemap,

@@ -50,9 +50,9 @@ export default async () => {
     // Schedule cron to generate the sitemap
     if (cron) {
       strapi.cron.add({
-        generateSitemap: {
+        generateDefaultSitemap: {
           task: async ({ strapi }) => {
-            await getPluginService('core').createSitemap();
+            getPluginService('core').createSitemap('default');
           },
           options: {
             rule: cron,

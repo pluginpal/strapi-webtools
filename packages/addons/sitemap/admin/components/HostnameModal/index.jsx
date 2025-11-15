@@ -38,8 +38,7 @@ const ModalForm = (props) => {
       open={isOpen}
       onOpenChange={(open) => {
         if (!open) onCancel();
-      }}
-    >
+      }}>
       <Modal.Content>
         <Modal.Header>
           <Typography textColor="neutral800" variant="omega" fontWeight="bold">

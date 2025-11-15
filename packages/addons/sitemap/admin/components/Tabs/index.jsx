@@ -7,7 +7,7 @@ import CollectionURLs from '../../tabs/CollectionURLs';
 import CustomURLs from '../../tabs/CustomURLs';
 import Settings from '../../tabs/Settings';
 
-const SitemapTabs = () => {
+const SitemapTabs = ({ id }) => {
   const { formatMessage } = useIntl();
   let [searchParams, setSearchParams] = useSearchParams();
 
@@ -26,14 +26,14 @@ const SitemapTabs = () => {
           <Tabs.Trigger value="settings">{formatMessage({ id: 'sitemap.Settings.SettingsTitle', defaultMessage: 'Settings' })}</Tabs.Trigger>
         </Tabs.List>
         <Tabs.Content value="url-bundles">
-          <CollectionURLs />
+          <CollectionURLs id={id} />
         </Tabs.Content>
         <Tabs.Content value="custom-urls">
-          <CustomURLs />
+          <CustomURLs id={id} />
         </Tabs.Content>
         <Tabs.Content value="settings">
           <Box padding={6} background="neutral0" shadow="filterShadow">
-            <Settings />
+            <Settings id={id} />
           </Box>
         </Tabs.Content>
       </Tabs.Root>

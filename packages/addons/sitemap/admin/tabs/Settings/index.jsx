@@ -18,23 +18,23 @@ import { onChangeSettings } from '../../state/actions/Sitemap';
 import HostnameModal from '../../components/HostnameModal';
 import { DEFAULT_LANGUAGE_URL_TYPE_DEFAULT_LOCALE, DEFAULT_LANGUAGE_URL_TYPE_OTHER } from '../../config/constants';
 
-const Settings = () => {
+const Settings = ({ id }) => {
   const { formatMessage } = useIntl();
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
   const languages = useSelector((store) => store.getIn(['sitemap', 'languages'], {}));
-  const settings = useSelector((state) => state.getIn(['sitemap', 'settings'], Map()));
-  const hostnameOverrides = useSelector((state) => state.getIn(['sitemap', 'settings', 'hostname_overrides'], {}));
+  const settings = useSelector((state) => state.getIn(['sitemap', 'settings', 'sitemaps', id], Map()));
+  const hostnameOverrides = useSelector((state) => state.getIn(['sitemap', 'settings', 'sitemaps', id, 'hostname_overrides'], {}));
   const [inputVisible, setInputVisible] = useState(settings.get('defaultLanguageUrlType') === DEFAULT_LANGUAGE_URL_TYPE_OTHER);
 
   const saveHostnameOverrides = (hostnames) => {
-    dispatch(onChangeSettings('hostname_overrides', hostnames));
+    dispatch(onChangeSettings(id, 'hostname_overrides', hostnames));
     setOpen(false);
   };
 
   const handleDefaultLanguageUrlTypeChange = (value = '') => {
-    dispatch(onChangeSettings('defaultLanguageUrlType', value));
-    if (value === DEFAULT_LANGUAGE_URL_TYPE_OTHER) dispatch(onChangeSettings('defaultLanguageUrl', undefined));
+    dispatch(onChangeSettings(id, 'defaultLanguageUrlType', value));
+    if (value === DEFAULT_LANGUAGE_URL_TYPE_OTHER) dispatch(onChangeSettings(id, 'defaultLanguageUrl', undefined));
     setInputVisible(value === DEFAULT_LANGUAGE_URL_TYPE_OTHER);
   };
 
@@ -51,7 +51,7 @@ const Settings = () => {
             placeholder="https://www.strapi.io"
             name="hostname"
             value={settings.get('hostname') || ''}
-            onChange={(e) => dispatch(onChangeSettings('hostname', e.target.value))}
+            onChange={(e) => dispatch(onChangeSettings(id, 'hostname', e.target.value))}
           />
         </Field.Root>
         <Field.Hint />
@@ -92,7 +92,7 @@ const Settings = () => {
             onLabel="on"
             offLabel="off"
             checked={settings.get('includeHomepage')}
-            onChange={(e) => dispatch(onChangeSettings('includeHomepage', e.target.checked))}
+            onChange={(e) => dispatch(onChangeSettings(id, 'includeHomepage', e.target.checked))}
           />
           <Field.Hint />
         </Field.Root>
@@ -109,7 +109,7 @@ const Settings = () => {
             onLabel="on"
             offLabel="off"
             checked={settings.get('excludeDrafts')}
-            onChange={(e) => dispatch(onChangeSettings('excludeDrafts', e.target.checked))}
+            onChange={(e) => dispatch(onChangeSettings(id, 'excludeDrafts', e.target.checked))}
           />
           <Field.Hint />
         </Field.Root>
@@ -156,7 +156,7 @@ const Settings = () => {
               name="defaultLanguageUrl"
               required
               value={settings.get('defaultLanguageUrl')}
-              onChange={(e) => dispatch(onChangeSettings('defaultLanguageUrl', e.target.value))}
+              onChange={(e) => dispatch(onChangeSettings(id, 'defaultLanguageUrl', e.target.value))}
             />
             <Field.Hint />
           </Field.Root>

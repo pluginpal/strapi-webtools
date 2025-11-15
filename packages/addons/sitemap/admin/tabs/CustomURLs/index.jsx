@@ -11,7 +11,7 @@ import {
 import List from '../../components/List/Custom';
 import ModalForm from '../../components/ModalForm';
 
-const CustomURLs = () => {
+const CustomURLs = ({ id }) => {
   const state = useSelector((store) => store.get('sitemap', Map()));
   const dispatch = useDispatch();
   const [modalOpen, setModalOpen] = useState(false);
@@ -19,7 +19,7 @@ const CustomURLs = () => {
 
   const handleModalSubmit = (e) => {
     e.preventDefault();
-    dispatch(submitModal());
+    dispatch(submitModal(id));
     setModalOpen(false);
     setUid(null);
   };
@@ -31,21 +31,21 @@ const CustomURLs = () => {
 
   const handleModalClose = (closeModal = true) => {
     if (closeModal) setModalOpen(false);
-    dispatch(discardModifiedContentTypes());
+    dispatch(discardModifiedContentTypes(id));
     setUid(null);
   };
 
   // Loading state
-  if (!state.getIn(['settings', 'customEntries'])) {
+  if (!state.getIn(['settings', 'sitemaps', id, 'customEntries'])) {
     return null;
   }
 
   return (
     <div>
       <List
-        items={state.getIn(['settings', 'customEntries'])}
+        items={state.getIn(['settings', 'sitemaps', id, 'customEntries'])}
         openModal={(editId) => handleModalOpen(editId)}
-        onDelete={(key) => dispatch(deleteCustomEntry(key))}
+        onDelete={(key) => dispatch(deleteCustomEntry(id, key))}
         prependSlash
       />
       <ModalForm

@@ -36,15 +36,28 @@ program
 program
   .command('generate')
   .description('Generate the sitemap XML')
-  .action(async () => {
+  .argument('[sitemap]', 'Specific sitemap to generate')
+  .action(async (sitemap) => {
     const app = await getStrapiApp();
+    const sitemaps = [];
 
-    try {
-      app.plugin('webtools-addon-sitemap').service('core').createSitemap();
-      console.log(`${chalk.green.bold('[success]')} Successfully generated the sitemap XML.`);
-    } catch (err) {
-      console.log(`${chalk.red.bold('[error]')} Something went wrong when generating the sitemap XML. ${err}`);
+    if (!sitemap) {
+      const config = await app.plugin('webtools-addon-sitemap').service('setting').getConfig();
+      Object.keys(config.sitemaps).forEach((sitemapId) => {
+        sitemaps.push(sitemapId);
+      });
+    } else {
+      sitemaps.push(sitemap);
     }
+
+    await Promise.all(sitemaps.map(async (sitemap) => {
+      try {
+        app.plugin('webtools-addon-sitemap').service('core').createSitemap(sitemap);
+        console.log(`${chalk.green.bold('[success]')} Successfully generated the ${sitemap} sitemap XML.`);
+      } catch (err) {
+        console.log(`${chalk.red.bold('[error]')} Something went wrong when generating the ${sitemap} sitemap XML. ${err}`);
+      }
+    }));
 
     process.exit(0);
   });
