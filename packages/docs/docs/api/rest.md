@@ -24,7 +24,7 @@ Before you can use the router and url-alias endpoints publicly, you need to conf
 - `webtools.router.find`
 - For each enabled content type: `[content-type].find`
 
-See the complete [Permissions Guide](/permissions) for detailed instructions on all three permission levels.
+See the [API Permissions](/api-permissions) guide for detailed instructions on setting up permissions, including API tokens and content-type permissions.
 :::
 
 ## Router

@@ -73,7 +73,8 @@ After successful installation you have to rebuild the admin UI so it'll include 
 ### Post-install checklist
 
 - Enable Webtools per content type → see [Usage](/webtools/usage)
-- Review Roles & Permissions → see [Permissions](/webtools/permissions)
+- Review API Permissions → see [API Permissions](/webtools/api-permissions)
+- Review Admin Panel Permissions → see [Admin Permissions](/webtools/admin-permissions)
 
 ## Updating Webtools
 
