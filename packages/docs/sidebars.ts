@@ -168,7 +168,8 @@ const sidebars = {
             "addons/redirects/getting-started/introduction",
             "addons/redirects/getting-started/installation",
             "addons/redirects/getting-started/usage",
-            "addons/redirects/getting-started/permissions",
+            "addons/redirects/getting-started/api-permissions",
+            "addons/redirects/getting-started/admin-permissions",
           ],
         },
         {
