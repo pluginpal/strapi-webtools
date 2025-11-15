@@ -23,30 +23,38 @@ import {
 } from '../../state/actions/Sitemap';
 import Loader from '../../components/Loader';
 
-const App = () => {
+const Settings = ({ id }) => {
   const loading = useSelector((state) => state.getIn(['sitemap', 'loading'], false));
   const { formatMessage } = useIntl();
+  const [backButton, setBackButton] = React.useState(false);
 
   const dispatch = useDispatch();
   const { toggleNotification } = useNotification();
   const { get } = getFetchClient();
 
   useEffect(() => {
-    dispatch(getSettings(toggleNotification, formatMessage, get));
+    get('/webtools/sitemap/init')
+      .then(() => setBackButton(true))
+      .catch(() => setBackButton(false));
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
+    dispatch(getSettings(toggleNotification, formatMessage, get, id));
     dispatch(getLanguages(toggleNotification, formatMessage, get));
     dispatch(getContentTypes(toggleNotification, formatMessage, get));
-    dispatch(getSitemapInfo(toggleNotification, formatMessage, get));
+    dispatch(getSitemapInfo(id, toggleNotification, formatMessage, get));
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
 
   return (
     <div style={{ position: 'relative' }}>
       {loading && <Loader />}
-      <Header />
-      <Info />
-      <Tabs />
+      <Header id={id} backButton={backButton} />
+      <Info id={id} />
+      <Tabs id={id} />
     </div>
   );
 };
 
-export default App;
+export default Settings;

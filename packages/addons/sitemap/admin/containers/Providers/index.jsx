@@ -11,14 +11,13 @@ import { Provider } from 'react-redux';
 
 import { store } from '../../helpers/configureStore';
 // import pluginPermissions from '../../permissions';
-import Main from '../Main';
 
-const App = () => {
+const Providers = ({ children }) => {
   return (
     <Provider store={store}>
-      <Main />
+      {children}
     </Provider>
   );
 };
 
-export default App;
+export default Providers;

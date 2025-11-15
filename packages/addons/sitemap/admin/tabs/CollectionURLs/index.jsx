@@ -15,7 +15,7 @@ import {
 import List from '../../components/List/Collection';
 import ModalForm from '../../components/ModalForm';
 
-const CollectionURLs = () => {
+const CollectionURLs = ({ id }) => {
   const state = useSelector((store) => store.get('sitemap', Map()));
   const dispatch = useDispatch();
   const [modalOpen, setModalOpen] = useState(false);
@@ -25,7 +25,7 @@ const CollectionURLs = () => {
 
   const handleModalSubmit = (e) => {
     e.preventDefault();
-    dispatch(submitModal());
+    dispatch(submitModal(id));
     setModalOpen(false);
     setUid(null);
   };
@@ -41,11 +41,11 @@ const CollectionURLs = () => {
       setModalOpen(false);
       setUid(null);
     }
-    dispatch(discardModifiedContentTypes());
+    dispatch(discardModifiedContentTypes(id));
   };
 
   // Loading state
-  if (!state.getIn(['settings', 'contentTypes'])) {
+  if (!state.getIn(['settings', 'sitemaps', id, 'contentTypes'])) {
     return null;
   }
 
@@ -82,9 +82,9 @@ const CollectionURLs = () => {
   return (
     <div>
       <List
-        items={state.getIn(['settings', 'contentTypes'])}
+        items={state.getIn(['settings', 'sitemaps', id, 'contentTypes'])}
         openModal={(editId, lang) => handleModalOpen(editId, lang)}
-        onDelete={(key, lang) => dispatch(deleteContentType(key, lang))}
+        onDelete={(key, lang) => dispatch(deleteContentType(id, key, lang))}
       />
       <ModalForm
         contentTypes={state.get('contentTypes')}

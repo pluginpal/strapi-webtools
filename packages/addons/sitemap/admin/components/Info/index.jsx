@@ -12,7 +12,7 @@ import { generateSitemap } from '../../state/actions/Sitemap';
 
 const emptyMap = new Map();
 
-const Info = () => {
+const Info = ({ id }) => {
   const hasHostname = useSelector((state) => state.getIn(['sitemap', 'initialData', 'hostname'], emptyMap));
   const sitemapInfo = useSelector((state) => state.getIn(['sitemap', 'info'], emptyMap));
   let [, setSearchParams] = useSearchParams();
@@ -63,7 +63,7 @@ const Info = () => {
           </div>
           <div style={{ marginTop: '15px' }}>
             <Button
-              onClick={() => dispatch(generateSitemap(toggleNotification, formatMessage, get))}
+              onClick={() => dispatch(generateSitemap(id, toggleNotification, formatMessage, get))}
               variant="secondary"
             >
               {formatMessage({ id: 'sitemap.Header.Button.Generate', defaultMessage: 'Generate sitemap' })}
@@ -108,7 +108,7 @@ const Info = () => {
         )}
         <div style={{ display: 'flex', flexDirection: 'row', marginTop: '15px' }}>
           <Button
-            onClick={() => dispatch(generateSitemap(toggleNotification, formatMessage, get))}
+            onClick={() => dispatch(generateSitemap(id, toggleNotification, formatMessage, get))}
             variant="secondary"
             style={{ marginRight: '10px' }}
           >

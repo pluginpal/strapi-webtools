@@ -4,13 +4,14 @@ import { Map } from 'immutable';
 import { useIntl } from 'react-intl';
 
 import { useNotification, getFetchClient, Layouts } from '@strapi/strapi/admin';
-import { Box, Button } from '@strapi/design-system';
-import { Check } from '@strapi/icons';
+import { Box, Button, Link as DsLink } from '@strapi/design-system';
+import { Check, ArrowLeft } from '@strapi/icons';
+import { Link } from 'react-router-dom';
 
 import { discardAllChanges, submit } from '../../state/actions/Sitemap';
 
-const Header = () => {
-  const settings = useSelector((state) => state.getIn(['sitemap', 'settings'], Map()));
+const Header = ({ id, backButton }) => {
+  const settings = useSelector((state) => state.getIn(['sitemap', 'settings', 'sitemaps', id], Map()));
   const initialData = useSelector((state) => state.getIn(['sitemap', 'initialData'], Map()));
   const { toggleNotification } = useNotification();
   const { put } = getFetchClient();
@@ -22,17 +23,25 @@ const Header = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(submit(settings.toJS(), toggleNotification, formatMessage, put));
+    dispatch(submit(id, settings.toJS(), toggleNotification, formatMessage, put));
   };
 
   const handleCancel = (e) => {
     e.preventDefault();
-    dispatch(discardAllChanges());
+    dispatch(discardAllChanges(id));
   };
 
   return (
     <Box background="neutral100">
       <Layouts.Header
+        navigationAction={backButton && (
+          <DsLink startIcon={<ArrowLeft />} tag={Link} to="/plugins/webtools/sitemap">
+            {formatMessage({
+              id: 'global.back',
+              defaultMessage: 'Back',
+            })}
+          </DsLink>
+        )}
         primaryAction={(
           <Box style={{ display: 'flex' }}>
             <Button
@@ -53,7 +62,7 @@ const Header = () => {
             </Button>
           </Box>
         )}
-        title={formatMessage({ id: 'sitemap.Header.Title', defaultMessage: 'Sitemap' })}
+        title={`${formatMessage({ id: 'sitemap.Header.Title', defaultMessage: 'Sitemap' })} - ${id}`}
         subtitle={formatMessage({ id: 'sitemap.Header.Description', defaultMessage: 'Settings for the sitemap XML' })}
       />
     </Box>

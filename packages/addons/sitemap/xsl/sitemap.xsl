@@ -28,7 +28,7 @@
         </xsl:choose>
 
         <div id="footer">
-          <p>Generated with a <a href="https://github.com/boazpoolman/strapi-plugin-sitemap" target="_blank">sitemap plugin</a> for Strapi CMS.</p>
+          <p>Generated with a <a href="https://docs.pluginpal.io/webtools/addons/sitemap" target="_blank">sitemap plugin</a> for Strapi CMS.</p>
         </div>
       </body>
     </html>

@@ -5,7 +5,7 @@ export default {
   routes: [
     {
       method: 'GET',
-      path: '/',
+      path: '/build-sitemap/:id',
       handler: 'core.buildSitemap',
       config: {
         policies: [],
@@ -13,8 +13,24 @@ export default {
     },
     {
       method: 'GET',
-      path: '/info',
+      path: '/info/:id',
       handler: 'core.info',
+      config: {
+        policies: [],
+      },
+    },
+    {
+      method: 'POST',
+      path: '/create-new-sitemap',
+      handler: 'settings.createNewSitemap',
+      config: {
+        policies: [],
+      },
+    },
+    {
+      method: 'DELETE',
+      path: '/:id',
+      handler: 'settings.deleteSitemap',
       config: {
         policies: [],
       },
@@ -29,7 +45,7 @@ export default {
     },
     {
       method: 'PUT',
-      path: '/settings',
+      path: '/settings/:id',
       handler: 'settings.updateSettings',
       config: {
         policies: [],

@@ -10,9 +10,10 @@ const autoGenerateMiddleware = async (context, next) => {
   }
 
   const settings = await getPluginService('settings').getConfig();
+  const defaultSitemapSettings = settings?.sitemaps?.default;
 
   // Only add the middleware if the content type is added to the sitemap.
-  if (!settings.contentTypes || !Object.keys(settings.contentTypes).includes(uid)) {
+  if (!defaultSitemapSettings?.contentTypes || !Object.keys(defaultSitemapSettings?.contentTypes).includes(uid)) {
     return next();
   }
 
@@ -25,7 +26,7 @@ const autoGenerateMiddleware = async (context, next) => {
   const document = await next();
 
   // Generate the sitemap.
-  getPluginService('core').createSitemap();
+  getPluginService('core').createSitemap('default');
 
   // Return the document
   return document;

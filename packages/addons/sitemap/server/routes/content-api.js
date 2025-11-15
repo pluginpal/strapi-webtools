@@ -5,7 +5,7 @@ export default {
   routes: [
     {
       method: 'GET',
-      path: '/sitemap/index.xml',
+      path: '/sitemap/:id.xml',
       handler: 'core.getSitemap',
       config: {
         policies: [],
