@@ -30,9 +30,9 @@ Select this option if you already have a purchased license key. You'll be prompt
 
 ### 2. Get me a trial
 
-Select this option to start a **30-day free trial** of the Essential plan. The trial includes:
+Select this option to start a **7-day free trial** of the Essential plan. The trial includes:
 - [Redirects addon](/webtools/addons/redirects)
-- [Internal Links addon](/webtools/addons/links)
+- [Links addon](/webtools/addons/links)
 
 #### Trial Process
 
