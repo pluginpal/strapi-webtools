@@ -24,7 +24,7 @@ const Settings = ({ id }) => {
   const [open, setOpen] = useState(false);
   const languages = useSelector((store) => store.getIn(['sitemap', 'languages'], {}));
   const settings = useSelector((state) => state.getIn(['sitemap', 'settings', 'sitemaps', id], Map()));
-  const hostnameOverrides = useSelector((state) => state.getIn(['sitemap', 'settings', 'sitemaps', id, 'hostname_overrides'], {}));
+  const hostnameOverrides = useSelector((state) => state.getIn(['sitemap', 'settings', 'sitemaps', id, 'hostname_overrides'], Map()));
   const [inputVisible, setInputVisible] = useState(settings.get('defaultLanguageUrlType') === DEFAULT_LANGUAGE_URL_TYPE_OTHER);
 
   const saveHostnameOverrides = (hostnames) => {

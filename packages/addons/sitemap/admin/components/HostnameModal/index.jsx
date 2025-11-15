@@ -26,7 +26,7 @@ const ModalForm = (props) => {
 
   useEffect(() => {
     if (isOpen) {
-      setHostnames({ ...hostnameOverrides });
+      setHostnames({ ...hostnameOverrides.toJS() });
     } else {
       setHostnames({});
     }

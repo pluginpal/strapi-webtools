@@ -69,7 +69,7 @@ export default function sitemapReducer(state = initialState, action) {
         .updateIn(['modifiedCustomEntries', action.url, action.key], () => action.value);
     case ON_CHANGE_SETTINGS:
       return state
-        .updateIn(['settings', 'sitemaps', action.id, action.key], () => action.value);
+        .updateIn(['settings', 'sitemaps', action.id, action.key], () => fromJS(action.value));
     case DISCARD_ALL_CHANGES:
       return state
         .updateIn(['settings', 'sitemaps', action.id], () => state.get('initialData'))
