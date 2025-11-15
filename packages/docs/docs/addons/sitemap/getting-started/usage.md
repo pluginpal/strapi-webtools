@@ -19,10 +19,10 @@ An URL bundle is a set of URLs grouped by type. If you set up an URL bundle, all
 
 URLs coming from a URL bundle will get the following XML attributes:
 
-- `<loc>`
-- `<lastmod>`
-- `<priority>`
-- `<changefreq>`
+- `<loc>` - The URL location
+- `<lastmod>` - Last modification date (automatically set from Strapi)
+- `<priority>` - Relative importance (0.1 - 1.0)
+- `<changefreq>` - How often search engines should crawl
 
 <ThemedImage
   alt="URL bundle"
@@ -31,6 +31,23 @@ URLs coming from a URL bundle will get the following XML attributes:
     dark: useBaseUrl('/webtools/img/assets/addons/sitemap/URL-bundle-light.png'),
   }}
 />
+
+### Bundle Settings
+
+When configuring a URL bundle, you can set:
+
+| Setting | Options | Description |
+|---------|---------|-------------|
+| **Priority** | `0.1` - `1.0` | Relative importance of URLs in this bundle. Higher priority (e.g., `0.8` or `1.0`) suggests these URLs are more important. Default is typically `0.5`. |
+| **Change frequency** | `always`, `hourly`, `daily`, `weekly`, `monthly`, `yearly`, `never` | Hint to search engines about how often these URLs change. Does not guarantee crawl frequency. |
+
+:::tip Multiple Bundles
+You can add the same content type multiple times with different settings. For example:
+- **Bundle 1**: English articles with `daily` updates and `priority: 0.8`
+- **Bundle 2**: Dutch articles with `weekly` updates and `priority: 0.6`
+
+This allows fine-grained control over how different content and locales appear in your sitemap.
+:::
 
 ## Custom URLs
 A custom URL is meant to add URLs to the sitemap which are not managed in Strapi. It might be that you have custom route like `/account` that is hardcoded in your front-end. If you'd want to add such a route (URL) to the sitemap you can add it as a custom URL.

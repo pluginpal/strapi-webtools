@@ -120,6 +120,7 @@ const sidebars = {
             "addons/sitemap/getting-started/cli",
             "addons/sitemap/getting-started/api-permissions",
             "addons/sitemap/getting-started/admin-permissions",
+            "addons/sitemap/getting-started/troubleshooting",
           ],
         },
         {
