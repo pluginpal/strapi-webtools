@@ -33,7 +33,7 @@ Multiple warnings about unmet peer dependencies during installation.
 error: [webtools]: License key activation is not valid. Remove the activation_id from your package.json to issue a new activation for this project.
 ```
 
-This error occurs when the stored license activation is no longer valid. This can happen when:
+This error occurs when the stored license activation is no longer valid. The `activation_id` is stored in your `package.json` under `strapi.webtools.activation_id`. This can happen when:
 
 - You moved the project to a different machine
 - You reinstalled dependencies or changed the project structure
@@ -43,7 +43,7 @@ This error occurs when the stored license activation is no longer valid. This ca
 **Solution:** Remove the activation ID and restart Strapi to trigger a new activation:
 
 1. Open your `package.json` file
-2. Look for a field named `activation_id` (usually near the top level)
+2. Find the `strapi.webtools.activation_id` field (located inside the `strapi` object)
 3. Remove the entire `activation_id` field and its value
 4. Save the file
 5. Restart your Strapi server
@@ -56,9 +56,13 @@ Before:
 ```json
 {
   "name": "my-strapi-project",
-  "activation_id": "abc123...",
   "version": "1.0.0",
-  ...
+  "strapi": {
+    "uuid": "...",
+    "webtools": {
+      "activation_id": "..."
+    }
+  }
 }
 ```
 
@@ -67,7 +71,10 @@ After:
 {
   "name": "my-strapi-project",
   "version": "1.0.0",
-  ...
+  "strapi": {
+    "uuid": "...",
+    "webtools": {}
+  }
 }
 ```
 
