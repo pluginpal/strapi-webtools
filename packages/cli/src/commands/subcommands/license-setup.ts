@@ -8,6 +8,8 @@ export async function licenseSetup() {
   console.log('✨ 7 days of access to the Essential plan, which includes:');
   console.log('✅ Automated Redirects');
   console.log('✅ Internal Links\n');
+  console.log('✅ Breadcrumbs\n');
+  console.log('✅ Unlimited sitemaps\n');
 
   const selectedPlan = await select({
     message: 'Do you have a license?',
