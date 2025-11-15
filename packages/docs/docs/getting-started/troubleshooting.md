@@ -188,22 +188,37 @@ Origin null is not allowed by Access-Control-Allow-Origin
 
 ## Configuration Issues
 
-### Default Language URL Type
-Controls how the default locale appears in URLs:
+### Confused about "Default Language URL Type"?
 
-- **Disabled**: All URLs use same format `/path`
-- **Default language URL of bundles**: Default locale gets `/en/path`, others `/nl/path`
-- **Other**: Custom locale handling
+This sitemap setting controls whether your default language appears in URLs.
 
-Choose based on your multilingual URL structure needs.
+**Problem:** Not sure which option to choose in the sitemap settings.
 
-### URL Bundle Configuration
-Each content type can have multiple bundles with different:
-- Change frequency (hourly, daily, monthly)
-- Priority settings (0.1 - 1.0)
-- Locale-specific configurations
+**Options explained:**
 
-This allows fine-grained control over how different content appears in your sitemap.
+| Option | Default Language URL | Other Language URL | Use When |
+|--------|---------------------|-------------------|----------|
+| **Disabled** | `/about` | `/about` | Single language site, or all locales use same URL format |
+| **Default language URL of bundles** | `/en/about` | `/nl/about` | You want all languages (including default) to have locale prefixes |
+| **Other** | `/about` | `/nl/about` | Only non-default languages should have locale prefixes |
+
+**Example:**
+If your default language is English and you choose "Other":
+- English page: `https://example.com/about`
+- Dutch page: `https://example.com/nl/about`
+
+### Multiple sitemap bundles for same content type?
+
+You can add the same content type multiple times to sitemap bundles.
+
+**Why would you do this?**
+
+Each bundle can have different settings for different locales or priorities:
+
+- **Bundle 1**: English articles with `changefreq: daily` and `priority: 0.8`
+- **Bundle 2**: Dutch articles with `changefreq: weekly` and `priority: 0.6`
+
+This allows fine-grained control over how different content and locales appear in your sitemap.
 
 ## Still Having Issues?
 
