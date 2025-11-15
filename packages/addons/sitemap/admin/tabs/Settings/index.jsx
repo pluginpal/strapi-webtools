@@ -32,6 +32,11 @@ const Settings = ({ id }) => {
     setOpen(false);
   };
 
+  const saveLanguageFilter = (languageFilter) => {
+    dispatch(onChangeSettings(id, 'languageFilter', languageFilter));
+    setOpen(false);
+  };
+
   const handleDefaultLanguageUrlTypeChange = (value = '') => {
     dispatch(onChangeSettings(id, 'defaultLanguageUrlType', value));
     if (value === DEFAULT_LANGUAGE_URL_TYPE_OTHER) dispatch(onChangeSettings(id, 'defaultLanguageUrl', undefined));
@@ -78,6 +83,33 @@ const Settings = ({ id }) => {
             onSave={saveHostnameOverrides}
             onCancel={() => setOpen(false)}
           />
+        </Grid.Item>
+      )}
+      {languages.length > 1 && (
+        <Grid.Item col={12} s={12} direction="column" alignItems="flex-start">
+          <Field.Root
+            hint={formatMessage({ id: 'sitemap.Settings.Field.LanguageFilter.Description', defaultMessage: 'Filter the sitemap URLs based on a language' })}
+          >
+            <Field.Label>
+              {formatMessage({ id: 'sitemap.Settings.Field.LanguageFilter.Label', defaultMessage: 'Language filter' })}
+            </Field.Label>
+            <SingleSelect
+              clearLabel="Clear"
+              name="languageFilter"
+              value={settings.get('languageFilter') || 'off'}
+              onChange={saveLanguageFilter}
+            >
+              <SingleSelectOption key="off" value="off">
+                {formatMessage({ id: 'sitemap.Settings.Field.LanguageFilter.Option.Disabled', defaultMessage: 'Disabled' })}
+              </SingleSelectOption>
+              {languages.map((lang) => (
+                <SingleSelectOption key={lang.uid} value={lang.uid}>
+                  {lang.name}
+                </SingleSelectOption>
+              ))}
+            </SingleSelect>
+            <Field.Hint />
+          </Field.Root>
         </Grid.Item>
       )}
       <Grid.Item col={12} s={12}>

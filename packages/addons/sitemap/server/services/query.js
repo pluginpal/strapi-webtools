@@ -14,11 +14,11 @@ import { noLimit, logMessage } from '../utils';
  *
  * @param {obj} config - The config object
  * @param {string} contentType - Query only entities of this type.
- * @param {array} ids - Query only these ids.
+ * @param {array} languageFilter - A language to filter on.
  *
  * @returns {object} The pages.
  */
-const getPages = async (config, contentType, ids) => {
+const getPages = async (config, contentType, languageFilter) => {
   const excludeDrafts = config.excludeDrafts && strapi.contentTypes[contentType].options.draftAndPublish;
   const isLocalized =
     strapi.contentTypes[contentType].pluginOptions?.i18n?.localized
@@ -28,6 +28,10 @@ const getPages = async (config, contentType, ids) => {
   let allPages = [];
 
   await Promise.all(locales.map(async (locale) => {
+    if (isLocalized && languageFilter && languageFilter !== 'off' && locale.code !== languageFilter) {
+      return;
+    }
+
     const pages = await noLimit(contentType, {
       filters: {
         $or: [
@@ -42,9 +46,6 @@ const getPages = async (config, contentType, ids) => {
             },
           },
         ],
-        id: ids ? {
-          $in: ids,
-        } : {},
       },
       ...(isLocalized ? { locale: locale.code } : {}),
       fields: isLocalized ? ['locale', 'updatedAt'] : ['updatedAt'],
@@ -67,6 +68,9 @@ const getPages = async (config, contentType, ids) => {
                 },
               },
             ],
+            locale: isLocalized && languageFilter && languageFilter !== 'off' ? {
+              $in: [languageFilter],
+            } : {},
           },
           populate: {
             url_alias: {

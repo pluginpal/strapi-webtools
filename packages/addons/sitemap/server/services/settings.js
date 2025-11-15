@@ -27,6 +27,7 @@ const createDefaultConfig = async () => {
         defaultLanguageUrlType: '',
         defaultLanguageUrl: '',
         hostname_overrides: {},
+        languageFilter: 'off',
         contentTypes: Map({}),
         customEntries: Map({}),
       },

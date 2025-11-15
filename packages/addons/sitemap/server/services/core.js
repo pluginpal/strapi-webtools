@@ -159,7 +159,7 @@ const createSitemapEntries = async (id) => {
   // Collection entries.
   await Promise.all(Object.keys(sitemapConfig.contentTypes).map(async (contentType) => {
     // Query all the pages
-    const pages = await getPluginService('query').getPages(sitemapConfig, contentType);
+    const pages = await getPluginService('query').getPages(sitemapConfig, contentType, sitemapConfig.languageFilter);
 
     // Add formatted sitemap page data to the array.
     await Promise.all(pages.map(async (page, i) => {
