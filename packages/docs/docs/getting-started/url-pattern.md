@@ -4,12 +4,21 @@ displayed_sidebar: webtoolsSidebar
 slug: /url-pattern
 ---
 
+import ThemedImage from '@theme/ThemedImage';
+import useBaseUrl from '@docusaurus/useBaseUrl';
+
 # 🔌 URL pattern
 To create dynamic URLs this plugin uses **URL patterns**. The URL pattern will be used to generate unique URLs based on the data available.
 
 You can add URL patterns in the settings section of the plugin. For configuration details and fallbacks, see [Default pattern](/webtools/configuration/default-pattern) and [Slugify](/webtools/configuration/slugify).
 
-<img src="/webtools/img/assets/url_patterns.png" alt="URL patterns overview" />
+<ThemedImage
+  alt="URL patterns overview"
+  sources={{
+    light: useBaseUrl('/webtools/img/assets/url_patterns-dark.png'),
+    dark: useBaseUrl('/webtools/img/assets/url_patterns-dark.png'),
+  }}
+/>
 
 ```
 /pages/[my-title-field]
@@ -29,4 +38,10 @@ The following field types are allowed in a pattern:
 
 See below a screenshot of the URL pattern creation form in Strapi.
 
-<img src="/webtools/img/assets/add_new_pattern.png" alt="Add new pattern with field suggestions" />
+<ThemedImage
+  alt="Add new pattern with field suggestions"
+  sources={{
+    light: useBaseUrl('/webtools/img/assets/add_new_pattern-dark.png'),
+    dark: useBaseUrl('/webtools/img/assets/add_new_pattern-dark.png'),
+  }}
+/>

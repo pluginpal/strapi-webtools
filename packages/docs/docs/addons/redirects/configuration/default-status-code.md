@@ -1,5 +1,5 @@
 ---
-sidebar_label: 'Cron'
+sidebar_label: 'Default status code'
 displayed_sidebar: webtoolsRedirectsSidebar
 slug: /addons/redirects/configuration/default-status-code
 ---
