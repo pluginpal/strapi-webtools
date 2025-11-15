@@ -78,6 +78,9 @@ Enjoy 🎉
 
 - Core plugin: https://docs.pluginpal.io/webtools
 - Sitemap addon: https://docs.pluginpal.io/webtools/addons/sitemap
+- Links addon: https://docs.pluginpal.io/webtools/addons/links
+- Redirects addon: https://docs.pluginpal.io/webtools/addons/redirects
+- Breadcrumbs addon: https://docs.pluginpal.io/webtools/addons/breadcrumbs
 
 ## 🔌 Addons
 

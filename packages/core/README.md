@@ -68,6 +68,9 @@ The full documentation of this plugin can be found on it's dedicated documentati
 
 - [Webtools documentation](https://docs.pluginpal.io/webtools)
 - [Webtools sitemap addon](https://docs.pluginpal.io/webtools/addons/sitemap)
+- [Webtools redirects addon](https://docs.pluginpal.io/webtools/addons/redirects)
+- [Webtools links addon](https://docs.pluginpal.io/webtools/addons/links)
+- [Webtools breadcrumbs addon](https://docs.pluginpal.io/webtools/addons/breadcrumbs)
 
 ## 🔌 Addons
 
