@@ -23,11 +23,14 @@ import {
   ON_CHANGE_CUSTOM_ENTRY,
   GET_ALLOWED_FIELDS_SUCCEEDED,
   SET_LOADING_STATE,
+  GET_SITEMAPS_SUCCEEDED,
+  PREPARE_SETTINGS_FORM,
 } from '../../../config/constants';
 
 const initialState = fromJS({
   loading: false,
   info: {},
+  sitemaps: [],
   allowedFields: {},
   settings: Map({}),
   contentTypes: {},
@@ -42,9 +45,9 @@ export default function sitemapReducer(state = initialState, action) {
   switch (action.type) {
     case GET_SETTINGS_SUCCEEDED:
       return state
-        .update('settings', () => fromJS(action.settings))
-        .updateIn(['settings', 'contentTypes'], () => fromJS(action.settings.get('contentTypes')))
-        .updateIn(['settings', 'customEntries'], () => fromJS(action.settings.get('customEntries')))
+        .update('settings', () => fromJS(action.settings));
+    case PREPARE_SETTINGS_FORM:
+      return state
         .update('initialData', () => fromJS(action.settings))
         .updateIn(['initialData', 'contentTypes'], () => fromJS(action.settings.get('contentTypes')))
         .updateIn(['initialData', 'customEntries'], () => fromJS(action.settings.get('customEntries')))
@@ -66,32 +69,32 @@ export default function sitemapReducer(state = initialState, action) {
         .updateIn(['modifiedCustomEntries', action.url, action.key], () => action.value);
     case ON_CHANGE_SETTINGS:
       return state
-        .updateIn(['settings', action.key], () => action.value);
+        .updateIn(['settings', 'sitemaps', action.id, action.key], () => fromJS(action.value));
     case DISCARD_ALL_CHANGES:
       return state
-        .update('settings', () => state.get('initialData'))
+        .updateIn(['settings', 'sitemaps', action.id], () => state.get('initialData'))
         .update('modifiedContentTypes', () => state.getIn(['initialData', 'contentTypes']))
         .update('modifiedCustomEntries', () => state.getIn(['initialData', 'customEntries']));
     case DISCARD_MODIFIED_CONTENT_TYPES:
       return state
-        .update('modifiedContentTypes', () => state.getIn(['settings', 'contentTypes']))
-        .update('modifiedCustomEntries', () => state.getIn(['settings', 'customEntries']));
+        .update('modifiedContentTypes', () => state.getIn(['settings', 'sitemaps', action.id, 'contentTypes']))
+        .update('modifiedCustomEntries', () => state.getIn(['settings', 'sitemaps', action.id, 'customEntries']));
     case SUBMIT_MODAL:
       return state
-        .updateIn(['settings', 'contentTypes'], () => state.get('modifiedContentTypes'))
-        .updateIn(['settings', 'customEntries'], () => state.get('modifiedCustomEntries'));
+        .updateIn(['settings', 'sitemaps', action.id, 'contentTypes'], () => state.get('modifiedContentTypes'))
+        .updateIn(['settings', 'sitemaps', action.id, 'customEntries'], () => state.get('modifiedCustomEntries'));
     case DELETE_CONTENT_TYPE:
-      if (state.getIn(['settings', 'contentTypes', action.key, 'languages']).size > 1) {
+      if (state.getIn(['settings', 'sitemaps', action.id, 'contentTypes', action.key, 'languages']).size > 1) {
         return state
-          .deleteIn(['settings', 'contentTypes', action.key, 'languages', action.lang])
+          .deleteIn(['settings', 'sitemaps', action.id, 'contentTypes', action.key, 'languages', action.lang])
           .deleteIn(['modifiedContentTypes', action.key, 'languages', action.lang]);
       }
       return state
-        .deleteIn(['settings', 'contentTypes', action.key])
+        .deleteIn(['settings', 'sitemaps', action.id, 'contentTypes', action.key])
         .deleteIn(['modifiedContentTypes', action.key]);
     case DELETE_CUSTOM_ENTRY:
       return state
-        .deleteIn(['settings', 'customEntries', action.key])
+        .deleteIn(['settings', 'sitemaps', action.id, 'customEntries', action.key])
         .deleteIn(['modifiedCustomEntries', action.key]);
     case GET_CONTENT_TYPES_SUCCEEDED:
       return state
@@ -99,9 +102,12 @@ export default function sitemapReducer(state = initialState, action) {
     case GET_LANGUAGES_SUCCEEDED:
       return state
         .update('languages', () => action.languages);
+    case GET_SITEMAPS_SUCCEEDED:
+      return state
+        .update('sitemaps', () => fromJS(action.sitemaps));
     case ON_SUBMIT_SUCCEEDED:
       return state
-        .update('initialData', () => state.get('settings'));
+        .update('initialData', () => state.getIn(['settings', 'sitemaps', action.id]));
     case GET_SITEMAP_INFO_SUCCEEDED:
       return state
         .update('info', () => fromJS(action.info));

@@ -140,11 +140,13 @@ const getSitemapPageData = async (config, page, contentType, defaultLocale) => {
 
 /**
  * Get array of sitemap entries based on the plugins configurations.
+ * @param {string} id - The sitemap ID.
  *
  * @returns {object} The sitemap entries.
  */
-const createSitemapEntries = async () => {
+const createSitemapEntries = async (id) => {
   const config = await getPluginService('settings').getConfig();
+  const sitemapConfig = config.sitemaps[id];
   let defaultLocale;
 
   if (strapi.plugin('i18n')) {
@@ -155,13 +157,13 @@ const createSitemapEntries = async () => {
   const sitemapEntries = [];
 
   // Collection entries.
-  await Promise.all(Object.keys(config.contentTypes).map(async (contentType) => {
+  await Promise.all(Object.keys(sitemapConfig.contentTypes).map(async (contentType) => {
     // Query all the pages
-    const pages = await getPluginService('query').getPages(config, contentType);
+    const pages = await getPluginService('query').getPages(sitemapConfig, contentType, sitemapConfig.languageFilter);
 
     // Add formatted sitemap page data to the array.
     await Promise.all(pages.map(async (page, i) => {
-      const pageData = await getPluginService('core').getSitemapPageData(config, page, contentType, defaultLocale);
+      const pageData = await getPluginService('core').getSitemapPageData(sitemapConfig, page, contentType, defaultLocale);
       if (pageData) {
         sitemapEntries.push(pageData);
       }
@@ -171,16 +173,16 @@ const createSitemapEntries = async () => {
 
 
   // Custom entries.
-  await Promise.all(Object.keys(config.customEntries).map(async (customEntry) => {
+  await Promise.all(Object.keys(sitemapConfig.customEntries).map(async (customEntry) => {
     sitemapEntries.push({
       url: customEntry,
-      changefreq: config.customEntries[customEntry].changefreq,
-      priority: parseFloat(config.customEntries[customEntry].priority),
+      changefreq: sitemapConfig.customEntries[customEntry].changefreq,
+      priority: parseFloat(sitemapConfig.customEntries[customEntry].priority),
     });
   }));
 
   // Custom homepage entry.
-  if (config.includeHomepage) {
+  if (sitemapConfig.includeHomepage) {
     const hasHomePage = !isEmpty(sitemapEntries.filter((entry) => entry.url === ''));
 
     // Only add it when no other '/' entry is present.
@@ -240,10 +242,11 @@ const saveSitemap = async (filename, sitemap, isIndex) => {
  * Get the SitemapStream instance.
  *
  * @param {number} urlCount - The amount of URLs.
+ * @param {string} id - The sitemap ID.
  *
  * @returns {SitemapStream} - The sitemap stream.
  */
-const getSitemapStream = async (urlCount) => {
+const getSitemapStream = async (urlCount, id) => {
   const config = await getPluginService('settings').getConfig();
   const LIMIT = strapi.config.get('plugin::webtools-addon-sitemap.limit');
   const enableXsl = strapi.config.get('plugin::webtools-addon-sitemap.xsl');
@@ -257,7 +260,7 @@ const getSitemapStream = async (urlCount) => {
 
   if (urlCount <= LIMIT) {
     return [new SitemapStream({
-      hostname: config.hostname,
+      hostname: config.sitemaps[id].hostname,
       ...xslObj,
     }), false];
   } else {
@@ -268,7 +271,7 @@ const getSitemapStream = async (urlCount) => {
       lastmodDateOnly: false,
       getSitemapStream: (i) => {
         const sitemapStream = new SitemapStream({
-          hostname: config.hostname,
+          hostname: config.sitemaps[id].hostname,
           ...xslObj,
         });
         const delta = i + 1;
@@ -278,7 +281,7 @@ const getSitemapStream = async (urlCount) => {
           .then((sm) => {
             getPluginService('query').createSitemap({
               sitemap_string: sm.toString(),
-              name: 'default',
+              name: id,
               type: 'default_hreflang',
               delta,
             });
@@ -292,11 +295,12 @@ const getSitemapStream = async (urlCount) => {
 
 /**
  * The main sitemap generation service.
+ * @param {string} id - The sitemap ID.
  *
  * @returns {void}
  */
-const createSitemap = async () => {
-  const sitemapEntries = await getPluginService('core').createSitemapEntries();
+const createSitemap = async (id) => {
+  const sitemapEntries = await getPluginService('core').createSitemapEntries(id);
 
   const config = await getPluginService('settings').getConfig();
 
@@ -305,23 +309,23 @@ const createSitemap = async () => {
     return;
   }
 
-  if (!config.hostname) {
+  if (!config.sitemaps[id].hostname) {
     strapi.log.warn(logMessage('No sitemap XML was generated because there was no hostname configured.'));
     return;
   }
 
-  if (!isValidUrl(config.hostname)) {
+  if (!isValidUrl(config.sitemaps[id].hostname)) {
     strapi.log.warn(logMessage('No sitemap XML was generated because the hostname was invalid'));
     return;
   }
 
-  await getPluginService('query').deleteSitemap('default');
-  const [sitemap, isIndex] = await getSitemapStream(sitemapEntries.length);
+  await getPluginService('query').deleteSitemap(id);
+  const [sitemap, isIndex] = await getSitemapStream(sitemapEntries.length, id);
 
   sitemapEntries.map((sitemapEntry) => sitemap.write(sitemapEntry));
   sitemap.end();
 
-  await getPluginService('core').saveSitemap('default', sitemap, isIndex);
+  await getPluginService('core').saveSitemap(id, sitemap, isIndex);
 
   strapi.log.info(logMessage('The sitemap XML has been generated. It can be accessed on /api/sitemap/index.xml.'));
 };

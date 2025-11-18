@@ -2,7 +2,6 @@
 
 import fs from 'fs';
 import path from 'path';
-
 import { getPluginService } from '../utils/getPluginService';
 
 /**
@@ -14,7 +13,7 @@ import { getPluginService } from '../utils/getPluginService';
 export default {
   buildSitemap: async (ctx) => {
     try {
-      await getPluginService('core').createSitemap();
+      await getPluginService('core').createSitemap(ctx.params.id);
 
       ctx.send({
         message: 'The sitemap has been generated.',
@@ -27,7 +26,7 @@ export default {
   },
 
   info: async (ctx) => {
-    const sitemap = await getPluginService('query').getSitemap('default', 0, ['link_count', 'updatedAt', 'type']);
+    const sitemap = await getPluginService('query').getSitemap(ctx.params.id, 0, ['link_count', 'updatedAt', 'type']);
     const sitemapInfo = {};
 
     if (sitemap) {
@@ -40,17 +39,24 @@ export default {
       }
 
       sitemapInfo.updateTime = sitemap.updatedAt;
-      sitemapInfo.location = '/api/sitemap/index.xml';
+      sitemapInfo.location = `/api/sitemap/${ctx.params.id}.xml`;
     }
-
-    sitemapInfo.hasPro = !!strapi.plugin('sitemap-pro');
 
     ctx.send(sitemapInfo);
   },
 
   getSitemap: async (ctx) => {
     const { page = 0 } = ctx.query;
-    const sitemap = await getPluginService('query').getSitemap('default', page);
+    let { id } = ctx.params;
+
+    let sitemap = await getPluginService('query').getSitemap(id, page);
+
+    // If the sitemap that is being queried has id 'index', and none is found,
+    // try to get a sitemap with the id 'default'. This adds backwards compatibility
+    // for users upgrading from older versions of the plugin.
+    if (!sitemap && id === 'index') {
+      sitemap = await getPluginService('query').getSitemap('default', page);
+    }
 
     if (!sitemap) {
       ctx.notFound('Not found');
@@ -59,6 +65,10 @@ export default {
 
     ctx.response.set('content-type', 'application/xml');
     ctx.body = sitemap.sitemap_string;
+  },
+
+  getSitemapTypes: async (ctx) => {
+    ctx.body = ['hreflang'];
   },
 
   getSitemapXsl: async (ctx) => {

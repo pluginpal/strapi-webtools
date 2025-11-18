@@ -5,7 +5,7 @@
  *
  */
 
-import { Map } from 'immutable';
+import { fromJS } from 'immutable';
 
 import {
   SUBMIT_MODAL,
@@ -24,18 +24,23 @@ import {
   ON_CHANGE_CUSTOM_ENTRY,
   GET_ALLOWED_FIELDS_SUCCEEDED,
   SET_LOADING_STATE,
+  GET_SITEMAPS_SUCCEEDED,
+  PREPARE_SETTINGS_FORM,
 } from '../../config/constants';
 
 import getTrad from '../../helpers/getTrad';
 
 
 // Get initial settings
-export function getSettings(toggleNotification, formatMessage, get) {
+export function getSettings(toggleNotification, formatMessage, get, id) {
   return async function(dispatch) {
     try {
-      const res = await get('/webtools-addon-sitemap/settings/');
+      const res = await get('/webtools-addon-sitemap/settings');
       const settings = res.data;
-      dispatch(getSettingsSucceeded(Map(settings)));
+      dispatch(getSettingsSucceeded(fromJS(settings)));
+      if (id) {
+        dispatch(prepareSettingsForm(fromJS(settings.sitemaps[id])));
+      }
     } catch (err) {
       toggleNotification({ type: 'warning', message: formatMessage({ id: 'notification.error' }) });
     }
@@ -45,6 +50,13 @@ export function getSettings(toggleNotification, formatMessage, get) {
 export function getSettingsSucceeded(settings) {
   return {
     type: GET_SETTINGS_SUCCEEDED,
+    settings,
+  };
+}
+
+export function prepareSettingsForm(settings) {
+  return {
+    type: PREPARE_SETTINGS_FORM,
     settings,
   };
 }
@@ -68,17 +80,19 @@ export function onChangeCustomEntry(url, key, value) {
   };
 }
 
-export function onChangeSettings(key, value) {
+export function onChangeSettings(id, key, value) {
   return {
     type: ON_CHANGE_SETTINGS,
+    id,
     key,
     value,
   };
 }
 
-export function discardAllChanges() {
+export function discardAllChanges(id) {
   return {
     type: DISCARD_ALL_CHANGES,
+    id,
   };
 }
 
@@ -89,19 +103,34 @@ export function updateSettings(settings) {
   };
 }
 
-export function discardModifiedContentTypes() {
+export function discardModifiedContentTypes(id) {
   return {
     type: DISCARD_MODIFIED_CONTENT_TYPES,
+    id,
   };
 }
 
-export function generateSitemap(toggleNotification, formatMessage, get) {
+export function deleteSitemap(id, del, get, toggleNotification, formatMessage) {
   return async function(dispatch) {
     try {
       dispatch(setLoading(true));
-      const res = await get('/webtools-addon-sitemap');
+      await del(`/webtools-addon-sitemap/${id}`);
+      dispatch(getSettings(toggleNotification, formatMessage, get));
+      toggleNotification({ type: 'success', message: formatMessage({ id: getTrad('notification.success.delete'), defaultMessage: 'Sitemap deleted successfully' }) });
+      dispatch(setLoading(false));
+    } catch (err) {
+      toggleNotification({ type: 'warning', message: formatMessage({ id: 'notification.error' }) });
+    }
+  };
+}
+
+export function generateSitemap(id, toggleNotification, formatMessage, get) {
+  return async function(dispatch) {
+    try {
+      dispatch(setLoading(true));
+      const res = await get(`/webtools-addon-sitemap/build-sitemap/${id}`);
       const message = res.data.message;
-      dispatch(getSitemapInfo(toggleNotification, formatMessage, get));
+      dispatch(getSitemapInfo(id, toggleNotification, formatMessage, get));
       toggleNotification({ type: 'success', message });
       dispatch(setLoading(false));
     } catch (err) {
@@ -148,11 +177,11 @@ export function getLanguagesSucceeded(languages) {
   };
 }
 
-export function submit(settings, toggleNotification, formatMessage, put) {
+export function submit(id, settings, toggleNotification, formatMessage, put) {
   return async function(dispatch) {
     try {
-      await put('/webtools-addon-sitemap/settings/', settings);
-      dispatch(onSubmitSucceeded());
+      await put(`/webtools-addon-sitemap/settings/${id}`, settings);
+      dispatch(onSubmitSucceeded(id));
       toggleNotification({ type: 'success', message: formatMessage({ id: getTrad('notification.success.submit') }) });
     } catch (err) {
       toggleNotification({ type: 'warning', message: formatMessage({ id: 'notification.error' }) });
@@ -160,37 +189,41 @@ export function submit(settings, toggleNotification, formatMessage, put) {
   };
 }
 
-export function onSubmitSucceeded() {
+export function onSubmitSucceeded(id) {
   return {
     type: ON_SUBMIT_SUCCEEDED,
+    id,
   };
 }
 
-export function submitModal() {
+export function submitModal(id) {
   return {
     type: SUBMIT_MODAL,
+    id,
   };
 }
 
-export function deleteContentType(key, lang) {
+export function deleteContentType(id, key, lang) {
   return {
     type: DELETE_CONTENT_TYPE,
+    id,
     key,
     lang,
   };
 }
 
-export function deleteCustomEntry(key) {
+export function deleteCustomEntry(id, key) {
   return {
     type: DELETE_CUSTOM_ENTRY,
+    id,
     key,
   };
 }
 
-export function getSitemapInfo(toggleNotification, formatMessage, get) {
+export function getSitemapInfo(id, toggleNotification, formatMessage, get) {
   return async function(dispatch) {
     try {
-      const res = await get('/webtools-addon-sitemap/info');
+      const res = await get(`/webtools-addon-sitemap/info/${id}`);
       const info = res.data;
       dispatch(getSitemapInfoSucceeded(info));
     } catch (err) {
@@ -203,6 +236,25 @@ export function getSitemapInfoSucceeded(info) {
   return {
     type: GET_SITEMAP_INFO_SUCCEEDED,
     info,
+  };
+}
+
+export function getSitemaps(toggleNotification, formatMessage, get) {
+  return async function(dispatch) {
+    try {
+      const res = await get('/webtools-addon-sitemap/sitemaps');
+      const sitemaps = res.data;
+      dispatch(getSitemapsSucceeded(sitemaps));
+    } catch (err) {
+      toggleNotification({ type: 'warning', message: formatMessage({ id: 'notification.error' }) });
+    }
+  };
+}
+
+export function getSitemapsSucceeded(sitemaps) {
+  return {
+    type: GET_SITEMAPS_SUCCEEDED,
+    sitemaps,
   };
 }
 
