@@ -14,9 +14,9 @@ This plugin acts as an extension of the core `strapi-plugin-webtools`. Please in
 
 ## ✨ Features
 
-- **Automatic creation** (Automatic redirect creation when your URL changes)
-- **Chain detection** (Prevents you from creating redirects that create chains)
-- **Loop detection** (Prevents you from creating redirects that create loops)
-- **Custom redirects** (Create custom redirects, separate from Webtools pages)
-- **API endpoint** (Fetch and use the redirects in your front-end)
+- **Automatic creation** - Automatic redirect creation when your URL changes ([learn more](/addons/redirects/configuration/auto-generate))
+- **Chain detection** - Prevents you from creating redirects that create chains ([what are chains?](/addons/redirects/usage#what-is-a-redirect-chain))
+- **Loop detection** - Prevents you from creating redirects that create loops ([what are loops?](/addons/redirects/usage#what-is-a-redirect-loop))
+- **Custom redirects** - Create custom redirects, separate from Webtools pages
+- **API endpoint** - Fetch and use the redirects in your front-end ([REST API docs](/addons/redirects/api/rest))
 

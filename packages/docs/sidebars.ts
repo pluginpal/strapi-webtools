@@ -26,7 +26,8 @@ const sidebars = {
         "getting-started/usage",
         "getting-started/url-pattern",
         "getting-started/url-alias",
-        "getting-started/permissions",
+        "getting-started/api-permissions",
+        "getting-started/admin-permissions",
         "getting-started/troubleshooting",
       ],
     },
@@ -117,6 +118,9 @@ const sidebars = {
             "addons/sitemap/getting-started/sitemap-index",
             "addons/sitemap/getting-started/robots-txt",
             "addons/sitemap/getting-started/cli",
+            "addons/sitemap/getting-started/api-permissions",
+            "addons/sitemap/getting-started/admin-permissions",
+            "addons/sitemap/getting-started/troubleshooting",
           ],
         },
         {
@@ -167,6 +171,8 @@ const sidebars = {
             "addons/redirects/getting-started/introduction",
             "addons/redirects/getting-started/installation",
             "addons/redirects/getting-started/usage",
+            "addons/redirects/getting-started/api-permissions",
+            "addons/redirects/getting-started/admin-permissions",
           ],
         },
         {
