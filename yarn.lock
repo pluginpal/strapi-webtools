@@ -7710,7 +7710,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@strapi/admin@npm:5.31.2, @strapi/admin@npm:^5.31.2":
+"@strapi/admin@npm:5.31.2, @strapi/admin@npm:^5.0.0":
   version: 5.31.2
   resolution: "@strapi/admin@npm:5.31.2"
   dependencies:
@@ -8352,7 +8352,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@strapi/strapi@npm:^5.31.2":
+"@strapi/strapi@npm:^5.0.0":
   version: 5.31.2
   resolution: "@strapi/strapi@npm:5.31.2"
   dependencies:
@@ -8573,7 +8573,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@strapi/utils@npm:5.31.2, @strapi/utils@npm:^5.31.2":
+"@strapi/utils@npm:5.31.2, @strapi/utils@npm:^5.0.0":
   version: 5.31.2
   resolution: "@strapi/utils@npm:5.31.2"
   dependencies:
@@ -28447,13 +28447,13 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "strapi-plugin-webtools@workspace:packages/core"
   dependencies:
-    "@strapi/admin": "npm:^5.31.2"
+    "@strapi/admin": "npm:^5.0.0"
     "@strapi/design-system": "npm:^2.0.0"
     "@strapi/icons": "npm:^2.0.0"
     "@strapi/pack-up": "npm:^5.0.0"
     "@strapi/sdk-plugin": "npm:^5.0.0"
-    "@strapi/strapi": "npm:^5.31.2"
-    "@strapi/utils": "npm:^5.31.2"
+    "@strapi/strapi": "npm:^5.0.0"
+    "@strapi/utils": "npm:^5.0.0"
     "@types/koa": "npm:^2.15.0"
     "@types/lodash": "npm:^4"
     "@types/qs": "npm:^6"
@@ -28472,11 +28472,11 @@ __metadata:
     yalc: "npm:^1.0.0-pre.53"
     yup: "npm:^0.32.9"
   peerDependencies:
-    "@strapi/admin": ^5.31.2
+    "@strapi/admin": ^5.0.0
     "@strapi/design-system": ^2.0.0
     "@strapi/icons": ^2.0.0
-    "@strapi/strapi": ^5.31.2
-    "@strapi/utils": ^5.31.2
+    "@strapi/strapi": ^5.0.0
+    "@strapi/utils": ^5.0.0
     react: ^17.0.0 || ^18.0.0
     react-dom: ^17.0.0 || ^18.0.0
     react-router-dom: ^6.0.0
@@ -31014,8 +31014,8 @@ __metadata:
     "@strapi/icons": "npm:^2.0.0"
     "@strapi/pack-up": "npm:^5.0.0"
     "@strapi/sdk-plugin": "npm:^5.0.0"
-    "@strapi/strapi": "npm:^5.31.2"
-    "@strapi/utils": "npm:^5.31.2"
+    "@strapi/strapi": "npm:^5.0.0"
+    "@strapi/utils": "npm:^5.0.0"
     "@types/lodash": "npm:^4"
     chalk: "npm:^4.1.2"
     commander: "npm:^8.3.0"
@@ -31037,8 +31037,8 @@ __metadata:
   peerDependencies:
     "@strapi/design-system": ^2.0.0
     "@strapi/icons": ^2.0.0
-    "@strapi/strapi": ^5.31.2
-    "@strapi/utils": ^5.31.2
+    "@strapi/strapi": ^5.0.0
+    "@strapi/utils": ^5.0.0
     react: ^17.0.0 || ^18.0.0
     react-dom: ^17.0.0 || ^18.0.0
     react-router-dom: ^6.0.0
