@@ -23,8 +23,19 @@
       "inversedBy": "category"
     },
     "title": {
-      "type": "string",
-      "pluginOptions": {}
+      "type": "string"
+    },
+    "url_alias": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "plugin::webtools.url-alias",
+      "configurable": false
+    },
+    "cities": {
+      "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::city.city",
+      "mappedBy": "categories"
     }
   }
 }
