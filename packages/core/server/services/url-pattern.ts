@@ -63,7 +63,11 @@ const customServices = () => ({
 
                     typedEntries(relation.attributes).forEach(([subFieldName, subField]) => {
                         if (subField.type === fieldType || subFieldName === fieldType) {
-                            fields.push(`${fieldName}.${subFieldName}`);
+                            if (field.relation.endsWith('ToMany')) {
+                                fields.push(`${fieldName}[0].${subFieldName}`);
+                            } else {
+                                fields.push(`${fieldName}.${subFieldName}`);
+                            }
                         }
                     });
                 } else if (
@@ -105,7 +109,7 @@ const customServices = () => ({
      * @returns {string[]} The extracted fields.
      */
     getFieldsFromPattern: (pattern: string): string[] => {
-        const fields = pattern.match(/[[\w\d.]+]/g); // Get all substrings between [] as array.
+        const fields = pattern.match(/\[.*?\]/g);
 
         if (!fields) {
             return [];
@@ -130,7 +134,7 @@ const customServices = () => ({
         fields = fields.filter((field) => field);
 
         // For fields containing dots, extract the first part (relation)
-        const relations = fields.filter((field) => field.includes('.')).map((field) => field.split('.')[0]);
+        const relations = fields.filter((field) => field.includes('.')).map((field) => field.split('.')[0].replace(/\[\d+\]/, ''));
 
         return relations;
     },
@@ -171,6 +175,17 @@ const customServices = () => ({
                 } else if (!relationalField) {
                     const fieldValue = slugify(String(entity[field]));
                     resolvedPattern = resolvedPattern.replace(`[${field}]`, fieldValue || '');
+                } else if (relationalField[0].match(/\[\d+\]/)) {
+                    const relationName = relationalField[0].split('[')[0];
+                    const index = parseInt(relationalField[0].split('[')[1].split(']')[0], 10);
+
+                    if (Array.isArray(entity[relationName]) && entity[relationName][index]) {
+                        const relation = entity[relationName][index];
+                        const fieldValue = slugify(String(relation[relationalField[1]]));
+                        resolvedPattern = resolvedPattern.replace(`[${field}]`, fieldValue || '');
+                    } else {
+                        resolvedPattern = resolvedPattern.replace(`[${field}]`, '');
+                    }
                 } else if (Array.isArray(entity[relationalField[0]])) {
                     // If the relation is a one-to-many or many-to-many, we use the first one.
                     const relation = entity[relationalField[0]][0];
