@@ -1,5 +1,23 @@
 # addon-sitemap
 
+## 1.3.0
+
+### Minor Changes
+
+- [#348](https://github.com/pluginpal/strapi-webtools/pull/348) [`5cee87b`](https://github.com/pluginpal/strapi-webtools/commit/5cee87bd2fc719a4a7d3885e37a2939d1f625d50) Thanks [@boazpoolman](https://github.com/boazpoolman)! - feat: Add a new sitemap setting called 'language filter'
+
+- [#348](https://github.com/pluginpal/strapi-webtools/pull/348) [`0cbe911`](https://github.com/pluginpal/strapi-webtools/commit/0cbe911ae944f611504a986d831a4c80a932ce16) Thanks [@boazpoolman](https://github.com/boazpoolman)! - feat: allow for creation of multiple sitemaps
+
+### Patch Changes
+
+- [#348](https://github.com/pluginpal/strapi-webtools/pull/348) [`4961550`](https://github.com/pluginpal/strapi-webtools/commit/4961550f460473d090eb0c25bfb78ae981782be0) Thanks [@boazpoolman](https://github.com/boazpoolman)! - fix: saving of the hostname overrides modal
+
+- [#348](https://github.com/pluginpal/strapi-webtools/pull/348) [`22f7eff`](https://github.com/pluginpal/strapi-webtools/commit/22f7eff916196ffdd71f1fb2cf1939b97790b8fa) Thanks [@boazpoolman](https://github.com/boazpoolman)! - fix: update the footer link in the sitemap XSL
+
+- [#348](https://github.com/pluginpal/strapi-webtools/pull/348) [`da9dfbb`](https://github.com/pluginpal/strapi-webtools/commit/da9dfbb2a43c7099133228024221b2713765544f) Thanks [@boazpoolman](https://github.com/boazpoolman)! - fix: allow closing the hostname overrides modal by using the close button
+
+- [#352](https://github.com/pluginpal/strapi-webtools/pull/352) [`bcf7a05`](https://github.com/pluginpal/strapi-webtools/commit/bcf7a0505e43a7d347a166610a43f21a10338526) Thanks [@boazpoolman](https://github.com/boazpoolman)! - chore: remove -rc version constraint from @strapi design-system & icons peer dependencies
+
 ## 1.2.4
 
 ### Patch Changes

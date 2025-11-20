@@ -1,5 +1,13 @@
 # docs
 
+## 1.2.1
+
+### Patch Changes
+
+- [#346](https://github.com/pluginpal/strapi-webtools/pull/346) [`f8dada1`](https://github.com/pluginpal/strapi-webtools/commit/f8dada16021f68e7fa8e03010cda9d62bb673551) Thanks [@MSACC](https://github.com/MSACC)! - Chore/documentation quality
+
+- [#347](https://github.com/pluginpal/strapi-webtools/pull/347) [`4b14155`](https://github.com/pluginpal/strapi-webtools/commit/4b141558defbdc210d33f4e371159c7b2f6a32a8) Thanks [@MSACC](https://github.com/MSACC)! - Chore/security updates
+
 ## 1.2.0
 
 ### Minor Changes
