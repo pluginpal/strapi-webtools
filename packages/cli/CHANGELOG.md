@@ -1,5 +1,15 @@
 # webtools-cli
 
+## 1.1.3
+
+### Patch Changes
+
+- [#348](https://github.com/pluginpal/strapi-webtools/pull/348) [`2da9605`](https://github.com/pluginpal/strapi-webtools/commit/2da96057374edde7f32c075a40ece41cbaadf403) Thanks [@boazpoolman](https://github.com/boazpoolman)! - docs: include breadcrumbs and sitemap in the trial description
+
+- [#348](https://github.com/pluginpal/strapi-webtools/pull/348) [`7fad4de`](https://github.com/pluginpal/strapi-webtools/commit/7fad4de326c83e86369a68188ba3bab8e1bfaf83) Thanks [@boazpoolman](https://github.com/boazpoolman)! - chore: add the breadcrumbs addon and sitemap expansion to the selectable premium addons
+
+- [#348](https://github.com/pluginpal/strapi-webtools/pull/348) [`67406b1`](https://github.com/pluginpal/strapi-webtools/commit/67406b1c1e9cbdadff4f353333677a52ecf94c4b) Thanks [@boazpoolman](https://github.com/boazpoolman)! - fix: change the trail license message in the CLI from 30 days to 7 days
+
 ## 1.1.2
 
 ### Patch Changes
