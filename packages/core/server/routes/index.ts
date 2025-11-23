@@ -45,7 +45,7 @@ export default {
       {
         method: 'GET',
         path: '/router',
-        handler: 'core.router',
+        handler: 'router.findOne',
         config: {
           policies: [],
         },
