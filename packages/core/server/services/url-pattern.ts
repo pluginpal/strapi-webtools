@@ -48,7 +48,7 @@ const customServices = () => ({
           fields.push(fieldName);
         } else if (
           field.type === 'relation'
-          && field.relation.endsWith('ToOne') // TODO: implement `ToMany` relations.
+          // && field.relation.endsWith('ToOne') // TODO: implement `ToMany` relations.
           && fieldName !== 'localizations'
           && fieldName !== 'createdBy'
           && fieldName !== 'updatedBy'
@@ -105,13 +105,13 @@ const customServices = () => ({
    * @returns {string[]} The extracted fields.
    */
   getFieldsFromPattern: (pattern: string): string[] => {
-    const fields = pattern.match(/[[\w\d.]+]/g); // Get all substrings between [] as array.
+    const fields = pattern.match(/\[[\w\d.\[\]]+\]/g); // Get all substrings between [] as array.
 
     if (!fields) {
       return [];
     }
 
-    const newFields = fields.map((field) => (/(?<=\[)(.*?)(?=\])/).exec(field)?.[0] ?? ''); // Strip [] from string.
+    const newFields = fields.map((field) => field.slice(1, -1)); // Strip [] from string.
 
     return newFields;
   },
@@ -171,10 +171,28 @@ const customServices = () => ({
         } else if (!relationalField) {
           const fieldValue = slugify(String(entity[field]));
           resolvedPattern = resolvedPattern.replace(`[${field}]`, fieldValue || '');
-        } else if (Array.isArray(entity[relationalField[0]])) {
-          strapi.log.error('Something went wrong whilst resolving the pattern.');
-        } else if (typeof entity[relationalField[0]] === 'object') {
-          resolvedPattern = resolvedPattern.replace(`[${field}]`, entity[relationalField[0]] && String((entity[relationalField[0]] as any[])[relationalField[1]]) ? slugify(String((entity[relationalField[0]] as any[])[relationalField[1]])) : '');
+        } else {
+          let relationName = relationalField[0];
+          let relationIndex: number | null = null;
+
+          const arrayMatch = relationName.match(/^(\w+)\[(\d+)\]$/);
+          if (arrayMatch) {
+            relationName = arrayMatch[1];
+            relationIndex = parseInt(arrayMatch[2], 10);
+          }
+
+          const relationEntity = entity[relationName];
+
+          if (Array.isArray(relationEntity) && relationIndex !== null) {
+            const subEntity = relationEntity[relationIndex];
+            const value = subEntity?.[relationalField[1]];
+            resolvedPattern = resolvedPattern.replace(`[${field}]`, value ? slugify(String(value)) : '');
+          } else if (typeof relationEntity === 'object' && !Array.isArray(relationEntity)) {
+            const value = relationEntity?.[relationalField[1]];
+            resolvedPattern = resolvedPattern.replace(`[${field}]`, value ? slugify(String(value)) : '');
+          } else {
+            strapi.log.error('Something went wrong whilst resolving the pattern.');
+          }
         }
       });
 
@@ -229,7 +247,8 @@ const customServices = () => ({
 
     // Pass the original `pattern` array to getFieldsFromPattern
     getPluginService('url-pattern').getFieldsFromPattern(pattern).forEach((field) => {
-      if (!allowedFieldNames.includes(field)) fieldsAreAllowed = false;
+      const fieldName = field.replace(/\[\d+\]/g, '');
+      if (!allowedFieldNames.includes(fieldName)) fieldsAreAllowed = false;
     });
 
     if (!fieldsAreAllowed) {
