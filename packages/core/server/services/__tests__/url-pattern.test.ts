@@ -146,6 +146,25 @@ describe('URL Pattern Service', () => {
   });
 
   describe('validatePattern', () => {
+    it('should invalidate pattern with ToMany relation missing array index', () => {
+      const pattern = '/test/[private_categories.slug]/1';
+      const allowedFields = ['private_categories.slug'];
+      const contentType = {
+        attributes: {
+          private_categories: {
+            type: 'relation',
+            relation: 'manyToMany',
+            target: 'api::category.category',
+          },
+        },
+      } as any;
+
+      const result = service.validatePattern(pattern, allowedFields, contentType);
+
+      expect(result.valid).toBe(false);
+      expect(result.message).toContain('must include an array index');
+    });
+
     it('should validate pattern with underscored relation name', () => {
       const pattern = '/test/[private_categories[0].slug]/1';
       const allowedFields = ['private_categories.slug'];

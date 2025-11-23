@@ -214,55 +214,55 @@ const customServices = () => ({
   /**
    * Validate if a pattern is correctly structured.
    *
-   * @param {string[]} pattern - The pattern to validate.
-   * @param {string[]} allowedFieldNames - The allowed field names in the pattern.
+   * @param {string} pattern - The pattern to validate.
+   * @param {string[]} allowedFieldNames - The allowed fields.
+   * @param {Schema.ContentType} contentType - The content type.
    * @returns {object} The validation result.
-   * @returns {boolean} object.valid - Validation boolean.
-   * @returns {string} object.message - Validation message.
    */
-  validatePattern: (pattern: string, allowedFieldNames: string[]) => {
-    if (!pattern.length) {
+  validatePattern: (pattern: string, allowedFieldNames: string[], contentType?: Schema.ContentType): { valid: boolean, message: string } => {
+    if (!pattern) {
       return {
         valid: false,
         message: 'Pattern cannot be empty',
       };
     }
 
-    const preCharCount = pattern.split('[').length - 1;
-    const postCharCount = pattern.split(']').length - 1;
+    const fields = getPluginService('url-pattern').getFieldsFromPattern(pattern);
+    let valid = true;
+    let message = '';
 
-    if (preCharCount < 1 || postCharCount < 1) {
-      return {
-        valid: false,
-        message: 'Pattern should contain at least one field',
-      };
-    }
-
-    if (preCharCount !== postCharCount) {
-      return {
-        valid: false,
-        message: 'Fields in the pattern are not escaped correctly',
-      };
-    }
-
-    let fieldsAreAllowed = true;
-
-    // Pass the original `pattern` array to getFieldsFromPattern
-    getPluginService('url-pattern').getFieldsFromPattern(pattern).forEach((field) => {
+    fields.forEach((field) => {
+      // Check if the field is allowed.
+      // We strip the array index from the field name to check if it is allowed.
+      // e.g. private_categories[0].slug -> private_categories.slug
       const fieldName = field.replace(/\[\d+\]/g, '');
-      if (!allowedFieldNames.includes(fieldName)) fieldsAreAllowed = false;
+      if (!allowedFieldNames.includes(fieldName)) {
+        valid = false;
+        message = `Pattern contains forbidden fields: ${field}`;
+      }
+
+      // Check if the field is a ToMany relation and has an array index.
+      if (contentType && field.includes('.')) {
+        const [relationName] = field.split('.');
+        // Strip array index to get the attribute name
+        const attributeName = relationName.replace(/\[\d+\]/g, '');
+        const attribute = contentType.attributes[attributeName];
+
+        if (
+          attribute
+          && attribute.type === 'relation'
+          && !attribute.relation.endsWith('ToOne')
+          && !relationName.includes('[')
+        ) {
+          valid = false;
+          message = `The relation ${attributeName} is a ToMany relation and must include an array index (e.g. ${attributeName}[0]).`;
+        }
+      }
     });
 
-    if (!fieldsAreAllowed) {
-      return {
-        valid: false,
-        message: 'Pattern contains forbidden fields',
-      };
-    }
-
     return {
-      valid: true,
-      message: 'Valid pattern',
+      valid,
+      message,
     };
   },
 });
