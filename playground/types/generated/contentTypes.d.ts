@@ -543,7 +543,8 @@ export interface ApiPrivateCategoryPrivateCategory
     sitemap_exclude: Schema.Attribute.Boolean &
       Schema.Attribute.Private &
       Schema.Attribute.DefaultTo<false>;
-    test: Schema.Attribute.Relation<'oneToOne', 'api::test.test'>;
+    slug: Schema.Attribute.UID<'title'>;
+    tests: Schema.Attribute.Relation<'manyToMany', 'api::test.test'>;
     title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -566,7 +567,6 @@ export interface ApiTestTest extends Struct.CollectionTypeSchema {
   };
   options: {
     draftAndPublish: true;
-    populateCreatorFields: true;
   };
   pluginOptions: {
     i18n: {
@@ -579,7 +579,8 @@ export interface ApiTestTest extends Struct.CollectionTypeSchema {
   attributes: {
     category: Schema.Attribute.Relation<'oneToOne', 'api::category.category'>;
     createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
+    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
     header: Schema.Attribute.Component<'core.header', true> &
       Schema.Attribute.SetPluginOptions<{
         i18n: {
@@ -588,8 +589,8 @@ export interface ApiTestTest extends Struct.CollectionTypeSchema {
       }>;
     locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::test.test'>;
-    private_category: Schema.Attribute.Relation<
-      'oneToOne',
+    private_categories: Schema.Attribute.Relation<
+      'manyToMany',
       'api::private-category.private-category'
     >;
     publishedAt: Schema.Attribute.DateTime;
@@ -603,7 +604,8 @@ export interface ApiTestTest extends Struct.CollectionTypeSchema {
         };
       }>;
     updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
+    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
+      Schema.Attribute.Private;
     url_alias: Schema.Attribute.Relation<
       'oneToMany',
       'plugin::webtools.url-alias'

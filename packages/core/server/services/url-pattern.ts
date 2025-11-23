@@ -105,7 +105,7 @@ const customServices = () => ({
    * @returns {string[]} The extracted fields.
    */
   getFieldsFromPattern: (pattern: string): string[] => {
-    const fields = pattern.match(/\[[\w\d.\[\]]+\]/g); // Get all substrings between [] as array.
+    const fields = pattern.match(/\[[\w\d.\-\[\]]+\]/g); // Get all substrings between [] as array.
 
     if (!fields) {
       return [];
@@ -175,7 +175,7 @@ const customServices = () => ({
           let relationName = relationalField[0];
           let relationIndex: number | null = null;
 
-          const arrayMatch = relationName.match(/^(\w+)\[(\d+)\]$/);
+          const arrayMatch = relationName.match(/^([\w-]+)\[(\d+)\]$/);
           if (arrayMatch) {
             relationName = arrayMatch[1];
             relationIndex = parseInt(arrayMatch[2], 10);
