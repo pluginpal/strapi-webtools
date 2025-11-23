@@ -143,41 +143,43 @@ describe('URL Pattern Service', () => {
       // Current implementation replaces with empty string if missing.
       expect(resolved).toBe('/articles/my-article');
     });
-    describe('validatePattern', () => {
-      it('should validate pattern with ToMany relation array syntax', () => {
-        const pattern = '/articles/[categories[0].slug]/[title]';
-        const allowedFields = ['title', 'categories.slug', 'author.name'];
+  });
 
-        const result = service.validatePattern(pattern, allowedFields);
+  describe('validatePattern', () => {
+    it('should validate pattern with underscored relation name', () => {
+      const pattern = '/test/[private_categories[0].slug]/1';
+      const allowedFields = ['private_categories.slug'];
 
-        expect(result.valid).toBe(true);
-      });
+      const result = service.validatePattern(pattern, allowedFields);
 
-      it('should validate pattern with underscored relation name', () => {
-        const pattern = '/test/[private_categories[0].slug]/1';
-        const allowedFields = ['private_categories.slug'];
+      expect(result.valid).toBe(true);
+    });
 
-        const result = service.validatePattern(pattern, allowedFields);
+    it('should validate pattern with dashed relation name', () => {
+      const pattern = '/test/[private-categories[0].slug]/1';
+      const allowedFields = ['private-categories.slug'];
 
-        expect(result.valid).toBe(true);
-      });
+      const result = service.validatePattern(pattern, allowedFields);
 
-      it('should validate pattern with dashed relation name', () => {
-        const pattern = '/test/[private-categories[0].slug]/1';
-        const allowedFields = ['private-categories.slug'];
+      expect(result.valid).toBe(true);
+    });
+    it('should invalidate pattern with forbidden fields', () => {
+      const pattern = '/articles/[forbidden]/[title]';
+      const allowedFields = ['title'];
 
-        const result = service.validatePattern(pattern, allowedFields);
+      const result = service.validatePattern(pattern, allowedFields);
 
-        expect(result.valid).toBe(true);
-      });
-      it('should invalidate pattern with forbidden fields', () => {
-        const pattern = '/articles/[forbidden]/[title]';
-        const allowedFields = ['title'];
+      expect(result.valid).toBe(false);
+    });
+  });
 
-        const result = service.validatePattern(pattern, allowedFields);
+  describe('getRelationsFromPattern', () => {
+    it('should return relation name without array index', () => {
+      const pattern = '/articles/[categories[0].slug]/[title]';
+      const relations = service.getRelationsFromPattern(pattern);
 
-        expect(result.valid).toBe(false);
-      });
+      expect(relations).toContain('categories');
+      expect(relations).not.toContain('categories[0]');
     });
   });
 });

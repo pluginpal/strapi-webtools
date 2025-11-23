@@ -130,7 +130,10 @@ const customServices = () => ({
     fields = fields.filter((field) => field);
 
     // For fields containing dots, extract the first part (relation)
-    const relations = fields.filter((field) => field.includes('.')).map((field) => field.split('.')[0]);
+    const relations = fields
+      .filter((field) => field.includes('.'))
+      .map((field) => field.split('.')[0])
+      .map((relation) => relation.replace(/\[\d+\]/g, '')); // Strip array index
 
     return relations;
   },
