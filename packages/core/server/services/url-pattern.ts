@@ -48,7 +48,6 @@ const customServices = () => ({
           fields.push(fieldName);
         } else if (
           field.type === 'relation'
-          // && field.relation.endsWith('ToOne') // TODO: implement `ToMany` relations.
           && fieldName !== 'localizations'
           && fieldName !== 'createdBy'
           && fieldName !== 'updatedBy'
