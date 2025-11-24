@@ -1,9 +1,7 @@
 
 'use strict';
 
-import {
-  logMessage,
-} from '..';
+const { logMessage } = require('..');
 
 describe('Generic utilities', () => {
   it('Log message formatting', () => {

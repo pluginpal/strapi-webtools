@@ -12,13 +12,13 @@
     "sitemap": "strapi-sitemap"
   },
   "dependencies": {
-    "@strapi/plugin-cloud": "^5.17.0",
-    "@strapi/plugin-users-permissions": "^5.17.0",
-    "@strapi/strapi": "^5.17.0",
+    "@strapi/plugin-cloud": "^5.31.2",
+    "@strapi/plugin-users-permissions": "^5.31.2",
+    "@strapi/strapi": "^5.31.2",
     "better-sqlite3": "11.3.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
-    "react-router-dom": "^6.0.0",
+    "react-router-dom": "^6.30.2",
     "strapi-plugin-webtools": "link:.yalc/strapi-plugin-webtools",
     "styled-components": "^6.0.0",
     "webtools-addon-sitemap": "link:.yalc/webtools-addon-sitemap"

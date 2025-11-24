@@ -1,4 +1,4 @@
-import { setupStrapi, stopStrapi } from '../../../../../playground/tests/helpers';
+const { setupStrapi, stopStrapi } = require('../../../../../playground/tests/helpers');
 
 // Higher timeout limit for slower machines
 jest.setTimeout(30000); // 30 seconds now

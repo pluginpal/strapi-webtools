@@ -44,31 +44,32 @@
     "eslint:fix": "eslint --fix './**/*.{js,jsx,ts,tsx}'"
   },
   "peerDependencies": {
-    "@strapi/design-system": "^2.0.0-rc",
-    "@strapi/icons": "^2.0.0-rc",
-    "@strapi/strapi": "^5.0.0",
-    "@strapi/utils": "^5.0.0",
+    "@strapi/design-system": "^2.0.1",
+    "@strapi/icons": "^2.0.1",
+    "@strapi/strapi": "^5.31.2",
+    "@strapi/utils": "^5.31.2",
     "react": "^17.0.0 || ^18.0.0",
     "react-dom": "^17.0.0 || ^18.0.0",
     "react-router-dom": "^6.0.0",
     "redux": "*",
     "strapi-plugin-webtools": "^1.4.0",
-    "styled-components": "^6.0.0"
+    "styled-components": "^6.1.19"
   },
   "devDependencies": {
-    "@strapi/design-system": "^2.0.0-rc",
-    "@strapi/icons": "^2.0.0-rc",
+    "@strapi/design-system": "^2.0.1",
+    "@strapi/icons": "^2.0.1",
     "@strapi/pack-up": "^5.0.0",
     "@strapi/sdk-plugin": "^5.0.0",
-    "@strapi/strapi": "^5.0.0",
-    "@strapi/utils": "^5.0.0",
-    "@types/lodash": "^4",
+    "@strapi/strapi": "^5.31.2",
+    "@strapi/utils": "^5.31.2",
+    "@types/lodash": "^4.17.21",
+    "@types/react": "^18.0.0",
     "copyfiles": "^2.4.1",
     "eslint": "^8.57.1",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
-    "react-router-dom": "^6",
-    "styled-components": "^6",
+    "react-router-dom": "^6.30.2",
+    "styled-components": "^6.1.19",
     "yalc": "^1.0.0-pre.53"
   },
   "dependencies": {
@@ -76,12 +77,13 @@
     "commander": "^8.3.0",
     "immutable": "^3.8.2",
     "lodash": "^4.17.21",
-    "react-intl": "^6.4.1",
+    "react-intl": "^6.8.9",
     "react-redux": "^8.1.1",
+    "redux": "^4.2.1",
     "redux-immutable": "^4.0.0",
-    "redux-thunk": "^2.3.0",
+    "redux-thunk": "^2.4.2",
     "sitemap": "^7.1.0",
-    "xml2js": "^0.5.0"
+    "xml2js": "^0.6.2"
   },
   "author": {
     "name": "Boaz Poolman",
