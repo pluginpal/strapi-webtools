@@ -104,7 +104,7 @@ const customServices = () => ({
    * @returns {string[]} The extracted fields.
    */
   getFieldsFromPattern: (pattern: string): string[] => {
-    const fields = pattern.match(/\[[\w\d.\-\[\]]+\]/g); // Get all substrings between [] as array.
+    const fields = pattern.match(/\[[\w\d.\-[\]]+\]/g); // Get all substrings between [] as array.
 
     if (!fields) {
       return [];
@@ -179,8 +179,9 @@ const customServices = () => ({
 
           const arrayMatch = relationName.match(/^([\w-]+)\[(\d+)\]$/);
           if (arrayMatch) {
-            relationName = arrayMatch[1];
-            relationIndex = parseInt(arrayMatch[2], 10);
+            const [, name, index] = arrayMatch;
+            relationName = name;
+            relationIndex = parseInt(index, 10);
           }
 
           const relationEntity = entity[relationName];
@@ -219,7 +220,11 @@ const customServices = () => ({
    * @param {Schema.ContentType} contentType - The content type.
    * @returns {object} The validation result.
    */
-  validatePattern: (pattern: string, allowedFieldNames: string[], contentType?: Schema.ContentType): { valid: boolean, message: string } => {
+  validatePattern: (
+    pattern: string,
+    allowedFieldNames: string[],
+    contentType?: Schema.ContentType,
+  ): { valid: boolean, message: string } => {
     if (!pattern) {
       return {
         valid: false,
