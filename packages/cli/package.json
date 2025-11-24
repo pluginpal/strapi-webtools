@@ -37,7 +37,6 @@
   "devDependencies": {
     "@strapi/pack-up": "^5.0.0",
     "@types/fs-extra": "^11.0.4",
-    "@types/glob": "^9.0.0",
     "@types/node": "^20.19.25",
     "eslint": "^8.57.1",
     "typescript": "^5.9.3",
