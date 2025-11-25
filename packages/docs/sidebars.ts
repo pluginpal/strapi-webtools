@@ -133,6 +133,7 @@ const sidebars = {
             "addons/sitemap/settings/hostname-overrides",
             "addons/sitemap/settings/exclude-drafts",
             "addons/sitemap/settings/include-homepage",
+            "addons/sitemap/settings/language-filter",
             "addons/sitemap/settings/default-language-url-type",
           ],
         },
