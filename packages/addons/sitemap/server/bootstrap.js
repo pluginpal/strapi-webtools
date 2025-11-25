@@ -52,7 +52,17 @@ export default async () => {
       strapi.cron.add({
         generateDefaultSitemap: {
           task: async ({ strapi }) => {
-            getPluginService('core').createSitemap('default');
+            const id = 'default';
+
+            const config = await getPluginService('settings').getConfig();
+            const sitemapConfig = config.sitemaps[id];
+
+            // Gracefully exit if no sitemap config found
+            if (!sitemapConfig) {
+              return;
+            }
+
+            getPluginService('core').createSitemap(id);
           },
           options: {
             rule: cron,
