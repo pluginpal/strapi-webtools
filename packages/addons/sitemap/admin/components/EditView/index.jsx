@@ -31,8 +31,15 @@ const CMEditViewExclude = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (!sitemapSettings.contentTypes) return null;
-  if (!sitemapSettings.contentTypes[props.slug]) return null;
+  const isContentTypeInAnySitemap = () => {
+    if (!sitemapSettings.sitemaps) return false;
+
+    return Object.values(sitemapSettings.sitemaps).some(
+      (sitemap) => sitemap.contentTypes && sitemap.contentTypes[props.slug],
+    );
+  };
+
+  if (!isContentTypeInAnySitemap()) return null;
 
   const excluded = 'sitemap_exclude' in values ? values.sitemap_exclude : document?.sitemap_exclude;
 
