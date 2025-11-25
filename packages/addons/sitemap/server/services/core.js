@@ -327,7 +327,7 @@ const createSitemap = async (id) => {
 
   await getPluginService('core').saveSitemap(id, sitemap, isIndex);
 
-  strapi.log.info(logMessage('The sitemap XML has been generated. It can be accessed on /api/sitemap/index.xml.'));
+  strapi.log.info(logMessage(`The sitemap XML has been generated. It can be accessed on /api/sitemap/${id}.xml.`));
 };
 
 export default () => ({
