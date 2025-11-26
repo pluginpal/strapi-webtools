@@ -1,5 +1,11 @@
 # core
 
+## 1.7.2
+
+### Patch Changes
+
+- [#352](https://github.com/pluginpal/strapi-webtools/pull/352) [`bcf7a05`](https://github.com/pluginpal/strapi-webtools/commit/bcf7a0505e43a7d347a166610a43f21a10338526) Thanks [@boazpoolman](https://github.com/boazpoolman)! - chore: remove -rc version constraint from @strapi design-system & icons peer dependencies
+
 ## 1.7.1
 
 ### Patch Changes
