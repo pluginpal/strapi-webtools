@@ -126,6 +126,15 @@ const sidebars = {
         {
           type: "category",
           collapsed: false,
+          label: "✨ Additional features",
+          items: [
+            "addons/sitemap/expansion/introduction",
+            "addons/sitemap/expansion/multiple-sitemaps",
+          ],
+        },
+        {
+          type: "category",
+          collapsed: false,
           label: "⚙️ Settings",
           items: [
             "addons/sitemap/settings/introduction",
