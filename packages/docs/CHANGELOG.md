@@ -1,5 +1,11 @@
 # docs
 
+## 1.3.1
+
+### Patch Changes
+
+- [`8904357`](https://github.com/pluginpal/strapi-webtools/commit/8904357685b1d8bcfee24b564eaeea20283b5932) Thanks [@boazpoolman](https://github.com/boazpoolman)! - chore: update node to version 20 in the Dockerfile of the documentation website
+
 ## 1.3.0
 
 ### Minor Changes
