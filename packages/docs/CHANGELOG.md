@@ -1,5 +1,19 @@
 # docs
 
+## 1.3.0
+
+### Minor Changes
+
+- [`d55f224`](https://github.com/pluginpal/strapi-webtools/commit/d55f224443f0409b21f5aa7678219d7bc955a2da) Thanks [@boazpoolman](https://github.com/boazpoolman)! - docs: add documentation about the multiple sitemaps feature
+
+- [`d55f224`](https://github.com/pluginpal/strapi-webtools/commit/d55f224443f0409b21f5aa7678219d7bc955a2da) Thanks [@boazpoolman](https://github.com/boazpoolman)! - docs: add documentation about the new 'language filter' setting for sitemaps
+
+### Patch Changes
+
+- [`d55f224`](https://github.com/pluginpal/strapi-webtools/commit/d55f224443f0409b21f5aa7678219d7bc955a2da) Thanks [@boazpoolman](https://github.com/boazpoolman)! - Chore/documentation quality
+
+- [`d55f224`](https://github.com/pluginpal/strapi-webtools/commit/d55f224443f0409b21f5aa7678219d7bc955a2da) Thanks [@boazpoolman](https://github.com/boazpoolman)! - Chore/security updates
+
 ## 1.2.0
 
 ### Minor Changes
