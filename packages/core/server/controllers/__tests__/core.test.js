@@ -1,5 +1,5 @@
-const request = require('supertest');
-const { setupStrapi, stopStrapi } = require('../../../../../playground/tests/helpers');
+import request from 'supertest';
+import { setupStrapi, stopStrapi } from '../../../../../playground/tests/helpers';
 
 beforeAll(async () => {
   await setupStrapi();

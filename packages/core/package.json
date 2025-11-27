@@ -40,15 +40,15 @@
     "eslint:fix": "eslint --fix './**/*.{js,jsx,ts,tsx}'"
   },
   "peerDependencies": {
-    "@strapi/admin": "^5.31.2",
-    "@strapi/design-system": "^2.0.1",
-    "@strapi/icons": "^2.0.1",
-    "@strapi/strapi": "^5.31.2",
-    "@strapi/utils": "^5.31.2",
+    "@strapi/admin": "^5.0.0",
+    "@strapi/design-system": "^2.0.0",
+    "@strapi/icons": "^2.0.0",
+    "@strapi/strapi": "^5.0.0",
+    "@strapi/utils": "^5.0.0",
     "react": "^17.0.0 || ^18.0.0",
     "react-dom": "^17.0.0 || ^18.0.0",
     "react-router-dom": "^6.0.0",
-    "styled-components": "^6.1.19"
+    "styled-components": "^6.0.0"
   },
   "devDependencies": {
     "@strapi/admin": "^5.31.2",

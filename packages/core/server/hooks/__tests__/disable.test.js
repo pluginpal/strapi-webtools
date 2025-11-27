@@ -40,10 +40,10 @@ describe('Hooks', () => {
         },
       };
 
-      await disableContentType({ oldContentTypes: oldContentTypes as any, contentTypes: contentTypes as any });
+      await disableContentType({ oldContentTypes, contentTypes });
 
       // The url alias should be deleted now
-      const deletedEntry = await strapi.documents(`plugin::${pluginId}.url-alias` as any).findOne({
+      const deletedEntry = await strapi.documents(`plugin::${pluginId}.url-alias`).findOne({
         documentId,
       });
       expect(deletedEntry).toBeNull();
