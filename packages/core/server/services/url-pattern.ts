@@ -148,7 +148,7 @@ const customServices = () => ({
    */
   resolvePattern: (
     uid: UID.ContentType,
-    entity: { [key: string]: any },
+    entity: Record<string, unknown>,
     urlPattern?: string,
   ): string => {
     const resolve = (pattern: string) => {
@@ -187,12 +187,24 @@ const customServices = () => ({
           const relationEntity = entity[relationName];
 
           if (Array.isArray(relationEntity) && relationIndex !== null) {
-            const subEntity = relationEntity[relationIndex];
+            const subEntity = relationEntity[relationIndex] as
+              | Record<string, unknown>
+              | undefined;
             const value = subEntity?.[relationalField[1]];
-            resolvedPattern = resolvedPattern.replace(`[${field}]`, value ? slugify(String(value)) : '');
-          } else if (typeof relationEntity === 'object' && !Array.isArray(relationEntity)) {
-            const value = relationEntity?.[relationalField[1]];
-            resolvedPattern = resolvedPattern.replace(`[${field}]`, value ? slugify(String(value)) : '');
+            resolvedPattern = resolvedPattern.replace(
+              `[${field}]`,
+              value ? slugify(String(value)) : '',
+            );
+          } else if (
+            typeof relationEntity === 'object'
+            && relationEntity !== null
+            && !Array.isArray(relationEntity)
+          ) {
+            const value = (relationEntity as Record<string, unknown>)?.[relationalField[1]];
+            resolvedPattern = resolvedPattern.replace(
+              `[${field}]`,
+              value ? slugify(String(value)) : '',
+            );
           } else {
             strapi.log.error('Something went wrong whilst resolving the pattern.');
           }
@@ -251,11 +263,14 @@ const customServices = () => ({
         const [relationName] = field.split('.');
         // Strip array index to get the attribute name
         const attributeName = relationName.replace(/\[\d+\]/g, '');
-        const attribute = contentType.attributes[attributeName];
+        const attribute = contentType.attributes[
+          attributeName
+        ] as Schema.Attribute.Relation | undefined;
 
         if (
           attribute
           && attribute.type === 'relation'
+          && typeof attribute.relation === 'string'
           && !attribute.relation.endsWith('ToOne')
           && !relationName.includes('[')
         ) {
