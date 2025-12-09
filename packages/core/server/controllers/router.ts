@@ -10,7 +10,7 @@ import { sanitizeOutput } from '../util/sanitizeOutput';
  */
 
 export default {
-  router: async (ctx: Context) => {
+  findOne: async (ctx: Context) => {
     const { path, ...searchQuery } = ctx.query;
     const { auth } = ctx.state;
 

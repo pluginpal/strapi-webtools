@@ -1,13 +1,13 @@
 import urlAliasController from './url-alias';
 import urlPatternController from './url-pattern';
 import infoController from './info';
-import coreController from './core';
+import routerController from './router';
 import searchController from './search';
 
 export default {
   'url-alias': urlAliasController,
   'url-pattern': urlPatternController,
   info: infoController,
-  core: coreController,
+  router: routerController,
   search: searchController,
 };
