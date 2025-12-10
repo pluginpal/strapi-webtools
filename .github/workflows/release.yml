@@ -31,4 +31,3 @@ jobs:
           version: yarn release:prepare
         env:
           GITHUB_TOKEN: ${{ secrets.PLUGINPAL_BOT_GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
