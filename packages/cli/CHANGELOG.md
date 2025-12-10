@@ -1,5 +1,11 @@
 # webtools-cli
 
+## 1.1.4
+
+### Patch Changes
+
+- [`5c9a810`](https://github.com/pluginpal/strapi-webtools/commit/5c9a810fff5fa65deab9081fe55d1ccfb69350e1) Thanks [@boazpoolman](https://github.com/boazpoolman)! - fix: formatting of premium addons
+
 ## 1.1.3
 
 ### Patch Changes
