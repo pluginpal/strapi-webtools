@@ -1,6 +1,6 @@
 
 import { Context } from 'koa';
-import { Schema, UID } from '@strapi/strapi';
+import { Schema } from '@strapi/strapi';
 
 import { getPluginService } from '../util/getPluginService';
 import { sanitizeOutput } from '../util/sanitizeOutput';
