@@ -1,5 +1,11 @@
 # core
 
+## 1.7.3
+
+### Patch Changes
+
+- [`bb014b8`](https://github.com/pluginpal/strapi-webtools/commit/bb014b83b22da596b2b5466ceb7cc8edadb86df6) Thanks [@boazpoolman](https://github.com/boazpoolman)! - fix: manually transform the response from the router endpoint
+
 ## 1.7.2
 
 ### Patch Changes
