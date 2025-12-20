@@ -32,12 +32,12 @@ After you've setup your license you can install the addon like so:
 <Tabs groupId="yarn-npm">
   <TabItem value="yarn" label="Yarn">
     ```
-    yarn add @pluginpal/webtools-addon-links
+    yarn add strapi-plugin-webtools @pluginpal/webtools-addon-links
     ```
   </TabItem>
   <TabItem value="npm" label="NPM">
     ```
-    npm install @pluginpal/webtools-addon-links --save
+    npm install strapi-plugin-webtools @pluginpal/webtools-addon-links --save
     ```
   </TabItem>
 </Tabs>
