@@ -1,5 +1,13 @@
 # docs
 
+## 1.4.0
+
+### Minor Changes
+
+- [#371](https://github.com/pluginpal/strapi-webtools/pull/371) [`3a96e10`](https://github.com/pluginpal/strapi-webtools/commit/3a96e103719bc38f45327b754ba655c19d05b54d) Thanks [@boazpoolman](https://github.com/boazpoolman)! - docs: improve documentation for existing and new addons
+
+- [#369](https://github.com/pluginpal/strapi-webtools/pull/369) [`28b5353`](https://github.com/pluginpal/strapi-webtools/commit/28b5353a0f1ee034da2e06d0fbd0ed06263c9b29) Thanks [@boazpoolman](https://github.com/boazpoolman)! - feat: new configuration option called 'router_use_controllers'
+
 ## 1.3.1
 
 ### Patch Changes
