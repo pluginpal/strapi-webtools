@@ -75,6 +75,11 @@ export default {
     // Find related entity by path.
     const { entity, contentType } = await getPluginService('url-alias').findRelatedEntity(path as string, searchQuery);
 
+    if (!entity) {
+      ctx.notFound();
+      return;
+    }
+
     // Check 'find' permissions for the content type we're querying.
     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     await strapi.auth.verify(auth, { scope: [`${contentType}.find`] });
