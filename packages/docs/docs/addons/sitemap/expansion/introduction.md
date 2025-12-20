@@ -25,12 +25,12 @@ Note that this package can only be installed after you've [setup your license](/
 <Tabs groupId="yarn-npm">
   <TabItem value="yarn" label="Yarn">
     ```
-    yarn add @pluginpal/webtools-addon-sitemap-expansion
+    yarn add strapi-plugin-webtools @pluginpal/webtools-addon-sitemap-expansion
     ```
   </TabItem>
   <TabItem value="npm" label="NPM">
     ```
-    npm install @pluginpal/webtools-addon-sitemap-expansion --save
+    npm install strapi-plugin-webtools @pluginpal/webtools-addon-sitemap-expansion --save
     ```
   </TabItem>
 </Tabs>
