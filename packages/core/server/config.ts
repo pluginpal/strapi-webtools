@@ -6,6 +6,7 @@ export interface Config {
   website_url: string;
   default_pattern: string,
   unique_per_locale: boolean,
+  router_use_controllers: boolean,
   slugify: (fieldValue: string) => string,
 }
 
@@ -14,6 +15,7 @@ const config: {
   validator: () => void
 } = {
   default: {
+    router_use_controllers: false,
     website_url: null,
     default_pattern: '/[pluralName]/[documentId]',
     slugify: (fieldValue) => kebabCase(deburr(toLower(fieldValue))),

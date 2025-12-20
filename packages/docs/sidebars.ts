@@ -80,6 +80,7 @@ const sidebars = {
       items: [
         "configuration/introduction",
         "configuration/default-pattern",
+        "configuration/router-use-controllers",
         "configuration/website-url",
         "configuration/slugify",
         "configuration/unique-per-locale",
