@@ -49,22 +49,18 @@
     .page {
       width: var(--page-width);
       min-height: var(--page-height);
-      height: var(--page-height);
       padding: var(--page-margin);
       background: white;
       page-break-after: always;
-      break-after: page;
       display: flex;
       flex-direction: column;
       margin: 0 auto 20px;
       box-shadow: 0 2px 8px rgba(0,0,0,0.1);
       position: relative;
-      overflow: hidden;
     }
 
     .page:last-child {
       page-break-after: auto;
-      break-after: auto;
     }
 
     /* ===========================
@@ -575,117 +571,27 @@
        =========================== */
     @media print {
       @page {
-        size: A4 portrait;
+        size: A4;
         margin: 0;
       }
 
-      html, body {
+      body {
         margin: 0;
         padding: 0;
         background: white;
       }
 
       .page {
-        /* CRITICAL: Remove flexbox completely for print */
-        display: block !important;
-
-        /* CRITICAL: Remove fixed heights - let browser calculate */
-        height: auto !important;
-        min-height: auto !important;
-        max-height: none !important;
-
-        /* CRITICAL: Page break controls */
         page-break-after: always;
         page-break-inside: avoid;
-        page-break-before: auto;
-        break-after: page;
-        break-inside: avoid;
-        break-before: auto;
-
-        /* Layout */
-        width: 210mm;
-        padding: var(--page-margin);
-        margin: 0;
         box-shadow: none;
-        position: relative;
-        overflow: visible; /* Don't hide overflow - let browser see boundaries */
+        margin: 0;
+        width: 100%;
+        min-height: 100vh;
       }
 
       .page:last-child {
         page-break-after: auto;
-        break-after: auto;
-      }
-
-      .page:first-child {
-        page-break-before: avoid;
-        break-before: avoid;
-      }
-
-      /* CRITICAL: Convert all flex/grid containers to block for print */
-      .cover-container,
-      .section-header,
-      .grid-2,
-      .grid-3,
-      .grid-4,
-      .pricing-grid,
-      .steps,
-      .resources-grid,
-      .tech-grid,
-      .addon-architecture {
-        display: block !important;
-      }
-
-      /* Approximate grid layouts with inline-block for print reliability */
-      .grid-2 > *,
-      .pricing-grid > * {
-        display: inline-block;
-        width: calc(50% - 8px);
-        vertical-align: top;
-        margin-bottom: 12px;
-        margin-right: 8px;
-      }
-
-      .grid-3 > * {
-        display: inline-block;
-        width: calc(33.333% - 11px);
-        vertical-align: top;
-        margin-bottom: 12px;
-        margin-right: 8px;
-      }
-
-      .grid-4 > *,
-      .steps > *,
-      .resources-grid > *,
-      .tech-grid > * {
-        display: inline-block;
-        width: calc(25% - 12px);
-        vertical-align: top;
-        margin-bottom: 12px;
-        margin-right: 8px;
-      }
-
-      /* Cover page centering without flex */
-      .cover-container {
-        text-align: center;
-        padding-top: 60px; /* Manual vertical centering */
-      }
-
-      /* Prevent awkward breaks within cards */
-      .card,
-      .feature-card,
-      .addon-card,
-      .use-case,
-      .pricing-card,
-      .resource-card,
-      .step {
-        page-break-inside: avoid;
-        break-inside: avoid;
-      }
-
-      /* Page footer should stay at bottom */
-      .page-footer,
-      .cover-footer {
-        margin-top: 40px;
       }
 
       a {
@@ -697,7 +603,10 @@
       * {
         -webkit-print-color-adjust: exact;
         print-color-adjust: exact;
-        color-adjust: exact;
+      }
+
+      .card, .feature-card, .addon-card, .use-case, .pricing-card, .resource-card {
+        page-break-inside: avoid;
       }
     }
 
