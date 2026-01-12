@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Strapi Webtools - Complete URL management solution for Strapi CMS">
+  <title>Strapi Webtools Brochure</title>
+  <style>
+    /* ===========================
+       RESET & BASE STYLES
+       =========================== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      /* Strapi Design System tokens */
+      --strapi-primary-600: #4945FF;
+      --strapi-primary-100: #F0F0FF;
+      --strapi-neutral-0: #FFFFFF;
+      --strapi-neutral-800: #32324D;
+      --strapi-neutral-600: #666687;
+      --strapi-neutral-100: #F6F6F9;
+      --strapi-neutral-200: #EAEAEF;
+
+      /* Custom tokens */
+      --color-free: #5CB176;
+      --color-premium: #D9822F;
+      --color-coming-soon: #A5A5BA;
+      --spacing-unit: 8px;
+      --page-width: 210mm;
+      --page-height: 297mm;
+      --page-margin: 20mm;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Helvetica Neue', sans-serif;
+      font-size: 11pt;
+      line-height: 1.6;
+      color: var(--strapi-neutral-800);
+      background: #f0f0f0;
+    }
+
+    /* ===========================
+       PAGE STRUCTURE
+       =========================== */
+    .page {
+      width: var(--page-width);
+      min-height: var(--page-height);
+      height: var(--page-height);
+      padding: var(--page-margin);
+      background: white;
+      page-break-after: always;
+      break-after: page;
+      display: flex;
+      flex-direction: column;
+      margin: 0 auto 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .page:last-child {
+      page-break-after: auto;
+      break-after: auto;
+    }
+
+    /* ===========================
+       TYPOGRAPHY
+       =========================== */
+    h1 {
+      font-size: 32pt;
+      font-weight: 700;
+      color: var(--strapi-primary-600);
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+
+    h2 {
+      font-size: 24pt;
+      font-weight: 700;
+      color: var(--strapi-neutral-800);
+      margin-bottom: 16px;
+      line-height: 1.3;
+    }
+
+    h3 {
+      font-size: 16pt;
+      font-weight: 600;
+      color: var(--strapi-neutral-800);
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+
+    p {
+      margin-bottom: 12px;
+      color: var(--strapi-neutral-600);
+    }
+
+    strong {
+      color: var(--strapi-neutral-800);
+      font-weight: 600;
+    }
+
+    code {
+      font-family: 'Monaco', 'Courier New', monospace;
+      background: var(--strapi-neutral-100);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 10pt;
+    }
+
+    /* ===========================
+       BADGES & LABELS
+       =========================== */
+    .badge {
+      display: inline-block;
+      padding: 6px 14px;
+      border-radius: 16px;
+      font-size: 9pt;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin: 4px;
+    }
+
+    .badge-free {
+      background: var(--color-free);
+      color: white;
+    }
+
+    .badge-premium {
+      background: var(--color-premium);
+      color: white;
+    }
+
+    .badge-coming-soon {
+      background: var(--color-coming-soon);
+      color: white;
+    }
+
+    /* ===========================
+       GRID LAYOUTS
+       =========================== */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 16px;
+    }
+
+    .grid-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    /* ===========================
+       CARDS
+       =========================== */
+    .card {
+      border: 1px solid var(--strapi-neutral-200);
+      border-radius: 8px;
+      padding: 16px;
+      background: white;
+      page-break-inside: avoid;
+    }
+
+    .card-accent {
+      border-left: 4px solid var(--strapi-primary-600);
+    }
+
+    .feature-card {
+      border: 1px solid var(--strapi-neutral-200);
+      border-radius: 8px;
+      padding: 16px;
+      background: var(--strapi-neutral-100);
+      page-break-inside: avoid;
+    }
+
+    .feature-icon {
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+
+    .addon-card {
+      border: 2px solid var(--strapi-neutral-200);
+      border-radius: 12px;
+      padding: 20px;
+      background: white;
+      margin-bottom: 16px;
+      page-break-inside: avoid;
+    }
+
+    .addon-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+
+    .addon-icon {
+      font-size: 32px;
+    }
+
+    .use-case {
+      background: var(--strapi-neutral-100);
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 16px;
+      page-break-inside: avoid;
+      display: flex;
+      gap: 16px;
+    }
+
+    .use-case-icon {
+      font-size: 32px;
+      flex-shrink: 0;
+    }
+
+    /* ===========================
+       LISTS
+       =========================== */
+    ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    ul li {
+      padding-left: 20px;
+      position: relative;
+      margin-bottom: 6px;
+      color: var(--strapi-neutral-600);
+    }
+
+    ul li:before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--color-free);
+      font-weight: bold;
+    }
+
+    /* ===========================
+       COVER PAGE SPECIFIC
+       =========================== */
+    .cover-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .cover-logo {
+      width: 150px;
+      height: 150px;
+      margin-bottom: 24px;
+      background: var(--strapi-primary-600);
+      border-radius: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 48pt;
+      font-weight: 700;
+    }
+
+    .cover-title {
+      margin-bottom: 8px;
+    }
+
+    .cover-tagline {
+      font-size: 18pt;
+      color: var(--strapi-neutral-600);
+      margin-bottom: 16px;
+      max-width: 600px;
+    }
+
+    .cover-subtitle {
+      font-size: 12pt;
+      color: var(--strapi-neutral-600);
+      margin-bottom: 32px;
+      max-width: 650px;
+      line-height: 1.5;
+    }
+
+    .cover-badges {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 32px;
+    }
+
+    .cover-footer {
+      margin-top: auto;
+      text-align: center;
+      padding-top: 24px;
+      border-top: 1px solid var(--strapi-neutral-200);
+    }
+
+    .cover-footer p {
+      margin: 4px 0;
+      font-size: 10pt;
+      color: var(--strapi-neutral-600);
+    }
+
+    /* ===========================
+       SECTION HEADERS
+       =========================== */
+    .section-header {
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    .section-subtitle {
+      font-size: 12pt;
+      color: var(--strapi-neutral-600);
+      margin-top: 8px;
+    }
+
+    /* ===========================
+       DIVIDERS
+       =========================== */
+    .divider {
+      border: 0;
+      border-top: 2px solid var(--strapi-primary-600);
+      margin: 32px 0;
+      width: 100px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* ===========================
+       PRICING CARDS
+       =========================== */
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 24px;
+    }
+
+    .pricing-card {
+      border: 2px solid var(--strapi-neutral-200);
+      border-radius: 12px;
+      padding: 24px;
+      background: white;
+      text-align: center;
+      page-break-inside: avoid;
+    }
+
+    .pricing-card.premium {
+      border-color: var(--color-premium);
+      background: linear-gradient(to bottom, white, #FFF9F5);
+    }
+
+    .pricing-card.free {
+      border-color: var(--color-free);
+      background: linear-gradient(to bottom, white, #F5FFF9);
+    }
+
+    .pricing-title {
+      font-size: 20pt;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .pricing-price {
+      font-size: 32pt;
+      font-weight: 700;
+      color: var(--strapi-primary-600);
+      margin: 16px 0;
+    }
+
+    .pricing-subtitle {
+      font-size: 11pt;
+      color: var(--strapi-neutral-600);
+      margin-bottom: 24px;
+    }
+
+    .cta-button {
+      display: inline-block;
+      padding: 12px 24px;
+      background: var(--strapi-primary-600);
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: 600;
+      margin-top: 16px;
+    }
+
+    /* ===========================
+       CODE BLOCKS
+       =========================== */
+    .code-block {
+      background: var(--strapi-neutral-800);
+      color: #A5F3FC;
+      padding: 16px;
+      border-radius: 8px;
+      font-family: 'Monaco', 'Courier New', monospace;
+      font-size: 14pt;
+      margin: 24px 0;
+      text-align: center;
+      page-break-inside: avoid;
+    }
+
+    /* ===========================
+       STEPS
+       =========================== */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin: 24px 0;
+    }
+
+    .step {
+      text-align: center;
+      page-break-inside: avoid;
+    }
+
+    .step-number {
+      width: 40px;
+      height: 40px;
+      background: var(--strapi-primary-600);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 18pt;
+      margin: 0 auto 12px;
+    }
+
+    .step-title {
+      font-weight: 600;
+      font-size: 12pt;
+      margin-bottom: 8px;
+      color: var(--strapi-neutral-800);
+    }
+
+    .step-desc {
+      font-size: 9pt;
+      color: var(--strapi-neutral-600);
+      line-height: 1.4;
+    }
+
+    /* ===========================
+       FOOTER
+       =========================== */
+    .page-footer {
+      margin-top: auto;
+      padding-top: 24px;
+      border-top: 1px solid var(--strapi-neutral-200);
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      font-size: 9pt;
+    }
+
+    .footer-column h4 {
+      font-size: 10pt;
+      margin-bottom: 8px;
+      color: var(--strapi-neutral-800);
+    }
+
+    .footer-column p {
+      margin-bottom: 4px;
+      font-size: 9pt;
+      color: var(--strapi-neutral-600);
+    }
+
+    .footer-column a {
+      color: var(--strapi-primary-600);
+      text-decoration: none;
+    }
+
+    /* ===========================
+       RESOURCES GRID
+       =========================== */
+    .resources-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin: 24px 0;
+    }
+
+    .resource-card {
+      text-align: center;
+      padding: 16px;
+      border: 1px solid var(--strapi-neutral-200);
+      border-radius: 8px;
+      background: var(--strapi-neutral-100);
+      page-break-inside: avoid;
+    }
+
+    .resource-icon {
+      font-size: 32px;
+      margin-bottom: 8px;
+    }
+
+    .resource-link {
+      color: var(--strapi-primary-600);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 10pt;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .resource-desc {
+      font-size: 9pt;
+      color: var(--strapi-neutral-600);
+    }
+
+    /* ===========================
+       TECH GRID
+       =========================== */
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-top: 16px;
+      padding: 16px;
+      background: var(--strapi-neutral-100);
+      border-radius: 8px;
+    }
+
+    .tech-item {
+      text-align: center;
+    }
+
+    .tech-label {
+      font-weight: 600;
+      font-size: 11pt;
+      color: var(--strapi-neutral-800);
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .tech-detail {
+      font-size: 9pt;
+      color: var(--strapi-neutral-600);
+      line-height: 1.3;
+    }
+
+    /* ===========================
+       ADDON ARCHITECTURE
+       =========================== */
+    .addon-architecture {
+      background: var(--strapi-neutral-100);
+      padding: 24px;
+      border-radius: 8px;
+      margin-top: 24px;
+    }
+
+    .addon-architecture h3 {
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    /* ===========================
+       PRINT-SPECIFIC STYLES
+       =========================== */
+    @media print {
+      @page {
+        size: A4 portrait;
+        margin: 0;
+      }
+
+      html, body {
+        margin: 0;
+        padding: 0;
+        background: white;
+      }
+
+      .page {
+        /* CRITICAL: Remove flexbox completely for print */
+        display: block !important;
+
+        /* CRITICAL: Remove fixed heights - let browser calculate */
+        height: auto !important;
+        min-height: auto !important;
+        max-height: none !important;
+
+        /* CRITICAL: Page break controls */
+        page-break-after: always;
+        page-break-inside: avoid;
+        page-break-before: auto;
+        break-after: page;
+        break-inside: avoid;
+        break-before: auto;
+
+        /* Layout */
+        width: 210mm;
+        padding: var(--page-margin);
+        margin: 0;
+        box-shadow: none;
+        position: relative;
+        overflow: visible; /* Don't hide overflow - let browser see boundaries */
+      }
+
+      .page:last-child {
+        page-break-after: auto;
+        break-after: auto;
+      }
+
+      .page:first-child {
+        page-break-before: avoid;
+        break-before: avoid;
+      }
+
+      /* CRITICAL: Convert all flex/grid containers to block for print */
+      .cover-container,
+      .section-header,
+      .grid-2,
+      .grid-3,
+      .grid-4,
+      .pricing-grid,
+      .steps,
+      .resources-grid,
+      .tech-grid,
+      .addon-architecture {
+        display: block !important;
+      }
+
+      /* Approximate grid layouts with inline-block for print reliability */
+      .grid-2 > *,
+      .pricing-grid > * {
+        display: inline-block;
+        width: calc(50% - 8px);
+        vertical-align: top;
+        margin-bottom: 12px;
+        margin-right: 8px;
+      }
+
+      .grid-3 > * {
+        display: inline-block;
+        width: calc(33.333% - 11px);
+        vertical-align: top;
+        margin-bottom: 12px;
+        margin-right: 8px;
+      }
+
+      .grid-4 > *,
+      .steps > *,
+      .resources-grid > *,
+      .tech-grid > * {
+        display: inline-block;
+        width: calc(25% - 12px);
+        vertical-align: top;
+        margin-bottom: 12px;
+        margin-right: 8px;
+      }
+
+      /* Cover page centering without flex */
+      .cover-container {
+        text-align: center;
+        padding-top: 60px; /* Manual vertical centering */
+      }
+
+      /* Prevent awkward breaks within cards */
+      .card,
+      .feature-card,
+      .addon-card,
+      .use-case,
+      .pricing-card,
+      .resource-card,
+      .step {
+        page-break-inside: avoid;
+        break-inside: avoid;
+      }
+
+      /* Page footer should stay at bottom */
+      .page-footer,
+      .cover-footer {
+        margin-top: 40px;
+      }
+
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+
+      /* Ensure colors print properly */
+      * {
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        color-adjust: exact;
+      }
+    }
+
+    /* ===========================
+       RESPONSIVE (SCREEN ONLY)
+       =========================== */
+    @media screen and (max-width: 768px) {
+      body {
+        padding: 0;
+      }
+
+      .page {
+        box-shadow: none;
+        margin: 0;
+        padding: 16px;
+        width: 100%;
+      }
+
+      .grid-2, .grid-3, .grid-4, .pricing-grid, .steps, .resources-grid, .tech-grid {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 24pt;
+      }
+
+      h2 {
+        font-size: 18pt;
+      }
+
+      .cover-logo {
+        width: 100px;
+        height: 100px;
+        font-size: 32pt;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===========================
+     PAGE 1: COVER
+     =========================== -->
+<div class="page">
+  <div class="cover-container">
+    <div class="cover-logo">
+      W
+    </div>
+
+    <h1 class="cover-title">Strapi Webtools</h1>
+
+    <p class="cover-tagline">
+      Everything you need to build a website with Strapi CMS
+    </p>
+
+    <p class="cover-subtitle">
+      Complete URL management, frontend routing, and extensible addons
+      for production-ready Strapi v5.x websites
+    </p>
+
+    <div class="cover-badges">
+      <span class="badge badge-free">Free Core Plugin</span>
+      <span class="badge badge-premium">Premium Addons Available</span>
+      <span class="badge" style="background: var(--strapi-primary-600); color: white;">Strapi v5.x Compatible</span>
+    </div>
+
+    <p style="font-size: 10pt; color: var(--strapi-neutral-600);">
+      Version 1.8.0 | Updated January 2026
+    </p>
+  </div>
+
+  <div class="cover-footer">
+    <p><strong>by PluginPal</strong></p>
+    <p>docs.pluginpal.io/webtools</p>
+  </div>
+</div>
+
+<!-- ===========================
+     PAGE 2: PROBLEM & SOLUTION
+     =========================== -->
+<div class="page">
+  <div class="section-header">
+    <h2>The Challenge: Building Production Websites with Strapi</h2>
+  </div>
+
+  <div class="grid-2" style="margin-bottom: 32px;">
+    <div class="feature-card">
+      <div class="feature-icon">🔗</div>
+      <h3>URL Management Complexity</h3>
+      <p>Strapi provides no built-in URL management. Developers must build custom solutions for every project, wasting weeks on infrastructure instead of features.</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">🔌</div>
+      <h3>Frontend Integration Gaps</h3>
+      <p>No standard way to fetch content by URL path. Frontend frameworks require complex routing logic and custom API queries for dynamic pages.</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">🌐</div>
+      <h3>SEO & Multilingual Limitations</h3>
+      <p>Basic slug fields don't scale to enterprise needs. Multilingual sites, sitemaps, redirects, and SEO best practices require extensive custom development.</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">⚙️</div>
+      <h3>Content Team Frustration</h3>
+      <p>Headless CMS lacks the URL control content teams expect from traditional platforms. Every URL change requires developer intervention.</p>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section-header">
+    <h2>The Webtools Solution: Enterprise-Grade URL Management</h2>
+  </div>
+
+  <p style="text-align: center; font-size: 12pt; max-width: 800px; margin: 0 auto 24px; color: var(--strapi-neutral-800); line-height: 1.6;">
+    <strong>Webtools transforms Strapi into a complete website platform</strong> with automated URL generation, frontend routing, and a modular addon ecosystem. Everything you need, nothing you don't.
+  </p>
+
+  <div class="grid-2">
+    <div class="card">
+      <h3>🎯 Pattern-Based Automation</h3>
+      <p>Configure URL patterns once, generate thousands of URLs automatically.</p>
+      <p style="margin-top: 12px;"><strong>Example:</strong> <code>/blog/{year}/{month}/{slug}</code></p>
+      <p style="margin-top: 4px;">→ <code>/blog/2024/01/getting-started</code></p>
+    </div>
+
+    <div class="card">
+      <h3>🔌 Extensible Addon System</h3>
+      <p>Sitemap, Redirects, Links, Breadcrumbs addons. Mix and match based on project needs.</p>
+      <p style="margin-top: 12px;"><strong>Freemium model:</strong> Free core + paid premium features</p>
+    </div>
+
+    <div class="card">
+      <h3>🚀 Frontend Router API</h3>
+      <p>Public <code>/router</code> endpoint fetches content by URL path. Works with Next.js, Nuxt, React, Vue out of the box.</p>
+    </div>
+
+    <div class="card">
+      <h3>✅ Production-Ready & Reliable</h3>
+      <p>Comprehensive test suite, active maintenance by PluginPal, used in production by real businesses.</p>
+    </div>
+
+    <div class="card">
+      <h3>🌍 Multilingual from Day One</h3>
+      <p>Per-locale URL patterns and configurations. Official Strapi i18n plugin integration.</p>
+    </div>
+
+    <div class="card">
+      <h3>💻 Intuitive Admin Interface</h3>
+      <p>Visual pattern editor, URL overview, bulk operations. Content teams can manage URLs without developer support.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ===========================
+     PAGE 3: CORE FEATURES
+     =========================== -->
+<div class="page">
+  <div class="section-header">
+    <h2>Core Plugin Features</h2>
+    <span class="badge badge-free">FREE</span>
+  </div>
+
+  <div class="grid-2" style="margin-bottom: 24px;">
+    <div class="feature-card">
+      <div class="feature-icon">🎯</div>
+      <h3>Unique URL Aliases</h3>
+      <p>Every page gets its own unique path, stored as a dedicated content type with full Strapi capabilities.</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">⚡</div>
+      <h3>Automated URL Generation</h3>
+      <p>Pattern-based automation generates URLs from content fields. Set it once, forget it forever.</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">🎨</div>
+      <h3>Flexible Overrides</h3>
+      <p>Toggle between auto-generated and custom URLs per page. Best of both worlds for special cases.</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">🚀</div>
+      <h3>Frontend Router</h3>
+      <p>Public <code>/router</code> API endpoint enables dynamic page fetching by URL path. Integrates with any frontend framework.</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">🌍</div>
+      <h3>Multilingual Support</h3>
+      <p>Full i18n integration with per-locale patterns and URLs. Build truly international websites.</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">💻</div>
+      <h3>Admin UI</h3>
+      <p>Visual pattern editor, URL list, bulk operations, and search. Everything accessible from Strapi admin.</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">🔧</div>
+      <h3>Auto-Slugify</h3>
+      <p>URLs automatically slugified to ensure valid, clean paths. Customizable slugify rules per project.</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">📦</div>
+      <h3>Content-Type Integration</h3>
+      <p>Enable Webtools per content type via Content-Type Builder. Granular control over which content gets URLs.</p>
+    </div>
+  </div>
+
+  <div class="section-header" style="margin-top: 24px;">
+    <h3>Technical Highlights</h3>
+  </div>
+
+  <div class="tech-grid">
+    <div class="tech-item">
+      <span class="tech-label">REST & GraphQL</span>
+      <span class="tech-detail">Full API coverage with 15+ endpoints</span>
+    </div>
+    <div class="tech-item">
+      <span class="tech-label">TypeScript</span>
+      <span class="tech-detail">First-class TS support with complete types</span>
+    </div>
+    <div class="tech-item">
+      <span class="tech-label">Strapi v5.x</span>
+      <span class="tech-detail">Built for latest architecture</span>
+    </div>
+    <div class="tech-item">
+      <span class="tech-label">Open Source</span>
+      <span class="tech-detail">MIT licensed core plugin</span>
+    </div>
+  </div>
+</div>
+
+<!-- ===========================
+     PAGE 4: ADDON ECOSYSTEM
+     =========================== -->
+<div class="page">
+  <div class="section-header">
+    <h2>Extend with Premium Addons</h2>
+    <p class="section-subtitle">Modular extensions that build on the core to solve specific use cases</p>
+  </div>
+
+  <div class="addon-card">
+    <div class="addon-header">
+      <span class="addon-icon">🗺️</span>
+      <span class="badge badge-free">FREE</span>
+    </div>
+    <h3>Sitemap</h3>
+    <p style="margin-bottom: 12px; color: var(--strapi-neutral-600); font-style: italic;">Generate SEO-perfect sitemaps automatically</p>
+    <ul>
+      <li>Multilingual support with rel="alternate" hreflang tags</li>
+      <li>URL bundles to group URLs by type</li>
+      <li>Custom URLs for non-Strapi pages</li>
+      <li>Automatic cron-based regeneration</li>
+      <li>Sitemap indexes for large sites (50k+ URLs)</li>
+      <li>XSL styling for human-readable XML</li>
+    </ul>
+  </div>
+
+  <div class="addon-card">
+    <div class="addon-header">
+      <span class="addon-icon">🔀</span>
+      <span class="badge badge-premium">PREMIUM</span>
+    </div>
+    <h3>Redirects</h3>
+    <p style="margin-bottom: 12px; color: var(--strapi-neutral-600); font-style: italic;">Manage URL redirects with confidence</p>
+    <ul>
+      <li>Support for 301, 302, 307, 308 status codes</li>
+      <li>Automatic redirect generation when URLs change</li>
+      <li>Chain detection (A→B→C becomes A→C)</li>
+      <li>Loop detection and prevention</li>
+      <li>Admin UI for manual redirect management</li>
+      <li>Bulk import/export capabilities</li>
+    </ul>
+  </div>
+
+  <div class="addon-card">
+    <div class="addon-header">
+      <span class="addon-icon">🔗</span>
+      <span class="badge badge-premium">PREMIUM</span>
+    </div>
+    <h3>Links</h3>
+    <p style="margin-bottom: 12px; color: var(--strapi-neutral-600); font-style: italic;">Internal link management made easy</p>
+    <ul>
+      <li>Track internal links between content</li>
+      <li>Custom field support for link pickers</li>
+      <li>CKEditor integration with smart link search</li>
+      <li>Automatic link updates when URLs change</li>
+      <li>Broken link detection</li>
+    </ul>
+  </div>
+
+  <div class="addon-card">
+    <div class="addon-header">
+      <span class="addon-icon">📍</span>
+      <span class="badge badge-coming-soon">COMING SOON</span>
+    </div>
+    <h3>Breadcrumbs</h3>
+    <p style="margin-bottom: 12px; color: var(--strapi-neutral-600); font-style: italic;">Automated navigation breadcrumbs</p>
+    <ul>
+      <li>Automatic breadcrumb generation from URL structure</li>
+      <li>Custom breadcrumb overrides per page</li>
+      <li>Schema.org structured data</li>
+      <li>Frontend component examples</li>
+    </ul>
+  </div>
+
+  <div class="addon-architecture">
+    <h3>Why Addons?</h3>
+    <div class="grid-3">
+      <div style="text-align: center;">
+        <strong style="display: block; margin-bottom: 8px; color: var(--strapi-primary-600);">Modular</strong>
+        <p style="font-size: 10pt;">Only install what you need. No bloated "everything" plugins. Lighter footprint, better performance.</p>
+      </div>
+      <div style="text-align: center;">
+        <strong style="display: block; margin-bottom: 8px; color: var(--strapi-primary-600);">Flexible</strong>
+        <p style="font-size: 10pt;">Mix and match addons. Upgrade core independently. Extend with community addons.</p>
+      </div>
+      <div style="text-align: center;">
+        <strong style="display: block; margin-bottom: 8px; color: var(--strapi-primary-600);">Economical</strong>
+        <p style="font-size: 10pt;">Free core covers most needs. Pay only for premium features. Lower total cost than custom development.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===========================
+     PAGE 5: USE CASES & INTEGRATION
+     =========================== -->
+<div class="page">
+  <div class="section-header">
+    <h2>Real-World Use Cases</h2>
+  </div>
+
+  <div class="use-case">
+    <div class="use-case-icon">🛒</div>
+    <div>
+      <h3>E-commerce & Product Catalogs</h3>
+      <p>Manage thousands of product URLs with automated pattern generation. Multilingual support for international stores. Automatic redirects preserve SEO when products move categories.</p>
+      <p style="margin-top: 8px; font-size: 10pt;"><strong>Features:</strong> <span class="badge" style="font-size: 8pt; padding: 2px 8px;">Core</span> <span class="badge" style="font-size: 8pt; padding: 2px 8px;">Sitemap</span> <span class="badge" style="font-size: 8pt; padding: 2px 8px;">Redirects</span></p>
+      <p style="margin-top: 4px; font-size: 10pt; font-style: italic; color: var(--color-free);"><strong>Outcome:</strong> "3,000+ products, 8 languages, zero manual URL management"</p>
+    </div>
+  </div>
+
+  <div class="use-case">
+    <div class="use-case-icon">📚</div>
+    <div>
+      <h3>Documentation & Knowledge Base</h3>
+      <p>Version-based URLs (<code>/v2/docs/api/...</code>), automatic redirects for reorganizations, breadcrumb navigation. Perfect for SaaS companies with extensive docs.</p>
+      <p style="margin-top: 8px; font-size: 10pt;"><strong>Features:</strong> <span class="badge" style="font-size: 8pt; padding: 2px 8px;">Core</span> <span class="badge" style="font-size: 8pt; padding: 2px 8px;">Redirects</span> <span class="badge" style="font-size: 8pt; padding: 2px 8px;">Breadcrumbs</span></p>
+      <p style="margin-top: 4px; font-size: 10pt; font-style: italic; color: var(--color-free);"><strong>Outcome:</strong> "500+ pages, automatic redirects during restructure, improved SEO"</p>
+    </div>
+  </div>
+
+  <div class="use-case">
+    <div class="use-case-icon">🏢</div>
+    <div>
+      <h3>Corporate & Marketing Websites</h3>
+      <p>Clean URLs for every page, multilingual support for global presence, sitemap automation. Content team manages URLs without IT dependency.</p>
+      <p style="margin-top: 8px; font-size: 10pt;"><strong>Features:</strong> <span class="badge" style="font-size: 8pt; padding: 2px 8px;">Core</span> <span class="badge" style="font-size: 8pt; padding: 2px 8px;">Sitemap</span> <span class="badge" style="font-size: 8pt; padding: 2px 8px;">Links</span></p>
+      <p style="margin-top: 4px; font-size: 10pt; font-style: italic; color: var(--color-free);"><strong>Outcome:</strong> "40% faster content publishing, autonomous marketing team"</p>
+    </div>
+  </div>
+
+  <div class="use-case">
+    <div class="use-case-icon">📰</div>
+    <div>
+      <h3>News & Content Publishing</h3>
+      <p>Date-based URLs for articles, automatic sitemap updates, internal link tracking. Scales to 10,000+ articles with consistent performance.</p>
+      <p style="margin-top: 8px; font-size: 10pt;"><strong>Features:</strong> <span class="badge" style="font-size: 8pt; padding: 2px 8px;">Core</span> <span class="badge" style="font-size: 8pt; padding: 2px 8px;">Sitemap</span> <span class="badge" style="font-size: 8pt; padding: 2px 8px;">Links</span></p>
+      <p style="margin-top: 4px; font-size: 10pt; font-style: italic; color: var(--color-free);"><strong>Outcome:</strong> "10,000+ articles, automated sitemap, zero broken links"</p>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <div class="section-header">
+    <h3>Get Started in Minutes</h3>
+  </div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-number">1</div>
+      <div class="step-title">Install</div>
+      <p class="step-desc">Run <code style="font-size: 8pt;">npx webtools-cli install</code> and follow the wizard</p>
+    </div>
+    <div class="step">
+      <div class="step-number">2</div>
+      <div class="step-title">Configure</div>
+      <p class="step-desc">Select content types and choose addons. CLI sets up everything</p>
+    </div>
+    <div class="step">
+      <div class="step-number">3</div>
+      <div class="step-title">Customize</div>
+      <p class="step-desc">Create URL patterns in admin UI. Example: <code style="font-size: 8pt;">/blog/{year}/{slug}</code></p>
+    </div>
+    <div class="step">
+      <div class="step-number">4</div>
+      <div class="step-title">Deploy</div>
+      <p class="step-desc">URLs generate automatically. Use frontend router for dynamic pages</p>
+    </div>
+  </div>
+
+  <p style="text-align: center; font-size: 10pt; color: var(--strapi-neutral-600); margin-top: 16px;">
+    <strong>Requirements:</strong> Node.js ≥18.17 | Strapi v5.x | 5 minutes to install
+  </p>
+</div>
+
+<!-- ===========================
+     PAGE 6: GETTING STARTED & CTA
+     =========================== -->
+<div class="page">
+  <div class="section-header">
+    <h2>Get Started Today</h2>
+  </div>
+
+  <div class="code-block">
+    npx webtools-cli install
+  </div>
+
+  <p style="text-align: center; margin-bottom: 32px; color: var(--strapi-neutral-600);">
+    Interactive CLI wizard guides you through installation and configuration. No manual setup required.
+  </p>
+
+  <div class="section-header" style="margin-top: 32px;">
+    <h2>Flexible Pricing</h2>
+  </div>
+
+  <div class="pricing-grid">
+    <div class="pricing-card free">
+      <h3 class="pricing-title">Free Core</h3>
+      <div class="pricing-price">$0</div>
+      <p class="pricing-subtitle">Forever</p>
+      <ul style="text-align: left; margin-bottom: 16px;">
+        <li>URL aliases & patterns</li>
+        <li>Frontend router API</li>
+        <li>Multilingual support</li>
+        <li>Auto-slugify</li>
+        <li>Admin UI</li>
+        <li>Sitemap addon (FREE)</li>
+        <li>Community support</li>
+      </ul>
+      <a href="https://docs.pluginpal.io/webtools/" class="cta-button">Install Now</a>
+    </div>
+
+    <div class="pricing-card premium">
+      <h3 class="pricing-title">Premium Addons</h3>
+      <div class="pricing-price">From $49</div>
+      <p class="pricing-subtitle">Per addon</p>
+      <ul style="text-align: left; margin-bottom: 16px;">
+        <li>Redirects addon</li>
+        <li>Links addon</li>
+        <li>Breadcrumbs addon</li>
+        <li>Priority email support</li>
+        <li>Commercial license</li>
+        <li>All core features</li>
+      </ul>
+      <a href="https://www.pluginpal.io/plugin/webtools" class="cta-button">View Pricing</a>
+    </div>
+  </div>
+
+  <p style="text-align: center; margin: 24px 0; font-size: 12pt; color: var(--strapi-neutral-800);">
+    <strong>Save $10,000+ in custom development costs.</strong> Get production-ready URL management in hours, not weeks.
+  </p>
+
+  <hr class="divider">
+
+  <div class="section-header">
+    <h3>Learn More</h3>
+  </div>
+
+  <div class="resources-grid">
+    <div class="resource-card">
+      <div class="resource-icon">📖</div>
+      <a href="https://docs.pluginpal.io/webtools/" class="resource-link">Documentation</a>
+      <p class="resource-desc">Comprehensive guides, API docs, and tutorials</p>
+    </div>
+    <div class="resource-card">
+      <div class="resource-icon">💻</div>
+      <a href="https://github.com/pluginpal/strapi-webtools" class="resource-link">GitHub</a>
+      <p class="resource-desc">View source code, report issues, contribute</p>
+    </div>
+    <div class="resource-card">
+      <div class="resource-icon">🏪</div>
+      <a href="https://market.strapi.io/plugins/@pluginpal-webtools-core" class="resource-link">Strapi Marketplace</a>
+      <p class="resource-desc">Official plugin marketplace listing</p>
+    </div>
+    <div class="resource-card">
+      <div class="resource-icon">🔌</div>
+      <a href="https://www.pluginpal.io/plugin/webtools" class="resource-link">PluginPal</a>
+      <p class="resource-desc">Product page, pricing, support options</p>
+    </div>
+  </div>
+
+  <div class="page-footer">
+    <div class="footer-column">
+      <h4>About</h4>
+      <p><strong>Strapi Webtools by PluginPal</strong></p>
+      <p>Version 1.8.0 | MIT License</p>
+    </div>
+    <div class="footer-column">
+      <h4>Support</h4>
+      <p>Community: <a href="https://github.com/pluginpal/strapi-webtools/discussions">GitHub Discussions</a></p>
+      <p>Commercial: support@pluginpal.io</p>
+    </div>
+    <div class="footer-column">
+      <h4>Legal</h4>
+      <p><a href="https://www.pluginpal.io/terms">Terms of Service</a></p>
+      <p>© 2026 PluginPal. All rights reserved.</p>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

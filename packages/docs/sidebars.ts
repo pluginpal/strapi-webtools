@@ -100,6 +100,14 @@ const sidebars = {
         "migration/strapi-v4-to-v5",
       ],
     },
+    {
+      type: "category",
+      collapsed: false,
+      label: "📚 Resources",
+      items: [
+        "resources/brochure",
+      ],
+    },
   ],
 
   webtoolsSitemapSidebar: [

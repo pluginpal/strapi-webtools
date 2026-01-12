@@ -49,3 +49,9 @@ yarn-error.log*
 # Cypress
 cypress/screenshots/
 cypress/videos/
+
+# AI helper and local marketing materials
+.ai-helper/
+brochure-drafts/
+*.draft.html
+marketing-temp/
