@@ -4,7 +4,27 @@ import { Button } from '../Button/Button';
 export function DownloadButton({
   variant = 'primary',
   size = '',
-  children = 'Download Brochure',
+  children = 'Download PDF',
+  href = '/webtools/downloads/strapi-webtools-brochure-clean.pdf',
+  ...rest
+}) {
+  return (
+    <Button
+      href={href}
+      variant={variant}
+      size={size}
+      decorative="↓"
+      {...rest}
+    >
+      {children}
+    </Button>
+  );
+}
+
+export function ViewHtmlButton({
+  variant = 'secondary',
+  size = '',
+  children = 'View as HTML',
   ...rest
 }) {
   return (
