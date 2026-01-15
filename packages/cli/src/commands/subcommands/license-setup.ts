@@ -7,8 +7,8 @@ export async function licenseSetup() {
   console.log('Start your free trial and get:');
   console.log('✨ 7 days of access to the Essential plan, which includes:');
   console.log('✅ Automated Redirects');
-  console.log('✅ Internal Links\n');
-  console.log('✅ Breadcrumbs\n');
+  console.log('✅ Internal Links');
+  console.log('✅ Breadcrumbs');
   console.log('✅ Unlimited sitemaps\n');
 
   const selectedPlan = await select({

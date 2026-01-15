@@ -1,5 +1,23 @@
 # core
 
+## 1.8.0
+
+### Minor Changes
+
+- [#369](https://github.com/pluginpal/strapi-webtools/pull/369) [`28b5353`](https://github.com/pluginpal/strapi-webtools/commit/28b5353a0f1ee034da2e06d0fbd0ed06263c9b29) Thanks [@boazpoolman](https://github.com/boazpoolman)! - feat: new configuration option called 'router_use_controllers'
+
+## 1.7.3
+
+### Patch Changes
+
+- [`bb014b8`](https://github.com/pluginpal/strapi-webtools/commit/bb014b83b22da596b2b5466ceb7cc8edadb86df6) Thanks [@boazpoolman](https://github.com/boazpoolman)! - fix: manually transform the response from the router endpoint
+
+## 1.7.2
+
+### Patch Changes
+
+- [`d55f224`](https://github.com/pluginpal/strapi-webtools/commit/d55f224443f0409b21f5aa7678219d7bc955a2da) Thanks [@boazpoolman](https://github.com/boazpoolman)! - chore: remove -rc version constraint from @strapi design-system & icons peer dependencies
+
 ## 1.7.1
 
 ### Patch Changes

@@ -1,7 +1,7 @@
 ---
 sidebar_label: 'Installation'
-displayed_sidebar: webtoolsRedirectsSidebar
-slug: /addons/redirects/installation
+displayed_sidebar: webtoolsBreadcrumbsSidebar
+slug: /addons/breadcrumbs/installation
 ---
 
 # ⏳ Installation
@@ -10,7 +10,7 @@ slug: /addons/redirects/installation
 Complete installation requirements are the exact same as for Strapi itself and can be found in the Strapi documentation.
 
 **Additional Requirements:**
-- **Node.js**: Version 18 or higher
+- **Node.js**: Version 18.18.2 or higher
 - **Strapi**: Version 5.x
 - **Webtools**: Version 1.x
 :::
@@ -32,12 +32,12 @@ After you've setup your license you can install the addon like so:
 <Tabs groupId="yarn-npm">
   <TabItem value="yarn" label="Yarn">
     ```
-    yarn add strapi-plugin-webtools @pluginpal/webtools-addon-redirects
+    yarn add strapi-plugin-webtools @pluginpal/webtools-addon-breadcrumbs
     ```
   </TabItem>
   <TabItem value="npm" label="NPM">
     ```
-    npm install strapi-plugin-webtools @pluginpal/webtools-addon-redirects --save
+    npm install strapi-plugin-webtools @pluginpal/webtools-addon-breadcrumbs --save
     ```
   </TabItem>
 </Tabs>

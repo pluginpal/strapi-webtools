@@ -26,6 +26,7 @@ const sidebars = {
         "getting-started/usage",
         "getting-started/url-pattern",
         "getting-started/url-alias",
+        "getting-started/bulk-generate",
         "getting-started/api-permissions",
         "getting-started/admin-permissions",
         "getting-started/troubleshooting",
@@ -33,7 +34,7 @@ const sidebars = {
     },
     {
       type: "category",
-      collapsed: false,
+      collapsed: true,
       label: "📦 API",
       items: [
         "api/rest",
@@ -42,7 +43,7 @@ const sidebars = {
     },
     {
       type: "category",
-      collapsed: false,
+      collapsed: true,
       label: "📟 CLI",
       items: [
         "cli/install",
@@ -52,7 +53,7 @@ const sidebars = {
     },
     {
       type: "category",
-      collapsed: false,
+      collapsed: true,
       label: "🔌 Addons",
       items: [
         "addons/introduction",
@@ -71,28 +72,34 @@ const sidebars = {
           label: "Links addon",
           href: '/addons/links',
         },
+        {
+          type: "link",
+          label: "Breadcrumbs addon",
+          href: '/addons/breadcrumbs',
+        },
       ],
     },
     {
       type: "category",
-      collapsed: false,
+      collapsed: true,
       label: "⚙️ Configuration",
       items: [
         "configuration/introduction",
         "configuration/default-pattern",
+        "configuration/router-use-controllers",
         "configuration/website-url",
         "configuration/slugify",
         "configuration/unique-per-locale",
       ],
     },
-    // {
-    //   type: "category",
-    //   collapsed: false,
-    //   label: "♻️ Upgrading",
-    //   items: [
-    //     "upgrading/generic-update",
-    //   ],
-    // },
+    {
+      type: "category",
+      collapsed: true,
+      label: "♻️ Upgrading",
+      items: [
+        "migration/strapi-v4-to-v5",
+      ],
+    },
   ],
 
   webtoolsSitemapSidebar: [
@@ -126,6 +133,15 @@ const sidebars = {
         {
           type: "category",
           collapsed: false,
+          label: "✨ Additional features",
+          items: [
+            "addons/sitemap/expansion/introduction",
+            "addons/sitemap/expansion/multiple-sitemaps",
+          ],
+        },
+        {
+          type: "category",
+          collapsed: true,
           label: "⚙️ Settings",
           items: [
             "addons/sitemap/settings/introduction",
@@ -133,12 +149,13 @@ const sidebars = {
             "addons/sitemap/settings/hostname-overrides",
             "addons/sitemap/settings/exclude-drafts",
             "addons/sitemap/settings/include-homepage",
+            "addons/sitemap/settings/language-filter",
             "addons/sitemap/settings/default-language-url-type",
           ],
         },
         {
           type: "category",
-          collapsed: false,
+          collapsed: true,
           label: "🔧 Configuration",
           items: [
             "addons/sitemap/configuration/introduction",
@@ -216,7 +233,16 @@ const sidebars = {
             "addons/links/getting-started/introduction",
             "addons/links/getting-started/installation",
             "addons/links/getting-started/custom-field",
-            "addons/links/getting-started/ckeditor",
+          ],
+        },
+        {
+          type: "category",
+          collapsed: false,
+          label: "✨ Integrations",
+          items: [
+            "addons/links/integrations/ckeditor",
+            "addons/links/integrations/magic-editor",
+            "addons/links/integrations/custom-text-editor",
           ],
         },
         {
@@ -225,6 +251,56 @@ const sidebars = {
           label: "📦 API",
           items: [
             "addons/links/api/links-format",
+            "addons/links/api/rewrite-middleware",
+          ],
+        },
+        {
+          type: "category",
+          collapsed: false,
+          label: "🔧 Configuration",
+          items: [
+            "addons/links/configuration/introduction",
+            "addons/links/configuration/custom-links",
+          ],
+        },
+      ],
+    },
+  ],
+
+  webtoolsBreadcrumbsSidebar: [
+    {
+      type: "link",
+      label: "⬅️ Back to Webtools Core docs",
+      href: "/addons",
+    },
+    {
+      type: "category",
+      collapsed: false,
+      label: "🔗 Breadcrumbs addon",
+      items: [
+        {
+          type: "category",
+          collapsed: false,
+          label: "🚀 Getting Started",
+          items: [
+            "addons/breadcrumbs/getting-started/introduction",
+            "addons/breadcrumbs/getting-started/installation",
+          ],
+        },
+        {
+          type: "category",
+          collapsed: false,
+          label: "📦 API",
+          items: [
+            "addons/breadcrumbs/api/rest",
+          ],
+        },
+        {
+          type: "category",
+          collapsed: false,
+          label: "🔧 Settings",
+          items: [
+            "addons/breadcrumbs/settings/introduction",
           ],
         },
       ],

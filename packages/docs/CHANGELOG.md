@@ -1,5 +1,33 @@
 # docs
 
+## 1.4.0
+
+### Minor Changes
+
+- [#371](https://github.com/pluginpal/strapi-webtools/pull/371) [`3a96e10`](https://github.com/pluginpal/strapi-webtools/commit/3a96e103719bc38f45327b754ba655c19d05b54d) Thanks [@boazpoolman](https://github.com/boazpoolman)! - docs: improve documentation for existing and new addons
+
+- [#369](https://github.com/pluginpal/strapi-webtools/pull/369) [`28b5353`](https://github.com/pluginpal/strapi-webtools/commit/28b5353a0f1ee034da2e06d0fbd0ed06263c9b29) Thanks [@boazpoolman](https://github.com/boazpoolman)! - feat: new configuration option called 'router_use_controllers'
+
+## 1.3.1
+
+### Patch Changes
+
+- [`8904357`](https://github.com/pluginpal/strapi-webtools/commit/8904357685b1d8bcfee24b564eaeea20283b5932) Thanks [@boazpoolman](https://github.com/boazpoolman)! - chore: update node to version 20 in the Dockerfile of the documentation website
+
+## 1.3.0
+
+### Minor Changes
+
+- [`d55f224`](https://github.com/pluginpal/strapi-webtools/commit/d55f224443f0409b21f5aa7678219d7bc955a2da) Thanks [@boazpoolman](https://github.com/boazpoolman)! - docs: add documentation about the multiple sitemaps feature
+
+- [`d55f224`](https://github.com/pluginpal/strapi-webtools/commit/d55f224443f0409b21f5aa7678219d7bc955a2da) Thanks [@boazpoolman](https://github.com/boazpoolman)! - docs: add documentation about the new 'language filter' setting for sitemaps
+
+### Patch Changes
+
+- [`d55f224`](https://github.com/pluginpal/strapi-webtools/commit/d55f224443f0409b21f5aa7678219d7bc955a2da) Thanks [@boazpoolman](https://github.com/boazpoolman)! - Chore/documentation quality
+
+- [`d55f224`](https://github.com/pluginpal/strapi-webtools/commit/d55f224443f0409b21f5aa7678219d7bc955a2da) Thanks [@boazpoolman](https://github.com/boazpoolman)! - Chore/security updates
+
 ## 1.2.0
 
 ### Minor Changes
