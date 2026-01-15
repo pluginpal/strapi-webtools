@@ -109,6 +109,7 @@ describe('Core controller - Router', () => {
   });
 
   it('Should allow creator field population if the populateCreatorFields is true', async () => {
+    strapi.config.set('plugin::webtools.populate_creator_fields', true);
     const page = await request(strapi.server.httpServer)
       .get('/api/webtools/router?path=/page/published-test-page&populate[0]=createdBy&populate[1]=updatedBy')
       .expect(200)
@@ -119,6 +120,7 @@ describe('Core controller - Router', () => {
   });
 
   it('Should not allow creator field population if the populateCreatorFields is false', async () => {
+    strapi.config.set('plugin::webtools.populate_creator_fields', false);
     const page = await request(strapi.server.httpServer)
       .get('/api/webtools/router?path=/category/published-category')
       .expect(200)

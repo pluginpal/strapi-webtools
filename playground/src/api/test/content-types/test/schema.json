@@ -8,8 +8,7 @@
     "description": ""
   },
   "options": {
-    "draftAndPublish": true,
-    "populateCreatorFields": true
+    "draftAndPublish": true
   },
   "pluginOptions": {
     "webtools": {
@@ -34,21 +33,27 @@
       "target": "api::category.category",
       "mappedBy": "test"
     },
-    "private_category": {
+    "private_categories": {
       "type": "relation",
-      "relation": "oneToOne",
+      "relation": "manyToMany",
       "target": "api::private-category.private-category",
-      "inversedBy": "test"
+      "mappedBy": "tests"
     },
     "header": {
       "type": "component",
-      "repeatable": true,
       "pluginOptions": {
         "i18n": {
           "localized": true
         }
       },
-      "component": "core.header"
+      "component": "core.header",
+      "repeatable": true
+    },
+    "url_alias": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "plugin::webtools.url-alias",
+      "configurable": false
     }
   }
 }

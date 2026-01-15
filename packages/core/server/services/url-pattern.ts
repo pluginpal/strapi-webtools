@@ -48,7 +48,6 @@ const customServices = () => ({
           fields.push(fieldName);
         } else if (
           field.type === 'relation'
-          && field.relation.endsWith('ToOne') // TODO: implement `ToMany` relations.
           && fieldName !== 'localizations'
           && fieldName !== 'createdBy'
           && fieldName !== 'updatedBy'
@@ -105,13 +104,13 @@ const customServices = () => ({
    * @returns {string[]} The extracted fields.
    */
   getFieldsFromPattern: (pattern: string): string[] => {
-    const fields = pattern.match(/[[\w\d.]+]/g); // Get all substrings between [] as array.
+    const fields = pattern.match(/\[[\w\d.\-[\]]+\]/g); // Get all substrings between [] as array.
 
     if (!fields) {
       return [];
     }
 
-    const newFields = fields.map((field) => (/(?<=\[)(.*?)(?=\])/).exec(field)?.[0] ?? ''); // Strip [] from string.
+    const newFields = fields.map((field) => field.slice(1, -1)); // Strip [] from string.
 
     return newFields;
   },
@@ -130,7 +129,10 @@ const customServices = () => ({
     fields = fields.filter((field) => field);
 
     // For fields containing dots, extract the first part (relation)
-    const relations = fields.filter((field) => field.includes('.')).map((field) => field.split('.')[0]);
+    const relations = fields
+      .filter((field) => field.includes('.'))
+      .map((field) => field.split('.')[0])
+      .map((relation) => relation.replace(/\[\d+\]/g, '')); // Strip array index
 
     return relations;
   },
@@ -146,7 +148,7 @@ const customServices = () => ({
    */
   resolvePattern: (
     uid: UID.ContentType,
-    entity: { [key: string]: any },
+    entity: Record<string, unknown>,
     urlPattern?: string,
   ): string => {
     const resolve = (pattern: string) => {
@@ -171,10 +173,41 @@ const customServices = () => ({
         } else if (!relationalField) {
           const fieldValue = slugify(String(entity[field]));
           resolvedPattern = resolvedPattern.replace(`[${field}]`, fieldValue || '');
-        } else if (Array.isArray(entity[relationalField[0]])) {
-          strapi.log.error('Something went wrong whilst resolving the pattern.');
-        } else if (typeof entity[relationalField[0]] === 'object') {
-          resolvedPattern = resolvedPattern.replace(`[${field}]`, entity[relationalField[0]] && String((entity[relationalField[0]] as any[])[relationalField[1]]) ? slugify(String((entity[relationalField[0]] as any[])[relationalField[1]])) : '');
+        } else {
+          let relationName = relationalField[0];
+          let relationIndex: number | null = null;
+
+          const arrayMatch = relationName.match(/^([\w-]+)\[(\d+)\]$/);
+          if (arrayMatch) {
+            const [, name, index] = arrayMatch;
+            relationName = name;
+            relationIndex = parseInt(index, 10);
+          }
+
+          const relationEntity = entity[relationName];
+
+          if (Array.isArray(relationEntity) && relationIndex !== null) {
+            const subEntity = relationEntity[relationIndex] as
+              | Record<string, unknown>
+              | undefined;
+            const value = subEntity?.[relationalField[1]];
+            resolvedPattern = resolvedPattern.replace(
+              `[${field}]`,
+              value ? slugify(String(value)) : '',
+            );
+          } else if (
+            typeof relationEntity === 'object'
+            && relationEntity !== null
+            && !Array.isArray(relationEntity)
+          ) {
+            const value = (relationEntity as Record<string, unknown>)?.[relationalField[1]];
+            resolvedPattern = resolvedPattern.replace(
+              `[${field}]`,
+              value ? slugify(String(value)) : '',
+            );
+          } else {
+            strapi.log.error('Something went wrong whilst resolving the pattern.');
+          }
         }
       });
 
@@ -194,54 +227,62 @@ const customServices = () => ({
   /**
    * Validate if a pattern is correctly structured.
    *
-   * @param {string[]} pattern - The pattern to validate.
-   * @param {string[]} allowedFieldNames - The allowed field names in the pattern.
+   * @param {string} pattern - The pattern to validate.
+   * @param {string[]} allowedFieldNames - The allowed fields.
+   * @param {Schema.ContentType} contentType - The content type.
    * @returns {object} The validation result.
-   * @returns {boolean} object.valid - Validation boolean.
-   * @returns {string} object.message - Validation message.
    */
-  validatePattern: (pattern: string, allowedFieldNames: string[]) => {
-    if (!pattern.length) {
+  validatePattern: (
+    pattern: string,
+    allowedFieldNames: string[],
+    contentType?: Schema.ContentType,
+  ): { valid: boolean, message: string } => {
+    if (!pattern) {
       return {
         valid: false,
         message: 'Pattern cannot be empty',
       };
     }
 
-    const preCharCount = pattern.split('[').length - 1;
-    const postCharCount = pattern.split(']').length - 1;
+    const fields = getPluginService('url-pattern').getFieldsFromPattern(pattern);
+    let valid = true;
+    let message = '';
 
-    if (preCharCount < 1 || postCharCount < 1) {
-      return {
-        valid: false,
-        message: 'Pattern should contain at least one field',
-      };
-    }
+    fields.forEach((field) => {
+      // Check if the field is allowed.
+      // We strip the array index from the field name to check if it is allowed.
+      // e.g. private_categories[0].slug -> private_categories.slug
+      const fieldName = field.replace(/\[\d+\]/g, '');
+      if (!allowedFieldNames.includes(fieldName)) {
+        valid = false;
+        message = `Pattern contains forbidden fields: ${field}`;
+      }
 
-    if (preCharCount !== postCharCount) {
-      return {
-        valid: false,
-        message: 'Fields in the pattern are not escaped correctly',
-      };
-    }
+      // Check if the field is a ToMany relation and has an array index.
+      if (contentType && field.includes('.')) {
+        const [relationName] = field.split('.');
+        // Strip array index to get the attribute name
+        const attributeName = relationName.replace(/\[\d+\]/g, '');
+        const attribute = contentType.attributes[
+          attributeName
+        ] as Schema.Attribute.Relation | undefined;
 
-    let fieldsAreAllowed = true;
-
-    // Pass the original `pattern` array to getFieldsFromPattern
-    getPluginService('url-pattern').getFieldsFromPattern(pattern).forEach((field) => {
-      if (!allowedFieldNames.includes(field)) fieldsAreAllowed = false;
+        if (
+          attribute
+          && attribute.type === 'relation'
+          && typeof attribute.relation === 'string'
+          && !attribute.relation.endsWith('ToOne')
+          && !relationName.includes('[')
+        ) {
+          valid = false;
+          message = `The relation ${attributeName} is a ToMany relation and must include an array index (e.g. ${attributeName}[0]).`;
+        }
+      }
     });
 
-    if (!fieldsAreAllowed) {
-      return {
-        valid: false,
-        message: 'Pattern contains forbidden fields',
-      };
-    }
-
     return {
-      valid: true,
-      message: 'Valid pattern',
+      valid,
+      message,
     };
   },
 });
