@@ -1,4 +1,5 @@
 import { Modules, Data } from '@strapi/strapi';
+import type { TelemetryClient } from '@pluginpal/plugin-telemetry';
 import { isContentTypeEnabled } from '../util/enabledContentTypes';
 import { getPluginService } from '../util/getPluginService';
 
@@ -16,6 +17,10 @@ const generateUrlAliasMiddleware: Modules.Documents.Middleware.Middleware = asyn
   if (!['clone', 'create', 'update'].includes(action)) {
     return next();
   }
+
+  // Track telemetry
+  const startTime = Date.now();
+  const telemetry = strapi.container.get('plugin::webtools.telemetry') as TelemetryClient | undefined;
 
   const params = context.params as Modules.Documents.ServiceParams<'api::test.test'>['create' | 'update' | 'clone'];
 
@@ -158,6 +163,18 @@ const generateUrlAliasMiddleware: Modules.Documents.Middleware.Middleware = asyn
     fields: params.fields,
     ...(params.locale ? { locale: params.locale } : {}),
     populate: params.populate,
+  });
+
+  // Track successful URL generation
+  telemetry?.trackEvent('url_alias.generated', {
+    content_type_uid: uid,
+    pattern_used: urlPatterns[0]?.pattern || 'default',
+    locale: params.locale,
+    is_localized: !!params.locale,
+    generation_type: action,
+    collision_handled: urlAliasEntity?.url_path !== urlPatterns[0] ? getPluginService('url-pattern').resolvePattern(uid, combinedEntity, urlPatterns[0]) : false,
+  }, {
+    duration_ms: Date.now() - startTime,
   });
 
   if (action === 'clone') {

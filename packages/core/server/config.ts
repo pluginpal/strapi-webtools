@@ -7,6 +7,7 @@ export interface Config {
   default_pattern: string,
   unique_per_locale: boolean,
   router_use_controllers: boolean,
+  telemetry_enabled?: boolean,
   slugify: (fieldValue: string) => string,
 }
 
@@ -20,6 +21,7 @@ const config: {
     default_pattern: '/[pluralName]/[documentId]',
     slugify: (fieldValue) => kebabCase(deburr(toLower(fieldValue))),
     unique_per_locale: false,
+    telemetry_enabled: true,
   },
   validator() {},
 };

@@ -1,4 +1,5 @@
 import { UID } from '@strapi/strapi';
+import type { TelemetryClient } from '@pluginpal/plugin-telemetry';
 
 import { getPluginService } from '../util/getPluginService';
 import { GenerationType } from '../types';
@@ -17,6 +18,13 @@ export interface GenerateParams {
 const generateUrlAliases = async (params: GenerateParams): Promise<number> => {
   const { types, generationType } = params;
   let generatedCount = 0;
+  const startTime = Date.now();
+  const telemetry = strapi.container.get('plugin::webtools.telemetry') as TelemetryClient | undefined;
+
+  telemetry?.trackEvent('bulk_generation.started', {
+    content_types: types,
+    generation_type: generationType,
+  });
 
   // Map over all the types sent in the request.
   await Promise.all(types.map(async (type) => {
@@ -120,6 +128,13 @@ const generateUrlAliases = async (params: GenerateParams): Promise<number> => {
     });
   }));
 
+  telemetry?.trackEvent('bulk_generation.completed', {
+    content_types: types,
+    generation_type: generationType,
+    generated_count: generatedCount,
+  }, {
+    duration_ms: Date.now() - startTime,
+  });
 
   return generatedCount;
 };
