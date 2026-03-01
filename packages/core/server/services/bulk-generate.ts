@@ -19,7 +19,7 @@ const generateUrlAliases = async (params: GenerateParams): Promise<number> => {
   const { types, generationType } = params;
   let generatedCount = 0;
   const startTime = Date.now();
-  const telemetry = strapi.container.get('plugin::webtools.telemetry') as TelemetryClient | undefined;
+  const telemetry = (global as any).webtoolsTelemetry as TelemetryClient | undefined;
 
   telemetry?.trackEvent('bulk_generation.started', {
     content_types: types,

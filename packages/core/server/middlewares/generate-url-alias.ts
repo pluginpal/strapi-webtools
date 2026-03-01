@@ -20,7 +20,7 @@ const generateUrlAliasMiddleware: Modules.Documents.Middleware.Middleware = asyn
 
   // Track telemetry
   const startTime = Date.now();
-  const telemetry = strapi.container.get('plugin::webtools.telemetry') as TelemetryClient | undefined;
+  const telemetry = (global as any).webtoolsTelemetry as TelemetryClient | undefined;
 
   const params = context.params as Modules.Documents.ServiceParams<'api::test.test'>['create' | 'update' | 'clone'];
 

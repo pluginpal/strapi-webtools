@@ -8,25 +8,25 @@ export default ({ strapi }: { strapi: Core.Strapi }) => {
   try {
     // Initialize telemetry
     try {
-      // Get Strapi's admin UUID (persistent, unique per instance)
-      const adminUuid = strapi.config.get('admin.uuid');
-      if (!adminUuid) {
-        throw new Error('Strapi admin.uuid not found');
+      // Get Strapi's UUID (from strapi.uuid in package.json)
+      const strapiUuid = strapi.config.get('uuid');
+      if (!strapiUuid) {
+        throw new Error('Strapi UUID not found in config');
       }
 
       const telemetry = new TelemetryClient({
         endpoint: process.env.PLUGINPAL_TELEMETRY_ENDPOINT ||
                   'https://admin.pluginpal.io/v1/ingest/events',
         tenantId: process.env.WEBTOOLS_LICENSE_KEY || 'anonymous',
-        installationId: adminUuid,
+        installationId: strapiUuid,
         pluginName: 'webtools',
         pluginVersion: PLUGIN_VERSION,
         enabled: strapi.config.get('plugin::webtools.telemetry_enabled', true),
         environment: process.env.NODE_ENV,
       });
 
-      // Register in container
-      strapi.container.register('plugin::webtools.telemetry', telemetry);
+      // Store telemetry on global strapi object for access from middlewares/services
+      (global as any).webtoolsTelemetry = telemetry;
 
       strapi.log.info(`Webtools telemetry: ${telemetry.isEnabled() ? 'enabled' : 'disabled'}`);
     } catch (error) {
