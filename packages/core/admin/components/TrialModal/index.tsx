@@ -176,13 +176,13 @@ const TrialModal: React.FC<TrialModalProps> = ({ addon, isOpen, onClose }) => {
             >
               <Typography
                 variant="omega"
-                fontStyle="italic"
                 textColor="neutral700"
                 marginBottom={2}
                 style={{
                   lineHeight: '1.6',
                   hyphens: 'none',
                   wordBreak: 'normal',
+                  fontStyle: 'italic',
                 }}
               >
                 {formatMessage({
