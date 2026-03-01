@@ -12,6 +12,9 @@
     "sitemap": "strapi-sitemap"
   },
   "dependencies": {
+    "@pluginpal/webtools-addon-breadcrumbs": "^1.0.3",
+    "@pluginpal/webtools-addon-links": "^1.5.1",
+    "@pluginpal/webtools-addon-redirects": "^1.0.1",
     "@strapi/plugin-cloud": "^5.31.2",
     "@strapi/plugin-users-permissions": "^5.31.2",
     "@strapi/strapi": "^5.31.2",
@@ -36,6 +39,9 @@
     "npm": ">=6.0.0"
   },
   "strapi": {
-    "uuid": "90b22b41-262b-40ae-9b68-3a3e507df1b9"
+    "uuid": "90b22b41-262b-40ae-9b68-3a3e507df1b9",
+    "webtools": {
+      "activation_id": "044cbffa-b3f1-4aab-86f6-8130089abf8e"
+    }
   }
 }

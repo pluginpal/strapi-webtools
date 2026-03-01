@@ -46,20 +46,15 @@ const App = () => {
   const location = useLocation();
   const currentPath = location.pathname;
 
-  // Determine which Pro addons are installed
-  const installedAddonPackageNames = routerComponents
-    .map((route) => {
-      // Extract package name from the route path or component
-      // The path usually contains the addon name
-      const pathParts = route.path?.split('/') || [];
-      return pathParts[pathParts.length - 1];
-    })
+  // Get list of installed addon labels (e.g., "Redirects", "Links", "Breadcrumbs")
+  const installedAddonLabels = routerComponents
+    .map((route) => route.label?.toLowerCase())
     .filter(Boolean);
 
   // Find locked addons (Pro addons that are NOT installed)
   const lockedAddons = PRO_ADDONS.filter((addon) => {
-    // Check if this addon's package is not in the installed list
-    return !installedAddonPackageNames.includes(addon.id);
+    // Check if this addon's name is not in the installed list
+    return !installedAddonLabels.includes(addon.name.toLowerCase());
   });
 
   return (

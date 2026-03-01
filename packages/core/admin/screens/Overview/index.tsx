@@ -48,11 +48,19 @@ const List = () => {
   }
 
   const installedAddons = Object.values(addons.data.data || {});
-  const installedAddonPackageNames = installedAddons.map((addon) => addon.info.name);
 
-  const isAddonInstalled = (packageName: string): boolean => {
-    return installedAddonPackageNames.includes(packageName);
+  // Get list of installed addon names (e.g., "Redirects", "Links", "Breadcrumbs")
+  const installedAddonNames = installedAddons.map((addon) => addon.info.addonName.toLowerCase());
+
+  const isAddonInstalled = (addonName: string): boolean => {
+    return installedAddonNames.includes(addonName.toLowerCase());
   };
+
+  // Only show locked Pro addons that are NOT installed
+  const lockedProAddons = PRO_ADDONS.filter(proAddon => !isAddonInstalled(proAddon.name));
+
+  // Check if user has Pro license (at least one Pro addon installed)
+  const hasProLicense = PRO_ADDONS.some(proAddon => isAddonInstalled(proAddon.name));
 
   // Combine installed and locked pro addons
   const allAddonsToShow = [
@@ -60,7 +68,7 @@ const List = () => {
       type: 'installed' as const,
       info: addon.info,
     })),
-    ...PRO_ADDONS.filter(proAddon => !isAddonInstalled(proAddon.packageName)).map(proAddon => ({
+    ...lockedProAddons.map(proAddon => ({
       type: 'locked' as const,
       info: {
         name: proAddon.packageName,
@@ -108,19 +116,21 @@ const List = () => {
                 </Typography>
                 <Flex gap={3} direction="row" alignItems="center" marginTop={2}>
                   <Typography>v{packageJson.version}</Typography>
-                  <Button
-                    variant="success"
-                    size="S"
-                    tag="a"
-                    href={TRIAL_URL}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {formatMessage({
-                      id: 'webtools.overview.try_premium',
-                      defaultMessage: 'Try Premium Free',
-                    })}
-                  </Button>
+                  {!hasProLicense && (
+                    <Button
+                      variant="success"
+                      size="S"
+                      tag="a"
+                      href={TRIAL_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {formatMessage({
+                        id: 'webtools.overview.try_premium',
+                        defaultMessage: 'Try Premium Free',
+                      })}
+                    </Button>
+                  )}
                 </Flex>
               </Grid.Item>
               <Grid.Item col={6} s={12} direction="column" alignItems="flex-start">
