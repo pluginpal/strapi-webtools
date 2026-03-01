@@ -68,5 +68,42 @@
   "settings.page.patterns.create.subtitle": "Pattern details",
   "settings.page.patterns.create.description": "Add a pattern for automatic URL alias generation.",
 
-  "notification.success.permalink_copied": "Permalink copied to the clipboard"
+  "notification.success.permalink_copied": "Permalink copied to the clipboard",
+
+  "overview.hero.title": "Welcome to Webtools {version}",
+  "overview.hero.subtitle": "Everything you need to build professional websites with Strapi CMS",
+  "overview.hero.trial_button_short": "Start Free Trial",
+  "overview.hero.docs_button": "View Documentation",
+
+  "overview.installed_addons.title": "Your Addons",
+  "overview.installed_addons.description": "Manage your installed addons",
+  "overview.installed_addons.empty": "No addons installed yet. Start with a free trial!",
+
+  "overview.pro_addons.title": "Unlock More with Pro Addons",
+  "overview.pro_addons.description": "Extend Webtools with powerful premium features",
+
+  "overview.addon.active": "Active",
+  "overview.addon.pro": "PRO",
+  "overview.addon.learn_more": "Learn More",
+  "overview.addon.start_trial": "Start Free Trial",
+
+  "overview.try_premium": "Try Premium Free",
+
+  "overview.trial_cta.title_short": "Ready to unlock Pro features?",
+  "overview.trial_cta.subtitle": "Start your free 7-day trial - includes Redirects & Links addons",
+  "overview.trial_cta.button_short": "Start Free Trial",
+
+  "trial_modal.title": "Unlock {name}",
+  "trial_modal.benefits_title": "KEY BENEFITS",
+  "trial_modal.testimonial": "\"Saved us 20+ hours per project. Essential for our agency workflow.\"",
+  "trial_modal.testimonial_author": "— Marcus, Digital Agency Owner",
+  "trial_modal.trial_details_title": "TRIAL DETAILS",
+  "trial_modal.trial_detail_1": "✅ 7-day free trial",
+  "trial_modal.trial_detail_2": "✅ Includes Redirects + Links addons",
+  "trial_modal.trial_detail_3": "✅ No credit card required",
+  "trial_modal.trial_detail_4": "✅ Cancel anytime",
+  "trial_modal.learn_more": "Learn More",
+  "trial_modal.start_trial": "Start Free Trial",
+
+  "sidebar.locked_addon.tooltip": "Start free trial to unlock"
 }

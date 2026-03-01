@@ -29,6 +29,8 @@ import PatternsEditPage from '../../screens/Patterns/EditPage';
 import PatternsCreatePage from '../../screens/Patterns/CreatePage';
 import PageNotFound from '../../screens/404';
 import { InjectedRoute } from '../../types/injection-zones';
+import { PRO_ADDONS } from '../../constants/pro-addons';
+import LockedAddonMenuItem from '../../components/LockedAddonMenuItem';
 
 const App = () => {
   const getPlugin = useStrapiApp('MyComponent', (state) => state.getPlugin);
@@ -43,6 +45,22 @@ const App = () => {
 
   const location = useLocation();
   const currentPath = location.pathname;
+
+  // Determine which Pro addons are installed
+  const installedAddonPackageNames = routerComponents
+    .map((route) => {
+      // Extract package name from the route path or component
+      // The path usually contains the addon name
+      const pathParts = route.path?.split('/') || [];
+      return pathParts[pathParts.length - 1];
+    })
+    .filter(Boolean);
+
+  // Find locked addons (Pro addons that are NOT installed)
+  const lockedAddons = PRO_ADDONS.filter((addon) => {
+    // Check if this addon's package is not in the installed list
+    return !installedAddonPackageNames.includes(addon.id);
+  });
 
   return (
     <Layouts.Root
@@ -67,12 +85,18 @@ const App = () => {
                 </SubNavLink>
               )}
             </SubNavSection>
-            {routerComponents.length > 0 && (
+            {(routerComponents.length > 0 || lockedAddons.length > 0) && (
               <SubNavSection label="Addons">
+                {/* Installed addons - existing functionality */}
                 {routerComponents.map(({ path, label }) => label && (
                   <SubNavLink tag={Link} to={`/plugins/webtools${path}`} key={path} className={currentPath.startsWith(`/plugins/webtools${path}`) ? 'active' : ''}>
                     {label}
                   </SubNavLink>
+                ))}
+
+                {/* Locked Pro addons - new functionality */}
+                {lockedAddons.map((addon) => (
+                  <LockedAddonMenuItem key={addon.id} addon={addon} />
                 ))}
               </SubNavSection>
             )}
