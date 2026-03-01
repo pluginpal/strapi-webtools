@@ -16,7 +16,9 @@ import {
   Badge,
   Button,
 } from '@strapi/design-system';
-import { ExternalLink, PuzzlePiece, Lock, Check } from '@strapi/icons';
+import {
+  ExternalLink, PuzzlePiece, Lock, Check,
+} from '@strapi/icons';
 import { Page, getFetchClient, Layouts } from '@strapi/strapi/admin';
 import { useQuery } from 'react-query';
 
@@ -57,18 +59,18 @@ const List = () => {
   };
 
   // Only show locked Pro addons that are NOT installed
-  const lockedProAddons = PRO_ADDONS.filter(proAddon => !isAddonInstalled(proAddon.name));
+  const lockedProAddons = PRO_ADDONS.filter((proAddon) => !isAddonInstalled(proAddon.name));
 
   // Check if user has Pro license (at least one Pro addon installed)
-  const hasProLicense = PRO_ADDONS.some(proAddon => isAddonInstalled(proAddon.name));
+  const hasProLicense = PRO_ADDONS.some((proAddon) => isAddonInstalled(proAddon.name));
 
   // Combine installed and locked pro addons
   const allAddonsToShow = [
-    ...installedAddons.map(addon => ({
+    ...installedAddons.map((addon) => ({
       type: 'installed' as const,
       info: addon.info,
     })),
-    ...lockedProAddons.map(proAddon => ({
+    ...lockedProAddons.map((proAddon) => ({
       type: 'locked' as const,
       info: {
         name: proAddon.packageName,
@@ -219,9 +221,20 @@ const List = () => {
                       flexDirection: 'column',
                     }}
                     key={addon.info.name}
-                    onClick={isLocked ? () => setSelectedAddon(addon.proAddon!) : undefined}
+                    onClick={
+                      isLocked
+                        ? () => setSelectedAddon(addon.proAddon)
+                        : undefined
+                    }
                   >
-                    <CardBody style={{ display: 'flex', flexDirection: 'column', height: '100%', padding: '20px' }}>
+                    <CardBody
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        height: '100%',
+                        padding: '20px',
+                      }}
+                    >
                       {/* Badge positioned absolutely in top-right */}
                       <Box
                         style={{
@@ -252,16 +265,41 @@ const List = () => {
                       </Box>
 
                       {/* Icon */}
-                      <Box padding={2} background={isLocked ? 'neutral200' : 'primary100'} hasRadius marginBottom={3}>
+                      <Box
+                        padding={2}
+                        background={isLocked ? 'neutral200' : 'primary100'}
+                        hasRadius
+                        marginBottom={3}
+                      >
                         {isLocked ? <Lock /> : <PuzzlePiece />}
                       </Box>
 
                       {/* Content with padding-right to prevent badge overlap */}
-                      <CardContent paddingLeft={0} paddingRight={0} paddingTop={0} paddingBottom={0} style={{ flex: 1 }}>
-                        <CardTitle style={{ paddingRight: '60px', marginBottom: '8px' }}>
+                      <CardContent
+                        paddingLeft={0}
+                        paddingRight={0}
+                        paddingTop={0}
+                        paddingBottom={0}
+                        style={{
+                          flex: 1,
+                        }}
+                      >
+                        <CardTitle
+                          style={{
+                            paddingRight: '60px',
+                            marginBottom: '8px',
+                          }}
+                        >
                           {addon.info.addonName}
                         </CardTitle>
-                        <CardSubtitle style={{ hyphens: 'none', wordBreak: 'normal', overflowWrap: 'break-word', lineHeight: '1.5' }}>
+                        <CardSubtitle
+                          style={{
+                            hyphens: 'none',
+                            wordBreak: 'normal',
+                            overflowWrap: 'break-word',
+                            lineHeight: '1.5',
+                          }}
+                        >
                           {addon.info.description}
                         </CardSubtitle>
                       </CardContent>

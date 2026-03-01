@@ -73,8 +73,8 @@ const TrialModal: React.FC<TrialModalProps> = ({ addon, isOpen, onClose }) => {
                     })}
                   </Typography>
                   <Flex direction="column" gap={2} alignItems="flex-start">
-                    {addon.benefits.map((benefit, index) => (
-                      <Flex key={index} gap={2} alignItems="flex-start">
+                    {addon.benefits.map((benefit) => (
+                      <Flex key={benefit} gap={2} alignItems="flex-start">
                         <Box style={{ minWidth: '16px', textAlign: 'left' }}>
                           <Typography variant="pi" textColor="primary600">
                             •

@@ -1,7 +1,11 @@
 import React from 'react';
 import { Page, Layouts } from '@strapi/strapi/admin';
-import { Typography, Box, Button, Flex } from '@strapi/design-system';
-import { ExternalLink, Link as LinkIcon } from '@strapi/icons';
+import {
+  Typography, Box, Button, Flex,
+} from '@strapi/design-system';
+import {
+  ExternalLink, Link as LinkIcon,
+} from '@strapi/icons';
 
 const LinksOverview = () => {
   return (
@@ -39,7 +43,8 @@ const LinksOverview = () => {
               textAlign="center"
               style={{ maxWidth: '600px' }}
             >
-              The Links addon provides a custom field type for creating internal links that persist across URL changes. Links survive URL updates automatically.
+              The Links addon provides a custom field type for creating internal links
+              that persist across URL changes. Links survive URL updates automatically.
             </Typography>
             <Box marginTop={3}>
               <Button
