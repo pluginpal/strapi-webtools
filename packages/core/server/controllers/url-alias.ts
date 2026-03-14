@@ -14,6 +14,47 @@ import { GenerateParams } from '../services/bulk-generate';
 const contentTypeSlug = 'plugin::webtools.url-alias';
 
 export default factories.createCoreController(contentTypeSlug, ({ strapi }) => ({
+  async create(ctx: Context) {
+    const response = await super.create(ctx);
+    const telemetry = (global as any).webtoolsTelemetry;
+    const entityData = (ctx.request as any).body?.data || {};
+    telemetry?.trackEvent('url_alias.created', {
+      content_type_uid: entityData.contenttype,
+      locale: entityData.locale,
+      is_generated: entityData.generated ?? false,
+    });
+    return response;
+  },
+
+  async update(ctx: Context) {
+    const response = await super.update(ctx);
+    const telemetry = (global as any).webtoolsTelemetry;
+    const entityData = (ctx.request as any).body?.data || {};
+    telemetry?.trackEvent('url_alias.updated', {
+      locale: entityData.locale,
+      was_generated: entityData.generated ?? false,
+    });
+    return response;
+  },
+
+  async delete(ctx: Context) {
+    const { id } = ctx.params as { id: string };
+    let locale: string | undefined;
+    try {
+      const entity = await strapi.documents(contentTypeSlug as any).findOne({
+        documentId: id,
+        fields: ['locale'],
+      });
+      locale = (entity as any)?.locale;
+    } catch {
+      // best-effort
+    }
+    const response = await super.delete(ctx);
+    const telemetry = (global as any).webtoolsTelemetry;
+    telemetry?.trackEvent('url_alias.deleted', { locale });
+    return response;
+  },
+
   editLink: async (ctx: Context) => {
     const { path } = ctx.query;
     const { entity, contentType } = await getPluginService('url-alias').findRelatedEntity(path as string, { status: 'draft' });
