@@ -240,6 +240,17 @@ export default {
           policies: [],
         },
       },
+      /**
+       * Telemetry config route
+       */
+      {
+        method: 'GET',
+        path: '/telemetry/config',
+        handler: 'telemetry.getConfig',
+        config: {
+          policies: [],
+        },
+      },
     ],
   },
 };

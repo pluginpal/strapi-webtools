@@ -3,6 +3,7 @@ import urlPatternController from './url-pattern';
 import infoController from './info';
 import coreController from './core';
 import searchController from './search';
+import telemetryController from './telemetry';
 
 export default {
   'url-alias': urlAliasController,
@@ -10,4 +11,5 @@ export default {
   info: infoController,
   core: coreController,
   search: searchController,
+  telemetry: telemetryController,
 };

@@ -27,6 +27,7 @@ export default ({ strapi }: { strapi: Core.Strapi }) => {
 
       // Store telemetry on global strapi object for access from middlewares/services
       (global as any).webtoolsTelemetry = telemetry;
+      (global as any).webtoolsPluginVersion = PLUGIN_VERSION;
 
       strapi.log.info(`Webtools telemetry: ${telemetry.isEnabled() ? 'enabled' : 'disabled'}`);
     } catch (error) {
