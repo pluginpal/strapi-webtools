@@ -53,11 +53,13 @@ const App = () => {
   const addonsQuery = useQuery('addons', async () => get<WebtoolsAddonInfo[]>('/webtools/info/addons'));
 
   const installedPluginNames = Object.values(addonsQuery.data?.data || {})
-    .map((addon) => (addon as WebtoolsAddonInfo).info.name);
+    .map((addon) => addon.info.name);
 
-  // Strip npm scope for comparison: "@pluginpal/webtools-addon-redirects" → "webtools-addon-redirects"
-  const getPluginName = (packageName: string) =>
-    packageName.includes('/') ? packageName.split('/')[1] : packageName;
+  // Strip npm scope: "@pluginpal/webtools-addon-redirects" → "webtools-addon-redirects"
+  const getPluginName = (packageName: string) => {
+    if (packageName.includes('/')) return packageName.split('/')[1];
+    return packageName;
+  };
 
   // Find locked addons (Pro addons that are NOT installed)
   const lockedAddons = PRO_ADDONS.filter(

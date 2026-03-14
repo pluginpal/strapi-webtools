@@ -51,9 +51,11 @@ const List = () => {
 
   const installedAddons = Object.values(addons.data.data || {});
 
-  // Strip npm scope for comparison: "@pluginpal/webtools-addon-redirects" → "webtools-addon-redirects"
-  const getPluginName = (packageName: string) =>
-    packageName.includes('/') ? packageName.split('/')[1] : packageName;
+  // Strip npm scope: "@pluginpal/webtools-addon-redirects" → "webtools-addon-redirects"
+  const getPluginName = (packageName: string) => {
+    if (packageName.includes('/')) return packageName.split('/')[1];
+    return packageName;
+  };
 
   const installedPluginNames = installedAddons.map((addon) => addon.info.name);
 
