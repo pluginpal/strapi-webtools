@@ -447,10 +447,6 @@ export interface ApiCategoryCategory extends Struct.CollectionTypeSchema {
     };
   };
   attributes: {
-    breadcrumbs: Schema.Attribute.Relation<
-      'oneToOne',
-      'plugin::webtools-addon-breadcrumbs.breadcrumb'
-    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -494,10 +490,6 @@ export interface ApiHomeHome extends Struct.SingleTypeSchema {
     };
   };
   attributes: {
-    breadcrumbs: Schema.Attribute.Relation<
-      'oneToOne',
-      'plugin::webtools-addon-breadcrumbs.breadcrumb'
-    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -538,10 +530,6 @@ export interface ApiPrivateCategoryPrivateCategory
     };
   };
   attributes: {
-    breadcrumbs: Schema.Attribute.Relation<
-      'oneToOne',
-      'plugin::webtools-addon-breadcrumbs.breadcrumb'
-    >;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
       Schema.Attribute.Private;
@@ -589,10 +577,6 @@ export interface ApiTestTest extends Struct.CollectionTypeSchema {
     };
   };
   attributes: {
-    breadcrumbs: Schema.Attribute.Relation<
-      'oneToOne',
-      'plugin::webtools-addon-breadcrumbs.breadcrumb'
-    >;
     category: Schema.Attribute.Relation<'oneToOne', 'api::category.category'>;
     createdAt: Schema.Attribute.DateTime;
     createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'>;
@@ -1127,85 +1111,6 @@ export interface PluginUsersPermissionsUser
   };
 }
 
-export interface PluginWebtoolsAddonBreadcrumbsBreadcrumb
-  extends Struct.CollectionTypeSchema {
-  collectionName: 'wt_breadcrumb';
-  info: {
-    displayName: 'Breadcrumb';
-    pluralName: 'breadcrumbs';
-    singularName: 'breadcrumb';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  pluginOptions: {
-    'content-manager': {
-      visible: false;
-    };
-    'content-type-builder': {
-      visible: false;
-    };
-  };
-  attributes: {
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    items: Schema.Attribute.JSON & Schema.Attribute.Required;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'plugin::webtools-addon-breadcrumbs.breadcrumb'
-    > &
-      Schema.Attribute.Private;
-    publishedAt: Schema.Attribute.DateTime;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
-export interface PluginWebtoolsAddonRedirectsRedirect
-  extends Struct.CollectionTypeSchema {
-  collectionName: 'wt_redirect';
-  info: {
-    displayName: 'Redirect';
-    pluralName: 'redirects';
-    singularName: 'redirect';
-  };
-  options: {
-    comment: '';
-    draftAndPublish: false;
-  };
-  pluginOptions: {
-    'content-manager': {
-      visible: false;
-    };
-    'content-type-builder': {
-      visible: false;
-    };
-  };
-  attributes: {
-    createdAt: Schema.Attribute.DateTime;
-    createdBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-    from: Schema.Attribute.String &
-      Schema.Attribute.Required &
-      Schema.Attribute.Unique;
-    locale: Schema.Attribute.String & Schema.Attribute.Private;
-    localizations: Schema.Attribute.Relation<
-      'oneToMany',
-      'plugin::webtools-addon-redirects.redirect'
-    > &
-      Schema.Attribute.Private;
-    publishedAt: Schema.Attribute.DateTime;
-    status_code: Schema.Attribute.Integer & Schema.Attribute.Required;
-    to: Schema.Attribute.String & Schema.Attribute.Required;
-    updatedAt: Schema.Attribute.DateTime;
-    updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
-      Schema.Attribute.Private;
-  };
-}
-
 export interface PluginWebtoolsAddonSitemapSitemap
   extends Struct.CollectionTypeSchema {
   collectionName: 'wt_sitemap';
@@ -1367,8 +1272,6 @@ declare module '@strapi/strapi' {
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
-      'plugin::webtools-addon-breadcrumbs.breadcrumb': PluginWebtoolsAddonBreadcrumbsBreadcrumb;
-      'plugin::webtools-addon-redirects.redirect': PluginWebtoolsAddonRedirectsRedirect;
       'plugin::webtools-addon-sitemap.sitemap': PluginWebtoolsAddonSitemapSitemap;
       'plugin::webtools.url-alias': PluginWebtoolsUrlAlias;
       'plugin::webtools.url-pattern': PluginWebtoolsUrlPattern;
