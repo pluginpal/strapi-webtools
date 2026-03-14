@@ -19,9 +19,20 @@ import { Form, Formik } from 'formik';
 import getTrad from '../../helpers/getTrad';
 import { UrlAliasEntity } from '../../types/url-aliases';
 
-const EditForm = () => {
+interface EditFormProps {
+  onEditOpen?: () => void;
+}
+
+const EditForm = ({ onEditOpen }: EditFormProps) => {
   const context = unstable_useContentManagerContext();
   const [open, setOpen] = React.useState(false);
+
+  const handleOpenChange = (value: boolean) => {
+    if (value && onEditOpen) {
+      onEditOpen();
+    }
+    setOpen(value);
+  };
 
   const { id, model } = context;
   const { get, put } = useFetchClient();
@@ -53,7 +64,7 @@ const EditForm = () => {
       enableReinitialize
     >
       {({ setFieldValue, values, handleSubmit }) => (
-        <Modal.Root open={open} onOpenChange={setOpen}>
+        <Modal.Root open={open} onOpenChange={handleOpenChange}>
           <Modal.Trigger>
             <Button
               size="S"

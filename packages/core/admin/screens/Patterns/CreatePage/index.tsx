@@ -33,11 +33,13 @@ import { EnabledContentTypes } from '../../../types/enabled-contenttypes';
 import LanguageCheckboxes from '../../../components/LanguageCheckboxes';
 import HiddenLocalizedField from '../../../components/HiddenLocalizedField';
 import pluginPermissions from '../../../permissions';
+import useTelemetry from '../../../hooks/useTelemetry';
 
 const CreatePatternPage = () => {
   const navigate = useNavigate();
   const { toggleNotification } = useNotification();
   const { get, post } = getFetchClient();
+  const { trackEvent } = useTelemetry();
   const contentTypes = useQuery('content-types', async () => get<EnabledContentTypes>('/webtools/info/getContentTypes'));
   const { formatMessage } = useIntl();
 
@@ -53,6 +55,11 @@ const CreatePatternPage = () => {
           languages: values.languages,
           contenttype: values.contenttype,
         },
+      });
+
+      trackEvent('pattern.create_submitted', {
+        content_type_uid: values.contenttype,
+        has_language_filter: Array.isArray(values.languages) && values.languages.length > 0,
       });
 
       navigate(`/plugins/${pluginId}/patterns`);

@@ -14,6 +14,7 @@ import { UrlAliasEntity } from '../../types/url-aliases';
 import pluginPermissions from '../../permissions';
 import pluginId from '../../helpers/pluginId';
 import { InjectedRoute } from '../../types/injection-zones';
+import useTelemetry from '../../hooks/useTelemetry';
 
 const WebtoolsPanel: PanelComponent = () => {
   const { get } = useFetchClient();
@@ -27,6 +28,7 @@ const WebtoolsPanel: PanelComponent = () => {
     model,
     id,
   } = context;
+  const { trackEvent } = useTelemetry();
 
   const plugin = getPlugin(pluginId);
 
@@ -78,11 +80,18 @@ const WebtoolsPanel: PanelComponent = () => {
   if (aliases.error) return null;
   if (!aliases.data) return null;
 
+  const handleEditOpen = () => {
+    trackEvent('url_alias.edit_opened', {
+      content_type_uid: model,
+      locale: locale || 'default',
+    });
+  };
+
   return {
     title: 'Webtools',
     content: (
       <>
-        <EditForm />
+        <EditForm onEditOpen={handleEditOpen} />
         {aliases.data.data.length === 0 && (
           <div>Save the form to generate the URL alias</div>
         )}

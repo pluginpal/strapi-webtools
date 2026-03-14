@@ -29,12 +29,14 @@ import HiddenLocalizedField from '../../../components/HiddenLocalizedField';
 import LanguageCheckboxes from '../../../components/LanguageCheckboxes';
 import { GenericResponse } from '../../../types/content-api';
 import pluginPermissions from '../../../permissions';
+import useTelemetry from '../../../hooks/useTelemetry';
 
 const EditPatternPage = () => {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
   const { toggleNotification } = useNotification();
   const { get, put, post } = getFetchClient();
+  const { trackEvent } = useTelemetry();
   const pattern = useQuery(['url-pattern', id], async () => get<GenericResponse<PatternEntity>>(`/webtools/url-pattern/findOne/${id}`));
   const contentTypes = useQuery('content-types', async () => get<EnabledContentTypes>('/webtools/info/getContentTypes'));
   const { formatMessage } = useIntl();
@@ -51,6 +53,10 @@ const EditPatternPage = () => {
           languages: values.languages,
           contenttype: values.contenttype,
         },
+      });
+
+      trackEvent('pattern.edit_submitted', {
+        content_type_uid: values.contenttype,
       });
 
       navigate(`/plugins/${pluginId}/patterns`);

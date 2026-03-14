@@ -24,6 +24,7 @@ import { Config } from '../../../server/config';
 import { UrlAliasEntity } from '../../types/url-aliases';
 import useQueryParams from '../../hooks/useQueryParams';
 import { Locales } from '../../types/languages';
+import useTelemetry from '../../hooks/useTelemetry';
 
 export type Pagination = {
   page: number;
@@ -35,6 +36,7 @@ export type Pagination = {
 const List = () => {
   const { get } = getFetchClient();
   const params = useQueryParams();
+  const { trackEvent } = useTelemetry();
 
   const items = useQuery(['url-alias', params], async () => get<GenericResponse<UrlAliasEntity[]>>(`/webtools/url-alias/findMany?${params}`));
   const contentTypes = useQuery('content-types', async () => get<EnabledContentTypes>('/webtools/info/getContentTypes'));
@@ -48,6 +50,8 @@ const List = () => {
   const { toggleNotification } = useNotification();
 
   const handleGeneratePaths = async (types: EnabledContentType['uid'][], generationType: GenerationType) => {
+    trackEvent('bulk_generate.triggered', { generation_type: generationType });
+
     await post('/webtools/url-alias/generate', { types, generationType })
       .then((response: { data: { message: string } }) => {
         toggleNotification({ type: 'success', message: formatMessage({ id: 'webtools.success.url-alias.generate', defaultMessage: response.data.message }) });
