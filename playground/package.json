@@ -12,6 +12,7 @@
     "sitemap": "strapi-sitemap"
   },
   "dependencies": {
+    "@pluginpal/plugin-telemetry": "link:.yalc/@pluginpal/plugin-telemetry",
     "@strapi/plugin-cloud": "^5.31.2",
     "@strapi/plugin-users-permissions": "^5.31.2",
     "@strapi/strapi": "^5.31.2",
