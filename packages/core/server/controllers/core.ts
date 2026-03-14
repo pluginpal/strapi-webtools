@@ -63,11 +63,26 @@ export default {
   router: async (ctx: Context) => {
     const { path, ...searchQuery } = ctx.query;
     const { auth } = ctx.state;
+    const start = Date.now();
 
     const routerUseControllers = strapi.config.get('plugin::webtools.router_use_controllers', false);
+    const telemetry = (global as any).webtoolsTelemetry;
 
     if (routerUseControllers) {
       const entity = await routerWithControllers(ctx);
+      if (!entity) {
+        telemetry?.trackEvent('router.not_found', {
+          locale: (searchQuery as any).locale,
+          duration_ms: Date.now() - start,
+        });
+        return;
+      }
+      telemetry?.trackEvent('router.resolved', {
+        content_type_uid: (entity.data as any).contentType,
+        locale: (searchQuery as any).locale,
+        used_controllers: true,
+        duration_ms: Date.now() - start,
+      });
       ctx.body = entity;
       return;
     }
@@ -76,6 +91,10 @@ export default {
     const { entity, contentType } = await getPluginService('url-alias').findRelatedEntity(path as string, searchQuery);
 
     if (!entity) {
+      telemetry?.trackEvent('router.not_found', {
+        locale: (searchQuery as any).locale,
+        duration_ms: Date.now() - start,
+      });
       ctx.notFound();
       return;
     }
@@ -83,6 +102,13 @@ export default {
     // Check 'find' permissions for the content type we're querying.
     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     await strapi.auth.verify(auth, { scope: [`${contentType}.find`] });
+
+    telemetry?.trackEvent('router.resolved', {
+      content_type_uid: contentType,
+      locale: entity.locale,
+      used_controllers: false,
+      duration_ms: Date.now() - start,
+    });
 
     // Add content type to response.
     const responseEntity = {

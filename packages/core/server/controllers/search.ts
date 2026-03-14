@@ -21,6 +21,7 @@ export default {
   search: async (ctx: Context & { params: { id: number } }) => {
     const { q } = ctx.query;
     const results: SearchResult[] = [];
+    const start = Date.now();
 
     const qStr = typeof q === 'string' ? q.trim() : '';
     if (!qStr) {
@@ -58,10 +59,17 @@ export default {
       ),
     );
 
+    const telemetry = (global as any).webtoolsTelemetry;
+    telemetry?.trackEvent('search.executed', {
+      results_count: results.length,
+      duration_ms: Date.now() - start,
+    });
+
     ctx.body = results;
   },
   reverseSearch: async (ctx: Context & { params: { contentType: string; documentId: string } }) => {
     const { contentType, documentId } = ctx.params;
+    const start = Date.now();
 
     if (typeof contentType !== 'string' || !(contentType in strapi.contentTypes)) {
       throw new errors.ValidationError(`Unknown or invalid content type: ${contentType}`);
@@ -84,6 +92,12 @@ export default {
     if (!entry) {
       throw new errors.NotFoundError('Entry not found');
     }
+
+    const telemetry = (global as any).webtoolsTelemetry;
+    telemetry?.trackEvent('search.reverse_lookup', {
+      content_type_uid: contentType,
+      duration_ms: Date.now() - start,
+    });
 
     ctx.body = {
       id: entry.id,
