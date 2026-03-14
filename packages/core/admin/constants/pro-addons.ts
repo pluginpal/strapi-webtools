@@ -51,5 +51,5 @@ export const PRO_ADDONS: ProAddon[] = [
   },
 ];
 
-export const TRIAL_URL = 'https://polar.sh/checkout/polar_c_PqjxXfFD6q7QAyQ9Q7NVt75XfOSMTcdPSB0bZ2Oe3Tp';
+export const TRIAL_URL = 'https://polar.sh/checkout/polar_c_2scL6ja7SEWFHarsc21Pc8fHhRy14ib6XGUol2V5f7r';
 export const DOCS_URL = 'https://docs.pluginpal.io/webtools/';
