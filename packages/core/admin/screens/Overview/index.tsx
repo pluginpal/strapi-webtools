@@ -51,18 +51,21 @@ const List = () => {
 
   const installedAddons = Object.values(addons.data.data || {});
 
-  // Get list of installed addon names (e.g., "Redirects", "Links", "Breadcrumbs")
-  const installedAddonNames = installedAddons.map((addon) => addon.info.addonName.toLowerCase());
+  // Strip npm scope for comparison: "@pluginpal/webtools-addon-redirects" → "webtools-addon-redirects"
+  const getPluginName = (packageName: string) =>
+    packageName.includes('/') ? packageName.split('/')[1] : packageName;
 
-  const isAddonInstalled = (addonName: string): boolean => {
-    return installedAddonNames.includes(addonName.toLowerCase());
+  const installedPluginNames = installedAddons.map((addon) => addon.info.name);
+
+  const isAddonInstalled = (packageName: string): boolean => {
+    return installedPluginNames.includes(getPluginName(packageName));
   };
 
   // Only show locked Pro addons that are NOT installed
-  const lockedProAddons = PRO_ADDONS.filter((proAddon) => !isAddonInstalled(proAddon.name));
+  const lockedProAddons = PRO_ADDONS.filter((proAddon) => !isAddonInstalled(proAddon.packageName));
 
   // Check if user has Pro license (at least one Pro addon installed)
-  const hasProLicense = PRO_ADDONS.some((proAddon) => isAddonInstalled(proAddon.name));
+  const hasProLicense = PRO_ADDONS.some((proAddon) => isAddonInstalled(proAddon.packageName));
 
   // Combine installed and locked pro addons
   const allAddonsToShow = [
