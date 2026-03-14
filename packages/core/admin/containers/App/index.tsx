@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Routes,
   Route,
@@ -29,6 +29,16 @@ import PatternsEditPage from '../../screens/Patterns/EditPage';
 import PatternsCreatePage from '../../screens/Patterns/CreatePage';
 import PageNotFound from '../../screens/404';
 import { InjectedRoute } from '../../types/injection-zones';
+import useTelemetry from '../../hooks/useTelemetry';
+
+const getScreenName = (pathname: string): string | null => {
+  if (pathname === '/plugins/webtools') return 'overview';
+  if (pathname === '/plugins/webtools/urls') return 'urls';
+  if (pathname === '/plugins/webtools/patterns') return 'patterns_list';
+  if (pathname === '/plugins/webtools/patterns/new') return 'pattern_create';
+  if (/^\/plugins\/webtools\/patterns\/[^/]+$/.test(pathname)) return 'pattern_edit';
+  return null;
+};
 
 const App = () => {
   const getPlugin = useStrapiApp('MyComponent', (state) => state.getPlugin);
@@ -36,6 +46,7 @@ const App = () => {
     allowedActions: { canList, canPatterns, canOverview },
   } = useRBAC(pluginPermissions);
   const { formatMessage } = useIntl();
+  const { trackEvent } = useTelemetry();
 
   const plugin = getPlugin(pluginId);
 
@@ -43,6 +54,13 @@ const App = () => {
 
   const location = useLocation();
   const currentPath = location.pathname;
+
+  useEffect(() => {
+    const screen = getScreenName(currentPath);
+    if (screen) {
+      trackEvent('admin.page_view', { screen });
+    }
+  }, [currentPath, trackEvent]);
 
   return (
     <Layouts.Root
