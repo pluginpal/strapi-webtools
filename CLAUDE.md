@@ -51,6 +51,16 @@ Builds all packages using Turborepo's caching and dependency graph.
 
 ## Testing
 
+### Node version
+
+Always activate Node 20 before running yarn commands:
+
+```bash
+nvm use  # reads .nvmrc (Node 20)
+```
+
+The repo uses **Yarn 4.11.0** via `yarnPath` in `.yarnrc.yml`. Running `yarn` anywhere inside the repo automatically uses this version — even in subdirectories like `playground/`.
+
 ### Unit Tests
 
 ```bash
@@ -68,6 +78,8 @@ Unit tests are located in `__tests__` directories:
 - `packages/addons/sitemap/server/utils/__tests__/`
 
 Uses Jest with ts-jest preset. Test files: `*.test.ts` or `*.test.js`
+
+`playground/.env` is **force-committed** to git with placeholder values (`tobemodified`) so CI can boot Strapi. Do not add real secrets to it — use your local `.env` override for `WEBTOOLS_LICENSE_KEY` and similar.
 
 ### Integration Tests
 
@@ -184,6 +196,10 @@ Addons are Strapi plugins with a special flag in their `package.json`:
 
 **Discovery**: Core scans `enabledPlugins` at runtime for this flag
 
+**Addon detection in admin UI**: Always match on `addon.info.name` (the Strapi plugin name, e.g. `webtools-addon-redirects`), **not** on UI labels which are translatable. Strip the npm scope before comparing: `@pluginpal/webtools-addon-redirects` → `webtools-addon-redirects`.
+
+**Pro addons** (not open-source) are defined in `admin/constants/pro-addons.ts`. When not installed, they appear in the sidebar as locked items (`LockedAddonMenuItem`) that open a `TrialModal`. The `packageName` field in `ProAddon` is the full scoped npm name.
+
 **Integration**: Addons inject components via named zones:
 - `webtoolsRouter`: Adds routes to main navigation
 - `webtoolsSidePanel`: Adds components to content editor sidebar
@@ -295,6 +311,23 @@ See `packages/addons/sitemap` as reference:
    });
    ```
 4. Optionally extend content types in server `bootstrap()`
+
+## ESLint rules to watch
+
+- **`max-len`**: 100 character limit. Long inline comments will fail.
+- **`no-confusing-arrow` + `implicit-arrow-linebreak`**: Arrow functions with ternaries must use a block body:
+  ```typescript
+  // ✗ fails linting
+  const fn = (x: string) =>
+    x.includes('/') ? x.split('/')[1] : x;
+
+  // ✓ correct
+  const fn = (x: string) => {
+    if (x.includes('/')) return x.split('/')[1];
+    return x;
+  };
+  ```
+- **`@typescript-eslint/no-unnecessary-type-assertion`**: Remove casts that TypeScript already infers.
 
 ## Release Process
 

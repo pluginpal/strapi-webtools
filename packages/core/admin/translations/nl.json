@@ -66,5 +66,42 @@
   "settings.page.patterns.create.subtitle": "Patroondetails",
   "settings.page.patterns.create.description": "Voeg een patroon toe voor het automatisch genereren van URL-aliassen.",
 
-  "notification.success.permalink_copied": "Permalink gekopieerd naar het klembord"
+  "notification.success.permalink_copied": "Permalink gekopieerd naar het klembord",
+
+  "overview.hero.title": "Welkom bij Webtools {version}",
+  "overview.hero.subtitle": "Alles wat je nodig hebt om professionele websites te bouwen met Strapi CMS",
+  "overview.hero.trial_button_short": "Start Gratis Proefperiode",
+  "overview.hero.docs_button": "Bekijk Documentatie",
+
+  "overview.installed_addons.title": "Jouw Addons",
+  "overview.installed_addons.description": "Beheer je geïnstalleerde addons",
+  "overview.installed_addons.empty": "Nog geen addons geïnstalleerd. Start met een gratis proefperiode!",
+
+  "overview.pro_addons.title": "Ontgrendel Meer met Pro Addons",
+  "overview.pro_addons.description": "Breid Webtools uit met krachtige premium functies",
+
+  "overview.addon.active": "Actief",
+  "overview.addon.pro": "PRO",
+  "overview.addon.learn_more": "Meer Informatie",
+  "overview.addon.start_trial": "Start Gratis Proefperiode",
+
+  "overview.try_premium": "Probeer Premium Gratis",
+
+  "overview.trial_cta.title_short": "Klaar om Pro functies te ontgrendelen?",
+  "overview.trial_cta.subtitle": "Start je gratis 7-daagse proefperiode - inclusief Redirects & Links addons",
+  "overview.trial_cta.button_short": "Start Gratis Proefperiode",
+
+  "trial_modal.title": "Ontgrendel {name}",
+  "trial_modal.benefits_title": "BELANGRIJKSTE VOORDELEN",
+  "trial_modal.testimonial": "\"Bespaarde ons 20+ uur per project. Essentieel voor onze agency workflow.\"",
+  "trial_modal.testimonial_author": "— Marcus, Eigenaar Digitaal Bureau",
+  "trial_modal.trial_details_title": "PROEFPERIODE DETAILS",
+  "trial_modal.trial_detail_1": "✅ 7-daagse gratis proefperiode",
+  "trial_modal.trial_detail_2": "✅ Inclusief Redirects + Links addons",
+  "trial_modal.trial_detail_3": "✅ Geen creditcard vereist",
+  "trial_modal.trial_detail_4": "✅ Altijd opzegbaar",
+  "trial_modal.learn_more": "Meer Informatie",
+  "trial_modal.start_trial": "Start Gratis Proefperiode",
+
+  "sidebar.locked_addon.tooltip": "Start gratis proefperiode om te ontgrendelen"
 }

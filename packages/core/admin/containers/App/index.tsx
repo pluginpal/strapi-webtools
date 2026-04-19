@@ -18,7 +18,9 @@ import {
   useStrapiApp,
   Layouts,
   useRBAC,
+  getFetchClient,
 } from '@strapi/strapi/admin';
+import { useQuery } from 'react-query';
 
 import pluginPermissions from '../../permissions';
 import pluginId from '../../helpers/pluginId';
@@ -29,6 +31,9 @@ import PatternsEditPage from '../../screens/Patterns/EditPage';
 import PatternsCreatePage from '../../screens/Patterns/CreatePage';
 import PageNotFound from '../../screens/404';
 import { InjectedRoute } from '../../types/injection-zones';
+import { WebtoolsAddonInfo } from '../../types/addons';
+import { PRO_ADDONS } from '../../constants/pro-addons';
+import LockedAddonMenuItem from '../../components/LockedAddonMenuItem';
 
 const App = () => {
   const getPlugin = useStrapiApp('MyComponent', (state) => state.getPlugin);
@@ -43,6 +48,23 @@ const App = () => {
 
   const location = useLocation();
   const currentPath = location.pathname;
+
+  const { get } = getFetchClient();
+  const addonsQuery = useQuery('addons', async () => get<WebtoolsAddonInfo[]>('/webtools/info/addons'));
+
+  const installedPluginNames = Object.values(addonsQuery.data?.data || {})
+    .map((addon) => addon.info.name);
+
+  // Strip npm scope: "@pluginpal/webtools-addon-redirects" → "webtools-addon-redirects"
+  const getPluginName = (packageName: string) => {
+    if (packageName.includes('/')) return packageName.split('/')[1];
+    return packageName;
+  };
+
+  // Find locked addons (Pro addons that are NOT installed)
+  const lockedAddons = PRO_ADDONS.filter(
+    (addon) => !installedPluginNames.includes(getPluginName(addon.packageName)),
+  );
 
   return (
     <Layouts.Root
@@ -67,12 +89,18 @@ const App = () => {
                 </SubNavLink>
               )}
             </SubNavSection>
-            {routerComponents.length > 0 && (
+            {(routerComponents.length > 0 || lockedAddons.length > 0) && (
               <SubNavSection label="Addons">
+                {/* Installed addons - existing functionality */}
                 {routerComponents.map(({ path, label }) => label && (
                   <SubNavLink tag={Link} to={`/plugins/webtools${path}`} key={path} className={currentPath.startsWith(`/plugins/webtools${path}`) ? 'active' : ''}>
                     {label}
                   </SubNavLink>
+                ))}
+
+                {/* Locked Pro addons - new functionality */}
+                {lockedAddons.map((addon) => (
+                  <LockedAddonMenuItem key={addon.id} addon={addon} />
                 ))}
               </SubNavSection>
             )}

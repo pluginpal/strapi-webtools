@@ -36,6 +36,9 @@
     "npm": ">=6.0.0"
   },
   "strapi": {
-    "uuid": "90b22b41-262b-40ae-9b68-3a3e507df1b9"
+    "uuid": "90b22b41-262b-40ae-9b68-3a3e507df1b9",
+    "webtools": {
+      "activation_id": "044cbffa-b3f1-4aab-86f6-8130089abf8e"
+    }
   }
 }
