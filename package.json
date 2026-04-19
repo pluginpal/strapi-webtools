@@ -41,6 +41,9 @@
     "turbo": "^2.6.1",
     "yalc": "^1.0.0-pre.53"
   },
+  "resolutions": {
+    "webpack": "5.100.2"
+  },
   "engines": {
     "node": ">=20.0.0"
   },
