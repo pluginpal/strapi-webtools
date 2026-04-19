@@ -18,7 +18,7 @@ const routerWithControllers = async (ctx: Context) => {
 
   if (!entity) {
     ctx.notFound();
-    return;
+    return null;
   }
 
   const isSingleType = strapi.contentTypes[contentType].kind === 'singleType';
