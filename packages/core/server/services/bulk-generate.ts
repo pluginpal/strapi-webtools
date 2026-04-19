@@ -82,12 +82,8 @@ const generateUrlAliases = async (params: GenerateParams): Promise<number> => {
         });
 
         // eslint-disable-next-line no-await-in-loop
-        await strapi.documents(type as 'api::test.test').update({
-          locale: entity.locale,
-          documentId: entity.documentId,
-          data: {
-            url_alias: [newUrlAlias.documentId],
-          },
+        await strapi.db.query(type as 'api::test.test').updateRelations(entity.id, {
+          url_alias: [newUrlAlias.id],
         });
 
         // eslint-disable-next-line no-await-in-loop
@@ -106,12 +102,9 @@ const generateUrlAliases = async (params: GenerateParams): Promise<number> => {
             },
           });
 
-          await strapi.documents(type as 'api::test.test').update({
-            documentId: entity.documentId,
-            locale: loc.locale,
-            data: {
-              url_alias: [alias.documentId],
-            },
+          // eslint-disable-next-line no-await-in-loop
+          await strapi.db.query(type as 'api::test.test').updateRelations(loc.id, {
+            url_alias: [alias.id],
           });
         }));
 
