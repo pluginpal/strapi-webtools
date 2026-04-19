@@ -16,14 +16,24 @@
     }
   },
   "attributes": {
+    "url_alias": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "plugin::webtools.url-alias",
+      "configurable": false
+    },
     "title": {
       "type": "string"
     },
-    "test": {
+    "tests": {
       "type": "relation",
-      "relation": "oneToOne",
+      "relation": "manyToMany",
       "target": "api::test.test",
-      "mappedBy": "private_category"
+      "inversedBy": "private_categories"
+    },
+    "slug": {
+      "type": "uid",
+      "targetField": "title"
     }
   }
 }

@@ -48,7 +48,7 @@ export default factories.createCoreController(contentTypeSlug, ({ strapi }) => (
       'uid',
       'documentId',
     ]);
-    const validated = urlPatternService.validatePattern(pattern, fields);
+    const validated = urlPatternService.validatePattern(pattern, fields, contentType);
 
     ctx.body = validated;
   },

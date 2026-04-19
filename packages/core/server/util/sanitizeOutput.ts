@@ -1,6 +1,6 @@
 import { Schema } from '@strapi/strapi';
 
-export const sanitizeOutput = (
+export const sanitizeOutput = async (
   data,
   contentType: Schema.ContentType,
   auth: unknown,
