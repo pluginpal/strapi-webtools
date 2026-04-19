@@ -1,6 +1,5 @@
 import React, {
   FC,
-  useRef,
 } from 'react';
 import { useIntl } from 'react-intl';
 import styled from 'styled-components';
@@ -22,6 +21,21 @@ type Props = {
   setFieldValue: (field: string, value: any) => Promise<void | FormikErrors<PatternFormValues>>;
 };
 
+const HoverBox = styled(Box)`
+  cursor: pointer;
+  font-size: 16px;
+  &:hover:not([aria-disabled="true"]) {
+    background: ${({ theme }: { theme: Theme }) => theme.colors.primary100};
+  }
+`;
+
+const PopoverBody = styled(Box)`
+  max-height: min(50vh, 24rem);
+  width: calc(100% + 10px);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+`;
+
 const PatternField: FC<Props> = ({
   uid,
   values,
@@ -31,16 +45,6 @@ const PatternField: FC<Props> = ({
   const { get } = getFetchClient();
   const fields = useQuery('fields', async () => get<Record<string, string[]>>('/webtools/url-pattern/allowed-fields'));
   const { formatMessage } = useIntl();
-  const inputRef = useRef<HTMLInputElement>(undefined);
-  const popoverRef = useRef(undefined);
-
-  const HoverBox = styled(Box)`
-    cursor: pointer;
-    font-size: 16px;
-    &:hover:not([aria-disabled="true"]) {
-      background: ${({ theme }: { theme: Theme }) => theme.colors.primary100};
-    }
-  `;
 
   const patternHint = () => {
     const base = formatMessage({
@@ -91,7 +95,6 @@ const PatternField: FC<Props> = ({
               })}
             </Field.Label>
             <TextInput
-              ref={inputRef}
               name="pattern"
               value={values.pattern}
               placeholder="/en/pages/[id]"
@@ -108,19 +111,21 @@ const PatternField: FC<Props> = ({
             <Field.Error />
           </Field.Root>
         </Popover.Trigger>
-        <Popover.Content ref={popoverRef}>
-          {fields.data.data[uid].map((fieldName) => (
-            <HoverBox
-              key={fieldName}
-              padding={2}
-              onClick={() => {
-                const newPattern = `${values.pattern}${fieldName}]`;
-                return setFieldValue('pattern', newPattern);
-              }}
-            >
-              {fieldName}
-            </HoverBox>
-          ))}
+        <Popover.Content>
+          <PopoverBody>
+            {fields.data.data[uid].map((fieldName) => (
+              <HoverBox
+                key={fieldName}
+                padding={2}
+                onClick={() => {
+                  const newPattern = `${values.pattern}${fieldName}]`;
+                  return setFieldValue('pattern', newPattern);
+                }}
+              >
+                {fieldName}
+              </HoverBox>
+            ))}
+          </PopoverBody>
         </Popover.Content>
       </Popover.Root>
     </div>
