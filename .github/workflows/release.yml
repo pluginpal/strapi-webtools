@@ -1,5 +1,9 @@
 name: Release
 
+permissions:
+  id-token: write
+  contents: write
+
 on:
   push:
     branches:
@@ -31,4 +35,4 @@ jobs:
           version: yarn release:prepare
         env:
           GITHUB_TOKEN: ${{ secrets.PLUGINPAL_BOT_GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_CONFIG_PROVENANCE: true

@@ -14,10 +14,13 @@ body:
       label: Addon
       description: Please select the addon related to this issue
       options:
-        - "No specific addon – This bug report is related to Webtools Core"
-        - "Webtools Core - Sitemap Addon"
-        - "Webtools Pro - Redirects Addon"
-        - "Webtools Pro - Links Addon"
+        - "Webtools Core"
+        - "Sitemap Addon"
+        - "Sitemap Expansion Addon"
+        - "Redirects Addon"
+        - "Links Addon"
+        - "Breadcrumbs Addon"
+        - "Other"
     validations:
       required: true
 
