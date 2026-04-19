@@ -26,7 +26,9 @@ const autoGenerateMiddleware = async (context, next) => {
   const document = await next();
 
   // Generate the sitemap.
-  getPluginService('core').createSitemap('default');
+  setTimeout(() => {
+    getPluginService('core').createSitemap('default');
+  }, 0);
 
   // Return the document
   return document;

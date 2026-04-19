@@ -1,4 +1,4 @@
-import { UID } from '@strapi/strapi';
+import { UID, Data } from '@strapi/strapi';
 
 import { getPluginService } from '../util/getPluginService';
 import { GenerationType } from '../types';
@@ -82,9 +82,20 @@ const generateUrlAliases = async (params: GenerateParams): Promise<number> => {
         });
 
         // eslint-disable-next-line no-await-in-loop
-        await strapi.db.query(type as 'api::test.test').updateRelations(entity.id, {
-          url_alias: [newUrlAlias.id],
-        });
+        const allItems = await strapi.db.query(type as 'api::test.test').findMany({
+          where: {
+            ...(entity.locale ? { locale: entity.locale } : {}),
+            document_id: entity.documentId,
+          },
+        }) as Data.ContentType[];
+
+        // eslint-disable-next-line no-restricted-syntax
+        for (const doc of allItems) {
+          // eslint-disable-next-line no-await-in-loop
+          await strapi.db.query(type as 'api::test.test').updateRelations(doc.id, {
+            url_alias: [newUrlAlias.id],
+          });
+        }
 
         // eslint-disable-next-line no-await-in-loop
         await Promise.all(entity.localizations.map(async (loc) => {
@@ -103,9 +114,20 @@ const generateUrlAliases = async (params: GenerateParams): Promise<number> => {
           });
 
           // eslint-disable-next-line no-await-in-loop
-          await strapi.db.query(type as 'api::test.test').updateRelations(loc.id, {
-            url_alias: [alias.id],
-          });
+          const allLocalizations = await strapi.db.query(type as 'api::test.test').findMany({
+            where: {
+              ...(loc.locale ? { locale: loc.locale } : {}),
+              document_id: loc.documentId,
+            },
+          }) as Data.ContentType[];
+
+          // eslint-disable-next-line no-restricted-syntax
+          for (const doc of allLocalizations) {
+            // eslint-disable-next-line no-await-in-loop
+            await strapi.db.query(type as 'api::test.test').updateRelations(doc.id, {
+              url_alias: [alias.id],
+            });
+          }
         }));
 
         generatedCount += 1;
