@@ -3949,7 +3949,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@strapi/plugin-cloud@npm:^5.31.2":
+"@strapi/plugin-cloud@npm:^5.42.1":
   version: 5.42.1
   resolution: "@strapi/plugin-cloud@npm:5.42.1"
   dependencies:
@@ -3967,7 +3967,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@strapi/plugin-users-permissions@npm:^5.31.2":
+"@strapi/plugin-users-permissions@npm:^5.42.1":
   version: 5.42.1
   resolution: "@strapi/plugin-users-permissions@npm:5.42.1"
   dependencies:
@@ -4047,7 +4047,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@strapi/strapi@npm:^5.31.2":
+"@strapi/strapi@npm:^5.42.1":
   version: 5.42.1
   resolution: "@strapi/strapi@npm:5.42.1"
   dependencies:
@@ -12014,9 +12014,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "playground-5@workspace:."
   dependencies:
-    "@strapi/plugin-cloud": "npm:^5.31.2"
-    "@strapi/plugin-users-permissions": "npm:^5.31.2"
-    "@strapi/strapi": "npm:^5.31.2"
+    "@strapi/plugin-cloud": "npm:^5.42.1"
+    "@strapi/plugin-users-permissions": "npm:^5.42.1"
+    "@strapi/strapi": "npm:^5.42.1"
     "@types/node": "npm:^20"
     "@types/pg": "npm:^8"
     "@types/react": "npm:^18"
