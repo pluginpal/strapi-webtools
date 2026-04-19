@@ -8,17 +8,20 @@ import {
 import TableBody from '../TableBody';
 import { PatternEntity } from '../../../../../types/url-patterns';
 import { EnabledContentType } from '../../../../../types/enabled-contenttypes';
+import PaginationFooter from '../PaginationFooter';
+import type { Pagination } from '../..';
 
 interface Props {
   patterns: PatternEntity[]
   contentTypes: EnabledContentType[]
+  pagination: Pagination
 }
 
-const TableComponent: React.FC<Props> = ({ patterns, contentTypes }) => {
+const TableComponent: React.FC<Props> = ({ patterns, contentTypes, pagination }) => {
   const { formatMessage } = useIntl();
 
   const colCount = 3;
-  const rowCount = (patterns?.length || 0) + 1;
+  const rowCount = pagination.pageSize;
 
   return (
     <div>
@@ -64,7 +67,6 @@ const TableComponent: React.FC<Props> = ({ patterns, contentTypes }) => {
             patterns={patterns}
             contentTypes={contentTypes}
           />
-          {/* TODO: Pagination */}
         </Table>
       ) : (
         <EmptyStateLayout
@@ -76,6 +78,7 @@ const TableComponent: React.FC<Props> = ({ patterns, contentTypes }) => {
           hasRadius
         />
       )}
+      <PaginationFooter pagination={pagination} />
     </div>
   );
 };
