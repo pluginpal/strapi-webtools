@@ -16,10 +16,23 @@ import { PatternEntity } from '../../../types/url-patterns';
 import { GenericResponse } from '../../../types/content-api';
 import pluginPermissions from '../../../permissions';
 import { EnabledContentTypes } from '../../../types/enabled-contenttypes';
+import useQueryParams from '../../../hooks/useQueryParams';
+
+export type Pagination = {
+  page: number;
+  pageSize: number;
+  pageCount: number;
+  total: number;
+};
 
 const ListPatternPage = () => {
   const { get } = getFetchClient();
-  const items = useQuery(['url-patterns'], async () => get<GenericResponse<PatternEntity[]>>('/webtools/url-pattern/findMany'));
+  const params = useQueryParams();
+
+  const items = useQuery(
+    ['url-patterns', params],
+    async () => get<GenericResponse<PatternEntity[]>>(`/webtools/url-pattern/findMany?${params}`),
+  );
   const contentTypes = useQuery('content-types', async () => get<EnabledContentTypes>('/webtools/info/getContentTypes'));
 
   const { formatMessage } = useIntl();
@@ -55,6 +68,7 @@ const ListPatternPage = () => {
         <Layouts.Content>
           <Table
             patterns={items.data.data.data}
+            pagination={items.data.data.meta.pagination}
             contentTypes={contentTypes.data.data}
           />
         </Layouts.Content>
