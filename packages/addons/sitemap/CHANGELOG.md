@@ -1,5 +1,13 @@
 # addon-sitemap
 
+## 1.3.1
+
+### Patch Changes
+
+- [#398](https://github.com/pluginpal/strapi-webtools/pull/398) [`83e1c9e`](https://github.com/pluginpal/strapi-webtools/commit/83e1c9ebcaa6063850a754a622b477bc6788186e) Thanks [@boazpoolman](https://github.com/boazpoolman)! - fix: support node 24
+
+- [#401](https://github.com/pluginpal/strapi-webtools/pull/401) [`67b6e3a`](https://github.com/pluginpal/strapi-webtools/commit/67b6e3ac679e92a8ba69971355aff4dcd9b55482) Thanks [@boazpoolman](https://github.com/boazpoolman)! - fix: incorrect sitemap generation during auto/bulk generation
+
 ## 1.3.0
 
 ### Minor Changes
