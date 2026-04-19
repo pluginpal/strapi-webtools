@@ -1,5 +1,11 @@
 # webtools-cli
 
+## 1.1.5
+
+### Patch Changes
+
+- [#398](https://github.com/pluginpal/strapi-webtools/pull/398) [`83e1c9e`](https://github.com/pluginpal/strapi-webtools/commit/83e1c9ebcaa6063850a754a622b477bc6788186e) Thanks [@boazpoolman](https://github.com/boazpoolman)! - fix: support node 24
+
 ## 1.1.4
 
 ### Patch Changes
