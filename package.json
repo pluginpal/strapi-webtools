@@ -45,7 +45,7 @@
     "webpack": "5.100.2"
   },
   "engines": {
-    "node": ">=20.0.0"
+    "node": ">=20.x.x <=24.x.x"
   },
   "packageManager": "yarn@4.11.0"
 }

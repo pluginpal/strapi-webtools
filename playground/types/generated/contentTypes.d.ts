@@ -543,8 +543,7 @@ export interface ApiPrivateCategoryPrivateCategory
     sitemap_exclude: Schema.Attribute.Boolean &
       Schema.Attribute.Private &
       Schema.Attribute.DefaultTo<false>;
-    slug: Schema.Attribute.UID<'title'>;
-    tests: Schema.Attribute.Relation<'manyToMany', 'api::test.test'>;
+    test: Schema.Attribute.Relation<'oneToOne', 'api::test.test'>;
     title: Schema.Attribute.String;
     updatedAt: Schema.Attribute.DateTime;
     updatedBy: Schema.Attribute.Relation<'oneToOne', 'admin::user'> &
@@ -589,8 +588,8 @@ export interface ApiTestTest extends Struct.CollectionTypeSchema {
       }>;
     locale: Schema.Attribute.String;
     localizations: Schema.Attribute.Relation<'oneToMany', 'api::test.test'>;
-    private_categories: Schema.Attribute.Relation<
-      'manyToMany',
+    private_category: Schema.Attribute.Relation<
+      'oneToOne',
       'api::private-category.private-category'
     >;
     publishedAt: Schema.Attribute.DateTime;
