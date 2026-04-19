@@ -5,6 +5,67 @@ import { getPluginService } from '../util/getPluginService';
 // eslint-disable-next-line max-len
 const generateUrlAliasMiddleware: Modules.Documents.Middleware.Middleware = async (context, next) => {
   const { uid, action, contentType } = context;
+
+  if (uid === 'plugin::webtools.url-alias' && action === 'update') {
+    const { params } = context;
+
+    const shouldRegenerate = params.data?.generated === true;
+    if (shouldRegenerate) {
+      const { entity, contentType: relatedContentType } =
+        await getPluginService('url-alias').findRelatedEntity(
+          params.data?.url_path,
+          {
+            fields: ['documentId', 'locale'],
+          },
+        );
+
+      if (entity && relatedContentType) {
+        let relations: string[] = [];
+
+        const urlPatterns = await getPluginService('url-pattern').findByUid(
+          relatedContentType,
+          entity.locale,
+        );
+
+        urlPatterns.forEach((urlPattern) => {
+          const patternRelations =
+            getPluginService('url-pattern').getRelationsFromPattern(urlPattern);
+          relations = [...relations, ...patternRelations];
+        });
+
+        const fullEntity = await strapi.documents(relatedContentType as 'api::test.test').findOne({
+          documentId: entity.documentId,
+          ...(entity.locale ? { locale: entity.locale } : {}),
+          populate: {
+            ...relations.reduce((obj, key) => ({ ...obj, [key]: {} }), {}),
+          },
+        });
+
+        if (fullEntity) {
+          let generatedPath: string | null = null;
+          urlPatterns.forEach((urlPattern) => {
+            generatedPath = getPluginService('url-pattern').resolvePattern(
+              relatedContentType,
+              fullEntity,
+              urlPattern,
+            );
+          });
+
+          if (generatedPath) {
+            params.data = {
+              ...params.data,
+              generated: true,
+              contenttype: relatedContentType,
+              url_path: generatedPath,
+            };
+          }
+        }
+      }
+    }
+
+    return next();
+  }
+
   const hasWT = isContentTypeEnabled(contentType);
 
   // If Webtools isn't enabled, do nothing.
