@@ -1,5 +1,15 @@
 # docs
 
+## 1.5.0
+
+### Minor Changes
+
+- [#395](https://github.com/pluginpal/strapi-webtools/pull/395) [`5b1bf2f`](https://github.com/pluginpal/strapi-webtools/commit/5b1bf2f95244193792e978c6e061f268cd89df0c) Thanks [@boazpoolman](https://github.com/boazpoolman)! - chore: update docusaurus
+
+### Patch Changes
+
+- [#398](https://github.com/pluginpal/strapi-webtools/pull/398) [`83e1c9e`](https://github.com/pluginpal/strapi-webtools/commit/83e1c9ebcaa6063850a754a622b477bc6788186e) Thanks [@boazpoolman](https://github.com/boazpoolman)! - fix: support node 24
+
 ## 1.4.0
 
 ### Minor Changes
