@@ -1,5 +1,29 @@
 # core
 
+## 1.9.0
+
+### Minor Changes
+
+- [#355](https://github.com/pluginpal/strapi-webtools/pull/355) [`a27ed48`](https://github.com/pluginpal/strapi-webtools/commit/a27ed48114a22c45e974f7fd801db518f3769680) Thanks [@candidosales](https://github.com/candidosales)! - feat: allow xToMany relations in the URL patterns
+
+- [#399](https://github.com/pluginpal/strapi-webtools/pull/399) [`422d6cc`](https://github.com/pluginpal/strapi-webtools/commit/422d6cc93e3220c7e9621c55e16532f414c461f3) Thanks [@boazpoolman](https://github.com/boazpoolman)! - feat: add pagination footer for the URL patterns view
+
+### Patch Changes
+
+- [`8869230`](https://github.com/pluginpal/strapi-webtools/commit/8869230b05d514d21f7922cbad2fd0d7da71aa8a) Thanks [@boazpoolman](https://github.com/boazpoolman)! - fix: prevent changing to the modified status after bulk generating (#397)
+
+- [#382](https://github.com/pluginpal/strapi-webtools/pull/382) [`fbf8b1a`](https://github.com/pluginpal/strapi-webtools/commit/fbf8b1a89a31d625a615f45ca8fcc9f07b324705) Thanks [@MSACC](https://github.com/MSACC)! - Feature/try webtools inscentives
+
+- [`ccb9259`](https://github.com/pluginpal/strapi-webtools/commit/ccb92596ad82ca124fea46e6a011aa344cd578a7) Thanks [@boazpoolman](https://github.com/boazpoolman)! - fix: prevent #385 when an unknown URL is put in to the router
+
+- [#402](https://github.com/pluginpal/strapi-webtools/pull/402) [`88c0a18`](https://github.com/pluginpal/strapi-webtools/commit/88c0a183be9940d31a6e9a0ec6e2db17aa2603da) Thanks [@boazpoolman](https://github.com/boazpoolman)! - fix: regenerate url alias if generated is set from false to true
+
+- [#398](https://github.com/pluginpal/strapi-webtools/pull/398) [`83e1c9e`](https://github.com/pluginpal/strapi-webtools/commit/83e1c9ebcaa6063850a754a622b477bc6788186e) Thanks [@boazpoolman](https://github.com/boazpoolman)! - fix: support node 24
+
+- [#400](https://github.com/pluginpal/strapi-webtools/pull/400) [`9a81f0e`](https://github.com/pluginpal/strapi-webtools/commit/9a81f0edcdd190eded7387941aa39e8c8031203c) Thanks [@boazpoolman](https://github.com/boazpoolman)! - fix: unscrollable popup
+
+- [#401](https://github.com/pluginpal/strapi-webtools/pull/401) [`67b6e3a`](https://github.com/pluginpal/strapi-webtools/commit/67b6e3ac679e92a8ba69971355aff4dcd9b55482) Thanks [@boazpoolman](https://github.com/boazpoolman)! - fix: incorrect sitemap generation during auto/bulk generation
+
 ## 1.8.0
 
 ### Minor Changes
