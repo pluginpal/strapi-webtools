@@ -8,57 +8,60 @@ const generateUrlAliasMiddleware: Modules.Documents.Middleware.Middleware = asyn
 
   if (uid === 'plugin::webtools.url-alias' && action === 'update') {
     const { params } = context;
-
     const shouldRegenerate = params.data?.generated === true;
-    if (shouldRegenerate) {
-      const { entity, contentType: relatedContentType } =
-        await getPluginService('url-alias').findRelatedEntity(
-          params.data?.url_path,
-          {
-            fields: ['documentId', 'locale'],
-          },
-        );
 
-      if (entity && relatedContentType) {
-        let relations: string[] = [];
+    // @ts-expect-error
+    if (params.skipRegeneration || !shouldRegenerate) {
+      return next();
+    }
 
-        const urlPatterns = await getPluginService('url-pattern').findByUid(
-          relatedContentType,
-          entity.locale,
-        );
+    const { entity, contentType: relatedContentType } =
+      await getPluginService('url-alias').findRelatedEntity(
+        params.data?.url_path,
+        {
+          fields: ['documentId', 'locale'],
+        },
+      );
 
+    if (entity && relatedContentType) {
+      let relations: string[] = [];
+
+      const urlPatterns = await getPluginService('url-pattern').findByUid(
+        relatedContentType,
+        entity.locale,
+      );
+
+      urlPatterns.forEach((urlPattern) => {
+        const patternRelations =
+          getPluginService('url-pattern').getRelationsFromPattern(urlPattern);
+        relations = [...relations, ...patternRelations];
+      });
+
+      const fullEntity = await strapi.documents(relatedContentType as 'api::test.test').findOne({
+        documentId: entity.documentId,
+        ...(entity.locale ? { locale: entity.locale } : {}),
+        populate: {
+          ...relations.reduce((obj, key) => ({ ...obj, [key]: {} }), {}),
+        },
+      });
+
+      if (fullEntity) {
+        let generatedPath: string | null = null;
         urlPatterns.forEach((urlPattern) => {
-          const patternRelations =
-            getPluginService('url-pattern').getRelationsFromPattern(urlPattern);
-          relations = [...relations, ...patternRelations];
+          generatedPath = getPluginService('url-pattern').resolvePattern(
+            relatedContentType,
+            fullEntity,
+            urlPattern,
+          );
         });
 
-        const fullEntity = await strapi.documents(relatedContentType as 'api::test.test').findOne({
-          documentId: entity.documentId,
-          ...(entity.locale ? { locale: entity.locale } : {}),
-          populate: {
-            ...relations.reduce((obj, key) => ({ ...obj, [key]: {} }), {}),
-          },
-        });
-
-        if (fullEntity) {
-          let generatedPath: string | null = null;
-          urlPatterns.forEach((urlPattern) => {
-            generatedPath = getPluginService('url-pattern').resolvePattern(
-              relatedContentType,
-              fullEntity,
-              urlPattern,
-            );
-          });
-
-          if (generatedPath) {
-            params.data = {
-              ...params.data,
-              generated: true,
-              contenttype: relatedContentType,
-              url_path: generatedPath,
-            };
-          }
+        if (generatedPath) {
+          params.data = {
+            ...params.data,
+            generated: true,
+            contenttype: relatedContentType,
+            url_path: generatedPath,
+          };
         }
       }
     }
@@ -172,6 +175,7 @@ const generateUrlAliasMiddleware: Modules.Documents.Middleware.Middleware = asyn
           generated: true,
           contenttype: uid,
         },
+        skipRegeneration: true,
       });
     }
 
@@ -186,6 +190,7 @@ const generateUrlAliasMiddleware: Modules.Documents.Middleware.Middleware = asyn
             generated: true,
             contenttype: uid,
           },
+          skipRegeneration: true,
         });
       } else {
         urlAliasEntity = await strapi.documents('plugin::webtools.url-alias').create({

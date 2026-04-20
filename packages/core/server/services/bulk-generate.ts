@@ -111,6 +111,7 @@ const generateUrlAliases = async (params: GenerateParams): Promise<number> => {
               contenttype: type,
               locale: entity.locale,
             },
+            skipRegeneration: true,
           });
 
           // eslint-disable-next-line no-await-in-loop
