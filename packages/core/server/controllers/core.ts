@@ -73,6 +73,12 @@ export default {
 
     if (routerUseControllers) {
       const entity = await routerWithControllers(ctx);
+
+      if (!entity) {
+        ctx.notFound();
+        return;
+      }
+
       ctx.body = entity;
       return;
     }
