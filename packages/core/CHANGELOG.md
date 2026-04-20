@@ -1,5 +1,13 @@
 # core
 
+## 1.9.1
+
+### Patch Changes
+
+- [`cc684a1`](https://github.com/pluginpal/strapi-webtools/commit/cc684a11b87db76914c1d63f919c7e299292c3c7) Thanks [@boazpoolman](https://github.com/boazpoolman)! - fix: actually return a 404 if the entity is not found using the new router_with_controllers option
+
+- [`5f7f381`](https://github.com/pluginpal/strapi-webtools/commit/5f7f381d65c57249c4004d4d11c0c62e2601473d) Thanks [@boazpoolman](https://github.com/boazpoolman)! - fix: don't regenerate the URL alias during the document service middlewares
+
 ## 1.9.0
 
 ### Minor Changes
