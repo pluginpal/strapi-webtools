@@ -36,30 +36,6 @@ const WebtoolsPanel: PanelComponent = () => {
   const locale = urlParams.get('plugins[i18n][locale]');
   const aliases = useQuery(`aliases-${model}-${id}-${locale}`, async () => get<UrlAliasEntity[]>(`/webtools/url-alias/findFrom?model=${model}&documentId=${id}&locale=${locale}`), { enabled: false });
 
-  /**
-   * Ideally the url_alias field would be hidden, but doing so will cause an issue.
-   * The issue can be prevented by setting the field to visible. To make sure the user
-   * doesn't see the url_alias field, we just remove it from the dom.
-   *
-   * @see https://github.com/strapi/strapi/issues/23039
-   * @see https://github.com/strapi/strapi/issues/22975
-   */
-  useEffect(() => {
-    const label = Array.from(document.querySelectorAll('label')).find((l) => l.textContent.startsWith('url_alias'));
-    if (label) {
-      let parentDiv = label.closest('div');
-      for (let i = 0; i < 2; i++) {
-        if (parentDiv) {
-          // @ts-expect-error
-          parentDiv = parentDiv.parentElement;
-        }
-      }
-      if (parentDiv) {
-        parentDiv.remove();
-      }
-    }
-  }, []);
-
   // Early return if the user has no permissions to view the sidebar.
   if (!canSidebar) return null;
 
