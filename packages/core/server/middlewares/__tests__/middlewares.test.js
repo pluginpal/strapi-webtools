@@ -304,7 +304,6 @@ describe('Query layer decorator', () => {
       populate: ['url_alias'],
     });
 
-    console.log(category);
     expect(category).toHaveProperty('url_alias[0].url_path', '/category/a-category');
 
     const updatedCategory = await strapi.documents('api::category.category').update({
