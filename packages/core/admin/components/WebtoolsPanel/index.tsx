@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useQuery } from 'react-query';
 import type { PanelComponent } from '@strapi/content-manager/strapi-admin';
 import {
