@@ -1,5 +1,11 @@
 # core
 
+## 1.10.0
+
+### Minor Changes
+
+- [#407](https://github.com/pluginpal/strapi-webtools/pull/407) [`ee134ce`](https://github.com/pluginpal/strapi-webtools/commit/ee134ce62b338644457f990314b6d14cfb9e8ae1) Thanks [@boazpoolman](https://github.com/boazpoolman)! - fix: make the url_alias field invisible by setting the strapi peer dep to 5.42.1
+
 ## 1.9.1
 
 ### Patch Changes
