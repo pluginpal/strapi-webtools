@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "@strapi/plugin-cloud": "5.42.1",
-    "@strapi/plugin-users-permissions": "5.42.1",
+    "@strapi/plugin-users-permissions": "5.45.0",
     "@strapi/strapi": "5.42.1",
     "better-sqlite3": "11.3.0",
     "react": "^18.0.0",
