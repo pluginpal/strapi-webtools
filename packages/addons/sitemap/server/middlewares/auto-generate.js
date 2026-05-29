@@ -17,8 +17,10 @@ const autoGenerateMiddleware = async (context, next) => {
     return next();
   }
 
-  // Only add the middleware for the create, update and delete action.
-  if (!['create', 'update', 'delete'].includes(action)) {
+  // Only add the middleware for the create, update, delete, publish and unpublish actions.
+  // In Strapi 5, publish and unpublish are separate document service actions and do not
+  // go through update, so they must be explicitly included here.
+  if (!['create', 'update', 'delete', 'publish', 'unpublish'].includes(action)) {
     return next();
   }
 
