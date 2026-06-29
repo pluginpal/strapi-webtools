@@ -1,6 +1,5 @@
 
 
-import get from 'lodash/get';
 import { Context } from 'koa';
 import { factories, Schema, UID } from '@strapi/strapi';
 import { KoaContext } from '../types/koa';

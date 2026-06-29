@@ -194,27 +194,26 @@ const customServices = () => ({
 
           const relationEntity = entity[relationName];
 
-          if (Array.isArray(relationEntity) && relationIndex !== null) {
-            const subEntity = relationEntity[relationIndex] as
-              | Record<string, unknown>
-              | undefined;
-            const value = subEntity?.[relationalField[1]];
-            resolvedPattern = resolvedPattern.replace(
-              `[${field}]`,
-              value ? slugify(String(value)) : '',
-            );
-          } else if (
-            typeof relationEntity === 'object'
-            && relationEntity !== null
-            && !Array.isArray(relationEntity)
-          ) {
+          if (Array.isArray(relationEntity)) {
+            if (relationIndex === null) {
+              strapi.log.error(`Pattern ${pattern} refers to plural relationship ${relationName}, but does not contain an index.`);
+              resolvedPattern = resolvedPattern.replace(`[${field}]`, '');
+            } else {
+              const subEntity = relationEntity[relationIndex] as
+                | Record<string, unknown>
+                | undefined;
+              const value = subEntity?.[relationalField[1]];
+              resolvedPattern = resolvedPattern.replace(
+                `[${field}]`,
+                value ? slugify(String(value)) : '',
+              );
+            }
+          } else {
             const value = (relationEntity as Record<string, unknown>)?.[relationalField[1]];
             resolvedPattern = resolvedPattern.replace(
               `[${field}]`,
               value ? slugify(String(value)) : '',
             );
-          } else {
-            strapi.log.error('Something went wrong whilst resolving the pattern.');
           }
         }
       });

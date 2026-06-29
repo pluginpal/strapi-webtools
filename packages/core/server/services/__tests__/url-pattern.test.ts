@@ -143,6 +143,21 @@ describe('URL Pattern Service', () => {
       // Current implementation replaces with empty string if missing.
       expect(resolved).toBe('/articles/my-article');
     });
+
+    it('test', () => {
+      const uid = 'api::category.category';
+      const entity = {
+        title: 'My Category',
+        test: undefined,
+      };
+      const pattern = '/category/[test.title]/[title]';
+
+      const resolved = service.resolvePattern(uid, entity, pattern);
+
+      // Should probably result in empty string for that part or handle it?
+      // Current implementation replaces with empty string if missing.
+      expect(resolved).toBe('/category/my-category');
+    });
   });
 
   describe('validatePattern', () => {
@@ -182,6 +197,7 @@ describe('URL Pattern Service', () => {
 
       expect(result.valid).toBe(true);
     });
+
     it('should invalidate pattern with forbidden fields', () => {
       const pattern = '/articles/[forbidden]/[title]';
       const allowedFields = ['title'];
