@@ -13,6 +13,6 @@ To enhance Webtools in a modular way, the core plugin allows addons to be regist
 <CustomDocCardsWrapper>
 <CustomDocCard emoji="🔌" title="Sitemap" description="The Sitemap addon can be used to generate a customizable sitemap using all your Webtools URL aliases" link="/webtools/addons/sitemap" />
 <CustomDocCard emoji="🔀" title="Redirects" description="The Redirects addon can be used to manage your redirects in Strapi CMS." link="/webtools/addons/redirects" />
-<CustomDocCard emoji="🔗" title="Links" description="The Links addon can be used create dynamic links from 1 page to another." link="/webtools/addons/links" />
+<CustomDocCard emoji="🔗" title="Links" description="The Links addon can be used to create dynamic links from 1 page to another." link="/webtools/addons/links" />
 <CustomDocCard emoji="🍞" title="Breadcrumbs" description="The Breadcrumbs addon can be used to included a computed breadcrumbs path " link="/webtools/addons/breadcrumbs" />
 </CustomDocCardsWrapper>
